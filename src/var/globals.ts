@@ -1,5 +1,5 @@
-export const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:4000' : 'https://jesusnazareno-server-api-production.up.railway.app';
-
+export const API_BASE_URL = 'https://jesusnazareno-server-api-production.up.railway.app';
+//import.meta.env.DEV ? 'http://localhost:4000' :
 export const GradosDestino = {
   inicial: [
     { label: 'Grupo 3 años', value: 'Grupo 3 años' },
