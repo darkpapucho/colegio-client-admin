@@ -1,0 +1,14 @@
+export enum ApiEndPoints {
+  LOGIN = '/user/login',
+  FETCH_MATRICULADOS = '/alumno/matriculados',
+  NUEVA_MATRICULA = '/alumno/matricular',
+  RATIFICAR_MATRICULA = '/alumno/ratificar-matricula',
+  GET_RATIFICAR_LIST = '/alumno/get-ratificar-list',
+  RETIRAR_ALUMNO = '/alumno/retirar',
+  BUSCAR_ALUMNO = '/alumno/buscar',
+  EMITIR_DOCUMENTOS = '/documento/emitirdocumentos',
+  EDITAR_ALUMNO = '/alumno/editar',
+  FETCH_REGISTRO_NOTAS = '/documento/fetch-registro-notas-salon',
+  UPDATE_REGISTRO_NOTAS = '/documento/update-registro-notas',
+  EMITIR_BOLETAS_GRADO_SECCION = '/documento/generar-boletas-notas-grado-seccion',
+}
