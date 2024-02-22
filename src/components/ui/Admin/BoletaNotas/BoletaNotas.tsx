@@ -33,18 +33,11 @@ export default function BoletaNotas() {
   return (
     <SimpleLayout title="Boleta de Notas">
       {showModal && selectedAlumno && (
-        <SelectedAlumnoModal selectedAlumno={selectedAlumno} setShowModal={setShowModal}>
-          <Button $primary $small onClick={() => requestSingleBoleta()} $width="100%">
+        <SelectedAlumnoModal selectedAlumno={selectedAlumno} onCloseModal={onCloseModal}>
+          <Button $primary $small onClick={() => requestSingleBoleta()} $width="100%" disabled={isLoading}>
             Emitir Boleta de Notas
           </Button>
-          <Button
-            $width="100%"
-            $danger
-            $small
-            onClick={() => {
-              setShowModal(false);
-              setSelectedAlumno(undefined);
-            }}>
+          <Button $width="100%" $danger $small onClick={onCloseModal} disabled={isLoading}>
             Cancelar
           </Button>
         </SelectedAlumnoModal>
@@ -103,5 +96,9 @@ export default function BoletaNotas() {
       errorHandler(err);
       setIsLoading(false);
     }
+  }
+  function onCloseModal() {
+    setShowModal(false);
+    setSelectedAlumno(undefined);
   }
 }

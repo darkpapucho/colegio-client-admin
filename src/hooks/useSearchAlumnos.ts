@@ -18,16 +18,16 @@ export default function useSearchAlumno({
     error,
   } = useQuery({
     queryKey: [QueryKeys.BuscarAlumnos],
-    queryFn: () => handleSearch(),
+    queryFn: ({ signal }) => handleSearch(signal!),
     enabled: false,
   });
 
   return { isFetching, alumnos, refetch, error };
 
-  async function handleSearch() {
+  async function handleSearch(signal: AbortSignal) {
     const alumnoData = searchBoxRef.current?.value;
     if (!alumnoData || alumnoData == '') throw new Error('olvidaste ingresar los datos del alumno');
-    const response = await Alumno.buscarAlumno({ nombreCompleto: alumnoData, estadosMatricula });
+    const response = await Alumno.buscarAlumno({ nombreCompleto: alumnoData, estadosMatricula, signal });
     updateToken(response);
     if (response.data.ok) {
       return response.data.payload;

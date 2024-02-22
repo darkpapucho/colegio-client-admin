@@ -13,14 +13,13 @@ import { Alumno } from '../../../../models/alumno';
 import AlumnoCard from '../../../shared/AlumnoCard';
 export default function RetirarAlumnoModalForm({
   selectedAlumno,
-  setSelectedAlumno,
   onCloseModal,
   signal,
   setSignal,
 }: {
   selectedAlumno: AMatriculado | undefined;
   setSelectedAlumno: React.Dispatch<React.SetStateAction<AMatriculado | undefined>>;
-  onCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
+  onCloseModal: () => void;
   signal: boolean;
   setSignal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -30,8 +29,7 @@ export default function RetirarAlumnoModalForm({
     onSuccess: () => {
       queryClient.invalidateQueries(['buscar-alumnos']);
       queryClient.fetchQuery;
-      setSelectedAlumno(undefined);
-      onCloseModal(false);
+      onCloseModal();
       setSignal(!signal);
     },
     onError: (error) => {
@@ -50,13 +48,7 @@ export default function RetirarAlumnoModalForm({
       <Button $primary $small onClick={() => mutate()}>
         Retirar
       </Button>
-      <Button
-        $danger
-        $small
-        onClick={() => {
-          setSelectedAlumno(undefined);
-          onCloseModal(false);
-        }}>
+      <Button $danger $small onClick={onCloseModal}>
         Cancelar
       </Button>
     </Container>

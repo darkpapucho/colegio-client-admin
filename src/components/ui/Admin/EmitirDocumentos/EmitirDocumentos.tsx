@@ -15,12 +15,16 @@ export default function EmitirDocumentos() {
   return (
     <SimpleLayout title="Emitir Documentos">
       {showModal && selectedAlumno && (
-        <EmitirDocumentosModal width="45rem" onCloseModal={setShowModal} title={`${selectedAlumno?.nombreCompleto}`}>
-          <EmitirDocumentosForm selectedAlumno={selectedAlumno} setSelectedAlumno={setSelectedAlumno} setShowModal={setShowModal} />
+        <EmitirDocumentosModal width="45rem" onCloseModal={onCloseModal} title={`${selectedAlumno?.nombreCompleto}`}>
+          <EmitirDocumentosForm selectedAlumno={selectedAlumno} onCloseModal={onCloseModal} />
         </EmitirDocumentosModal>
       )}
       <SearchAlumnoBox handler={setAlumnos} width="40rem"></SearchAlumnoBox>
       <DisplayAlumnosTable alumnos={alumnos} setShowModal={setShowModal} icon={<AiOutlineSelect />} setSelectedAlumno={setSelectedAlumno} />
     </SimpleLayout>
   );
+  function onCloseModal() {
+    setShowModal(false);
+    setSelectedAlumno(undefined);
+  }
 }

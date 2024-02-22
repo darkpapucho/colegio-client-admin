@@ -20,8 +20,8 @@ export default function Matriculados() {
     <>
       {isFetching && <Spinner />}
       {showModal && (
-        <EditarAlumnoModal title={`Editar ${selectedAlumno?.nombreCompleto} - ${selectedAlumno?.grado} ${selectedAlumno?.seccion}`} onCloseModal={setShowModal}>
-          <EditarAlumnoForm alumno={selectedAlumno} setAlumno={setSelectedAlumno} setShowModal={setShowModal} />
+        <EditarAlumnoModal title={`Editar ${selectedAlumno?.nombreCompleto} - ${selectedAlumno?.grado} ${selectedAlumno?.seccion}`} onCloseModal={onCloseModal}>
+          <EditarAlumnoForm alumno={selectedAlumno} onCloseModal={onCloseModal} />
         </EditarAlumnoModal>
       )}
       <SimpleLayout title="Listar alumnos matriculados">
@@ -32,4 +32,8 @@ export default function Matriculados() {
       </SimpleLayout>
     </>
   );
+  function onCloseModal() {
+    setShowModal(false);
+    setSelectedAlumno(undefined);
+  }
 }

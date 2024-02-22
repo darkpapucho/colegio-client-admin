@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AMatriculado } from '../../../../types/alumno';
 import AlumnoCard from '../../../shared/AlumnoCard';
 import { Container } from '../../../shared/Container';
@@ -16,15 +16,7 @@ import { Button } from '../../../shared/Button';
 import { GradosDestino } from '../../../../var/globals';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 
-export default function EmitirDocumentosForm({
-  selectedAlumno,
-  setShowModal,
-  setSelectedAlumno,
-}: {
-  selectedAlumno: AMatriculado;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  setSelectedAlumno: Dispatch<SetStateAction<AMatriculado | undefined>>;
-}) {
+export default function EmitirDocumentosForm({ selectedAlumno, onCloseModal }: { selectedAlumno: AMatriculado; onCloseModal: () => void }) {
   const nivel = useTypedSelector((state) => state.nivel);
   const colegioDestinoRef = useRef<HTMLInputElement | null>(null);
   const codigoModularRef = useRef<HTMLInputElement | null>(null);
@@ -66,8 +58,6 @@ export default function EmitirDocumentosForm({
       alink.download = `${selectedAlumno!.nombreCompleto}.pdf`;
       alink.click();
       alink.remove();
-      setShowModal(false);
-      setSelectedAlumno(undefined);
     }
   }, [isSuccess]);
   return (
@@ -89,14 +79,7 @@ export default function EmitirDocumentosForm({
         <Button disabled={isLoading} $primary $small onClick={() => refetch()}>
           Emitir Documentos
         </Button>
-        <Button
-          disabled={isLoading}
-          $danger
-          $small
-          onClick={() => {
-            setSelectedAlumno(undefined);
-            setShowModal(false);
-          }}>
+        <Button disabled={isLoading} $danger $small onClick={onCloseModal}>
           Cancelar
         </Button>
       </Container>

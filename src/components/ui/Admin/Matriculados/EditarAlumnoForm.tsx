@@ -1,4 +1,4 @@
-import { useRef, useState, Dispatch, SetStateAction, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { AMatriculado } from '../../../../types/alumno';
 import { Container } from '../../../shared/Container';
 import { Icon } from '../../../shared/Icon';
@@ -21,15 +21,7 @@ import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { handleFetchMatriculados } from '../../../../hooks/useAlumnosMatriculados';
 import useEditarAlumno from '../../../../hooks/useEditarAlumno';
 
-export default function EditarAlumnoForm({
-  alumno,
-  setShowModal,
-  setAlumno,
-}: {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  setAlumno: Dispatch<SetStateAction<AMatriculado | undefined>>;
-  alumno: AMatriculado | undefined;
-}) {
+export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModal: () => void; alumno: AMatriculado | undefined }) {
   const { grado, seccion } = useGradoSeccionSearchParams();
   const año = useTypedSelector((state) => state.año);
   const nivel = useTypedSelector((state) => state.nivel);
@@ -59,8 +51,7 @@ export default function EditarAlumnoForm({
     if (isSuccess === true) {
       queryClient.invalidateQueries(['matriculados', grado, seccion, año]);
       queryClient.prefetchQuery({ queryKey: ['matriculados', grado, seccion, año], queryFn: () => handleFetchMatriculados({ grado, seccion }) });
-      setShowModal(false);
-      setAlumno(undefined);
+      onCloseModal();
     }
   }, [isSuccess]);
   useEffect(() => {
@@ -188,14 +179,7 @@ export default function EditarAlumnoForm({
       <Button $primary $small disabled={isLoading} onClick={() => editarAlumno()}>
         Editar{' '}
       </Button>
-      <Button
-        $danger
-        $small
-        disabled={isLoading}
-        onClick={() => {
-          setSelectedAlumno(undefined);
-          setShowModal(false);
-        }}>
+      <Button $danger $small disabled={isLoading} onClick={onCloseModal}>
         Cancelar{' '}
       </Button>
     </Container>

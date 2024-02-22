@@ -32,7 +32,7 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
     <>
       {copyRegistro.length > 0 && <SubmitRegistro copyRegistro={copyRegistro} />}
       {showModal && (
-        <ConclusionDescriptivaModal apellidos={selectedRegistro!.alumnoNombre} setShowModal={setShowModal}>
+        <ConclusionDescriptivaModal apellidos={selectedRegistro!.alumnoNombre} onCloseModal={onCloseModal}>
           <Container $direction="column" $gap="1rem" $width="100%" $padding="4px 0 0 0">
             <textarea maxLength={200} defaultValue={selectedRegistro?.defaultValue} style={{ width: '100%', outline: 'none' }} rows={6} ref={textAreaRef} />
             <Button
@@ -81,5 +81,9 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
     if (name === EVENT_NAME) {
       dispatch({ type: 'updateNotaCurso', payload: value });
     }
+  }
+  function onCloseModal() {
+    setShowModal(false);
+    setSelectedRegistro(undefined);
   }
 }

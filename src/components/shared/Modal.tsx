@@ -31,22 +31,12 @@ const ModalHeader = styled.div`
   color: white;
 `;
 
-export default function Modal({
-  children,
-  width,
-  title,
-  onCloseModal,
-}: {
-  children: ReactNode;
-  width: WidthCss;
-  title: string;
-  onCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function Modal({ children, width, title, onCloseModal }: { children: ReactNode; width: WidthCss; title: string; onCloseModal: () => void }) {
   return (
     <StyledModal $width={width}>
       <ModalHeader>
         {title}
-        <Button $danger onClick={() => onCloseModal(false)}>
+        <Button $danger onClick={() => onCloseModal()}>
           X
         </Button>
       </ModalHeader>
