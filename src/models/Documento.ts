@@ -9,8 +9,13 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { RegistroNota } from '../types/documento';
 
 export default class Documento {
+  static async emitirBoletaNotasIndividual({ alumnoId }: { alumnoId: string }) {
+    const END_POINT = ApiEndPoints.EMITIR_BOLETA_NOTAS_INDIVIDUAL + `?alumnoId=${alumnoId}`;
+    const response = await axios.get(API_BASE_URL + END_POINT, { ...GetHeaders(), responseType: 'arraybuffer' });
+    return response;
+  }
   static async emitirBoletasNotasGradoSeccion({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
-    const END_POINT = ApiEndPoints.EMITIR_BOLETAS_GRADO_SECCION;
+    const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
     const response = await axios.post(API_BASE_URL + END_POINT, { grado, seccion }, { ...GetHeaders(), responseType: 'arraybuffer' });
     return response;
   }

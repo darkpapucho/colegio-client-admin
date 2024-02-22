@@ -34,10 +34,11 @@ export default function BoletaNotas() {
     <SimpleLayout title="Boleta de Notas">
       {showModal && selectedAlumno && (
         <SelectedAlumnoModal selectedAlumno={selectedAlumno} setShowModal={setShowModal}>
-          <Button $primary $small onClick={() => requestSingleBoleta()}>
+          <Button $primary $small onClick={() => requestSingleBoleta()} $width="100%">
             Emitir Boleta de Notas
           </Button>
           <Button
+            $width="100%"
             $danger
             $small
             onClick={() => {
@@ -68,9 +69,19 @@ export default function BoletaNotas() {
   async function requestSingleBoleta() {
     try {
       setIsLoading(true);
+      const response = await Documento.emitirBoletaNotasIndividual({ alumnoId: selectedAlumno!._id });
+      updateToken(response);
+      const myBlob = new Blob([response.data]);
+      const fileUrl = URL.createObjectURL(myBlob);
+      const aLink = document.createElement('a');
+      aLink.href = fileUrl;
+      aLink.download = `Boleta ${selectedAlumno?.nombreCompleto}.pdf`;
+      aLink.click();
+      aLink.remove();
       setIsLoading(false);
     } catch (err) {
       errorHandler(err);
+      setIsLoading(false);
     }
   }
   async function requestBoletasSalon() {

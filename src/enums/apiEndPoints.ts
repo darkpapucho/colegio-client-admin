@@ -10,5 +10,6 @@ export enum ApiEndPoints {
   EDITAR_ALUMNO = '/alumno/editar',
   FETCH_REGISTRO_NOTAS = '/documento/fetch-registro-notas-salon',
   UPDATE_REGISTRO_NOTAS = '/documento/update-registro-notas',
-  EMITIR_BOLETAS_GRADO_SECCION = '/documento/generar-boletas-notas-grado-seccion',
+  EMITIR_BOLETAS_NOTAS_GRADO_SECCION = '/documento/generar-boletas-notas-grado-seccion',
+  EMITIR_BOLETA_NOTAS_INDIVIDUAL = '/documento/generar-boleta-nota-individual',
 }

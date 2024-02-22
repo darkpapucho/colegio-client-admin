@@ -86,13 +86,13 @@ export default function EmitirDocumentosForm({
         <Select name="gradoDestino" label="Grado Destino" options={GradosDestino[nivel]} width="20rem" small></Select>
       </Container>
       <Container $width="100%" $gap="1rem">
-        <Button disabled={isLoading} $primary $medium onClick={() => refetch()}>
+        <Button disabled={isLoading} $primary $small onClick={() => refetch()}>
           Emitir Documentos
         </Button>
         <Button
           disabled={isLoading}
           $danger
-          $medium
+          $small
           onClick={() => {
             setSelectedAlumno(undefined);
             setShowModal(false);

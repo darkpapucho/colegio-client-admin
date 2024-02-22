@@ -7,6 +7,15 @@ import { logoutUser } from '../config/redux/user/slice';
 import { setAño } from '../config/redux/año/slice';
 import { setNivel } from '../config/redux/nivel/slice';
 import { Year } from '../types/enums';
+
+export function capitalizeString(string: string) {
+  const elements = string.split(' ');
+  const elementsCapitalized = elements.map((element) => {
+    return element.slice(0, 1).toUpperCase() + element.toLowerCase().slice(1);
+  });
+  return elementsCapitalized.join(' ');
+}
+
 export function GetHeaders() {
   const { nivel, año } = store.getState();
   if (!nivel || !año) throw new Error(ErrorMessages.INVALID_NIVEL_YEAR);

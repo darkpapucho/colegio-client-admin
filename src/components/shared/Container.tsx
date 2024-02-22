@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { WidthCss } from '../../types/globals';
 
 export const Container = styled.div<{
   $padding?: string;
@@ -7,6 +8,7 @@ export const Container = styled.div<{
   $bgColor?: string;
   $width?: string;
   $center?: boolean;
+  $height?: WidthCss;
 }>`
   display: flex;
   ${({ $width }) =>
@@ -15,6 +17,18 @@ export const Container = styled.div<{
       width: ${$width};
     `}
   flex-direction: ${({ $direction }) => $direction || 'column'};
+  ${({ $direction }) => {
+    if ($direction === 'row') {
+      return css`
+        align-items: center;
+      `;
+    }
+  }}
+  ${({ $height }) =>
+    $height &&
+    css`
+      height: ${$height};
+    `}
   ${({ $center }) =>
     $center &&
     css`

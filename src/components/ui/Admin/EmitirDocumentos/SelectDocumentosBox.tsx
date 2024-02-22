@@ -5,7 +5,7 @@ import { Container } from '../../../shared/Container';
 import { Text } from '../../../shared/Text';
 export default function SelectDocumentosBox({ width }: { width: WidthCss }) {
   return (
-    <Container $direction="column" $bgColor={theme.colors.indigo[100]} $width={width} $padding="1rem" $gap="1rem">
+    <Container $direction="column" $center $bgColor={theme.colors.indigo[100]} $width={width} $padding="1rem" $gap="1rem" $height="20rem">
       <Text $bold $fontSize="medium">
         Documentos:
       </Text>

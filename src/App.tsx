@@ -7,7 +7,7 @@ import RequireProfesor from './components/Guards/RequireProfesor';
 import RatificarMatricula from './components/ui/Admin/RatificarMatricula/RatificarMatricula';
 import MatriculaNueva from './components/ui/Admin/MatriculaNueva/MatriculaNueva';
 import RetirarAlumno from './components/ui/Admin/RetirarAlumno/RetirarAlumno';
-import ListarAlumnos from './components/ui/Admin/ListarAlumnos/ListarAlumnos';
+import Matriculados from './components/ui/Admin/Matriculados/Matriculados';
 import EmitirDocumentos from './components/ui/Admin/EmitirDocumentos/EmitirDocumentos';
 import RegistroNotas from './components/ui/Admin/RegistroNotas/RegistroNotas';
 import { ErrorDiv } from './components/shared/ErrorDiv';
@@ -23,7 +23,7 @@ function App() {
           <Route element={<RequireAdmin />}>
             <Route path="admin/matriculadirecta" element={<MatriculaNueva />} />
             <Route path="admin/ratificarmatricula" element={<RatificarMatricula />} />
-            <Route path="admin/matriculados" element={<ListarAlumnos />} />
+            <Route path="admin/matriculados" element={<Matriculados />} />
             <Route path="admin/retiraralumno" element={<RetirarAlumno />} />
             <Route path="admin/emitirdocumentos" element={<EmitirDocumentos />} />
             <Route path="admin/registronotas" element={<RegistroNotas />} />

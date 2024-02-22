@@ -10,7 +10,7 @@ import EditarAlumnoModal from './EditarAlumnoModal';
 import EditarAlumnoForm from './EditarAlumnoForm';
 import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
 
-export default function ListarAlumnos() {
+export default function Matriculados() {
   const { grado, seccion } = useGradoSeccionSearchParams();
   const { matriculados, isFetching, refetch, error } = useAlumnosMatriculados({ grado, seccion });
   const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(undefined);

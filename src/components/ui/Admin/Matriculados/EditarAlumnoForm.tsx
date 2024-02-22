@@ -6,14 +6,14 @@ import { StyledInput } from '../../../shared/StyledInput';
 import { CiEdit } from 'react-icons/ci';
 import { Text } from '../../../shared/Text';
 import Select from '../../../shared/Select';
-import { sections, sexos } from '../../../../utils/var';
+import { grados, sections, sexos } from '../../../../utils/var';
 import { Button } from '../../../shared/Button';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import { ESTADOS_MATRICULA_SELECT_OPTIONS } from '../../../../var/globals';
 import { Alumno } from '../../../../models/alumno';
 import { errorHandler } from '../../../../utils/errorHandler';
 import toaster from 'react-hot-toast';
-import { updateToken } from '../../../../utils/utils';
+import { capitalizeString, updateToken } from '../../../../utils/utils';
 import { editarAlumnoSchema } from '../../../../utils/zodSchemas';
 import { queryClient } from '../../../../config/query/query';
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
@@ -32,6 +32,7 @@ export default function EditarAlumnoForm({
 }) {
   const { grado, seccion } = useGradoSeccionSearchParams();
   const año = useTypedSelector((state) => state.año);
+  const nivel = useTypedSelector((state) => state.nivel);
   const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(alumno ? { ...alumno } : alumno);
   const [disables, setDisables] = useState({
     nombres: true,
@@ -72,64 +73,87 @@ export default function EditarAlumnoForm({
   return (
     <Container $direction="column" $width="100%" $gap="1rem">
       <Container $direction="row" $width="100%">
-        <Container $direction="column" $width="30%" $gap="0.8rem" $padding="2px 0">
-          <Text $bold> Nombres: </Text>
-          <Text $bold>Apellidos: </Text>
+        <Container $direction="column" $width="100%" $gap="0.2rem">
+          <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              Nombres:
+            </Text>
+            <StyledInput defaultValue={selectedAlumno.nombres} disabled={disables['nombres']} $width="60%" ref={nombresRef} />
+            <Icon $primary $pointer onClick={() => handleToggleEnability('nombres')} $small>
+              <CiEdit />
+            </Icon>
+          </Container>
+          <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              Apellidos:
+            </Text>
+            <StyledInput defaultValue={selectedAlumno.apellidos} disabled={disables['apellidos']} $width="60%" ref={apellidosRef} />
+            <Icon $primary $pointer onClick={() => handleToggleEnability('apellidos')} $small>
+              <CiEdit />
+            </Icon>
+          </Container>
+          <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              DNI:
+            </Text>
+            <StyledInput defaultValue={selectedAlumno.dni} disabled={disables['dni']} $width="60%" ref={dniRef} />
+            <Icon $primary $pointer onClick={() => handleToggleEnability('dni')} $small>
+              <CiEdit />
+            </Icon>
+          </Container>
 
-          <Text $bold>DNI: </Text>
-          <Text $bold>Cod. Estudiante: </Text>
-          <Text $bold>Fecha Matrícula </Text>
-          {selectedAlumno.fechaRetiro && <Text $bold>Fecha Retiro </Text>}
-          <Container $width="100%" $gap="1rem" $padding="8px 0 0 0">
-            <Text $bold>Sección: </Text>
-            <Text $bold>Est. Matrícula: </Text>
-            <Text $bold>Sexo: </Text>
-          </Container>
-        </Container>
-        <Container $direction="column" $width="70%" $gap="0.2rem">
           <Container $direction="row" $width="100%">
-            <StyledInput defaultValue={selectedAlumno.nombres} disabled={disables['nombres']} $width="30rem" ref={nombresRef} />
-            <Icon $primary $pointer onClick={() => handleToggleEnability('nombres')}>
+            <Text $width="25%" $bold>
+              Cod. Estudiante:
+            </Text>
+            <StyledInput defaultValue={selectedAlumno.codigoEstudiante} disabled={disables['codigoEstudiante']} $width="60%" ref={codigoEstudianteRef} />
+            <Icon $primary $pointer onClick={() => handleToggleEnability('codigoEstudiante')} $small>
               <CiEdit />
             </Icon>
           </Container>
           <Container $direction="row" $width="100%">
-            <StyledInput defaultValue={selectedAlumno.apellidos} disabled={disables['apellidos']} $width="90%" ref={apellidosRef} />
-            <Icon $primary $pointer onClick={() => handleToggleEnability('apellidos')}>
-              <CiEdit />
-            </Icon>
-          </Container>
-          <Container $direction="row" $width="100%">
-            <StyledInput defaultValue={selectedAlumno.dni} disabled={disables['dni']} $width="90%" ref={dniRef} />
-
-            <Icon $primary $pointer onClick={() => handleToggleEnability('dni')}>
-              <CiEdit />
-            </Icon>
-          </Container>
-          <Container $direction="row" $width="100%">
-            <StyledInput defaultValue={selectedAlumno.codigoEstudiante} disabled={disables['codigoEstudiante']} $width="90%" ref={codigoEstudianteRef} />
-            <Icon $primary $pointer onClick={() => handleToggleEnability('codigoEstudiante')}>
-              <CiEdit />
-            </Icon>
-          </Container>
-          <Container $direction="row" $width="100%">
-            <StyledInput type="date" defaultValue={selectedAlumno.fechaMatricula.slice(0, 10)} disabled={disables['fechaMatricula']} $width="90%" ref={fechaMatriculaRef} />
-            <Icon $primary $pointer onClick={() => handleToggleEnability('fechaMatricula')}>
+            <Text $width="25%" $bold>
+              Fecha Matrícula:
+            </Text>
+            <StyledInput type="date" defaultValue={selectedAlumno.fechaMatricula.slice(0, 10)} disabled={disables['fechaMatricula']} $width="60%" ref={fechaMatriculaRef} />
+            <Icon $primary $pointer onClick={() => handleToggleEnability('fechaMatricula')} $small>
               <CiEdit />
             </Icon>
           </Container>
           {selectedAlumno.fechaRetiro && (
             <Container $direction="row" $width="100%">
-              <StyledInput type="date" defaultValue={selectedAlumno.fechaRetiro.slice(0, 10)} disabled={disables['fechaRetiro']} $width="90%" ref={fechaRetiroRef} />
-              <Icon $primary $pointer onClick={() => handleToggleEnability('fechaRetiro')}>
+              <Text $width="25%" $bold>
+                Fecha Retiro:
+              </Text>
+              <StyledInput type="date" defaultValue={selectedAlumno.fechaRetiro.slice(0, 10)} disabled={disables['fechaRetiro']} $width="60%" ref={fechaRetiroRef} />
+              <Icon $primary $pointer onClick={() => handleToggleEnability('fechaRetiro')} $small>
                 <CiEdit />
               </Icon>
             </Container>
           )}
           <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              Grado:
+            </Text>
+            <Select
+              tiny
+              name="editarGrado"
+              width="13rem"
+              options={grados[nivel]}
+              label="grado"
+              defaultValue={{ label: capitalizeString(selectedAlumno.grado), value: selectedAlumno.grado }}
+            />
+          </Container>
+          <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              Sección:
+            </Text>
             <Select tiny name="editarSeccion" width="4rem" options={sections} label="seccion" defaultValue={{ label: selectedAlumno.seccion, value: selectedAlumno.seccion }} />
           </Container>
           <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              Est. Matrícula:
+            </Text>
             <Select
               tiny
               name="editarEstadoMatricula"
@@ -143,6 +167,9 @@ export default function EditarAlumnoForm({
             />
           </Container>
           <Container $direction="row" $width="100%">
+            <Text $width="25%" $bold>
+              Sexo:
+            </Text>
             <Select
               tiny
               name="sexo"
@@ -182,6 +209,8 @@ export default function EditarAlumnoForm({
       setSelectedAlumno((old) => (old ? { ...old, seccion: value } : old));
     } else if (name === 'editarEstadoMatricula') {
       setSelectedAlumno((old) => (old ? { ...old, estadoMatricula: value } : old));
+    } else if (name === 'editarGrado') {
+      setSelectedAlumno((old) => (old ? { ...old, grado: value } : old));
     }
   }
 
