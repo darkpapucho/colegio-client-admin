@@ -23,9 +23,13 @@ export default function RetirarAlumno() {
       )}
 
       <SearchAlumnoBox width="30rem" handler={setAlumnos} signal={signal}></SearchAlumnoBox>
-      <DisplayAlumnosTable alumnos={alumnos} icon={<AiOutlineSelect />} setShowModal={setShowModal} setSelectedAlumno={setSelectedAlumno} />
+      <DisplayAlumnosTable alumnos={alumnos} icon={<AiOutlineSelect />} actionHandler={actionHandler} />
     </SimpleLayout>
   );
+  function actionHandler(alumno: AMatriculado) {
+    setSelectedAlumno(alumno);
+    setShowModal(true);
+  }
   function onCloseModal() {
     setShowModal(false);
     setSelectedAlumno(undefined);

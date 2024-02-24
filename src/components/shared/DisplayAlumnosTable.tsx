@@ -8,11 +8,13 @@ import { ErrorMessage } from './ErrorMessage';
 export default function DisplayAlumnosTable({
   alumnos,
   icon,
-  setShowModal,
-  setSelectedAlumno,
+  // setShowModal,
+  // setSelectedAlumno,
+  actionHandler,
 }: {
-  setSelectedAlumno: React.Dispatch<React.SetStateAction<AMatriculado | undefined>>;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  // setSelectedAlumno: React.Dispatch<React.SetStateAction<AMatriculado | undefined>>;
+  // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  actionHandler: (alumno: AMatriculado) => void;
   alumnos: AMatriculado[] | undefined;
   icon: JSX.Element;
 }) {
@@ -45,14 +47,7 @@ export default function DisplayAlumnosTable({
                 {alumno.grado + ' ' + alumno.seccion}{' '}
               </Table.Body.Item>
               <Table.Body.Item $key={index} $padding="4px">
-                <Icon
-                  $primary
-                  $pointer
-                  $small
-                  onClick={() => {
-                    setShowModal(true);
-                    setSelectedAlumno(alumno);
-                  }}>
+                <Icon $primary $pointer $small onClick={() => actionHandler(alumno)}>
                   {icon}
                 </Icon>
               </Table.Body.Item>

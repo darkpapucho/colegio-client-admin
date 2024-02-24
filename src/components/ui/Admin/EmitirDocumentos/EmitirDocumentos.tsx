@@ -11,7 +11,6 @@ export default function EmitirDocumentos() {
   const [alumnos, setAlumnos] = useState<AMatriculado[] | undefined>(undefined);
   const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(undefined);
   const [showModal, setShowModal] = useState<boolean>(false);
-
   return (
     <SimpleLayout title="Emitir Documentos">
       {showModal && selectedAlumno && (
@@ -19,12 +18,19 @@ export default function EmitirDocumentos() {
           <EmitirDocumentosForm selectedAlumno={selectedAlumno} onCloseModal={onCloseModal} />
         </EmitirDocumentosModal>
       )}
-      <SearchAlumnoBox handler={setAlumnos} width="40rem"></SearchAlumnoBox>
-      <DisplayAlumnosTable alumnos={alumnos} setShowModal={setShowModal} icon={<AiOutlineSelect />} setSelectedAlumno={setSelectedAlumno} />
+      <SearchAlumnoBox handler={searchAlumnosBoxHandler} width="40rem"></SearchAlumnoBox>
+      <DisplayAlumnosTable alumnos={alumnos} actionHandler={actionHandler} icon={<AiOutlineSelect />} />
     </SimpleLayout>
   );
+  function searchAlumnosBoxHandler(alumnos: AMatriculado[]) {
+    setAlumnos(alumnos);
+  }
   function onCloseModal() {
     setShowModal(false);
     setSelectedAlumno(undefined);
+  }
+  function actionHandler(alumno: AMatriculado) {
+    setSelectedAlumno(alumno);
+    setShowModal(true);
   }
 }

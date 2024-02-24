@@ -11,15 +11,7 @@ import useSearchAlumnos from '../../hooks/useSearchAlumnos';
 
 const estadosMatricula: EstadoMatricula[] = ['DEFINITIVA', 'PENDIENTE'];
 
-export default function SearchAlumnoBox({
-  width,
-  handler,
-  signal,
-}: {
-  width: WidthCss;
-  handler: React.Dispatch<React.SetStateAction<AMatriculado[] | undefined>>;
-  signal?: boolean;
-}) {
+export default function SearchAlumnoBox({ width, handler, signal }: { width: WidthCss; handler: (alumnos: AMatriculado[]) => void; signal?: boolean }) {
   const searchBoxRef = useRef<HTMLInputElement | null>(null);
   const { isFetching, alumnos, refetch, error } = useSearchAlumnos({ searchBoxRef, estadosMatricula });
   const buttonRef = useRef<HTMLButtonElement | null>(null);
