@@ -1,10 +1,10 @@
 import { BiPencil } from 'react-icons/bi';
 import Table from '../../Table/Table';
 import { Icon } from '../../../shared/Icon';
-import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
+import { PeriodosKey, RegistroNota } from '../../../../types/documento';
 import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Container } from '../../../shared/Container';
-import SelectNota from './SelectNota';
+import SelectNota from './EditNotaButton';
 import { theme } from '../../../../config/styled/styled';
 import { EVENT_NAME, convertPeriodoKeyToIndex } from './utils';
 import { CopyRegistroReducer } from './registroReducer';
@@ -12,7 +12,6 @@ import { CopyRegistroReducer } from './registroReducer';
 export default function TableBody({
   setShowModal,
   setSelectedRegistro,
-  cursosMap,
   copyRegistro,
   periodo,
   dispatch,
@@ -21,11 +20,10 @@ export default function TableBody({
   setShowModal: Dispatch<SetStateAction<boolean>>;
   periodo: PeriodosKey;
   copyRegistro: RegistroNota[];
-  cursosMap: CursoMap[];
   dispatch: React.Dispatch<CopyRegistroReducer>;
 }) {
   console.log('registro table blody rendered');
-  console.log({ periodo, copyRegistro, cursosMap });
+  console.log({ periodo, copyRegistro });
   return (
     <Table.Body>
       {copyRegistro.map((registro, index) => {
@@ -33,7 +31,16 @@ export default function TableBody({
           <Fragment key={registro.alumnoId}>
             <Table.Body.Item $key={index}>{registro.apellidos + ', ' + registro.nombres}</Table.Body.Item>
             <Table.Body.Item $key={index}>{registro.estadoMatricula}</Table.Body.Item>
-            {cursosMap.map((curso) => {
+            {Object.keys(registro.cursos).map((curso) => {
+              return (
+                <Fragment>
+                  <Table.Body.Item $key={index}>
+                    <SelectNota notas={registro.cursos[curso][periodo]} cursoKey={curso} periodo={periodo} name={EVENT_NAME} alumnoId={registro.alumnoId} />
+                  </Table.Body.Item>
+                </Fragment>
+              );
+            })}
+            {/* {cursosMap.map((curso) => {
               return (
                 <Fragment key={curso.key}>
                   <Table.Body.Item $key={index}>
@@ -41,7 +48,7 @@ export default function TableBody({
                   </Table.Body.Item>
                 </Fragment>
               );
-            })}
+            })} */}
             <Table.Body.Item $key={index}>
               <Container $width="100%" $direction="row" $bgColor="white" $gap="1px" $padding="0">
                 <Container $width="50%" $bgColor={theme.colors.gray[400]} $center>

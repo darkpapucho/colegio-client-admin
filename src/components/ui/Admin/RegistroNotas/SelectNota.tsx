@@ -1,16 +1,19 @@
-import { RegistroNota } from '../../../../types/documento';
+import { Nota } from '../../../../types/enums';
 import Select from '../../../shared/Select';
+import { CalcularPromedioCompetencias } from './utils';
 
-export default function SelectNota({ name, registro, periodo, cursoKey }: { name: string; periodo: string; cursoKey: string; registro: RegistroNota }) {
+export default function SelectNota({ name, notas, alumnoId, periodo, cursoKey }: { name: string; periodo: string; cursoKey: string; notas: (Nota | '')[]; alumnoId: string }) {
   const notas_options = [
-    { label: 'A', value: { alumnoId: registro.alumnoId, nota: 'A', periodo, cursoKey } },
-    { label: 'B', value: { alumnoId: registro.alumnoId, nota: 'B', periodo, cursoKey } },
-    { label: 'C', value: { alumnoId: registro.alumnoId, nota: 'C', periodo, cursoKey } },
-    { label: 'AD', value: { alumnoId: registro.alumnoId, nota: 'AD', periodo, cursoKey } },
+    { label: 'A', value: { alumnoId: alumnoId, nota: 'A', periodo, cursoKey } },
+    { label: 'B', value: { alumnoId: alumnoId, nota: 'B', periodo, cursoKey } },
+    { label: 'C', value: { alumnoId: alumnoId, nota: 'C', periodo, cursoKey } },
+    { label: 'AD', value: { alumnoId: alumnoId, nota: 'AD', periodo, cursoKey } },
   ];
+
+  const promedio = CalcularPromedioCompetencias(notas);
   return (
     <Select
-      defaultValue={{ label: registro['cursos'][cursoKey][periodo][0] === '' ? '-' : registro['cursos'][cursoKey][periodo][0], value: registro['cursos'][cursoKey][periodo][0] }}
+      defaultValue={{ label: promedio === '' ? '-' : promedio, value: { alumnoId, nota: promedio, periodo, cursoKey } }}
       name={name}
       label="N"
       width="4rem"

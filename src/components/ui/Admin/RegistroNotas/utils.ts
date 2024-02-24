@@ -1,5 +1,6 @@
 import Documento from '../../../../models/Documento';
 import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
+import { Nota } from '../../../../types/enums';
 import { updateToken } from '../../../../utils/utils';
 import { CURSOS_MAP } from '../../../../utils/var';
 
@@ -40,4 +41,50 @@ export function mapCursosList(registroNota: RegistroNota | undefined): CursoMap[
     return cursosList.includes(cursoMap.key);
   });
   return result;
+}
+
+export function convertToLetras(number: number) {
+  switch (number) {
+    case 1:
+      return 'C';
+    case 2:
+      return 'B';
+    case 3:
+      return 'A';
+    case 4:
+      return 'AD';
+    case 0:
+      return '';
+    default:
+      throw new Error('ERROR CONVIRTIENDO NUMBERO A LETRA: NOTA INVÁLIDA');
+  }
+}
+export function convertToNumbers(letra: Nota | ''): number {
+  switch (letra) {
+    case 'A':
+      return 3;
+    case 'B':
+      return 2;
+    case 'C':
+      return 1;
+    case 'AD':
+      return 4;
+    case '':
+      return 0;
+    default:
+      throw new Error('ERROR CONVIRTIENDO LETRA A NUMERO: NOTA INVÁLIDA');
+  }
+}
+
+export function CalcularPromedioCompetencias(notas: (Nota | '')[]) {
+  const length = notas.length;
+  if (length === 0) {
+    return '-';
+  }
+  const notasNumbers: number[] = [];
+  for (const nota of notas) {
+    notasNumbers.push(convertToNumbers(nota));
+  }
+  const promedio = convertToLetras(notasNumbers.reduce((acc, curr) => acc + curr, 0) / length);
+  return promedio;
 }

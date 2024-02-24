@@ -62,15 +62,7 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
       <Table withBorder={true} gridTemplateColumns={gridTemplateCols} width="content-fit">
         {cursosMap?.length > 0 && <TableHeader cursosList={cursosMap} />}
         {data.length > 0 && (
-          <TableBody
-            dispatch={dispatch}
-            key={periodo}
-            copyRegistro={copyRegistro}
-            cursosMap={cursosMap}
-            periodo={periodo}
-            setShowModal={setShowModal}
-            setSelectedRegistro={setSelectedRegistro}
-          />
+          <TableBody dispatch={dispatch} key={periodo} copyRegistro={copyRegistro} periodo={periodo} setShowModal={setShowModal} setSelectedRegistro={setSelectedRegistro} />
         )}
       </Table>
     </>

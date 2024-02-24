@@ -1,18 +1,6 @@
 import { Grado, Nota } from './enums';
 
 export type CursosLabel = [];
-//CURSOS
-// export enum CursosLabelPrimaria {
-//   MATEMATICA = 'Matemática',
-//   CIENCIA_TECNOLOGIA = 'Ciencia y Tecnología',
-//   PERSONAL_SOCIAL = 'Personal Social',
-//   EDUCACION_FISICA = 'Educación Física',
-//   COMUNICACION = 'Comunicación',
-//   ARTE_CULTURA = 'Arte y Cultura',
-//   INGLES = 'Inglés',
-//   RELIGION = 'Educación Religiosa',
-//   COMPETENCIAS_TRANSVERSALES = 'Competencias Transversales',
-// }
 
 export type CursoMap = { label: string; key: string; code: string };
 
@@ -45,3 +33,9 @@ export type RegistroNota = {
 };
 
 export type PeriodosKey = 'primerPeriodo' | 'segundoPeriodo' | 'tercerPeriodo' | 'cuartoPeriodo';
+
+export type CURSO_BOLETA_NOTA = {
+  label: string;
+  key: string;
+  competencias: string[];
+};
