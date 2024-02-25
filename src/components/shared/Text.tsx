@@ -18,7 +18,7 @@ export const Text = styled.div<{ $fontSize?: Size; $bold?: boolean; $width?: Wid
           `;
         case 'small':
           return css`
-            font-size: ${theme.fontSizes.sm};
+            font-size: 1.2rem;
           `;
         default:
           return css`

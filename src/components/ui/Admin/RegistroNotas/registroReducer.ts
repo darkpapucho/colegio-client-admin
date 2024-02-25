@@ -12,15 +12,18 @@ type UpdateTardanzasInasistenciasAction = {
     field: 'inasistencias' | 'tardanzas';
   };
 };
+
 type UpdateNotaCursoAction = {
   type: 'updateNotaCurso';
-  payload: { periodo: PeriodosKey; nota: Nota; cursoKey: string; alumnoId: string };
+  payload: { periodo: PeriodosKey; nota: (Nota | '')[]; cursoKey: string; alumnoId: string };
 };
 type UpdateConclusionesDescriptivasAction = {
   type: 'updateConclusionesDescriptivas';
   payload: { alumnoId: string; periodo: PeriodosKey; value: string };
 };
+
 export type CopyRegistroReducer = UpdateTardanzasInasistenciasAction | UpdateNotaCursoAction | UpdateConclusionesDescriptivasAction;
+
 export function registroReducer(state: RegistroNota[], action: CopyRegistroReducer) {
   const { type, payload } = action;
   switch (type) {
@@ -29,7 +32,7 @@ export function registroReducer(state: RegistroNota[], action: CopyRegistroReduc
       const index = state.findIndex((registro) => registro.alumnoId === alumnoId);
       const numCompetencias = state[index]['cursos'][cursoKey].numCompetencias;
       for (let i = 0; i < numCompetencias; i++) {
-        state[index]['cursos'][cursoKey][periodo][i] = nota;
+        state[index]['cursos'][cursoKey][periodo][i] = nota[i];
       }
       break;
     }

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $small?: boolean; $tiny?: boolean; $inset?: string; $pointer?: boolean }>`
+export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $small?: boolean; $tiny?: boolean; $inset?: string; $pointer?: boolean; $color?: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,4 +43,11 @@ export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $sm
       color: ${({ theme, $primary }) => ($primary ? theme.colors.orange[400] : theme.colors.indigo[800])};
     }
   }
+  ${({ $color }) =>
+    $color &&
+    css`
+      > svg {
+        color: ${$color};
+      }
+    `}
 `;

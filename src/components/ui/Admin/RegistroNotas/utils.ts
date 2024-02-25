@@ -88,3 +88,14 @@ export function CalcularPromedioCompetencias(notas: (Nota | '')[]) {
   const promedio = convertToLetras(notasNumbers.reduce((acc, curr) => acc + curr, 0) / length);
   return promedio;
 }
+
+export function DeterminateState(notas: (Nota | '')[]) {
+  const length = notas.length;
+  let isCompletedCounter = 0;
+  for (const nota of notas) {
+    if (nota !== '') {
+      isCompletedCounter++;
+    }
+  }
+  return isCompletedCounter === length;
+}

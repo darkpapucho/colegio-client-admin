@@ -6,7 +6,9 @@ import toaster from 'react-hot-toast';
 import { logoutUser } from '../config/redux/user/slice';
 import { setAño } from '../config/redux/año/slice';
 import { setNivel } from '../config/redux/nivel/slice';
-import { Year } from '../types/enums';
+import { Grado, Nivel, Year } from '../types/enums';
+import { CURSOS_INICIAL_3_4_BOLETA_NOTAS, CURSOS_INICIAL_5_BOLETA_NOTAS, CURSOS_PRIMARIA_BOLETA_NOTAS } from '../var/globals';
+import { CURSO_BOLETA_NOTA } from '../types/documento';
 
 export function capitalizeString(string: string) {
   const elements = string.split(' ');
@@ -43,4 +45,16 @@ export function updateToken(response: AxiosResponse<ResponseSchema<any>>) {
     }
   }
   localStorage.setItem('token', token);
+}
+
+export function GetCompetenciasMap({ nivel, grado }: { nivel: Nivel; grado: Grado }): CURSO_BOLETA_NOTA[] {
+  if (nivel === 'inicial') {
+    if (grado === 'Grupo 5 años') {
+      return CURSOS_INICIAL_5_BOLETA_NOTAS;
+    } else {
+      return CURSOS_INICIAL_3_4_BOLETA_NOTAS;
+    }
+  } else {
+    return CURSOS_PRIMARIA_BOLETA_NOTAS;
+  }
 }

@@ -65,6 +65,7 @@ declare module 'styled-components' {
       };
       green: {
         100: string;
+        500: string;
         700: string;
         800: string;
       };

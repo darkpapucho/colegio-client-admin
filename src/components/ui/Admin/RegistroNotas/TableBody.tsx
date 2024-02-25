@@ -1,29 +1,31 @@
-import { BiPencil } from 'react-icons/bi';
 import Table from '../../Table/Table';
-import { Icon } from '../../../shared/Icon';
-import { PeriodosKey, RegistroNota } from '../../../../types/documento';
-import { Dispatch, Fragment, SetStateAction } from 'react';
+import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
 import { Container } from '../../../shared/Container';
-import SelectNota from './EditNotaButton';
 import { theme } from '../../../../config/styled/styled';
-import { EVENT_NAME, convertPeriodoKeyToIndex } from './utils';
+import { DeterminateState, convertPeriodoKeyToIndex } from './utils';
 import { CopyRegistroReducer } from './registroReducer';
+import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { IconBG } from './IconBG';
+import { Fragment } from 'react';
 
 export default function TableBody({
-  setShowModal,
-  setSelectedRegistro,
+  openConclusionesDescriptivasModal,
   copyRegistro,
   periodo,
   dispatch,
+  openEditNotasModal,
+  cursosMap,
 }: {
-  setSelectedRegistro: Dispatch<SetStateAction<{ alumnoId: string; alumnoNombre: string; defaultValue: string } | undefined>>;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  cursosMap: CursoMap[];
+  openEditNotasModal: ({ registro, cursoKey }: { cursoKey: string; registro: RegistroNota }) => void;
+  openConclusionesDescriptivasModal: (registro: RegistroNota) => void;
   periodo: PeriodosKey;
   copyRegistro: RegistroNota[];
   dispatch: React.Dispatch<CopyRegistroReducer>;
 }) {
   console.log('registro table blody rendered');
-  console.log({ periodo, copyRegistro });
+  // const [showModal, setShowModal] = useState(false);
+  // const [editNotaData, setEditNotaData] = useState<{ periodo: PeriodosKey; nota: (Nota | '')[]; cursoKey: string; alumnoId: string }|undefined>(undefined)
   return (
     <Table.Body>
       {copyRegistro.map((registro, index) => {
@@ -31,24 +33,22 @@ export default function TableBody({
           <Fragment key={registro.alumnoId}>
             <Table.Body.Item $key={index}>{registro.apellidos + ', ' + registro.nombres}</Table.Body.Item>
             <Table.Body.Item $key={index}>{registro.estadoMatricula}</Table.Body.Item>
-            {Object.keys(registro.cursos).map((curso) => {
+            {cursosMap.map((map) => {
               return (
-                <Fragment>
+                <Fragment key={map.key}>
                   <Table.Body.Item $key={index}>
-                    <SelectNota notas={registro.cursos[curso][periodo]} cursoKey={curso} periodo={periodo} name={EVENT_NAME} alumnoId={registro.alumnoId} />
+                    <IconBG
+                      onClick={() => openEditNotasModal({ registro: { ...registro }, cursoKey: map.key })}
+                      $isCompleted={DeterminateState(registro.cursos[map.key][periodo])}
+                      $pointer
+                      $small>
+                      {DeterminateState(registro.cursos[map.key][periodo]) ? <FaCheckCircle /> : <FaExclamationTriangle />}
+                    </IconBG>
                   </Table.Body.Item>
                 </Fragment>
               );
             })}
-            {/* {cursosMap.map((curso) => {
-              return (
-                <Fragment key={curso.key}>
-                  <Table.Body.Item $key={index}>
-                    <SelectNota registro={registro} cursoKey={curso.key} periodo={periodo} name={EVENT_NAME} />
-                  </Table.Body.Item>
-                </Fragment>
-              );
-            })} */}
+
             <Table.Body.Item $key={index}>
               <Container $width="100%" $direction="row" $bgColor="white" $gap="1px" $padding="0">
                 <Container $width="50%" $bgColor={theme.colors.gray[400]} $center>
@@ -122,21 +122,13 @@ export default function TableBody({
               </Container>
             </Table.Body.Item>
             <Table.Body.Item $key={index}>
-              <Icon
-                $primary
-                $interactive
-                $small
+              <IconBG
+                $isCompleted={registro.conclusionesDescriptivas[convertPeriodoKeyToIndex(periodo)].length > 0}
                 $pointer
-                onClick={() => {
-                  setSelectedRegistro({
-                    alumnoId: registro.alumnoId,
-                    alumnoNombre: registro.apellidos + ', ' + registro.nombres,
-                    defaultValue: registro.conclusionesDescriptivas[convertPeriodoKeyToIndex(periodo)],
-                  });
-                  setShowModal(true);
-                }}>
-                <BiPencil />
-              </Icon>
+                $small
+                onClick={() => openConclusionesDescriptivasModal(registro)}>
+                {registro.conclusionesDescriptivas[convertPeriodoKeyToIndex(periodo)].length > 0 ? <FaCheckCircle /> : <FaExclamationTriangle />}
+              </IconBG>
             </Table.Body.Item>
           </Fragment>
         );

@@ -6,10 +6,10 @@ export type CursoMap = { label: string; key: string; code: string };
 
 export type CursoNotaRecord = {
   numCompetencias: number;
-  primerPeriodo: Nota[];
-  segundoPeriodo: Nota[];
-  tercerPeriodo: Nota[];
-  cuartoPeriodo: Nota[];
+  primerPeriodo: (Nota | '')[];
+  segundoPeriodo: (Nota | '')[];
+  tercerPeriodo: (Nota | '')[];
+  cuartoPeriodo: (Nota | '')[];
 };
 export type RegistroNota = {
   alumnoId: string;
