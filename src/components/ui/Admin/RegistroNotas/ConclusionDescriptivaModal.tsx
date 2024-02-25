@@ -23,7 +23,7 @@ export default function ConclusionDescriptivaModal({
   const periodo = (searchParams.get('periodo') || 'primerPeriodo') as PeriodosKey;
   return (
     <>
-      <Modal width="30rem" title={`Comentarios sobre el rendimiento de ${registro.apellidos}, ${registro.nombres}`} onCloseModal={onCloseModal}>
+      <Modal width="30rem" title={`Conclusiones descriptivas: ${registro.apellidos}, ${registro.nombres} - ${periodo}`} onCloseModal={onCloseModal}>
         <Container $direction="column" $gap="1rem" $width="100%" $padding="4px 0 0 0">
           <textarea
             maxLength={200}
