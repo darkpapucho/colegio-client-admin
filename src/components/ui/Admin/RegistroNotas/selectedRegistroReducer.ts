@@ -19,8 +19,8 @@ type ClearSelectedRegistro = {
   type: 'clearSelectedRegistro';
 };
 
-type ActionsReducer = SetSelectedRegistroAction | UpdateNotaSelectedRegistroAction | ClearSelectedRegistro;
-export default function SelectedRegistroReducer(state: SelectedRegistroState, action: ActionsReducer) {
+export type SelectedRegistroActionsReducer = SetSelectedRegistroAction | UpdateNotaSelectedRegistroAction | ClearSelectedRegistro;
+export default function SelectedRegistroReducer(state: SelectedRegistroState, action: SelectedRegistroActionsReducer) {
   const { type } = action;
   switch (type) {
     case 'setSelectedRegistro':

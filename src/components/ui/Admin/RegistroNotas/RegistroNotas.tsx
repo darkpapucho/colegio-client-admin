@@ -23,7 +23,7 @@ export const RegistroNotasContext = createContext<{
 export default function RegistroNotas() {
   const { grado, seccion, setSearchParams } = useGradoSeccionSearchParams();
   const [data, setData] = useState<RegistroNota[] | undefined>(undefined);
-  const cursosMap: CursoMap[] | undefined = mapCursosList(data ? data[0] : data);
+  const cursosMap: CursoMap[] | undefined = mapCursosList(data ? data[0] : data); //creamos un mapa de cursos a partir de la cursos que vienen del backend
   const [isLoading, setIsLoading] = useState(false);
   const registroFiltered = useEstadoMatriculaFilter<RegistroNota>({ records: data });
   useCustomEvent('customSelect', listener);

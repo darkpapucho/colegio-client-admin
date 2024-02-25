@@ -99,3 +99,12 @@ export function DeterminateState(notas: (Nota | '')[]) {
   }
   return isCompletedCounter === length;
 }
+
+export function generateEditCompetenciasOptions({ cursoKey, index }: { cursoKey: string; index: number }) {
+  return [
+    { label: 'A', value: { cursoKey: cursoKey, index, nota: 'A' } },
+    { label: 'B', value: { cursoKey: cursoKey, index, nota: 'B' } },
+    { label: 'C', value: { cursoKey: cursoKey, index, nota: 'C' } },
+    { label: 'AD', value: { cursoKey: cursoKey, index, nota: 'AD' } },
+  ];
+}
