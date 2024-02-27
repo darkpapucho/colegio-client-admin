@@ -9,9 +9,9 @@ export default function SelectDocumentosBox({ width }: { width: WidthCss }) {
       <Text $bold $fontSize="medium">
         Documentos:
       </Text>
-      <CheckBox label="Cert. Conducta" name="certificadoConducta" width="100%"></CheckBox>
-      <CheckBox label="No Adeudo" name="certificadoNoAdeudo" width="100%"></CheckBox>
-      <CheckBox label="Resol. Traslado" name="resolucionTraslado" width="100%"></CheckBox>
+      <CheckBox label="Cert. Conducta" name="certificadoConducta" width="100%" initialState={true}></CheckBox>
+      <CheckBox label="No Adeudo" name="certificadoNoAdeudo" width="100%" initialState={true}></CheckBox>
+      <CheckBox label="Resol. Traslado" name="resolucionTraslado" width="100%" initialState={true}></CheckBox>
     </Container>
   );
 }

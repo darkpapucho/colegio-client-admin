@@ -17,8 +17,8 @@ const StyledCheckboxContainer = styled.div<{ $width?: WidthCss }>`
   align-items: center;
   padding: 4px 0;
 `;
-export default function CheckBox({ name, label, width }: { width: WidthCss; label: string; name: string }) {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+export default function CheckBox({ name, label, width, initialState }: { initialState: boolean; width: WidthCss; label: string; name: string }) {
+  const [isChecked, setIsChecked] = useState<boolean>(initialState);
   useEffect(() => {
     publish(isChecked);
   }, [isChecked]);
