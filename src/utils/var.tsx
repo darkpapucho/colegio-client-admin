@@ -102,6 +102,16 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       url: '/menu/admin/registronotas',
     },
     {
+      icon: <FiUserPlus />,
+      label: 'Agregar Profesor',
+      url: '/menu/admin/agregarprofesor',
+    },
+    {
+      icon: <FiUsers />,
+      label: 'Profesores',
+      url: '/menu/admin/gestionarprofesores',
+    },
+    {
       icon: <TbDeviceTabletUp />,
       label: 'Subir Files-notas',
       url: '/menu/admin/subirnotasexcelfiles',
@@ -110,16 +120,6 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <TbDeviceTabletDown />,
       label: 'Descargar Files-Notas',
       url: '/menu/admin/manejarnotasprofesores',
-    },
-    {
-      icon: <FiUserPlus />,
-      label: 'Agregar Profesor',
-      url: '/menu/admin/agregarprofesor',
-    },
-    {
-      icon: <FiUsers />,
-      label: 'Gestionar Profesores',
-      url: '/menu/admin/gestionarprofesores',
     },
     {
       icon: <FiUserCheck />,

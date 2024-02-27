@@ -22,8 +22,7 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
   const [showCDModal, setShowCDModal] = useState(false); //conc. descriptivas modal
   const [showENModal, setShowENModal] = useState(false); //edit notas modal
   const [selectedRegistro, dispatchSelectedRegistro] = useImmerReducer(SelectedRegistroReducer, { registro: data[0], cursoKey: '' });
-  console.log('registro notas table rendered');
-  console.log({ copyRegistro, cursosMap, selectedRegistro });
+
   useCustomEvent('customSelect', listener);
 
   if (!data) return null;
@@ -62,7 +61,6 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
     if (name === EVENT_NAME) {
       dispatch({ type: 'updateNotaCurso', payload: value });
     } else if (name === 'editCompetencia') {
-      console.log({ selectedRegistro });
       const { cursoKey, index, nota } = value;
       dispatchSelectedRegistro({ type: 'updateNotasSelectedRegistroAction', payload: { nota, index, cursoKey, periodo } });
     }

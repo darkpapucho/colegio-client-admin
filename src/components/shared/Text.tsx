@@ -1,10 +1,15 @@
 import styled, { css } from 'styled-components';
 import { Size, WidthCss } from '../../types/globals';
 
-export const Text = styled.div<{ $fontSize?: Size; $bold?: boolean; $width?: WidthCss }>`
+export const Text = styled.div<{ $fontSize?: Size; $bold?: boolean; $width?: WidthCss; $textAlign?: string }>`
   padding: 0;
   margin: 0;
-  background-color: 'red';
+
+  ${({ $textAlign }) =>
+    $textAlign &&
+    css`
+      text-align: ${$textAlign};
+    `};
   ${({ $fontSize, theme }) => {
     if ($fontSize) {
       switch ($fontSize) {
@@ -38,4 +43,5 @@ export const Text = styled.div<{ $fontSize?: Size; $bold?: boolean; $width?: Wid
     css`
       width: ${$width};
     `};
+  /* text-align: right; */
 `;

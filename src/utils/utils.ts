@@ -9,6 +9,7 @@ import { setNivel } from '../config/redux/nivel/slice';
 import { Grado, Nivel, Year } from '../types/enums';
 import { CURSOS_INICIAL_3_4_BOLETA_NOTAS, CURSOS_INICIAL_5_BOLETA_NOTAS, CURSOS_PRIMARIA_BOLETA_NOTAS } from '../var/globals';
 import { CURSO_BOLETA_NOTA } from '../types/documento';
+import { MultiSelectOptionType } from '../components/shared/MultiSelect/types';
 
 export function capitalizeString(string: string) {
   const elements = string.split(' ');
@@ -47,7 +48,7 @@ export function updateToken(response: AxiosResponse<ResponseSchema<any>>) {
   localStorage.setItem('token', token);
 }
 
-export function GetCompetenciasMap({ nivel, grado }: { nivel: Nivel; grado: Grado }): CURSO_BOLETA_NOTA[] {
+export function getCursosInfo({ nivel, grado }: { nivel: Nivel; grado: Grado }): CURSO_BOLETA_NOTA[] {
   if (nivel === 'inicial') {
     if (grado === 'Grupo 5 años') {
       return CURSOS_INICIAL_5_BOLETA_NOTAS;
@@ -56,5 +57,141 @@ export function GetCompetenciasMap({ nivel, grado }: { nivel: Nivel; grado: Grad
     }
   } else {
     return CURSOS_PRIMARIA_BOLETA_NOTAS;
+  }
+}
+
+export function generateSalones(nivel: Nivel): MultiSelectOptionType[] {
+  if (nivel === 'primaria') {
+    return [
+      {
+        label: 'Primero A',
+        value: { grado: 'PRIMERO', seccion: 'A' },
+        order: 1,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Primero B',
+        value: { grado: 'PRIMERO', seccion: 'B' },
+        order: 2,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Segundo A',
+        value: { grado: 'SEGUNDO', seccion: 'A' },
+        order: 3,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Segundo B',
+        value: { grado: 'SEGUNDO', seccion: 'B' },
+        order: 4,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Tercero A',
+        value: { grado: 'TERCERO', seccion: 'A' },
+        order: 5,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Tercero B',
+        value: { grado: 'TERCERO', seccion: 'B' },
+        order: 6,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Cuarto A',
+        value: { grado: 'CUARTO', seccion: 'A' },
+        order: 7,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Cuarto B',
+        value: { grado: 'CUARTO', seccion: 'B' },
+        order: 8,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Quinto A',
+        value: { grado: 'QUINTO', seccion: 'A' },
+        order: 9,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Quinto B',
+        value: { grado: 'QUINTO', seccion: 'B' },
+        order: 10,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Sexto A',
+        value: { grado: 'SEXTO', seccion: 'A' },
+        order: 11,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Sexto B',
+        value: { grado: 'SEXTO', seccion: 'B' },
+        order: 12,
+        tutor: false,
+        cursos: [],
+      },
+    ];
+  } else {
+    return [
+      {
+        label: 'Grupo 3 años A',
+        value: { grado: 'Grupo 3 años', seccion: 'A' },
+        order: 1,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Grupo 3 años B',
+        value: { grado: 'Grupo 3 años', seccion: 'B' },
+        order: 2,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Grupo 4 años A',
+        value: { grado: 'Grupo 4 años', seccion: 'A' },
+        order: 3,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Grupo 4 años B',
+        value: { grado: 'Grupo 4 años', seccion: 'B' },
+        order: 4,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Grupo 5 años A',
+        value: { grado: 'Grupo 5 años', seccion: 'A' },
+        order: 5,
+        tutor: false,
+        cursos: [],
+      },
+      {
+        label: 'Grupo 5 años B',
+        value: { grado: 'Grupo 5 años', seccion: 'B' },
+        order: 6,
+        tutor: false,
+        cursos: [],
+      },
+    ];
   }
 }

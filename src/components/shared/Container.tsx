@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { WidthCss } from '../../types/globals';
 
 export const Container = styled.div<{
   $padding?: string;
@@ -8,8 +7,15 @@ export const Container = styled.div<{
   $bgColor?: string;
   $width?: string;
   $center?: boolean;
-  $height?: WidthCss;
+  $height?: string;
+  $position?: string;
+  $border?: boolean;
 }>`
+  ${({ $border }) =>
+    $border &&
+    css`
+      border: 1px solid black;
+    `}
   display: flex;
   ${({ $width }) =>
     $width &&
@@ -17,13 +23,13 @@ export const Container = styled.div<{
       width: ${$width};
     `}
   flex-direction: ${({ $direction }) => $direction || 'column'};
-  ${({ $direction }) => {
+  /* ${({ $direction }) => {
     if ($direction === 'row') {
       return css`
         align-items: center;
       `;
     }
-  }}
+  }} */
   ${({ $height }) =>
     $height &&
     css`
@@ -32,7 +38,7 @@ export const Container = styled.div<{
   ${({ $center }) =>
     $center &&
     css`
-      justify-content: center;
+      /* justify-content: center; */
       align-items: center;
       text-align: center;
     `}
@@ -50,5 +56,10 @@ export const Container = styled.div<{
     $bgColor &&
     css`
       background-color: ${$bgColor};
+    `}
+    ${({ $position }) =>
+    $position &&
+    css`
+      position: ${$position};
     `}
 `;

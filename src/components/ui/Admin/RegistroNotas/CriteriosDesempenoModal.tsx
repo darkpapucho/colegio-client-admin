@@ -3,7 +3,7 @@ import { Overlay } from '../../../shared/Overlay';
 import { Container } from '../../../shared/Container';
 import { theme } from '../../../../config/styled/styled';
 import { Nivel, Grado } from '../../../../types/enums';
-import { GetCompetenciasMap } from '../../../../utils/utils';
+import { getCursosInfo } from '../../../../utils/utils';
 import { Button } from '../../../shared/Button';
 import Select from '../../../shared/Select';
 import { generateEditCompetenciasOptions } from './utils';
@@ -41,10 +41,9 @@ export default function CriteriosDesempenoModal({
             </Text>
           </Container>
           <Container $width="100%" $gap="0.4rem">
-            {GetCompetenciasMap({ nivel: nivel as unknown as Nivel, grado: grado! as Grado })
+            {getCursosInfo({ nivel: nivel as unknown as Nivel, grado: grado! as Grado })
               .find((map) => map.key === selectedRegistro!.cursoKey)
               ?.competencias.map((competencia, index) => {
-                console.log({ nota: selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][periodo][index], key: selectedRegistro!.cursoKey });
                 return (
                   <Container $direction="row" $width="100%" $bgColor={index % 2 === 0 ? theme.colors.gray[200] : theme.colors.gray[400]} key={competencia} $padding="0.4rem 0.4rem">
                     <Text $width="85%" $fontSize="small">
@@ -73,7 +72,6 @@ export default function CriteriosDesempenoModal({
             $small
             onClick={() => {
               const nota = [...selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][periodo]];
-              console.log({ nota22: nota });
               dispatch({ type: 'updateNotaCurso', payload: { periodo, nota, cursoKey: selectedRegistro!.cursoKey!, alumnoId: selectedRegistro!.registro.alumnoId } });
               onCloseModal();
             }}>

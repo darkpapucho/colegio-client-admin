@@ -25,7 +25,6 @@ export default function Filter<T>({
     if (eventName === name) {
       // searchParams.set(eventName, value);
       setSearchParams((prev) => {
-        console.log({ prev });
         prev.set(name, value);
         return prev;
       });

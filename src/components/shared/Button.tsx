@@ -31,13 +31,20 @@ const variations = (theme: DefaultTheme) => {
         background-color: ${theme.colors.orange[400]};
       }
     `,
-    secondary: css`
+    green: css`
       color: ${theme.colors.gray[100]};
-      background: ${theme.colors.indigo[500]};
-      /* border: 1px solid ${theme.colors.gray[300]}; */
+      background-color: ${theme.colors.green[500]};
 
       &:hover {
-        background-color: ${theme.colors.gray[100]};
+        background-color: ${theme.colors.green[800]};
+      }
+    `,
+    secondary: css`
+      color: ${theme.colors.gray[100]};
+      background: ${theme.colors.indigo[600]};
+
+      &:hover {
+        background-color: ${theme.colors.indigo[300]};
       }
     `,
     danger: css`
@@ -58,9 +65,14 @@ interface Props {
   $small?: boolean;
   $danger?: boolean;
   $width?: string;
+  $green?: boolean;
+  $padding?: string;
+  $center?: boolean;
 }
 
 export const Button = styled.button<Props>`
+  padding: 0.4rem 0.8rem;
+
   ${({ $width }) =>
     $width &&
     css`
@@ -68,13 +80,12 @@ export const Button = styled.button<Props>`
     `}
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.5rem;
   font-family: 'Lato', sans-serif;
   border: none;
   font-size: 1.2rem;
 
-  padding: 0.4rem 0.8rem;
   font-weight: 500;
   background-color: ${(props) => props.theme.colors.gray[500]};
   border: 1px solid ${(props) => props.theme.colors.gray[500]};
@@ -117,9 +128,18 @@ export const Button = styled.button<Props>`
     if (props.$danger) {
       return variations(props.theme)['danger'];
     }
+    if (props.$green) {
+      return variations(props.theme)['green'];
+    }
   }}
+  ${({ $padding }) =>
+    $padding &&
+    css`
+      padding: ${$padding};
+    `}
+    ${({ $center }) =>
+    $center &&
+    css`
+      justify-content: center;
+    `}
 `;
-// Button.defaultProps = {
-//   $primary: true,
-//   $small: true,
-// };

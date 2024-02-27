@@ -11,7 +11,6 @@ export default function useGradoSeccionSearchParams() {
   useCustomEvent('customSelect', listener);
   function listener(event: CustomEvent) {
     const { name, value } = event.detail;
-    console.log({ name, value });
     if (name === 'grado') {
       setSearchParams((prev) => {
         prev.set('grado', value);

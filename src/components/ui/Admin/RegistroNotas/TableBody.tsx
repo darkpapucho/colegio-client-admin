@@ -23,9 +23,6 @@ export default function TableBody({
   copyRegistro: RegistroNota[];
   dispatch: React.Dispatch<CopyRegistroReducer>;
 }) {
-  console.log('registro table blody rendered');
-  // const [showModal, setShowModal] = useState(false);
-  // const [editNotaData, setEditNotaData] = useState<{ periodo: PeriodosKey; nota: (Nota | '')[]; cursoKey: string; alumnoId: string }|undefined>(undefined)
   return (
     <Table.Body>
       {copyRegistro.map((registro, index) => {

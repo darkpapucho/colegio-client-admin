@@ -12,5 +12,5 @@ export enum ErrorMessages {
   UNAUTHORIZED = 'No tienes privilegios para hacer esta petición',
   INVALID_CREDENTIALS = 'Credenciales inválidas',
   NOT_FOUND = 'NO SE PUDO ENCONTRAR UNA RUTA PARA SU PETICIÓN',
-  ERROR_500 = 'Hubo un problema procesando su petención, por favor inténtelo nuevamente o consulte con el administrador',
+  ERROR_500 = 'Hubo un problema procesando su petición, por favor inténtelo nuevamente o consulte con el administrador',
 }

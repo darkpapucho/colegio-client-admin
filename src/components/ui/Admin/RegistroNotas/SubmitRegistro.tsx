@@ -20,16 +20,14 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
       <Button $primary disabled={isLoading} $small onClick={() => submitRegistro({ grado, seccion, registro: copyRegistro })}>
         Enviar Registro
       </Button>
-      <Button $danger $small disabled={isLoading}>
+      {/* <Button $danger $small disabled={isLoading}>
         Cancelar
-      </Button>
+      </Button> */}
     </Container>
   );
   async function submitRegistro({ grado, seccion, registro }: { grado: Grado; seccion: Seccion; registro: RegistroNota[] }) {
     try {
       setIsLoading(true);
-      console.log('submitting registro...');
-      console.log({ registro });
       const response = await Documento.updateRegistroNotas({ grado, seccion, registro });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);

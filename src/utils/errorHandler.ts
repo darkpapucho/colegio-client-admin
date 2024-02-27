@@ -28,8 +28,11 @@ export function errorHandler(error: unknown) {
       case 404:
         toaster.error(ErrorMessages.NOT_FOUND);
         break;
+      case 406:
+        toaster.error(error.message);
+        break;
       case 500:
-        toaster.error(ErrorMessages.ERROR_500);
+        toaster.error(error.message);
         break;
       default:
         toaster.error(error.message);
