@@ -1,15 +1,11 @@
 import { Profesor } from '../../../../types/empleado';
 import { Container } from '../../../shared/Container';
 import { Text } from '../../../shared/Text';
-import DisplayHoverMessage from '../../../shared/DisplayHoverMessage';
-import { CURSOS_CODES_MAP } from '../../../../utils/var';
-import { theme } from '../../../../config/styled/styled';
 import { Icon } from '../../../shared/Icon';
-import { FaRegTrashAlt } from 'react-icons/fa';
 import { useContext, useRef, useState } from 'react';
 import { ProfesoresContext } from './Profesores';
 import Select from '../../../shared/Select';
-import { generateSalones, getCursosInfo, updateToken } from '../../../../utils/utils';
+import { generateSalones, updateToken } from '../../../../utils/utils';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../types/enums';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
@@ -24,7 +20,7 @@ import { CiEdit } from 'react-icons/ci';
 import { FiSave } from 'react-icons/fi';
 import { asserts } from '../../../../utils/assert';
 import { SALONES_SELECT_OPTONS } from '../../../../var/globals';
-import CheckBox from '../../../shared/CheckBox';
+import SalonCard from './SalonCard';
 
 export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   const salonesSorted = [...profesor.salones].sort((prev, curr) => {
@@ -93,46 +89,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       </Container>
       <Container $gap=".4rem">
         {salonesSorted.map((salon) => {
-          const CURSOS_OPTIONS = getCursosInfo({ nivel, grado: salon.value.grado }).map((record) => {
-            return { label: record.label, value: { cursoKey: record.key, cursoLabel: record.label, salon: salon.label } };
-          });
-          return (
-            <Container $direction="row" $gap="1.5rem" $width="100%" key={salon.label} $center $border $height="26px">
-              <Container $direction="row" $width="17rem" $padding="0 5px" $center $gap="5px">
-                <DisplayHoverMessage
-                  width="1.5rem"
-                  message={`Eliminar ${salon.label}`}
-                  label={
-                    <Icon $primary $pointer onClick={() => deleteSalon(salon.label)}>
-                      <FaRegTrashAlt />
-                    </Icon>
-                  }
-                />
-                <CheckBox initialState={salon.tutor} width="2rem" label="Tutor" name={salon.label} />
-                <Text key={salon.label} $textAlign="right" $bold $width="10.5rem">
-                  {salon.label + ': '}
-                </Text>
-              </Container>
-
-              <Container $direction="row" $gap="2px" $center $width="44rem">
-                {salon.cursos.map((curso) => {
-                  return (
-                    <Container $direction="row" $border $bgColor={theme.colors.indigo[200]} $padding="0 4px" key={curso.label}>
-                      <DisplayHoverMessage padding={'2px 3px'} label={CURSOS_CODES_MAP[curso.key]} message={curso.label} />
-                      <DisplayHoverMessage
-                        message={`Eliminar ${curso.label}`}
-                        label={
-                          <Icon $primary $pointer onClick={() => deleteCurso({ salonLabel: salon.label, cursoKey: curso.key })}>
-                            <FaRegTrashAlt />
-                          </Icon>
-                        }></DisplayHoverMessage>
-                    </Container>
-                  );
-                })}
-              </Container>
-              <Select width="22rem" options={CURSOS_OPTIONS} label="--agregar curso--" name="addCurso" tiny></Select>
-            </Container>
-          );
+          return <SalonCard salon={salon} />;
         })}
       </Container>
       <Container $direction="row" $center $gap="2rem">
@@ -145,9 +102,6 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       </Container>
     </Container>
   );
-  function deleteCurso({ cursoKey, salonLabel }: { cursoKey: string; salonLabel: string }) {
-    dispatch({ type: 'deleteCursoFromSalon', payload: { cursoKey, salonLabel } });
-  }
   function listener(event: CustomEvent) {
     const { name, value } = event.detail;
     if (name === 'addCurso') {
@@ -189,14 +143,12 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       errorHandler(err);
     }
   }
-  function deleteSalon(salonLabel: string) {
-    dispatch({ type: 'deleteSalon', payload: salonLabel });
-  }
+
   function checkboxListener(event: CustomEvent) {
     const { name, value } = event.detail;
-
     dispatch({ type: 'updateTutoria', payload: { salon: name, value } });
   }
+
   async function guardarCambiosProfesor(profesor: Profesor) {
     if (!window.confirm('Se modificará la información permanentemente, ¿estás seguro de continuar?')) return;
     try {
