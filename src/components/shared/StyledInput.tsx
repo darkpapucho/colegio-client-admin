@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { WidthCss } from '../../types/globals';
 import { theme } from '../../config/styled/styled';
 
-export const StyledInput = styled.input<{ $width?: WidthCss }>`
+export const StyledInput = styled.input<{ $width?: WidthCss; $grow?: boolean }>`
   outline: none;
   border: none;
   padding: 4px;
@@ -17,5 +17,10 @@ export const StyledInput = styled.input<{ $width?: WidthCss }>`
     $width &&
     css`
       width: ${$width};
+    `}
+  ${({ $grow }) =>
+    $grow &&
+    css`
+      flex: 1 0 auto;
     `}
 `;

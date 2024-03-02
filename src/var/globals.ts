@@ -102,3 +102,28 @@ export const CURSOS_INICIAL_5_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
     competencias: ['Se desenvuelve en entornos virtuales generados por la TIC.', 'Gestiona su aprendizaje de manera autónoma.'],
   },
 ];
+
+export const SALONES_SELECT_OPTONS = {
+  inicial: [
+    { label: 'Grupo 3 años A', value: 'Grupo 3 años A' },
+    { label: 'Grupo 3 años B', value: 'Grupo 3 años B' },
+    { label: 'Grupo 4 años A', value: 'Grupo 4 años A' },
+    { label: 'Grupo 4 años B', value: 'Grupo 4 años B' },
+    { label: 'Grupo 5 años A', value: 'Grupo 5 años A' },
+    { label: 'Grupo 5 años B', value: 'Grupo 5 años B' },
+  ],
+  primaria: [
+    { label: 'Primero A', value: 'Primero A' },
+    { label: 'Primero B', value: 'Primero B' },
+    { label: 'Segundo A', value: 'Segundo A' },
+    { label: 'Segundo B', value: 'Segundo B' },
+    { label: 'Tercero A', value: 'Tercero A' },
+    { label: 'Tercero B', value: 'Tercero B' },
+    { label: 'Cuarto A', value: 'Cuarto A' },
+    { label: 'Cuarto B', value: 'Cuarto B' },
+    { label: 'Quinto A', value: 'Quinto A' },
+    { label: 'Quinto B', value: 'Quinto B' },
+    { label: 'Sexto A', value: 'Sexto A' },
+    { label: 'Sexto B', value: 'Sexto B' },
+  ],
+};

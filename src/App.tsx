@@ -13,6 +13,7 @@ import RegistroNotas from './components/ui/Admin/RegistroNotas/RegistroNotas';
 import { ErrorDiv } from './components/shared/ErrorDiv';
 import BoletaNotas from './components/ui/Admin/BoletaNotas/BoletaNotas';
 import AgregarProfesor from './components/ui/Admin/AgregarProfesor/AgregarProfesor';
+import Profesores from './components/ui/Admin/Profesores/Profesores';
 
 function App() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function App() {
             <Route path="admin/registronotas" element={<RegistroNotas />} />
             <Route path="admin/boletadenotas" element={<BoletaNotas />} />
             <Route path="admin/agregarprofesor" element={<AgregarProfesor />} />
+            <Route path="admin/gestionarprofesores" element={<Profesores />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

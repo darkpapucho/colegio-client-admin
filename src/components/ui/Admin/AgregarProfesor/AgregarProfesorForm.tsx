@@ -30,8 +30,8 @@ export default function AgregarProfesorForm() {
     <Container $width="max-content" $gap="2rem" $direction="column">
       {isLoading && <Loader />}
       <Container $direction="row" $width="max-content" $gap="2rem">
-        <Container $gap="1rem" $padding="1rem" $height={nivel === 'primaria' ? '39rem' : '22rem'} $bgColor={theme.colors.indigo[100]} $width="39rem">
-          <MultiSelect items={generateSalones(nivel)} width="34rem" name="addSalones"></MultiSelect>
+        <Container $gap="1rem" $padding="1rem" $height={nivel === 'primaria' ? '39rem' : '22rem'} $bgColor={theme.colors.indigo[100]} $width="42rem">
+          <MultiSelect items={generateSalones(nivel)} width="100%" name="addSalones"></MultiSelect>
         </Container>
         <Container $width="39rem" $gap="2.5rem" $padding="2.5rem 0 0 1rem">
           <Input type="text" ref={nombresRef} name="nombres" label="nombres" $width="100%"></Input>

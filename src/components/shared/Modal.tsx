@@ -4,9 +4,9 @@ import { ReactNode } from 'react';
 import { Button } from './Button';
 import { Container } from './Container';
 
-const StyledModal = styled.div<{ $width: WidthCss }>`
+const StyledModal = styled.div<{ $width: WidthCss; $marginTop?: string }>`
   position: fixed;
-  top: 35%;
+  top: ${({ $marginTop }) => $marginTop || '35%'};
   left: 50%;
   display: flex;
   flex-direction: column;
@@ -31,9 +31,21 @@ const ModalHeader = styled.div`
   color: white;
 `;
 
-export default function Modal({ children, width, title, onCloseModal }: { children: ReactNode; width: WidthCss; title: string; onCloseModal: () => void }) {
+export default function Modal({
+  children,
+  width,
+  title,
+  onCloseModal,
+  marginTop,
+}: {
+  marginTop?: string;
+  children: ReactNode;
+  width: WidthCss;
+  title: string;
+  onCloseModal: () => void;
+}) {
   return (
-    <StyledModal $width={width}>
+    <StyledModal $width={width} $marginTop={marginTop}>
       <ModalHeader>
         {title}
         <Button $danger onClick={() => onCloseModal()}>

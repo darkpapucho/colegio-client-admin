@@ -4,7 +4,6 @@ export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $sm
   display: flex;
   align-items: center;
   justify-content: center;
-
   ${({ $pointer }) =>
     $pointer &&
     css`

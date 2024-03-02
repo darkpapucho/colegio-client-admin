@@ -158,10 +158,21 @@ export const CURSOS_MAP: CursoMap[] = [
   { key: 'arteCultura', label: 'Arte y Cultura', code: 'AC' },
   { key: 'ingles', label: 'Inglés', code: 'IN' },
   { key: 'religion', label: 'Religión', code: 'RE' },
-  { key: 'psicomotriz', label: 'Psicomotriz', code: 'PS' },
-  { key: 'competenciasTransversales', label: 'Competencias Transversales', code: 'CT' },
+  { key: 'psicomotriz', label: 'Psicomotriz', code: 'PZ' },
+  { key: 'competenciasTransversales', label: 'Competencias Transversales', code: 'CX' },
 ];
-
+export const CURSOS_CODES_MAP = {
+  matematica: 'MA',
+  cienciaTecnologia: 'CT',
+  personalSocial: 'PS',
+  educacionFisica: 'EF',
+  comunicacion: 'CO',
+  arteCultura: 'AC',
+  ingles: 'IN',
+  religion: 'RE',
+  psicomotriz: 'PZ',
+  competenciasTransversales: 'CX',
+};
 export const NOTAS_OPTIONS = [
   { label: 'A', value: 'A' },
   { label: 'B', value: 'B' },

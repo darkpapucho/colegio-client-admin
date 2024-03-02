@@ -1,10 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { WidthCss } from '../../types/globals';
 
-const StyledHoverable = styled.div`
-  width: 100%;
+const StyledHoverable = styled.div<{ $bgColor?: string; $padding?: string; $width?: string }>`
+  width: ${({ $width }) => $width || '100%'};
   text-align: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  ${({ $padding }) =>
+    $padding &&
+    css`
+      padding: ${$padding};
+    `}
+  ${({ $bgColor }) =>
+    $bgColor &&
+    css`
+      background-color: ${$bgColor};
+    `}
 `;
 const StyledMessage = styled.div<{ $offset: number }>`
   position: absolute;
@@ -16,7 +29,19 @@ const StyledMessage = styled.div<{ $offset: number }>`
   width: max-content;
 `;
 
-export default function DisplayHoverMessage({ message, label }: { label: string; message: string }) {
+export default function DisplayHoverMessage({
+  message,
+  label,
+  bgColor,
+  padding,
+  width,
+}: {
+  width?: WidthCss;
+  padding?: string;
+  bgColor?: string;
+  label: ReactNode;
+  message: string;
+}) {
   const [showMessage, setShowMessage] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [offset, setOffset] = useState<number>(0);
@@ -27,7 +52,7 @@ export default function DisplayHoverMessage({ message, label }: { label: string;
     setOffset(width / 2);
   }, []);
   return (
-    <StyledHoverable onMouseEnter={() => setShowMessage(true)} onMouseLeave={() => setShowMessage(false)} ref={containerRef}>
+    <StyledHoverable $width={width} $bgColor={bgColor} $padding={padding} onMouseEnter={() => setShowMessage(true)} onMouseLeave={() => setShowMessage(false)} ref={containerRef}>
       {showMessage && <StyledMessage $offset={offset}>{message}</StyledMessage>}
       {label}
     </StyledHoverable>

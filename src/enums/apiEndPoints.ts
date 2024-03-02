@@ -13,4 +13,6 @@ export enum ApiEndPoints {
   EMITIR_BOLETAS_NOTAS_GRADO_SECCION = '/documento/generar-boletas-notas-grado-seccion',
   EMITIR_BOLETA_NOTAS_INDIVIDUAL = '/documento/generar-boleta-nota-individual',
   CREAR_PROFESOR = '/user/crear-profesor',
+  FETCH_PROFESORES = '/empleado/fetch-profesores',
+  UPDATE_PROFESOR = '/empleado/update-profesor',
 }
