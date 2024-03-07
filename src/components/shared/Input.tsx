@@ -64,10 +64,7 @@ const SLabel = styled.label<{ $hasContent: boolean; $type: string }>`
 `;
 
 //main input  componentt
-const Input = forwardRef(function InputComponent(
-  { name, type, $width, label, isError }: { $width?: string; name: string; type: string; label: string; isError?: boolean },
-  ref,
-) {
+const Input = forwardRef(function InputComponent({ name, type, $width, label, isError }: { $width?: string; name: string; type: string; label: string; isError?: boolean }, ref) {
   const [value, setValue] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [hasContent, setHasContent] = useState(false);

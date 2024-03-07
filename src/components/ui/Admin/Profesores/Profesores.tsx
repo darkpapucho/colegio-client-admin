@@ -2,27 +2,17 @@ import { useQuery } from '@tanstack/react-query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import SimpleLayout from '../../../shared/SimpleLayout';
 import { Nivel, Year } from '../../../../types/enums';
-import { Dispatch, SetStateAction, createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useImmerReducer } from 'use-immer';
-import ProfesorReducer, { ProfesorReducerAction } from './ProfesorReducer';
+import ProfesorReducer, { ProfesorReducerAction } from '../../../shared/Profesor/ProfesorReducer';
 import { Profesor } from '../../../../types/empleado';
 import ProfesorCardModal from './ProfesorCardModal';
 import ProfesoresTable from './ProfesoresTable';
 import Loader from '../../Loader/Loader';
 import { errorHandler } from '../../../../utils/errorHandler';
-import { SalonProfesor } from '../AgregarProfesor/selectedSalonesReducer';
 import { fetchProfesores } from './utils';
+import { ProfesoresContext, initialState } from '../../../shared/Profesor/ProfesorContext';
 
-export const ProfesoresContext = createContext<{ isLoading: boolean; dispatch: Dispatch<ProfesorReducerAction>; setShowModal: Dispatch<SetStateAction<boolean>> } | null>(null);
-const initialState: Profesor = {
-  nombres: '',
-  apellidos: '',
-  dni: 0,
-  rol: 'profesor',
-  _id: '',
-  userId: '',
-  salones: [] as SalonProfesor[],
-};
 export default function Profesores() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const año = useTypedSelector((state) => state.año) as Year;

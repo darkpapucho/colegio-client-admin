@@ -1,26 +1,26 @@
-import { Profesor } from '../../../../types/empleado';
-import { Container } from '../../../shared/Container';
-import { Text } from '../../../shared/Text';
-import { Icon } from '../../../shared/Icon';
+import { Profesor } from '../../../types/empleado';
+import { Container } from '../Container';
+import { Text } from '../Text';
+import { Icon } from '../Icon';
 import { useContext, useRef, useState } from 'react';
-import { ProfesoresContext } from './Profesores';
-import Select from '../../../shared/Select';
-import { generateSalones, updateToken } from '../../../../utils/utils';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { Nivel, Year } from '../../../../types/enums';
-import useCustomEvent from '../../../../hooks/useCustomEvent';
-import { Button } from '../../../shared/Button';
-import Empleado from '../../../../models/empleado';
+import Select from '../Select';
+import { generateSalones, updateToken } from '../../../utils/utils';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { Nivel, Year } from '../../../types/enums';
+import useCustomEvent from '../../../hooks/useCustomEvent';
+import { Button } from '../Button';
+import Empleado from '../../../models/empleado';
 import toaster from 'react-hot-toast';
-import { queryClient } from '../../../../config/query/query';
-import { fetchProfesores } from './utils';
-import { errorHandler } from '../../../../utils/errorHandler';
-import { StyledInput } from '../../../shared/StyledInput';
+import { queryClient } from '../../../config/query/query';
+import { fetchProfesores } from '../../ui/Admin/Profesores/utils';
+import { errorHandler } from '../../../utils/errorHandler';
+import { StyledInput } from '../StyledInput';
 import { CiEdit } from 'react-icons/ci';
 import { FiSave } from 'react-icons/fi';
-import { asserts } from '../../../../utils/assert';
-import { SALONES_SELECT_OPTONS } from '../../../../var/globals';
-import SalonCard from './SalonCard';
+import { asserts } from '../../../utils/assert';
+import { SALONES_SELECT_OPTONS } from '../../../var/globals';
+import SalonCard from '../SalonCard';
+import { ProfesoresContext } from './ProfesorContext';
 
 export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   const salonesSorted = [...profesor.salones].sort((prev, curr) => {
@@ -89,7 +89,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       </Container>
       <Container $gap=".4rem">
         {salonesSorted.map((salon) => {
-          return <SalonCard salon={salon} />;
+          return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
         })}
       </Container>
       <Container $direction="row" $center $gap="2rem">
@@ -114,7 +114,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
     }
   }
   function closeModal() {
-    setShowModal(false);
+    setShowModal ? setShowModal(false) : null;
   }
 
   function updateProfesorData(field: 'apellidos' | 'nombres' | 'dni' | 'telefono') {
@@ -166,5 +166,11 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       errorHandler(err);
       setIsLoading(false);
     }
+  }
+  function deleteSalon(salonLabel: string) {
+    dispatch({ type: 'deleteSalon', payload: salonLabel });
+  }
+  function deleteCurso({ cursoKey, salonLabel }: { cursoKey: string; salonLabel: string }) {
+    dispatch({ type: 'deleteCursoFromSalon', payload: { cursoKey, salonLabel } });
   }
 }

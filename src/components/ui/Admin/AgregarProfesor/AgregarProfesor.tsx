@@ -1,10 +1,150 @@
+import { useImmerReducer } from 'use-immer';
 import SimpleLayout from '../../../shared/SimpleLayout';
-import AgregarProfesorForm from './AgregarProfesorForm';
+// import AgregarProfesorForm from './AgregarProfesorForm';
+import toaster from 'react-hot-toast';
+import { Container } from '../../../shared/Container';
+import { Text } from '../../../shared/Text';
+import { SALONES_SELECT_OPTONS } from '../../../../var/globals';
+import { Button } from '../../../shared/Button';
+import Select from '../../../shared/Select';
+import { useState, useRef } from 'react';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import { Nivel } from '../../../../types/enums';
+import { asserts } from '../../../../utils/assert';
+import { errorHandler } from '../../../../utils/errorHandler';
+import { generateSalones, updateToken } from '../../../../utils/utils';
+import SalonCard from '../../../shared/SalonCard';
+import useCustomEvent from '../../../../hooks/useCustomEvent';
+import Input from '../../../shared/Input';
+import SalonesReducer from './SalonesReducer';
+import { User } from '../../../../models/user';
+import { SalonProfesor, ProfesorData } from '../../../shared/Profesor/types';
 
 export default function AgregarProfesor() {
+  const nivel = useTypedSelector((state) => state.nivel) as Nivel;
+  const [state, dispatch] = useImmerReducer(SalonesReducer, { salones: [] as SalonProfesor[] });
+  const salonesSorted = [...state.salones].sort((prev, curr) => {
+    return curr.order > prev.order ? -1 : 1;
+  });
+  const SALONES_OPTIONS = SALONES_SELECT_OPTONS[nivel].filter((option) => {
+    let result = 0;
+    salonesSorted.forEach((salon) => {
+      if (salon.label === option.label) {
+        result = 1;
+      }
+    });
+    if (result == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const apellidosRef = useRef<HTMLInputElement | null>(null);
+  const nombresRef = useRef<HTMLInputElement | null>(null);
+  const dniRef = useRef<HTMLInputElement | null>(null);
+  const telefonoRef = useRef<HTMLInputElement | null>(null);
+  useCustomEvent('customSelect', listener);
+  useCustomEvent('customCheckbox', checkboxListener);
   return (
     <SimpleLayout title="Agregar nuevo profesor">
-      <AgregarProfesorForm></AgregarProfesorForm>
+      {/* <AgregarProfesorForm></AgregarProfesorForm> */}
+      <Container $width="max-content" $gap="1.5rem">
+        <Container $width="30rem" $gap="1.8rem">
+          <Input label="Apellidos" ref={apellidosRef} name="apellidos" type="text" $width="100%"></Input>
+          <Input label="Nombres" ref={nombresRef} name="nombres" type="text" $width="100%"></Input>
+          <Input label="DNI" ref={dniRef} name="dni" type="text" $width="100%"></Input>
+          <Input label="Teléfono" ref={telefonoRef} name="telefono" type="text" $width="100%"></Input>
+        </Container>
+        <Container $direction="row" $gap="1rem" $width="100%">
+          <Text $bold $fontSize="medium">
+            {state.salones.length} {state.salones.length !== 1 ? ' salones:' : ' salón:'}
+          </Text>
+          <Select options={SALONES_OPTIONS} label="--agregar salón--" name="addSalon" width="15rem" tiny></Select>
+        </Container>
+        <Container $gap=".4rem">
+          {salonesSorted.map((salon) => {
+            return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
+          })}
+        </Container>
+        <Container $direction="row" $center $gap="2rem">
+          <Button disabled={isLoading} $primary $small $width="max-content" onClick={() => submitFOrm()}>
+            Guardar Cambios
+          </Button>
+          {/* <Button disabled={isLoading} $danger $small $width="max-content" onClick={closeModal}>
+          Cancelar
+        </Button> */}
+        </Container>
+      </Container>
     </SimpleLayout>
   );
+  function listener(event: CustomEvent) {
+    const { name, value } = event.detail;
+    if (name === 'addCurso') {
+      dispatch({ type: 'addCursoToSalon', payload: value });
+    }
+    if (name === 'addSalon') {
+      const salon = generateSalones(nivel).find((salon) => salon.label === value);
+
+      dispatch({ type: 'addSalon', payload: salon! });
+    }
+  }
+
+  function checkboxListener(event: CustomEvent) {
+    const { name, value } = event.detail;
+    dispatch({ type: 'updateTutoria', payload: { salon: name, value } });
+  }
+
+  function deleteSalon(salonLabel: string) {
+    dispatch({ type: 'deleteSalon', payload: salonLabel });
+  }
+  function deleteCurso({ cursoKey, salonLabel }: { cursoKey: string; salonLabel: string }) {
+    dispatch({ type: 'deleteCursoFromSalon', payload: { cursoKey, salonLabel } });
+  }
+  async function submitFOrm() {
+    if (!window.confirm('Estas seguro de agregar un nuevo profesor a la base de datos?')) return;
+    try {
+      setIsLoading(true);
+      const nombres = nombresRef.current!.value.trim().toUpperCase();
+      const apellidos = apellidosRef.current!.value.trim().toUpperCase();
+      const dni = dniRef.current!.value.trim();
+      const telefono = telefonoRef.current!.value.trim();
+
+      //validaciones
+      asserts(nombres.length >= 4, 'nombres debe contener al menos 4 caracteres');
+      asserts(apellidos.length >= 8, 'apellidos debe contener al menos 8 caracteres');
+      asserts(dni.length === 8 && typeof +dni === 'number', 'DNI inválido');
+      if (telefono.length > 0) {
+        asserts(telefono.length === 9 && typeof +telefono === 'number', 'teléfono inválido');
+      }
+      //validar al menos 1 salon seleccionado
+      if (state.salones.length === 0) throw new Error('debes seleccionar al menos 1 salón para el profesor');
+      const validSalones = state.salones.filter((salon) => salon.cursos.length > 0);
+      //validar q cada salon tenga al menos 1 curso seleccionado
+      if (validSalones.length !== state.salones.length) {
+        throw new Error('todos los salones deben tener al menos 1 curso agregado');
+      }
+      //data:
+      const profesorData: ProfesorData = {
+        nombres,
+        apellidos,
+        dni: +dni,
+        salones: state.salones,
+      };
+      if (telefono.length > 0) profesorData.telefono = +telefono;
+      const response = await User.crearProfesor(profesorData);
+      updateToken(response);
+      if (!response.data.ok) {
+        toaster.error(response.data.message);
+      } else {
+        toaster.success('La operación se realizó exitosamente');
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      errorHandler(err);
+      setIsLoading(false);
+    }
+  }
 }

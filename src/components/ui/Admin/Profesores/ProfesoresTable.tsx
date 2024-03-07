@@ -3,7 +3,7 @@ import { TbListDetails } from 'react-icons/tb';
 import { Profesor } from '../../../../types/empleado';
 import { Icon } from '../../../shared/Icon';
 import Table from '../../Table/Table';
-import { ProfesoresContext } from './Profesores';
+import { ProfesoresContext } from '../../../shared/Profesor/ProfesorContext';
 
 export default function ProfesoresTable({ data }: { data: Profesor[] }) {
   const { setShowModal, dispatch } = useContext(ProfesoresContext)!;

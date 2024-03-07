@@ -1,7 +1,7 @@
 import { Profesor } from '../../../../types/empleado';
 import Modal from '../../../shared/Modal';
 import { Overlay } from '../../../shared/Overlay';
-import ProfesorCard from './ProfesorCard';
+import ProfesorCard from '../../../shared/Profesor/ProfesorCard';
 
 export default function ProfesorCardModal({ profesor, onCloseModal }: { onCloseModal: () => void; profesor: Profesor }) {
   return (

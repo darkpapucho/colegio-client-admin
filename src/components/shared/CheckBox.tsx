@@ -28,7 +28,6 @@ export default function CheckBox({ name, label, width, initialState }: { initial
     </StyledCheckboxContainer>
   );
   function publish(value: boolean) {
-    console.log({ name, value });
     publishEvent('customCheckbox', { name, value });
   }
 }

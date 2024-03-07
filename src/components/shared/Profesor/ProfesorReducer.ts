@@ -1,5 +1,5 @@
-import { Profesor } from '../../../../types/empleado';
-import { SalonProfesor } from '../AgregarProfesor/selectedSalonesReducer';
+import { Profesor } from '../../../types/empleado';
+import { SalonProfesor } from './types';
 type UpdateTutoria = {
   type: 'updateTutoria';
   payload: { salon: string; value: boolean };
