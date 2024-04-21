@@ -14,7 +14,7 @@ export default function TableHeader({ cursosList }: { cursosList: { label: strin
       {cursosList!.map((curso) => {
         return (
           <Table.Header.Item key={curso.key}>
-            <DisplayHoverMessage message={curso.label} label={curso.code} />
+            <DisplayHoverMessage message={curso.label} label={curso.code} width="100%" />
           </Table.Header.Item>
         );
       })}

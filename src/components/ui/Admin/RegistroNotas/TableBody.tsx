@@ -7,8 +7,37 @@ import { CopyRegistroReducer } from './registroReducer';
 import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import { IconBG } from './IconBG';
 import { Fragment } from 'react';
+import styled from 'styled-components';
+const DisplayAlumno = styled.div<{ $index: number }>`
+  color: white;
+  cursor: pointer;
+  background-color: ${({ $index }) => {
+    if ($index % 2 === 0) {
+      return 'hsl(228, 100%, 57%)';
+    } else {
+      return 'hsl(228, 100%, 69%)';
+    }
+  }};
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 5px;
+  gap: 0.4rem;
+
+  .nombres-apellidos {
+    flex-grow: 1;
+    text-align: left;
+  }
+  &:hover {
+    color: ${({ theme }) => theme.colors.orange[400]};
+  }
+`;
 
 export default function TableBody({
+  openAllDetailsModal,
   openConclusionesDescriptivasModal,
   copyRegistro,
   periodo,
@@ -16,6 +45,7 @@ export default function TableBody({
   openEditNotasModal,
   cursosMap,
 }: {
+  openAllDetailsModal: (record: RegistroNota) => void;
   cursosMap: CursoMap[];
   openEditNotasModal: ({ registro, cursoKey }: { cursoKey: string; registro: RegistroNota }) => void;
   openConclusionesDescriptivasModal: (registro: RegistroNota) => void;
@@ -28,7 +58,12 @@ export default function TableBody({
       {copyRegistro.map((registro, index) => {
         return (
           <Fragment key={registro.alumnoId}>
-            <Table.Body.Item $key={index}>{registro.apellidos + ', ' + registro.nombres}</Table.Body.Item>
+            <Table.Body.Item $key={index} onClick={() => openAllDetailsModal(registro)}>
+              <DisplayAlumno $index={index}>
+                <p>{`[${index}]`}</p>
+                <p className="nombres-apellidos">{registro.apellidos + ', ' + registro.nombres}</p>
+              </DisplayAlumno>
+            </Table.Body.Item>
             <Table.Body.Item $key={index}>{registro.estadoMatricula}</Table.Body.Item>
             {cursosMap.map((map) => {
               return (

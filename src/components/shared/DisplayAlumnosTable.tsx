@@ -21,7 +21,7 @@ export default function DisplayAlumnosTable({
   if (!alumnos) return null;
   return (
     <Table gridTemplateColumns="22rem 8rem 10rem 10rem 5.5rem" width="content-fit" withBorder>
-      {alumnos.length > 0 && (
+      {alumnos.length > 0 ? (
         <Table.Header>
           <Table.Header.Item $padding="6px 3px">Alumno</Table.Header.Item>
           <Table.Header.Item $padding="6px 3px">DNI</Table.Header.Item>
@@ -29,7 +29,7 @@ export default function DisplayAlumnosTable({
           <Table.Header.Item $padding="6px 3px">Grado</Table.Header.Item>
           <Table.Header.Item $padding="6px 3px"> Action</Table.Header.Item>
         </Table.Header>
-      )}
+      ) : null}
       {alumnos.length > 0 ? (
         <Table.Body>
           {alumnos.map((alumno, index) => (

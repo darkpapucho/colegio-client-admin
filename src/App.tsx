@@ -14,6 +14,10 @@ import { ErrorDiv } from './components/shared/ErrorDiv';
 import BoletaNotas from './components/ui/Admin/BoletaNotas/BoletaNotas';
 import AgregarProfesor from './components/ui/Admin/AgregarProfesor/AgregarProfesor';
 import Profesores from './components/ui/Admin/Profesores/Profesores';
+import Calendario from './components/ui/Admin/Calendario/Calendario';
+import EnableDays from './components/ui/Admin/Calendario/EnableDays/EnableDays';
+import DisplayCalendar from './components/ui/Admin/Calendario/DisplayCalendar/DisplayCalendar';
+import ReportarTardanzaAlumno from './components/ui/Admin/ReportarTardanzaAlumno/ReportarTardanzaAlumno';
 
 function App() {
   const navigate = useNavigate();
@@ -32,6 +36,10 @@ function App() {
             <Route path="admin/boletadenotas" element={<BoletaNotas />} />
             <Route path="admin/agregarprofesor" element={<AgregarProfesor />} />
             <Route path="admin/gestionarprofesores" element={<Profesores />} />
+            <Route path="admin/calendario" element={<Calendario />} />
+            <Route path="admin/calendario/enable-days" element={<EnableDays />} />
+            <Route path="admin/calendario/display-calendar" element={<DisplayCalendar />} />
+            <Route path="admin/reportar-tardanza-alumno" element={<ReportarTardanzaAlumno />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

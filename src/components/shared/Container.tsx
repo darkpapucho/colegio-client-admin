@@ -42,6 +42,20 @@ export const Container = styled.div<{
       align-items: center;
       text-align: center;
     `}
+
+    /* ${({ $center, $direction }) => {
+    return $center && $direction === 'column'
+      ? css`
+          justify-content: center;
+          align-items: center;
+          justify-content: center;
+        `
+      : css`
+          align-items: center;
+          justify-content: flex-start;
+        `;
+  }}; 
+  */
   ${({ $padding }) =>
     $padding &&
     css`

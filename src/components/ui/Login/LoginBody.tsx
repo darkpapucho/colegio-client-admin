@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import logo from "/logo.png";
+import styled from 'styled-components';
+import logo from '/logo.png';
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -21,7 +21,7 @@ export default function LoginBody() {
       {/* <Title $center $cursive $color="white">
         Educando con valores
       </Title> */}
-      <img src={logo} style={{ width: "30rem" }}></img>
+      <img src={logo} style={{ width: '30rem' }}></img>
     </Container>
   );
 }

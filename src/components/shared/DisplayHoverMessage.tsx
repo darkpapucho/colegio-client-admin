@@ -4,9 +4,11 @@ import { WidthCss } from '../../types/globals';
 
 const StyledHoverable = styled.div<{ $bgColor?: string; $padding?: string; $width?: string }>`
   width: ${({ $width }) => $width || '100%'};
+
   text-align: center;
   position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
   ${({ $padding }) =>
     $padding &&
@@ -27,6 +29,7 @@ const StyledMessage = styled.div<{ $offset: number }>`
   top: -23px;
   left: ${({ $offset }) => $offset + 'px'};
   width: max-content;
+  z-index: 100;
 `;
 
 export default function DisplayHoverMessage({

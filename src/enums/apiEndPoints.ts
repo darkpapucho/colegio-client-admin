@@ -15,4 +15,9 @@ export enum ApiEndPoints {
   CREAR_PROFESOR = '/user/crear-profesor',
   FETCH_PROFESORES = '/empleado/fetch-profesores',
   UPDATE_PROFESOR = '/empleado/update-profesor',
+  ENABLE_CALENDAR_DAYS = '/calendario/enable-calendar-days',
+  FETCH_CALENDARIO = '/calendario/fetch-calendario',
+  DELETE_DAY_FROM_CALENDARIO = '/calendario/delete-day',
+  FETCH_DAY_ID = '/calendario/fetch-day-id',
+  REPORT_TARDANZA_ALUMNO = '/calendario/report-tardanza-alumno',
 }

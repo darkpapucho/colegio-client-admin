@@ -1,4 +1,4 @@
-import { SalonProfesor } from '../components/ui/Admin/AgregarProfesor/selectedSalonesReducer';
+import { SalonProfesor } from '../components/shared/Profesor/types';
 
 export type Profesor = {
   nombres: string;

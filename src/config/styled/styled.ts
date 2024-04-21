@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { DefaultTheme, createGlobalStyle } from 'styled-components';
 
-export const theme = {
+export const theme:DefaultTheme = {
   iconSize: {
     tiny: '1rem',
     md: '1.5rem',

@@ -12,22 +12,35 @@ import { useImmerReducer } from 'use-immer';
 import SubmitRegistro from './SubmitRegistro';
 import CriteriosDesempenoModal from './CriteriosDesempenoModal';
 import SelectedRegistroReducer from './selectedRegistroReducer';
+import AllDetailsModal from './AllDetailsModal';
+import { Button } from '../../../shared/Button';
 
 export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: CursoMap[]; data: RegistroNota[] }) {
   const [searchParams] = useSearchParams();
   const [copyRegistro, dispatch] = useImmerReducer(registroReducer, data);
 
-  const gridTemplateCols = `25rem 12rem repeat(${cursosMap.length}, 5rem) 8rem 8rem 4rem`;
+  const gridTemplateCols = `34rem 12rem repeat(${cursosMap.length}, 5rem) 8rem 8rem 4rem`;
   const periodo = (searchParams.get('periodo') || 'primerPeriodo') as PeriodosKey;
   const [showCDModal, setShowCDModal] = useState(false); //conc. descriptivas modal
   const [showENModal, setShowENModal] = useState(false); //edit notas modal
   const [selectedRegistro, dispatchSelectedRegistro] = useImmerReducer(SelectedRegistroReducer, { registro: data[0], cursoKey: '' });
-
+  const [showAllDetailsModal, setShowAllDetailsModal] = useState(false);
   useCustomEvent('customSelect', listener);
 
   if (!data) return null;
   return (
     <>
+      {showAllDetailsModal && selectedRegistro.registro !== undefined && (
+        <AllDetailsModal
+          cursosList={cursosMap}
+          registro={selectedRegistro.registro}
+          onCloseModal={() => setShowAllDetailsModal(false)}
+          title={selectedRegistro.registro.apellidos + ', ' + selectedRegistro.registro.nombres}>
+          <Button $danger onClick={() => setShowAllDetailsModal(false)} $width="max-content">
+            Close
+          </Button>
+        </AllDetailsModal>
+      )}
       {copyRegistro.length > 0 && <SubmitRegistro copyRegistro={copyRegistro} />}
       {showENModal && selectedRegistro.registro !== undefined && (
         <CriteriosDesempenoModal
@@ -43,6 +56,7 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
         {cursosMap?.length > 0 && <TableHeader cursosList={cursosMap} />}
         {data.length > 0 && (
           <TableBody
+            openAllDetailsModal={openAllDetailsModal}
             cursosMap={cursosMap}
             openEditNotasModal={openEditNotasModal}
             dispatch={dispatch}
@@ -77,5 +91,9 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
     // setSelectedRegistro({ registro, cursoKey });
     dispatchSelectedRegistro({ type: 'setSelectedRegistro', payload: { registro, cursoKey } });
     setShowENModal(true);
+  }
+  function openAllDetailsModal(record: RegistroNota) {
+    setShowAllDetailsModal(true);
+    dispatchSelectedRegistro({ type: 'setSelectedRegistro', payload: { registro: record, cursoKey: '' } });
   }
 }

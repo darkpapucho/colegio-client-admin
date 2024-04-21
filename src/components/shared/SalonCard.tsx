@@ -28,17 +28,7 @@ export default function SalonCard({
     return { label: record.label, value: { cursoKey: record.key, cursoLabel: record.label, salon: salon.label } };
   });
   const CURSOS_OPTIONS_DYNAMIC = CURSOS_OPTIONS.filter((option) => {
-    let result = 0;
-    salon.cursos.forEach((curso) => {
-      if (curso.label === option.label) {
-        result = 1;
-      }
-    });
-    if (result == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return !salon.cursos.some((curso) => curso.key === option.value.cursoKey);
   });
   return (
     <Container $direction="row" $gap="1.5rem" $width="100%" key={salon.label} $center $border $height="26px">

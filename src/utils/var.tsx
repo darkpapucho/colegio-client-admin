@@ -1,7 +1,7 @@
 import { MenuItem } from '../types/globals';
 import { HiAcademicCap } from 'react-icons/hi';
 import { FiUserPlus, FiUsers, FiUserCheck } from 'react-icons/fi';
-import { TbDeviceTabletDown, TbDeviceTabletUp } from 'react-icons/tb';
+import { TbDeviceTabletDown, TbDeviceTabletUp, TbReport } from 'react-icons/tb';
 import { PiUsersFourBold, PiBookOpenTextLight } from 'react-icons/pi';
 import { CgUserAdd, CgUserList, CgUserRemove } from 'react-icons/cg';
 import { RxCalendar } from 'react-icons/rx';
@@ -135,6 +135,16 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <RxCalendar />,
       label: 'gestionar pensiones',
       url: '/menu/admin/gestionarpensiones',
+    },
+    {
+      icon: <RxCalendar />,
+      label: 'Calendario Escolar',
+      url: '/menu/admin/calendario',
+    },
+    {
+      icon: <TbReport />,
+      label: 'Reportar tardanza',
+      url: '/menu/admin/reportar-tardanza-alumno',
     },
   ],
   promotor: [

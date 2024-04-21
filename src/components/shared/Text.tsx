@@ -1,10 +1,14 @@
 import styled, { css } from 'styled-components';
 import { Size, WidthCss } from '../../types/globals';
 
-export const Text = styled.div<{ $fontSize?: Size; $bold?: boolean; $width?: WidthCss; $textAlign?: string }>`
+export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: boolean; $width?: WidthCss; $textAlign?: string }>`
   padding: 0;
   margin: 0;
-
+  ${({ $primary, theme }) =>
+    $primary &&
+    css`
+      color: ${theme.colors.orange[400]};
+    `}
   ${({ $textAlign }) =>
     $textAlign &&
     css`

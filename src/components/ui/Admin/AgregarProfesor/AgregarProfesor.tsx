@@ -27,17 +27,7 @@ export default function AgregarProfesor() {
     return curr.order > prev.order ? -1 : 1;
   });
   const SALONES_OPTIONS = SALONES_SELECT_OPTONS[nivel].filter((option) => {
-    let result = 0;
-    salonesSorted.forEach((salon) => {
-      if (salon.label === option.label) {
-        result = 1;
-      }
-    });
-    if (result == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return !salonesSorted.some((salon) => salon.label === option.label);
   });
 
   const [isLoading, setIsLoading] = useState(false);
