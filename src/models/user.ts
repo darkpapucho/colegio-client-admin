@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../var/globals';
 import { ApiEndPoints } from '../enums/apiEndPoints';
-
-// import { LoginRequestParams, UserInfo } from '../types/user';
 import { ResponseSchema } from '../types/axiosResponse';
-import { ProfesorData } from '../components/ui/Admin/AgregarProfesor/selectedSalonesReducer';
 import { GetHeaders } from '../utils/utils';
+import { ProfesorData } from '../components/shared/Profesor/types';
 
 export class User {
   static async crearProfesor({ nombres, apellidos, dni, telefono, salones }: ProfesorData) {
