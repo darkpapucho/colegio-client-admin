@@ -4,7 +4,7 @@ import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
 import RegistroNotasTable from './RegistroNotasTable';
 import { fetchRegistroNotas, mapCursosList } from './utils';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
-import { CursoMap, RegistroNota } from '../../../../types/documento';
+import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
 import { errorHandler } from '../../../../utils/errorHandler';
 import useEstadoMatriculaFilter from '../../../../hooks/useAlumnosFilter';
 import { PERIODOS_SELECT_OPTIONS } from '../../../../var/globals';
@@ -13,6 +13,8 @@ import { theme } from '../../../../config/styled/styled';
 import toaster from 'react-hot-toast';
 import Select from '../../../shared/Select';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
+import { json2csv } from 'json-2-csv';
+import { Button } from '../../../shared/Button';
 
 export const RegistroNotasContext = createContext<{
   setData: Dispatch<SetStateAction<RegistroNota[] | undefined>>;
@@ -21,15 +23,23 @@ export const RegistroNotasContext = createContext<{
 } | null>(null);
 
 export default function RegistroNotas() {
-  const { grado, seccion, setSearchParams } = useGradoSeccionSearchParams();
+  const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
+  const periodo = searchParams.get('periodo') || 'primerPeriodo';
   const [data, setData] = useState<RegistroNota[] | undefined>(undefined);
   const cursosMap: CursoMap[] | undefined = mapCursosList(data ? data[0] : data); //creamos un mapa de cursos a partir de la cursos que vienen del backend
   const [isLoading, setIsLoading] = useState(false);
   const registroFiltered = useEstadoMatriculaFilter<RegistroNota>({ records: data });
+  console.log({ data, cursosMap });
   useCustomEvent('customSelect', listener);
   return (
     <RegistroNotasContext.Provider value={{ isLoading, setIsLoading, setData }}>
       <SimpleLayout title="Registro de Notas">
+        {data && (
+          <Button $width="max-content" onClick={() => downloadcsv(periodo as PeriodosKey, data)}>
+            Download csv
+          </Button>
+        )}
+
         <Container $direction="row" $gap="1rem">
           <FilterGradoSeccion handler={() => dataFetcher()} isLoading={isLoading} />
           <Container $padding="1rem" $bgColor={theme.colors.indigo[200]}>
@@ -62,5 +72,32 @@ export default function RegistroNotas() {
         return prev;
       });
     }
+  }
+  function downloadcsv(periodo: PeriodosKey, data: RegistroNota[]) {
+    if (!data) return;
+    const mappedData = data.map((record) => {
+      const newCursos = Object.keys(record.cursos).map((curso) => {
+        const numCompetencias = record.cursos[curso].numCompetencias;
+        const cursoRecord = {
+          [curso]: {},
+        };
+        for (let i = 0; i < numCompetencias; i++) {
+          cursoRecord[curso][i] = record.cursos[curso][periodo][i];
+        }
+        return { ...cursoRecord };
+      });
+
+      return { alumnoId: record.alumnoId, apellidos: record.apellidos, nombres: record.nombres, cursos: { ...newCursos } };
+    });
+    console.log({ mappedData });
+
+    const dataCSV = json2csv(mappedData);
+    const myBlob = new Blob([dataCSV], { type: 'text/csv' });
+    const fileUrl = URL.createObjectURL(myBlob);
+    const aLink = document.createElement('a');
+    aLink.href = fileUrl;
+    aLink.download = `registro-${grado}-${seccion}-${periodo}`;
+    aLink.click();
+    aLink.remove();
   }
 }

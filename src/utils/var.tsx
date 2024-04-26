@@ -5,7 +5,7 @@ import { TbDeviceTabletDown, TbDeviceTabletUp, TbReport } from 'react-icons/tb';
 import { PiUsersFourBold, PiBookOpenTextLight } from 'react-icons/pi';
 import { CgUserAdd, CgUserList, CgUserRemove } from 'react-icons/cg';
 import { RxCalendar } from 'react-icons/rx';
-import { RiUserFollowLine, RiFileList3Line } from 'react-icons/ri';
+import { RiUserFollowLine, RiFileList3Line, RiExchangeBoxLine } from 'react-icons/ri';
 import { FaRegFilePdf } from 'react-icons/fa';
 import { API_BASE_URL } from '../var/globals';
 import { CursoMap } from '../types/documento';
@@ -145,6 +145,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <TbReport />,
       label: 'Reportar tardanza',
       url: '/menu/admin/reportar-tardanza-alumno',
+    },
+    {
+      icon: <RiExchangeBoxLine />,
+      label: 'Cambiar Periodo',
+      url: '/menu/admin/cambiar-periodo',
     },
   ],
   promotor: [

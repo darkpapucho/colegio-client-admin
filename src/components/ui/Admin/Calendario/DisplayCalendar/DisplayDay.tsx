@@ -1,6 +1,6 @@
 import { FaTrash } from 'react-icons/fa';
 import { theme } from '../../../../../config/styled/styled';
-import { CalendarioList, CalendarioMonthsNames } from '../../../../../types/calendar';
+import { CalendarioList } from '../../../../../types/calendar';
 import { Container } from '../../../../shared/Container';
 import DisplayHoverMessage from '../../../../shared/DisplayHoverMessage';
 import { Icon } from '../../../../shared/Icon';
@@ -11,7 +11,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { queryClient } from '../../../../../config/query/query';
 import { fetchCalendario } from '../../../../../hooks/useCalendarioEscolar';
-import { MONTHS } from '../EnableDays/utils';
 
 const DAYS_OF_WEEK = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 
@@ -22,7 +21,7 @@ export default function DisplayDay({ day, month }: { month: number; day: Omit<Ca
   const message = `${convertNumberToDayName(dayNumber)}, ${day.day} del ${currentYear}`;
   const { mutate } = useMutation({
     mutationKey: ['calendario'],
-    mutationFn: () => handleDeleteDayFromCalendario(day._id, MONTHS[month] as CalendarioMonthsNames),
+    mutationFn: () => handleDeleteDayFromCalendario(day._id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['calendario-escolar', nivel, currentYear + ''] });
       queryClient.prefetchQuery({ queryKey: ['calendario-escolar', nivel, currentYear + ''], queryFn: () => fetchCalendario() });
@@ -48,9 +47,10 @@ export default function DisplayDay({ day, month }: { month: number; day: Omit<Ca
     }
     return DAYS_OF_WEEK[dayNumber];
   }
-  async function handleDeleteDayFromCalendario(dayId: string, month: CalendarioMonthsNames) {
+
+  async function handleDeleteDayFromCalendario(dayId: string) {
     if (!window.confirm(`seguro que deseas eliminar del calendario al ${message}`)) return;
-    const response = await Calendario.deleteDayFromCalendario({ dayId, month });
+    const response = await Calendario.deleteDayFromCalendario({ dayId });
     updateToken(response);
     if (!response.data.ok) toaster.error(response.data.message);
     toaster.success('Dia borrado del calendario');

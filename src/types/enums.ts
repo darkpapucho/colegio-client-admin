@@ -1,3 +1,10 @@
+export const PERIODOS_BY_KEY = {
+  primerPeriodo: 'Primer Periodo',
+  segundoPeriodo: 'Segundo Periodo',
+  tercerPeriodo: 'Tercer Periodo',
+  cuartoPeriodo: 'Cuarto Periodo',
+};
+
 //NOTAS:
 export const VALID_NOTAS = ['A', 'B', 'C', 'AD'] as const;
 export type Nota = (typeof VALID_NOTAS)[number];

@@ -18,6 +18,7 @@ import Calendario from './components/ui/Admin/Calendario/Calendario';
 import EnableDays from './components/ui/Admin/Calendario/EnableDays/EnableDays';
 import DisplayCalendar from './components/ui/Admin/Calendario/DisplayCalendar/DisplayCalendar';
 import ReportarTardanzaAlumno from './components/ui/Admin/ReportarTardanzaAlumno/ReportarTardanzaAlumno';
+import CambiarPeriodo from './components/ui/Admin/CambiarPeriodo/CambiarPeriodo';
 
 function App() {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ function App() {
             <Route path="admin/calendario/enable-days" element={<EnableDays />} />
             <Route path="admin/calendario/display-calendar" element={<DisplayCalendar />} />
             <Route path="admin/reportar-tardanza-alumno" element={<ReportarTardanzaAlumno />} />
+            <Route path="admin/cambiar-periodo" element={<CambiarPeriodo />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

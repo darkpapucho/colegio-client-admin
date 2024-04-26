@@ -8,14 +8,12 @@ import { useQuery } from '@tanstack/react-query';
 import Calendario from '../../../../models/Calendario';
 import { updateToken } from '../../../../utils/utils';
 import Loader from '../../Loader/Loader';
-
 import { errorHandler } from '../../../../utils/errorHandler';
 import toaster from 'react-hot-toast';
-import { MONTHS } from '../Calendario/EnableDays/utils';
-import { CalendarioMonthsNames } from '../../../../types/calendar';
+
 export default function ReportarTardanzaAlumno() {
   const [alumnos, setAlumnos] = useState<AMatriculado[]>([]);
-  const month = MONTHS[new Date().getMonth()];
+
   const { data, isLoading } = useQuery({ queryKey: ['dayId'], queryFn: () => fetchDayId(), refetchOnWindowFocus: false });
   const [loading, setLoading] = useState(false);
   if (isLoading || loading) return <Loader />;
@@ -33,13 +31,14 @@ export default function ReportarTardanzaAlumno() {
     if (!response.data.ok) throw new Error(response.data.message);
     return response.data.payload;
   }
+
   async function reportTardanzaAlumno(alumno: AMatriculado) {
     if (!data) return;
     if (!window.confirm(`Reportar tardanza de ${alumno.nombreCompleto}?`)) return;
 
     try {
       setLoading(true);
-      const response = await Calendario.reportarTardanzaAlumno({ dayId: data._id, month: month as CalendarioMonthsNames, alumnoId: alumno._id });
+      const response = await Calendario.reportarTardanzaAlumno({ dayId: data._id, alumnoId: alumno._id });
       console.log({ response });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);

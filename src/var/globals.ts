@@ -36,25 +36,20 @@ export const PERIODOS_SELECT_OPTIONS = [
 //PRIMARIA
 
 export const CURSOS_PRIMARIA_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
+  { label: 'Arte y Cultura', key: 'arteCultura', competencias: ['Aprecia las manifestaciones artístico-culturales.', 'Crea proyectos desde los lenguajes artísticos.'] },
+  { label: 'Inglés', key: 'ingles', competencias: ['Se comunica oralmente en inglés.', 'Lee diversos tipos de textos en inglés.', 'Escribe diversos tipos textos en inglés.'] },
   {
-    label: 'Personal Social',
-    key: 'personalSocial',
-    competencias: [
-      'Construye su identidad.',
-      'Convive y participa democráticamente.',
-      'Construye interpretaciones históricas.',
-      'Gestiona responsablemente el espacio y el ambiente',
-      'Gestiona responsablemente los recursos económicos.',
-    ],
+    label: 'Ciencia y Tecnología',
+    key: 'cienciaTecnologia',
+    competencias: ['Indaga mediante métodos científicos.', 'Explica el mundo basándose en hechos científicos.', 'Diseña y construye soluciones tecnológicas.'],
   },
+  { label: 'Comunicación', key: 'comunicacion', competencias: ['Se comunica oralmente.', 'Lee diversos tipos de textos.', 'Escribe diversos tipos de textos.'] },
   {
     label: 'Educación Física',
     key: 'educacionFisica',
     competencias: ['Se desenvuelve de manera autónoma.', 'Asume una vida saludable.', 'Interactúa a través de sus habilidades sociomotrices.'],
   },
-  { label: 'Comunicación', key: 'comunicacion', competencias: ['Se comunica oralmente.', 'Lee diversos tipos de textos.', 'Escribe diversos tipos de textos.'] },
-  { label: 'Arte y Cultura', key: 'arteCultura', competencias: ['Aprecia las manifestaciones artístico-culturales.', 'Crea proyectos desde los lenguajes artísticos.'] },
-  { label: 'Inglés', key: 'ingles', competencias: ['Se comunica oralmente en inglés.', 'Lee diversos tipos de textos en inglés.', 'Escribe diversos tipos textos en inglés.'] },
+  { label: 'Religión', key: 'religion', competencias: ['Construye su identidad como persona amada por Dios.', 'Asume a Dios en su proyecto de vida.'] },
   {
     label: 'Matemática',
     key: 'matematica',
@@ -66,11 +61,17 @@ export const CURSOS_PRIMARIA_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
     ],
   },
   {
-    label: 'Ciencia y Tecnología',
-    key: 'cienciaTecnologia',
-    competencias: ['Indaga mediante métodos científicos.', 'Explica el mundo basándose en hechos científicos.', 'Diseña y construye soluciones tecnológicas.'],
+    label: 'Personal Social',
+    key: 'personalSocial',
+    competencias: [
+      'Construye su identidad.',
+      'Convive y participa democráticamente.',
+      'Construye interpretaciones históricas.',
+      'Gestiona responsablemente el espacio y el ambiente',
+      'Gestiona responsablemente los recursos económicos.',
+    ],
   },
-  { label: 'Educación Religiosa', key: 'religion', competencias: ['Construye su identidad como persona amada por Dios.', 'Asume a Dios en su proyecto de vida.'] },
+
   {
     label: 'Competencias Transversales',
     key: 'competenciasTransversales',
@@ -81,26 +82,26 @@ export const CURSOS_PRIMARIA_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
 //INICIAL 3y4 AÑOS
 
 export const CURSOS_INICIAL_3_4_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
-  { label: 'Personal Social', key: 'personalSocial', competencias: ['Construye su identidad.', 'Convive y participa democráticamente.', 'Construye una conciencia histórica.'] },
-  { label: 'Psicomotriz', key: 'psicomotriz', competencias: ['Se desenvuelve de manera autónoma'] },
+  { label: 'Ciencia y Tecnología', key: 'cienciaTecnologia', competencias: ['Indaga e investiga mediante métodos científicos.'] },
   {
     label: 'Comunicación',
     key: 'comunicacion',
     competencias: ['Se comunica oralmente.', 'Lee diversos tipos de textos.', 'Escribe diversos tipos de textos.', 'Crea proyectos desde los lenguajes del arte.'],
   },
+  { label: 'Psicomotriz', key: 'psicomotriz', competencias: ['Se desenvuelve de manera autónoma'] },
   { label: 'Matemática', key: 'matematica', competencias: ['Resuelve problemas de cantidad.', 'Resuelve problemas de forma y movimiento.'] },
-  { label: 'Ciencia y Tecnología', key: 'cienciaTecnologia', competencias: ['Indaga e investiga mediante métodos científicos.'] },
+  { label: 'Personal Social', key: 'personalSocial', competencias: ['Construye su identidad.', 'Convive y participa democráticamente.', 'Construye una conciencia histórica.'] },
 ];
 
 //INICIAL 5 AÑOS
 export const CURSOS_INICIAL_5_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
   ...CURSOS_INICIAL_3_4_BOLETA_NOTAS,
-  { label: 'Inglés', key: 'ingles', competencias: ['Se comunica oralmente en inglés.', 'Lee diversos tipos de textos en inglés.', 'Escribe diversos tipos textos en inglés.'] },
   {
     label: 'Competencias Transversales',
     key: 'competenciasTransversales',
     competencias: ['Se desenvuelve en entornos virtuales generados por la TIC.', 'Gestiona su aprendizaje de manera autónoma.'],
   },
+  { label: 'Inglés', key: 'ingles', competencias: ['Se comunica oralmente en inglés.', 'Lee diversos tipos de textos en inglés.', 'Escribe diversos tipos textos en inglés.'] },
 ];
 
 export const SALONES_SELECT_OPTONS = {

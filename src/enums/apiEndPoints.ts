@@ -20,4 +20,6 @@ export enum ApiEndPoints {
   DELETE_DAY_FROM_CALENDARIO = '/calendario/delete-day',
   FETCH_DAY_ID = '/calendario/fetch-day-id',
   REPORT_TARDANZA_ALUMNO = '/calendario/report-tardanza-alumno',
+  FETCH_CURRENT_PERIODO = '/calendario/fetch-current-periodo',
+  SET_CURRENT_PERIODO = '/calendario/set-current-periodo',
 }
