@@ -22,4 +22,5 @@ export enum ApiEndPoints {
   REPORT_TARDANZA_ALUMNO = '/calendario/report-tardanza-alumno',
   FETCH_CURRENT_PERIODO = '/calendario/fetch-current-periodo',
   SET_CURRENT_PERIODO = '/calendario/set-current-periodo',
+  RESET_PROFESOR_PASSWORD = '/user/reset-profesor-password',
 }

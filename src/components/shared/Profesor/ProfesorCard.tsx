@@ -21,6 +21,7 @@ import { asserts } from '../../../utils/assert';
 import { SALONES_SELECT_OPTONS } from '../../../var/globals';
 import SalonCard from '../SalonCard';
 import { ProfesoresContext } from './ProfesorContext';
+import { User } from '../../../models/user';
 
 export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   const salonesSorted = [...profesor.salones].sort((prev, curr) => {
@@ -96,6 +97,9 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
         <Button disabled={isLoading} $primary $small $width="max-content" onClick={() => guardarCambiosProfesor(profesor)}>
           Guardar Cambios
         </Button>
+        <Button disabled={isLoading} $secondary $small $width="max-content" onClick={() => resetProfesorPassword({ dni: profesor.dni, userId: profesor.userId })}>
+          Reset Password
+        </Button>
         <Button disabled={isLoading} $danger $small $width="max-content" onClick={closeModal}>
           Cancelar
         </Button>
@@ -116,7 +120,20 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   function closeModal() {
     setShowModal ? setShowModal(false) : null;
   }
-
+  async function resetProfesorPassword({ userId, dni }: { userId: string; dni: number }) {
+    if (!window.confirm(`Estas seguro que deseas resetear el password de ${profesor.apellidos}, ${profesor.nombres}`)) return;
+    try {
+      setIsLoading(true);
+      const response = await User.resetProfesorPassword({ dni, userId });
+      updateToken(response);
+      if (!response.data.ok) throw new Error(response.data.message);
+      toaster.success('se reseteo el password');
+    } catch (err) {
+      errorHandler(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
   function updateProfesorData(field: 'apellidos' | 'nombres' | 'dni' | 'telefono') {
     try {
       if (field === 'apellidos') {
