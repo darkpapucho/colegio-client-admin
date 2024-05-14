@@ -28,10 +28,7 @@ export default function EnableDays() {
   const maxDate = `${currentYear}-12-24`;
   const [dateRange, setDateRange] = useState<DateRangeValue>([new Date(), new Date()]);
   const [isLoading, setIsLoading] = useState(false);
-  // if (dateRange) {
-  //   console.log(new Date(dateRange[0]).toLocaleDateString('ES-es', { day: '2-digit', month: 'long', year: 'numeric' }));
-  //   console.log(new Date(dateRange[1]).toLocaleDateString('ES-es', { day: '2-digit', month: 'long', year: 'numeric' }));
-  // }
+
   if (selectedYear !== '' + currentYear) {
     return <>{'Esta operación solo está permitida en el año' + currentYear}</>;
   }

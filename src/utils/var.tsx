@@ -111,20 +111,20 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Profesores',
       url: '/menu/admin/gestionarprofesores',
     },
-    {
-      icon: <TbDeviceTabletUp />,
-      label: 'Subir Files-notas',
-      url: '/menu/admin/subirnotasexcelfiles',
-    },
-    {
-      icon: <TbDeviceTabletDown />,
-      label: 'Descargar Files-Notas',
-      url: '/menu/admin/manejarnotasprofesores',
-    },
+    // {
+    //   icon: <TbDeviceTabletUp />,
+    //   label: 'Subir Files-notas',
+    //   url: '/menu/admin/subirnotasexcelfiles',
+    // },
+    // {
+    //   icon: <TbDeviceTabletDown />,
+    //   label: 'Descargar Files-Notas',
+    //   url: '/menu/admin/manejarnotasprofesores',
+    // },
     {
       icon: <FiUserCheck />,
-      label: 'Gestionar asistencia',
-      url: '/menu/admin/verasistenciaprofesores',
+      label: 'Asistencia Alumnos',
+      url: '/menu/admin/asistencia-alumnos',
     },
     {
       icon: <PiUsersFourBold />,

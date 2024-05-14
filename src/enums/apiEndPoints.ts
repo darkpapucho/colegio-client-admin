@@ -12,7 +12,7 @@ export enum ApiEndPoints {
   UPDATE_REGISTRO_NOTAS = '/documento/update-registro-notas',
   EMITIR_BOLETAS_NOTAS_GRADO_SECCION = '/documento/generar-boletas-notas-grado-seccion',
   EMITIR_BOLETA_NOTAS_INDIVIDUAL = '/documento/generar-boleta-nota-individual',
-  CREAR_PROFESOR = '/user/crear-profesor',
+  CREAR_PROFESOR = '/empleado/crear-profesor',
   FETCH_PROFESORES = '/empleado/fetch-profesores',
   UPDATE_PROFESOR = '/empleado/update-profesor',
   ENABLE_CALENDAR_DAYS = '/calendario/enable-calendar-days',
