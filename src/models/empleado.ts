@@ -16,4 +16,8 @@ export default class Empleado {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { profesor }, GetHeaders());
     return response;
   }
+  static async deleteProfesor(userId: string) {
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.DELETE_PROFESOR, { userId }, GetHeaders());
+    return response;
+  }
 }
