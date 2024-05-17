@@ -19,9 +19,12 @@ import Input from '../../../shared/Input';
 import SalonesReducer from './SalonesReducer';
 import { User } from '../../../../models/user';
 import { SalonProfesor, ProfesorData } from '../../../shared/Profesor/types';
+import { queryClient } from '../../../../config/query/query';
+import { fetchProfesores } from '../Profesores/utils';
 
 export default function AgregarProfesor() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
+  const año = useTypedSelector((state) => state.año);
   const [state, dispatch] = useImmerReducer(SalonesReducer, { salones: [] as SalonProfesor[] });
   const salonesSorted = [...state.salones].sort((prev, curr) => {
     return curr.order > prev.order ? -1 : 1;
@@ -130,7 +133,8 @@ export default function AgregarProfesor() {
       } else {
         toaster.success('La operación se realizó exitosamente');
       }
-
+      queryClient.invalidateQueries({ queryKey: ['profesores', nivel, año] });
+      queryClient.prefetchQuery({ queryKey: ['profesores', nivel, año], queryFn: fetchProfesores });
       setIsLoading(false);
     } catch (err) {
       errorHandler(err);
