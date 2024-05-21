@@ -7,6 +7,7 @@ import { EstadoMatricula } from '../../../../types/enums';
 import { CiEdit } from 'react-icons/ci';
 import { Icon } from '../../../shared/Icon';
 import useEstadoMatriculaFilter from '../../../../hooks/useAlumnosFilter';
+import { Container } from '../../../shared/Container';
 
 const estados: { label: EstadoMatricula | 'TODOS'; value: EstadoMatricula | 'TODOS' }[] = [
   { label: 'TODOS', value: 'TODOS' },
@@ -41,7 +42,12 @@ export default function ListaAlumnosTable({
             <Table.Body>
               {matriculadosFiltered.map((matriculado, i) => (
                 <Fragment key={i}>
-                  <Table.Body.Item $key={i}>{matriculado.nombreCompleto}</Table.Body.Item>
+                  <Table.Body.Item $key={i}>
+                    <Container $direction="row" $width="100%" $gap=".5rem" $padding="0 0 0 .5rem">
+                      <div>{`[${i + 1}]`}</div>
+                      <div>{matriculado.nombreCompleto}</div>
+                    </Container>
+                  </Table.Body.Item>
                   <Table.Body.Item $key={i}>{matriculado.estadoMatricula}</Table.Body.Item>
                   <Table.Body.Item $key={i}>{matriculado.dni == '' ? matriculado.codigoEstudiante : matriculado.dni}</Table.Body.Item>
                   <Table.Body.Item $key={i}>{matriculado.grado}</Table.Body.Item>

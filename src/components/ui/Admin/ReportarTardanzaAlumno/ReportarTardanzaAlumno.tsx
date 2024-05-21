@@ -27,7 +27,6 @@ export default function ReportarTardanzaAlumno() {
   async function fetchDayId() {
     const response = await Calendario.fetchDayId();
     updateToken(response);
-    console.log({ response });
     if (!response.data.ok) throw new Error(response.data.message);
     return response.data.payload;
   }
@@ -39,7 +38,6 @@ export default function ReportarTardanzaAlumno() {
     try {
       setLoading(true);
       const response = await Calendario.reportarTardanzaAlumno({ dayId: data._id, alumnoId: alumno._id });
-      console.log({ response });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       toaster.success('Tardanza reportada');

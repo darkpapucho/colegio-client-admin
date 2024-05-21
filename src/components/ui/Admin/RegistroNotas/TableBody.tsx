@@ -60,7 +60,7 @@ export default function TableBody({
           <Fragment key={registro.alumnoId}>
             <Table.Body.Item $key={index} onClick={() => openAllDetailsModal(registro)}>
               <DisplayAlumno $index={index}>
-                <p>{`[${index}]`}</p>
+                <p>{`[${index + 1}]`}</p>
                 <p className="nombres-apellidos">{registro.apellidos + ', ' + registro.nombres}</p>
               </DisplayAlumno>
             </Table.Body.Item>
