@@ -1,7 +1,7 @@
 import { MenuItem } from '../types/globals';
 import { HiAcademicCap } from 'react-icons/hi';
-import { FiUserPlus, FiUsers, FiUserCheck } from 'react-icons/fi';
-import { TbDeviceTabletDown, TbDeviceTabletUp, TbReport } from 'react-icons/tb';
+import { FiUserPlus, FiUsers } from 'react-icons/fi';
+import { TbReport } from 'react-icons/tb';
 import { PiUsersFourBold, PiBookOpenTextLight } from 'react-icons/pi';
 import { CgUserAdd, CgUserList, CgUserRemove } from 'react-icons/cg';
 import { RxCalendar } from 'react-icons/rx';
@@ -9,6 +9,7 @@ import { RiUserFollowLine, RiFileList3Line, RiExchangeBoxLine } from 'react-icon
 import { FaRegFilePdf } from 'react-icons/fa';
 import { API_BASE_URL } from '../var/globals';
 import { CursoMap } from '../types/documento';
+import { PiListChecksBold } from 'react-icons/pi';
 
 export const baseUrl = API_BASE_URL;
 
@@ -95,7 +96,6 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Emitir boleta de notas',
       url: '/menu/admin/boletadenotas',
     },
-
     {
       icon: <PiBookOpenTextLight />,
       label: 'Registro Notas',
@@ -122,7 +122,7 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
     //   url: '/menu/admin/manejarnotasprofesores',
     // },
     {
-      icon: <FiUserCheck />,
+      icon: <PiListChecksBold />,
       label: 'Asistencia Alumnos',
       url: '/menu/admin/asistencia-alumnos',
     },

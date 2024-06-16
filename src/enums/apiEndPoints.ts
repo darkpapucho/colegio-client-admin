@@ -24,4 +24,5 @@ export enum ApiEndPoints {
   SET_CURRENT_PERIODO = '/calendario/set-current-periodo',
   RESET_PROFESOR_PASSWORD = '/user/reset-profesor-password',
   DELETE_PROFESOR = '/empleado/delete-profesor',
+  GET_RECORD_ASISTENCIA_ALUMNOS = '/calendario/get-record-asistencias-grado-seccion-periodo',
 }

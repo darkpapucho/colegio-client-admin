@@ -4,7 +4,9 @@ export const PERIODOS_BY_KEY = {
   tercerPeriodo: 'Tercer Periodo',
   cuartoPeriodo: 'Cuarto Periodo',
 };
-
+//months:
+export const VALID_MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'] as const;
+export type MONTH_NAME = (typeof VALID_MONTHS)[number];
 //NOTAS:
 export const VALID_NOTAS = ['A', 'B', 'C', 'AD'] as const;
 export type Nota = (typeof VALID_NOTAS)[number];

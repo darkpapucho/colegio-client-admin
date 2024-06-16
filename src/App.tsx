@@ -20,6 +20,7 @@ import DisplayCalendar from './components/ui/Admin/Calendario/DisplayCalendar/Di
 import ReportarTardanzaAlumno from './components/ui/Admin/ReportarTardanzaAlumno/ReportarTardanzaAlumno';
 import CambiarPeriodo from './components/ui/Admin/CambiarPeriodo/CambiarPeriodo';
 import AsistenciaAlumnos from './components/ui/Admin/AsistenciaAlumnos/AsistenciaAlumnos';
+import RecordAsistencias from './components/ui/Admin/RecordAsistencias/RecordAsistencias';
 
 function App() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ function App() {
             <Route path="admin/reportar-tardanza-alumno" element={<ReportarTardanzaAlumno />} />
             <Route path="admin/cambiar-periodo" element={<CambiarPeriodo />} />
             <Route path="admin/asistencia-alumnos" element={<AsistenciaAlumnos />} />
+            <Route path="admin/record-asistencias" element={<RecordAsistencias />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

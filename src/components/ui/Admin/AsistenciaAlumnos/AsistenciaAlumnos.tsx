@@ -1,36 +1,95 @@
-// import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
-// import SimpleLayout from '../../../shared/SimpleLayout';
-// import '../Calendario/EnableDays/Calendar.css';
-// import '../Calendario/EnableDays/DateTimeRangePicker.css';
-// import { useState } from 'react';
-// import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-// import { Container } from '../../../shared/Container';
-// import { validateDay } from '../Calendario/EnableDays/utils';
-// type ValuePiece = Date | null;
-// type DateRangeValue = ValuePiece | [ValuePiece, ValuePiece];
+import SimpleLayout from '../../../shared/SimpleLayout';
+import '../Calendario/EnableDays/Calendar.css';
+import '../Calendario/EnableDays/DateTimeRangePicker.css';
+import { useEffect } from 'react';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import { Container } from '../../../shared/Container';
+import Select from '../../../shared/Select';
+import { PERIODOS_SELECT_OPTIONS } from '../../../../var/globals';
+import { grados, sections } from '../../../../utils/var';
+import { Button } from '../../../shared/Button';
+import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
+import useCustomEvent from '../../../../hooks/useCustomEvent';
+import { errorHandler } from '../../../../utils/errorHandler';
+import Calendario from '../../../../models/Calendario';
+import { PeriodosKey } from '../../../../types/documento';
+import { updateToken } from '../../../../utils/utils';
+import { Title } from '../../../shared/Title';
+
+import Loader from '../../Loader/Loader';
+import AsistenciaTable from './SubComponents/AsistenciaTable';
+import { useQuery } from '@tanstack/react-query';
+
 export default function AsistenciaAlumnos() {
-  // const nivel = useTypedSelector((state) => state.nivel);
-  // const selectedYear = useTypedSelector((state) => state.año); //YYYY
-  // const currentYear = new Date().getFullYear(); // YYYY
-  // const minDate = `${currentYear}-03-01`;
-  // const maxDate = new Date();
-  // const [dateRange, setDateRange] = useState<DateRangeValue>([new Date(), new Date()]);
-  // const [isLoading, setIsLoading] = useState(false);
+  const nivel = useTypedSelector((state) => state.nivel);
+  const year = useTypedSelector((state) => state.año);
+  const currentYear = new Date().getFullYear(); // YYYY
+  const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
+  const {
+    data: asistencias,
+    isFetching,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodoo')],
+    queryFn: () => requestRecords({ grado, seccion }),
+    enabled: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+
+  useCustomEvent('customSelect', periodoListener);
+
+  useEffect(() => {
+    if (!error) return;
+    errorHandler(error);
+  }, [error]);
+
+  if (year !== '' + currentYear) {
+    return (
+      <SimpleLayout>
+        <Title>{`Esta operación solo está disponible en el año ${year}`}</Title>
+      </SimpleLayout>
+    );
+  }
+
   return (
-    // <SimpleLayout>
-    //   <Container $width="36rem">
-    //     <DateTimeRangePicker
-    //       onClickDay={(value) => validateDay(value)}
-    //       value={dateRange}
-    //       onChange={setDateRange}
-    //       disabled={isLoading}
-    //       disableClock={true}
-    //       format="dd-MM-y"
-    //       minDate={new Date(minDate)}
-    //       maxDate={new Date(maxDate)}
-    //     />
-    //   </Container>
-    // </SimpleLayout>
-    <>hello world</>
+    <>
+      {isFetching && <Loader />}
+      <SimpleLayout>
+        <Container $direction="row" $gap="0.5rem">
+          <Select options={PERIODOS_SELECT_OPTIONS} width="13rem" name="periodo" label="periodo" tiny></Select>
+          <Select options={grados[nivel]} width="9rem" name="grado" label="grado" tiny></Select>
+          <Select options={sections} width="8rem" name="seccion" label="seccion" tiny></Select>
+          <Button $primary onClick={() => refetch()}>
+            Request
+          </Button>
+        </Container>
+        {asistencias && asistencias.length > 0 && (
+          <Container>
+            <AsistenciaTable asistencias={asistencias!} />
+          </Container>
+        )}
+      </SimpleLayout>
+    </>
   );
+  function periodoListener(event: CustomEvent) {
+    const { name, value } = event.detail;
+    if (name === 'periodo') {
+      setSearchParams((prev) => {
+        prev.set('periodo', value);
+        return prev;
+      });
+    }
+  }
+  async function requestRecords({ grado, seccion }) {
+    const periodo = searchParams.get('periodo') as PeriodosKey | null;
+    if (!periodo || !grado || !seccion) {
+      throw new Error('Debes seleccioon un grado, una sección y un periodo');
+    }
+    const response = await Calendario.getRecordAsistenciaAlumnos({ grado, seccion, periodo });
+    updateToken(response);
+    if (!response.data.ok) throw new Error(response.data.message);
+    return response.data.payload;
+  }
 }
