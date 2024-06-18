@@ -1,5 +1,6 @@
 import { MONTH_NAME, VALID_MONTHS } from '../../../../types/enums';
 import { AsistenciaRecord } from './types';
+export const alumnoNameCellWidth = 33;
 export const dayCellWidth = 2;
 export function sortMonthNames(monthNames: MONTH_NAME[]) {
   return monthNames.sort((prev, curr) => {
@@ -27,7 +28,7 @@ export function getMonthsFromAsistenciaRecord(records: AsistenciaRecord[]) {
 }
 
 function getGridTemplateColsForAsistenciaTable({ months, daysByMonth }: { months: MONTH_NAME[]; daysByMonth: { [key: string]: number[] } }) {
-  let gridTemplateCols: string = '30rem';
+  let gridTemplateCols: string = `${alumnoNameCellWidth}rem`;
   const minLength = 12;
   months.forEach((month) => {
     const length = daysByMonth[month].length;
