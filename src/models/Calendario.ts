@@ -8,6 +8,10 @@ import { PeriodosKey } from '../types/documento';
 import { Grado, Seccion } from '../types/enums';
 import { AsistenciaRecord } from '../components/ui/Admin/AsistenciaAlumnos/types';
 export default class Calendario {
+  static async justificarFalta({ alumnoId, dayId, date }: { date: Date; alumnoId: string; dayId: string }) {
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.JUSTIFICAR_FALTA, { alumnoId, dayId, date }, GetHeaders());
+    return response;
+  }
   static async getRecordAsistenciaAlumnos({ periodo, grado, seccion }: { periodo: PeriodosKey; grado: Grado; seccion: Seccion }) {
     const response = await axios.post<ResponseSchema<{ nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[]>>(
       API_BASE_URL + ApiEndPoints.GET_RECORD_ASISTENCIA_ALUMNOS,

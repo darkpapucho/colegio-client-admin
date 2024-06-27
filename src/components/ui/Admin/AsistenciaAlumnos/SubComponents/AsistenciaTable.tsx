@@ -38,7 +38,7 @@ export default function AsistenciaTable({ asistencias }: { asistencias: Asistenc
               {monthNames.map((monthName) => {
                 return (
                   <Table.Body.Item key={monthName}>
-                    <MonthBody monthName={monthName} records={element.records} days={daysByMonth[monthName]} />
+                    <MonthBody alumnoId={element.alumnoId} monthName={monthName} records={element.records} days={daysByMonth[monthName]} />
                   </Table.Body.Item>
                 );
               })}

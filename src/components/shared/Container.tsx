@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div<{
+  $cursor?: string;
   $padding?: string;
   $direction?: 'row' | 'column';
   $gap?: string;
@@ -11,6 +12,11 @@ export const Container = styled.div<{
   $position?: string;
   $border?: boolean;
 }>`
+  ${({ $cursor }) =>
+    $cursor &&
+    css`
+      cursor: ${$cursor};
+    `}
   ${({ $border }) =>
     $border &&
     css`

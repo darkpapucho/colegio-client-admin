@@ -1,5 +1,5 @@
 import { MONTH_NAME, VALID_MONTHS } from '../../../../types/enums';
-import { AsistenciaRecord } from './types';
+import { AsistenciaRecord, AsistenciaValue } from './types';
 export const alumnoNameCellWidth = 33;
 export const dayCellWidth = 2;
 export function sortMonthNames(monthNames: MONTH_NAME[]) {
@@ -41,7 +41,21 @@ function getGridTemplateColsForAsistenciaTable({ months, daysByMonth }: { months
 export function getAsistenciaValueFromRecords({ records, day, monthName }: { day: number; monthName: MONTH_NAME; records: AsistenciaRecord[] }) {
   const result = records.find((record) => {
     return record.month === monthName && record.day === day;
-  });
+  })!;
 
-  return result!.asistencia;
+  const justificado = result.justificado;
+  return { asistencia: { value: result.asistencia, justificado }, dayId: result!.dayId };
+}
+export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaValue: AsistenciaValue; justificado: undefined | true }) {
+  switch (asistenciaValue) {
+    case 'A':
+      return 'green';
+    case 'T':
+      return 'orange';
+    case 'F':
+      if (justificado === true) return 'hotpink';
+      return '#973131';
+    default:
+      return 'gray';
+  }
 }
