@@ -19,9 +19,10 @@ import { Title } from '../../../shared/Title';
 import Loader from '../../Loader/Loader';
 import AsistenciaTable from './SubComponents/AsistenciaTable';
 import { useQuery } from '@tanstack/react-query';
+import { Nivel } from '../../../../types/enums';
 
 export default function AsistenciaAlumnos() {
-  const nivel = useTypedSelector((state) => state.nivel);
+  const nivel: Nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const year = useTypedSelector((state) => state.año);
   const currentYear = new Date().getFullYear(); // YYYY
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
@@ -59,7 +60,7 @@ export default function AsistenciaAlumnos() {
       <SimpleLayout>
         <Container $direction="row" $gap="0.5rem">
           <Select options={PERIODOS_SELECT_OPTIONS} width="13rem" name="periodo" label="periodo" tiny></Select>
-          <Select options={grados[nivel]} width="9rem" name="grado" label="grado" tiny></Select>
+          <Select options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
           <Select options={sections} width="8rem" name="seccion" label="seccion" tiny></Select>
           <Button $primary onClick={() => refetch()}>
             Request
