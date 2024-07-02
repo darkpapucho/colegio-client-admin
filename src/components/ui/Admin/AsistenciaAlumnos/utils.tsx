@@ -41,13 +41,17 @@ function getGridTemplateColsForAsistenciaTable({ months, daysByMonth }: { months
 export function getAsistenciaValueFromRecords({ records, day, monthName }: { day: number; monthName: MONTH_NAME; records: AsistenciaRecord[] }) {
   const result = records.find((record) => {
     return record.month === monthName && record.day === day;
-  })!;
-
+  });
+  if (!result) {
+    return { asistencia: { value: '' as AsistenciaValue, justificado: undefined }, dayId: '' as string };
+  }
   const justificado = result.justificado;
   return { asistencia: { value: result.asistencia, justificado }, dayId: result!.dayId };
 }
 export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaValue: AsistenciaValue; justificado: undefined | true }) {
   switch (asistenciaValue) {
+    case '':
+      return 'gray';
     case 'A':
       return 'green';
     case 'T':

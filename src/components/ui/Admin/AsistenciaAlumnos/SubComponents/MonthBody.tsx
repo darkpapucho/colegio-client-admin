@@ -35,7 +35,7 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
             $border
             $bgColor={getBgColorOfCell({ asistenciaValue: value, justificado })}
             key={day}>
-            {value}
+            {value !== '' ? value : '-'}
           </DayCell>
         );
       })}
