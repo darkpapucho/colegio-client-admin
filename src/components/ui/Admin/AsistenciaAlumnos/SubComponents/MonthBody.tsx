@@ -23,19 +23,36 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
   return (
     <Container $direction="row" $width="100%">
       {days.map((day) => {
-        const {
-          asistencia: { value, justificado },
-          dayId,
-        } = getAsistenciaValueFromRecords({ monthName, day, records });
+        const result = getAsistenciaValueFromRecords({ monthName, day, records });
+        if (!result) {
+          return (
+            <DayCell $cursor="default" $width={`${dayCellWidth}rem`} $border $bgColor="black" key={day}>
+              X
+            </DayCell>
+          );
+        }
+        if (result.asistencia.value === 'F' && result.asistencia.justificado == undefined) {
+          return (
+            <DayCell
+              $cursor="pointer"
+              onClick={() => justificarFalta({ alumnoId, dayId: result.dayId, monthName, day, asistencia: result.asistencia.value })}
+              $width={`${dayCellWidth}rem`}
+              $border
+              $bgColor={getBgColorOfCell({ asistenciaValue: result.asistencia.value, justificado: result.asistencia.justificado })}
+              key={day}>
+              {result.asistencia.value}
+            </DayCell>
+          );
+        }
         return (
           <DayCell
-            $cursor={value === 'F' ? 'pointer' : 'default'}
-            onClick={() => justificarFalta({ alumnoId, dayId, monthName, day, asistencia: value })}
+            $cursor="default"
+            // onClick={() => justificarFalta({ alumnoId, dayId:result.dayId, monthName, day, asistencia: result.asistencia.value })}
             $width={`${dayCellWidth}rem`}
             $border
-            $bgColor={getBgColorOfCell({ asistenciaValue: value, justificado })}
+            $bgColor={getBgColorOfCell({ asistenciaValue: result.asistencia.value, justificado: result.asistencia.justificado })}
             key={day}>
-            {value !== '' ? value : '-'}
+            {result.asistencia.value !== '' ? result.asistencia.value : '-'}
           </DayCell>
         );
       })}

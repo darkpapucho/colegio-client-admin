@@ -5,7 +5,7 @@ import { GetHeaders } from '../utils/utils';
 import { ResponseSchema } from '../types/axiosResponse';
 import { ApiEndPoints } from '../enums/apiEndPoints';
 import { PeriodosKey } from '../types/documento';
-import { Grado, Seccion } from '../types/enums';
+import { Grado, MONTH_NAME, Seccion } from '../types/enums';
 import { AsistenciaRecord } from '../components/ui/Admin/AsistenciaAlumnos/types';
 export default class Calendario {
   static async justificarFalta({ alumnoId, dayId, date }: { date: Date; alumnoId: string; dayId: string }) {
@@ -13,11 +13,9 @@ export default class Calendario {
     return response;
   }
   static async getRecordAsistenciaAlumnos({ periodo, grado, seccion }: { periodo: PeriodosKey; grado: Grado; seccion: Seccion }) {
-    const response = await axios.post<ResponseSchema<{ nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[]>>(
-      API_BASE_URL + ApiEndPoints.GET_RECORD_ASISTENCIA_ALUMNOS,
-      { grado, seccion, periodo },
-      GetHeaders(),
-    );
+    const response = await axios.post<
+      ResponseSchema<{ asistencias: { nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[]; availableDays: { month: MONTH_NAME; day: number }[] }>
+    >(API_BASE_URL + ApiEndPoints.GET_RECORD_ASISTENCIA_ALUMNOS, { grado, seccion, periodo }, GetHeaders());
     return response;
   }
   static async setCurrentPeriodo({ periodo }: { periodo: PeriodosKey }) {
