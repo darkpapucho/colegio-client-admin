@@ -19,14 +19,14 @@ export const SContainer = styled.div<{ $width?: string; $type: string; $isError?
     outline: none;
     border: none;
     border-bottom: ${({ $type }) => ($type === 'date' ? 'none' : '1px solid black')};
-    border-color: ${({ theme, $isError }) => ($isError ? theme.colors.red[500] : theme.colors.gray[700])};
+    border-color: ${({ theme, $isError }) => ($isError ? theme.colors.red[500] : theme.colors.tertiary[700])};
     height: 3rem;
     padding-left: 5px;
     font-size: ${({ theme }) => theme.fontSizes.sm};
-    font-family: ${({ theme }) => theme.fontFamily.libreFranklin};
+    font-family: ${({ theme }) => theme.fontFamily.text};
     &:focus {
       outline: none;
-      border-bottom: 3px solid ${theme.colors.indigo[900]};
+      border-bottom: 3px solid ${theme.colors.secondary[900]};
     }
     &[type='date'] {
       background-color: rgba(0, 0, 0, 0);
@@ -47,7 +47,7 @@ export const SContainer = styled.div<{ $width?: string; $type: string; $isError?
 const SLabel = styled.label<{ $hasContent: boolean; $type: string }>`
   display: block;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-family: ${({ theme }) => theme.fontFamily.sourceSans};
+  font-family: ${({ theme }) => theme.fontFamily.header};
   position: ${({ $type }) => ($type === 'date' ? 'relative' : 'absolute')};
   border: 2px;
   left: 5px;

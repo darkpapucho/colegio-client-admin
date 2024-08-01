@@ -42,7 +42,7 @@ export default function RetirarAlumnoModalForm({
   return (
     <Container $direction="column" $width="100%" $gap="1rem 0">
       <AlumnoCard selectedAlumno={selectedAlumno} width="100%" />
-      <Container $bgColor={error instanceof FechaInputError ? theme.colors.red[100] : theme.colors.indigo[200]}>
+      <Container $bgColor={error instanceof FechaInputError ? theme.colors.red[100] : theme.colors.secondary[200]}>
         <Input name="fechaRetiro" type="date" label="Fecha de retiro" ref={fechaRetiroRef}></Input>
       </Container>
       <Button $primary $small onClick={() => mutate()}>

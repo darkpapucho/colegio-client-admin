@@ -35,20 +35,20 @@ const StyledTableItem = styled.div<{ $padding?: string }>`
   text-align: center;
 `;
 const HeaderItem = styled(StyledTableItem)`
-  background-color: ${({ theme }) => theme.colors.indigo[600]};
-  color: ${({ theme }) => theme.colors.gray[100]};
+  background-color: ${({ theme }) => theme.colors.secondary[600]};
+  color: ${({ theme }) => theme.colors.tertiary[100]};
   width: 100%;
 `;
 const BodyItem = styled(StyledTableItem)<{ $key: number; $align?: string }>`
   background-color: ${({ $key, theme }) => {
-    return $key % 2 === 0 ? theme.colors.gray[400] : theme.colors.gray[200];
+    return $key % 2 === 0 ? theme.colors.tertiary[400] : theme.colors.tertiary[200];
   }};
   ${({ $align }) =>
     $align &&
     css`
       justify-content: ${$align};
     `}
-  color: ${({ theme }) => theme.colors.gray[800]};
+  color: ${({ theme }) => theme.colors.tertiary[800]};
 `;
 const TableContext = createContext<{ gridTemplateColumns: string; width: string; withBorder?: boolean } | null>(null);
 

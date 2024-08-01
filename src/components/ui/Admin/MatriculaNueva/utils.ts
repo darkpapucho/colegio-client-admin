@@ -8,7 +8,7 @@ export interface ParseEditarAlumnoFormArgs {
   apellidosRef: React.MutableRefObject<HTMLInputElement | null>;
   nombresRef: React.MutableRefObject<HTMLInputElement | null>;
   dniRef: React.MutableRefObject<HTMLInputElement | null>;
-  codigoEstudianteRef: React.MutableRefObject<HTMLInputElement | null>;
+  codigoEstudiante: string;
   fechaMatriculaRef: React.MutableRefObject<HTMLInputElement | null>;
   grado: string;
   seccion: string;
@@ -21,9 +21,10 @@ export function parseEditarAlumnoFormData({
   grado,
   seccion,
   dniRef,
-  codigoEstudianteRef,
+  // codigoEstudianteRef,
   fechaMatriculaRef,
   sexo,
+  codigoEstudiante,
 }: ParseEditarAlumnoFormArgs): NuevoAlumno {
   assertGrado(grado);
   assertSeccion(seccion);
@@ -34,7 +35,7 @@ export function parseEditarAlumnoFormData({
     grado,
     seccion,
     dni: dniRef.current!.value,
-    codigoEstudiante: codigoEstudianteRef.current!.value,
+    codigoEstudiante,
     fechaMatricula: fechaMatriculaRef.current!.value ? new Date(fechaMatriculaRef.current!.value).toISOString() : '',
     sexo,
   };

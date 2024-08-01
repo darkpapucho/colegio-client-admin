@@ -12,10 +12,12 @@ import { queryClient } from '../../../../config/query/query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { fetchProfesores } from './utils';
 import toaster from 'react-hot-toast';
+
 export default function ProfesoresTable({ data }: { data: Profesor[] }) {
   const nivel = useTypedSelector((state) => state.nivel);
   const año = useTypedSelector((state) => state.año);
   const { setShowModal, dispatch } = useContext(ProfesoresContext)!;
+
   return (
     <Table gridTemplateColumns="15rem 15rem 7rem 5rem 5rem" width="content-fit">
       <Table.Header>

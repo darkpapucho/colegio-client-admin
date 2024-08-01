@@ -1,6 +1,6 @@
 import { DefaultTheme, createGlobalStyle } from 'styled-components';
 
-export const theme:DefaultTheme = {
+export const theme: DefaultTheme = {
   iconSize: {
     tiny: '1rem',
     md: '1.5rem',
@@ -13,41 +13,43 @@ export const theme:DefaultTheme = {
   },
   padding: {
     tiny: '.3rem .6rem',
-    sm: '1rem 1.4rem',
-    md: '2rem 2.4rem',
+    sm: 'clamp(3px, 1.2vw, 5px)',
+    md: 'clamp(5px, 1.8vw, 10px)',
     lg: '3rem 3.8rem',
     xl: '4rem 5.2rem',
   },
   fontSizes: {
-    tiny: 'calc(1.4rem )',
-    sm: 'calc(1.2rem + .2vw)',
-    md: 'calc(1.8rem + .2vw)',
-    lg: 'calc(2.4rem + .2vw)',
-    xl: 'calc(3.2rem + .1vw)',
+    tiny: 'clamp(10px, 1.2vw, 12px)',
+    sm: 'clamp(12px, 1.2vw, 16px)', //texto
+    md: 'clamp(16px, 1.8vw, 20px)', //subtitulos
+    lg: 'clamp(24px, 1.8vw, 28px)', //titulos
+    xl: 'clamp(32px, 2vw, 48px)', //h1
   },
   fontFamily: {
-    newCycle: "'News Cycle', sans-serif",
-    sourceSans: "'Source Sans 3', sans-serif",
-    libreFranklin: "'Libre Franklin', sans-serif",
+    display: "'Anton', sans-serif;", //display text (h1)
+    header: "'Poppins', sans-serif", //titles , subttitles
+    text: "'Inter', sans-serif", //text
   },
   colors: {
-    orange: {
-      100: '#FDBF60',
-      400: '#FFA447',
-      800: '#FC6736',
+    //primary color
+    primary: {
+      100: '#85C8EA',
+      400: '#48ADE0',
+      800: '#0B92D6',
     },
-    indigo: {
-      50: '#eef2ff',
-      100: '#e0e7ff',
-      200: '#c7d2fe',
-      300: '#836FFF',
-      500: '#6366f1',
-      600: '#6366f1',
-      700: '#4338ca',
-      800: '#3730a3',
-      900: '#312e81',
+    //secondary
+    secondary: {
+      50: '#8694A9',
+      100: '#8694A9',
+      200: '#495F7E',
+      300: '#495F7E',
+      500: '#253F65',
+      600: '#253F65',
+      700: '#0D2A54',
+      800: '#0D2A54',
+      900: '#0D2A54',
     },
-    gray: {
+    tertiary: {
       0: '#fff',
       50: '#fff',
       100: '#f9fafb',
@@ -99,7 +101,7 @@ export const theme:DefaultTheme = {
     lg: '9px',
   },
   image: {
-    grayScale: 0,
+    tertiaryScale: 0,
     opacity: '100%',
   },
 };
@@ -115,7 +117,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     font-family: 'Libre Franklin', sans-serif;
     font-weight: 400;
-    color: ${theme.colors.gray[800]};
+    color: ${theme.colors.tertiary[800]};
   }
   body{
     box-sizing: inherit;
@@ -125,6 +127,6 @@ export const GlobalStyle = createGlobalStyle`
   }
   a,a:visited,a:active{
     text-decoration: none;
-    color:${theme.colors.gray[800]}
+    color:${theme.colors.tertiary[800]}
   }
 `;

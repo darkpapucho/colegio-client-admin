@@ -4,18 +4,18 @@ const sizes = (theme: DefaultTheme) => {
   return {
     small: css`
       font-size: ${theme.fontSizes.sm};
-      padding: ${({ theme }) => theme.padding.tiny};
+      padding: ${({ theme }) => theme.padding.sm};
       text-transform: capitalize;
       font-weight: 400;
     `,
     medium: css`
       font-size: ${theme.fontSizes.md};
-      padding: ${({ theme }) => theme.padding.sm};
+      padding: ${({ theme }) => theme.padding.md};
       font-weight: 500;
     `,
     large: css`
       font-size: ${theme.fontSizes.lg};
-      padding: ${({ theme }) => theme.padding.md};
+      padding: ${({ theme }) => theme.padding.lg};
       font-weight: 500;
     `,
   };
@@ -24,15 +24,15 @@ const sizes = (theme: DefaultTheme) => {
 const variations = (theme: DefaultTheme) => {
   return {
     primary: css`
-      color: ${theme.colors.gray[100]};
-      background-color: ${theme.colors.orange[800]};
+      color: ${theme.colors.tertiary[100]};
+      background-color: ${theme.colors.primary[800]};
 
       &:hover {
-        background-color: ${theme.colors.orange[400]};
+        background-color: ${theme.colors.primary[400]};
       }
     `,
     green: css`
-      color: ${theme.colors.gray[100]};
+      color: ${theme.colors.tertiary[100]};
       background-color: ${theme.colors.green[500]};
 
       &:hover {
@@ -40,15 +40,15 @@ const variations = (theme: DefaultTheme) => {
       }
     `,
     secondary: css`
-      color: ${theme.colors.gray[100]};
-      background: ${theme.colors.indigo[600]};
+      color: ${theme.colors.tertiary[100]};
+      background: ${theme.colors.secondary[600]};
 
       &:hover {
-        background-color: ${theme.colors.indigo[300]};
+        background-color: ${theme.colors.secondary[300]};
       }
     `,
     danger: css`
-      color: ${theme.colors.gray[100]};
+      color: ${theme.colors.tertiary[100]};
       background-color: ${theme.colors.red[700]};
 
       &:hover {
@@ -68,11 +68,16 @@ interface Props {
   $green?: boolean;
   $padding?: string;
   $center?: boolean;
+  $height?: string;
 }
 
 export const Button = styled.button<Props>`
   padding: 0.4rem 0.8rem;
-
+  ${({ $height }) =>
+    $height &&
+    css`
+      height: ${$height};
+    `}
   ${({ $width }) =>
     $width &&
     css`
@@ -87,8 +92,8 @@ export const Button = styled.button<Props>`
   font-size: 1.2rem;
 
   font-weight: 500;
-  background-color: ${(props) => props.theme.colors.gray[500]};
-  border: 1px solid ${(props) => props.theme.colors.gray[500]};
+  background-color: ${(props) => props.theme.colors.tertiary[500]};
+  border: 1px solid ${(props) => props.theme.colors.tertiary[500]};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   box-shadow: ${({ theme }) => theme.shadows.sm};
   cursor: pointer;
@@ -99,13 +104,13 @@ export const Button = styled.button<Props>`
     transform: scale(0.93);
   }
   &:hover {
-    background-color: ${(props) => props.theme.colors.gray[600]};
+    background-color: ${(props) => props.theme.colors.tertiary[600]};
   }
   &:disabled {
     &:hover {
-      background-color: ${(props) => props.theme.colors.gray[500]};
+      background-color: ${(props) => props.theme.colors.tertiary[500]};
     }
-    background-color: ${(props) => props.theme.colors.gray[500]};
+    background-color: ${(props) => props.theme.colors.tertiary[500]};
   }
   ${(props) => {
     if (props.$large) {

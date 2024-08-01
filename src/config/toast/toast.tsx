@@ -26,8 +26,8 @@ export const toastArgs: ToasterProps = {
       fontSize: theme.fontSizes.md,
       maxWidth: '500px',
       padding: '16px 24px',
-      backgroundClip: theme.colors.gray[0],
-      color: theme.colors.gray[700],
+      backgroundClip: theme.colors.tertiary[0],
+      color: theme.colors.tertiary[700],
     },
   },
 };

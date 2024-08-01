@@ -32,14 +32,14 @@ export default function EmitirDocumentosForm({ selectedAlumno, onCloseModal }: {
 
   return (
     <Container $width="100%" $direction="column" $gap="2rem">
-      <Container $direction="row" $width="100%">
+      <Container $direction="row" $width="100%" $height="auto">
         <AlumnoCard selectedAlumno={selectedAlumno} width="60%" />
         <SelectDocumentosBox width="40%" />
       </Container>
-      <Container $width="100%" $gap="2rem">
+      <Container $width="100%" $gap="2rem" $direction="column">
         <Input label="Colegio Destino" name="colegioDestino" type="text" $width="100%" ref={colegioDestinoRef}></Input>
         <Input label="Código Modular" name="codigoModular" type="text" $width="100%" ref={codigoModularRef}></Input>
-        <Container $width="100%" $bgColor={theme.colors.indigo[100]}>
+        <Container $width="100%" $bgColor={theme.colors.secondary[100]}>
           <Input label="Fecha Emision" name="fechaEmision" type="date" $width="100%" ref={fechaEmisionRef}></Input>
         </Container>
 
@@ -69,6 +69,7 @@ export default function EmitirDocumentosForm({ selectedAlumno, onCloseModal }: {
   async function requestDocuments() {
     try {
       setIsLoading(true);
+      //this function also updates the token
       const blob = await handleRequestDocuments({
         colegioDestinoRef,
         codigoModularRef,

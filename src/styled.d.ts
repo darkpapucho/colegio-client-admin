@@ -26,17 +26,17 @@ declare module 'styled-components' {
       xl: string;
     };
     fontFamily: {
-      newCycle: string;
-      sourceSans: string;
-      libreFranklin: string;
+      display: string;
+      header: string;
+      text: string;
     };
     colors: {
-      orange: {
+      primary: {
         100: string;
         400: string;
         800: string;
       };
-      indigo: {
+      secondary: {
         50: string;
         100: string;
         200: string;
@@ -47,7 +47,7 @@ declare module 'styled-components' {
         800: string;
         900: string;
       };
-      gray: {
+      tertiary: {
         0: string;
         50: string;
         100: string;
@@ -98,7 +98,7 @@ declare module 'styled-components' {
       lg: string;
     };
     image: {
-      grayScale: number;
+      tertiaryScale: number;
       opacity: string;
     };
   }

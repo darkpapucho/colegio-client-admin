@@ -1,4 +1,18 @@
-import { CursosLabelInicial, CursosLabelPrimaria, CursosKeyInicial, CursosKeyPrimaria, GradosInicial, GradosPrimaria, SalonesInicial, SalonesPrimaria, Secciones } from './enums';
+import {
+  CursosLabelInicial,
+  CursosLabelPrimaria,
+  CursosKeyInicial,
+  CursosKeyPrimaria,
+  GradosInicial,
+  GradosPrimaria,
+  SalonesInicial,
+  SalonesPrimaria,
+  Secciones,
+  SalonesSecundaria,
+  GradosSecundaria,
+  CursosLabelSecundaria,
+  CursosKeySecundaria,
+} from './enums';
 
 export interface SalonInicial {
   label: SalonesInicial;
@@ -20,7 +34,19 @@ export interface SalonPrimaria {
     key: CursosKeyPrimaria;
   };
 }
+
+export interface SalonSecundaria {
+  label: SalonesSecundaria;
+  grado: GradosSecundaria;
+  seccion: Secciones;
+  order: number;
+  cursos: {
+    label: CursosLabelSecundaria;
+    key: CursosKeySecundaria;
+  };
+}
+
 export interface Curso {
-  label: CursosLabelInicial | CursosLabelPrimaria;
-  value: CursosValueInicial | CursosValuePrimaria;
+  label: CursosLabelInicial | CursosLabelPrimaria | CursosLabelSecundaria;
+  value: CursosValueInicial | CursosValuePrimaria | CursosValueSecundaria;
 }

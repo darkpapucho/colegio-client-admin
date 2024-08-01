@@ -26,6 +26,7 @@ export default function Profesores() {
   // const [profesores, dispatchProfesores] = useImmerReducer(ProfesoresReducer,[] as Profesor[]);
   const [selectedProfesor, dispatch] = useImmerReducer<{ profesor: Profesor }, ProfesorReducerAction>(ProfesorReducer, { profesor: initialState });
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     if (!error) return;
     errorHandler(error);

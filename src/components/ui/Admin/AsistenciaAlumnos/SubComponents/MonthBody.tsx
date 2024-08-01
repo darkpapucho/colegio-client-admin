@@ -11,11 +11,12 @@ import { dayCellWidth, getAsistenciaValueFromRecords, getBgColorOfCell } from '.
 import toaster from 'react-hot-toast';
 
 const DayCell = styled(Container)`
-  color: white;
+  color: black;
   &:hover {
     filter: brightness(140%);
     color: black;
   }
+  justify-content: center;
 `;
 
 export default function MonthBody({ monthName, days, records, alumnoId }: { alumnoId: string; records: AsistenciaRecord[]; monthName: MONTH_NAME; days: number[] }) {
@@ -26,7 +27,7 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
         const result = getAsistenciaValueFromRecords({ monthName, day, records });
         if (!result) {
           return (
-            <DayCell $cursor="default" $width={`${dayCellWidth}rem`} $border $bgColor="black" key={day}>
+            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid black" $bgColor="black" key={day}>
               X
             </DayCell>
           );
@@ -34,10 +35,10 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
         if (result.asistencia.value === 'F' && result.asistencia.justificado == undefined) {
           return (
             <DayCell
-              $cursor="pointer"
+              $pointer
               onClick={() => justificarFalta({ alumnoId, dayId: result.dayId, monthName, day, asistencia: result.asistencia.value })}
               $width={`${dayCellWidth}rem`}
-              $border
+              $border="1px solid black"
               $bgColor={getBgColorOfCell({ asistenciaValue: result.asistencia.value, justificado: result.asistencia.justificado })}
               key={day}>
               {result.asistencia.value}
@@ -46,10 +47,9 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
         }
         return (
           <DayCell
-            $cursor="default"
             // onClick={() => justificarFalta({ alumnoId, dayId:result.dayId, monthName, day, asistencia: result.asistencia.value })}
             $width={`${dayCellWidth}rem`}
-            $border
+            $border="1px solid black"
             $bgColor={getBgColorOfCell({ asistenciaValue: result.asistencia.value, justificado: result.asistencia.justificado })}
             key={day}>
             {result.asistencia.value !== '' ? result.asistencia.value : '-'}

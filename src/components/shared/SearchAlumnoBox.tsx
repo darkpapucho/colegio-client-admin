@@ -30,7 +30,7 @@ export default function SearchAlumnoBox({ width, handler, signal }: { width: Wid
 
   return (
     <Container $direction="column" $width={width} onKeyDown={(event) => keyEvent(event)}>
-      <Container $direction="row" $width={width} $bgColor={theme.colors.indigo[200]} $padding="2rem ">
+      <Container $direction="row" $width={width} $bgColor={theme.colors.secondary[200]} $padding={theme.padding.md}>
         <Input label="alumno" type="text" $width={width} name="searchBox" ref={searchBoxRef} />
         <Button onClick={() => refetch()} disabled={isFetching} $primary ref={buttonRef}>
           Buscar

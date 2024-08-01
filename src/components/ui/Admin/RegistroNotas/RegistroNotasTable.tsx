@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Table from '../../Table/Table';
-import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
+import { CursoMap, RegistroNota } from '../../../../types/documento';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import TableHeader from './TableHeader';
 import ConclusionDescriptivaModal from './ConclusionDescriptivaModal';
-import { EVENT_NAME } from './utils';
+import { EVENT_NAME, getSelectedPeriodo } from './utils';
 import TableBody from './TableBody';
 import { useSearchParams } from 'react-router-dom';
 import { registroReducer } from './registroReducer';
@@ -20,12 +20,12 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
   const [copyRegistro, dispatch] = useImmerReducer(registroReducer, data);
 
   const gridTemplateCols = `34rem 12rem repeat(${cursosMap.length}, 5rem) 8rem 8rem 4rem`;
-  const periodo = (searchParams.get('periodo') || 'primerPeriodo') as PeriodosKey;
+
   const [showCDModal, setShowCDModal] = useState(false); //conc. descriptivas modal
   const [showENModal, setShowENModal] = useState(false); //edit notas modal
   const [selectedRegistro, dispatchSelectedRegistro] = useImmerReducer(SelectedRegistroReducer, { registro: data[0], cursoKey: '' });
   const [showAllDetailsModal, setShowAllDetailsModal] = useState(false);
-  useCustomEvent('customSelect', listener);
+  useCustomEvent('customSelect', customSelectListener);
 
   if (!data) return null;
   return (
@@ -60,9 +60,9 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
             cursosMap={cursosMap}
             openEditNotasModal={openEditNotasModal}
             dispatch={dispatch}
-            key={periodo}
+            key={getSelectedPeriodo(searchParams)}
             copyRegistro={copyRegistro}
-            periodo={periodo}
+            periodo={getSelectedPeriodo(searchParams)}
             openConclusionesDescriptivasModal={openConclusionesDescriptivasModal}
           />
         )}
@@ -70,12 +70,15 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
     </>
   );
 
-  function listener(event: CustomEvent) {
+  function customSelectListener(event: CustomEvent) {
     const { name, value } = event.detail;
+    console.log({ name, value });
     if (name === EVENT_NAME) {
       dispatch({ type: 'updateNotaCurso', payload: value });
     } else if (name === 'editCompetencia') {
-      const { cursoKey, index, nota } = value;
+      const { cursoKey, index, nota, periodo } = value;
+      console.log('periodo selected listener');
+      console.log({ cursoKey, index, nota, periodo });
       dispatchSelectedRegistro({ type: 'updateNotasSelectedRegistroAction', payload: { nota, index, cursoKey, periodo } });
     }
   }

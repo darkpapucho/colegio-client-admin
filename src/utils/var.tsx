@@ -2,7 +2,7 @@ import { MenuItem } from '../types/globals';
 import { HiAcademicCap } from 'react-icons/hi';
 import { FiUserPlus, FiUsers } from 'react-icons/fi';
 import { TbReport } from 'react-icons/tb';
-import { PiUsersFourBold, PiBookOpenTextLight } from 'react-icons/pi';
+import { PiBookOpenTextLight } from 'react-icons/pi';
 import { CgUserAdd, CgUserList, CgUserRemove } from 'react-icons/cg';
 import { RxCalendar } from 'react-icons/rx';
 import { RiUserFollowLine, RiFileList3Line, RiExchangeBoxLine } from 'react-icons/ri';
@@ -13,17 +13,18 @@ import { PiListChecksBold } from 'react-icons/pi';
 
 export const baseUrl = API_BASE_URL;
 
-export const sections = [
+export const SECCIONES_SELECT_OPTIONS = [
   { label: 'A', value: 'A' },
   { label: 'B', value: 'B' },
   { label: 'C', value: 'C' },
 ];
 
-export const nivels = [
+export const NIVELES_SELECT_OPTIONS = [
   { label: 'inicial', value: 'inicial' },
   { label: 'primaria', value: 'primaria' },
+  { label: 'secundaria', value: 'secundaria' },
 ];
-export const años = [
+export const AÑOS_SELECT_OPTIONS = [
   { label: '2024', value: '2024' },
   { label: '2023', value: '2023' },
   { label: '2022', value: '2022' },
@@ -44,6 +45,13 @@ export const grados = {
     { label: 'Grupo 4 años', value: 'Grupo 4 años' },
     { label: 'Grupo 5 años', value: 'Grupo 5 años' },
   ],
+  secundaria: [
+    { label: 'Primero', value: 'PRIMERO' },
+    { label: 'Segundo', value: 'SEGUNDO' },
+    { label: 'Tercero', value: 'TERCERO' },
+    { label: 'Cuarto', value: 'CUARTO' },
+    { label: 'Quinto', value: 'QUINTO' },
+  ],
 };
 export const gradosRatificar = {
   inicial: [
@@ -58,14 +66,27 @@ export const gradosRatificar = {
     { label: 'Cuarto', value: 'CUARTO' },
     { label: 'Quinto', value: 'QUINTO' },
   ],
+  secundaria: [
+    { label: 'Sexto Primaria', value: 'SEXTO' },
+    { label: 'Primero', value: 'PRIMERO' },
+    { label: 'Segundo', value: 'SEGUNDO' },
+    { label: 'Tercero', value: 'TERCERO' },
+    { label: 'Cuarto', value: 'CUARTO' },
+    { label: 'Quinto', value: 'QUINTO' },
+  ],
 };
-export const sexos = [
+export const SEXOS_SELECT_OPTION = [
   { label: 'Hombre', value: 'Hombre' },
   { label: 'Mujer', value: 'Mujer' },
 ];
 
 export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: MenuItem[] } = {
   admin: [
+    {
+      icon: <TbReport />,
+      label: 'Reportar tardanza',
+      url: '/menu/admin/reportar-tardanza-alumno',
+    },
     {
       icon: <CgUserAdd />,
       label: 'Nueva Matrícula',
@@ -126,11 +147,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Asistencia Alumnos',
       url: '/menu/admin/asistencia-alumnos',
     },
-    {
-      icon: <PiUsersFourBold />,
-      label: 'Gestionar Empleados',
-      url: '/menu/admin/vertodosempleados',
-    },
+    // {
+    //   icon: <PiUsersFourBold />,
+    //   label: 'Gestionar Empleados',
+    //   url: '/menu/admin/vertodosempleados',
+    // },
     {
       icon: <RxCalendar />,
       label: 'gestionar pensiones',
@@ -141,11 +162,7 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Calendario Escolar',
       url: '/menu/admin/calendario',
     },
-    {
-      icon: <TbReport />,
-      label: 'Reportar tardanza',
-      url: '/menu/admin/reportar-tardanza-alumno',
-    },
+
     {
       icon: <RiExchangeBoxLine />,
       label: 'Cambiar Periodo',

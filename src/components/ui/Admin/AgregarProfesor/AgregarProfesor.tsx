@@ -43,8 +43,8 @@ export default function AgregarProfesor() {
   return (
     <SimpleLayout title="Agregar nuevo profesor">
       {/* <AgregarProfesorForm></AgregarProfesorForm> */}
-      <Container $width="max-content" $gap="1.5rem">
-        <Container $width="30rem" $gap="1.8rem">
+      <Container $width="max-content" $gap="3rem" $direction="column">
+        <Container $width="30rem" $gap="1.8rem" $direction="column">
           <Input label="Apellidos" ref={apellidosRef} name="apellidos" type="text" $width="100%"></Input>
           <Input label="Nombres" ref={nombresRef} name="nombres" type="text" $width="100%"></Input>
           <Input label="DNI" ref={dniRef} name="dni" type="text" $width="100%"></Input>
@@ -61,9 +61,9 @@ export default function AgregarProfesor() {
             return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
           })}
         </Container>
-        <Container $direction="row" $center $gap="2rem">
+        <Container $direction="row" $alignItems="center" $gap="2rem">
           <Button disabled={isLoading} $primary $small $width="max-content" onClick={() => submitFOrm()}>
-            Guardar Cambios
+            Crear Profesor
           </Button>
           {/* <Button disabled={isLoading} $danger $small $width="max-content" onClick={closeModal}>
           Cancelar

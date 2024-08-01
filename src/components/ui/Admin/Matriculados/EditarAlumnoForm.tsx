@@ -6,7 +6,7 @@ import { StyledInput } from '../../../shared/StyledInput';
 import { CiEdit } from 'react-icons/ci';
 import { Text } from '../../../shared/Text';
 import Select from '../../../shared/Select';
-import { grados, sections, sexos } from '../../../../utils/var';
+import { grados, SECCIONES_SELECT_OPTIONS, SEXOS_SELECT_OPTION } from '../../../../utils/var';
 import { Button } from '../../../shared/Button';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import { ESTADOS_MATRICULA_SELECT_OPTIONS } from '../../../../var/globals';
@@ -139,7 +139,14 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             <Text $width="25%" $bold>
               Sección:
             </Text>
-            <Select tiny name="editarSeccion" width="4rem" options={sections} label="seccion" defaultValue={{ label: selectedAlumno.seccion, value: selectedAlumno.seccion }} />
+            <Select
+              tiny
+              name="editarSeccion"
+              width="4rem"
+              options={SECCIONES_SELECT_OPTIONS}
+              label="seccion"
+              defaultValue={{ label: selectedAlumno.seccion, value: selectedAlumno.seccion }}
+            />
           </Container>
           <Container $direction="row" $width="100%">
             <Text $width="25%" $bold>
@@ -165,7 +172,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
               tiny
               name="sexo"
               width="8rem"
-              options={sexos}
+              options={SEXOS_SELECT_OPTION}
               label="sexo"
               defaultValue={{
                 label: selectedAlumno.sexo,

@@ -6,11 +6,11 @@ export const StyledInput = styled.input<{ $width?: WidthCss; $grow?: boolean }>`
   outline: none;
   border: none;
   padding: 4px;
-  background-color: ${theme.colors.indigo[100]};
-  font-family: ${({ theme }) => theme.fontFamily.sourceSans};
+  background-color: ${theme.colors.secondary[100]};
+  font-family: ${({ theme }) => theme.fontFamily.header};
   &:disabled {
     border: none;
-    background-color: ${theme.colors.gray[200]};
+    background-color: ${theme.colors.tertiary[200]};
   }
   font-size: 1.3rem;
   ${({ $width }) =>

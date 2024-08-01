@@ -4,6 +4,7 @@ import { Text } from './Text';
 import { WidthCss } from '../../types/globals';
 import { Icon } from './Icon';
 import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
+
 // const StyledCheckbox = styled.input`
 //   &[type='checkbox'] {
 //     width: 20px;

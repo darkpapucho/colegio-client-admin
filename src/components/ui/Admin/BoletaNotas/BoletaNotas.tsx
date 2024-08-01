@@ -54,7 +54,7 @@ export default function BoletaNotas() {
           </Button>
         </SelectedAlumnoModal>
       )}
-      <Container $direction="row" $gap="1rem" $padding="1rem" $bgColor={theme.colors.indigo[200]} $width="13rem">
+      <Container $direction="row" $gap="1rem" $padding="1rem" $bgColor={theme.colors.secondary[200]} $width="13rem">
         <Select name="modo" defaultValue={OPTIONS[0]} options={OPTIONS} width="11rem" tiny label="modo"></Select>
       </Container>
       {mode === 'individual' && <SearchAlumnoBox handler={searchAlumnosBoxHandler} width="30rem" />}

@@ -16,7 +16,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
   const { isLoading, setIsLoading, setData } = useContext(RegistroNotasContext)!;
   const { grado, seccion } = useGradoSeccionSearchParams();
   return (
-    <Container $direction="row" $gap="1rem" $bgColor={theme.colors.indigo[200]} $padding="1rem" $width="max-content">
+    <Container $direction="row" $gap="1rem" $bgColor={theme.colors.secondary[200]} $padding="1rem" $width="max-content">
       <Button $primary disabled={isLoading} $small onClick={() => submitRegistro({ grado, seccion, registro: copyRegistro })}>
         Enviar Registro
       </Button>

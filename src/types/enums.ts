@@ -20,11 +20,12 @@ export type Year = (typeof VALID_YEARS)[number];
 export const VALID_SEXOS = ['Hombre', 'Mujer'] as const;
 export type Sexo = (typeof VALID_SEXOS)[number];
 //Niveles
-export const VALID_NIVELES = ['primaria', 'inicial'] as const;
+export const VALID_NIVELES = ['primaria', 'inicial', 'secundaria'] as const;
 export type Nivel = (typeof VALID_NIVELES)[number];
 export enum Niveles {
   PRIMARIA = 'primaria',
   INICIAL = 'inicial',
+  SECUNDARIA = 'secundaria',
 }
 
 //secciones
@@ -55,6 +56,14 @@ export enum GradosInicial {
   Grupo3años = 'Grupo 3 años',
   Grupo4años = 'Grupo 4 años',
   Grupo5años = 'Grupo 5 años',
+}
+
+export enum GradosSecundaria {
+  PRIMERO = 'Primero',
+  SEGUNDO = 'Segundo',
+  TERCERO = 'Tercero',
+  CUARTO = 'Cuarto',
+  QUINTO = 'Quinto',
 }
 
 //SALONES
@@ -90,9 +99,50 @@ export enum SalonesPrimaria {
   SEXTO_C = 'SEXTO C',
 }
 
+export enum SalonesSecundaria {
+  PRIMERO_A = 'PRIMERO A',
+  PRIMERO_B = 'PRIMERO B',
+  PRIMERO_C = 'PRIMERO C',
+  SEGUNDO_A = 'SEGUNDO A',
+  SEGUNDO_B = 'SEGUNDO B',
+  SEGUNDO_C = 'SEGUNDO C',
+  TERCERO_A = 'TERCERO A ',
+  TERCERO_B = 'TERCERO B',
+  TERCERO_C = 'TERCERO C',
+  CUARTO_A = 'CUARTO A',
+  CUARTO_B = 'CUARTO B',
+  CUARTO_C = 'CUARTO C',
+  QUINTO_A = 'QUINTO A',
+  QUINTO_B = 'QUINTO B',
+  QUINTO_C = 'QUINTO C',
+}
+
 //
 
 //CURSOS
+export enum CursosLabelSecundaria {
+  MATEMATICA = 'Matemática',
+  CIENCIA_TECNOLOGIA = 'Ciencia y Tecnología',
+  PERSONAL_SOCIAL = 'Personal Social',
+  EDUCACION_FISICA = 'Educación Física',
+  COMUNICACION = 'Comunicación',
+  ARTE_CULTURA = 'Arte y Cultura',
+  INGLES = 'Inglés',
+  RELIGION = 'Educación Religiosa',
+  COMPETENCIAS_TRANSVERSALES = 'Competencias Transversales',
+}
+export enum CursosKeySecundaria {
+  MATEMATICA = 'matematica',
+  CIENCIA_TECNOLOGIA = 'cienciaTecnologia',
+  PERSONAL_SOCIAL = 'personalSocial',
+  EDUCACION_FISICA = 'educacionFisica',
+  COMUNICACION = 'comunicacion',
+  ARTE_CULTURA = 'arteCultura',
+  INGLES = 'ingles',
+  RELIGION = 'religion',
+  COMPETENCIAS_TRANSVERSALES = 'competenciasTransversales',
+  PSICOMOTRIZ = 'psicomotriz',
+}
 export enum CursosLabelPrimaria {
   MATEMATICA = 'Matemática',
   CIENCIA_TECNOLOGIA = 'Ciencia y Tecnología',

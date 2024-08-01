@@ -5,7 +5,7 @@ import { Container } from './Container';
 import { Text } from './Text';
 export default function AlumnoCard({ selectedAlumno, width }: { selectedAlumno: AMatriculado; width: WidthCss }) {
   return (
-    <Container $gap="1rem" $padding="1rem" $width={width} $bgColor={theme.colors.gray[300]}>
+    <Container $gap="1rem" $padding="1rem" $width={width} $bgColor={theme.colors.tertiary[300]} $direction="column" $border="1px solid black">
       <div>
         <Text $bold>Alumno:</Text>
         <Text>{selectedAlumno.nombreCompleto}</Text>

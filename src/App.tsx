@@ -10,7 +10,6 @@ import RetirarAlumno from './components/ui/Admin/RetirarAlumno/RetirarAlumno';
 import Matriculados from './components/ui/Admin/Matriculados/Matriculados';
 import EmitirDocumentos from './components/ui/Admin/EmitirDocumentos/EmitirDocumentos';
 import RegistroNotas from './components/ui/Admin/RegistroNotas/RegistroNotas';
-import { ErrorDiv } from './components/shared/ErrorDiv';
 import BoletaNotas from './components/ui/Admin/BoletaNotas/BoletaNotas';
 import AgregarProfesor from './components/ui/Admin/AgregarProfesor/AgregarProfesor';
 import Profesores from './components/ui/Admin/Profesores/Profesores';
@@ -20,6 +19,8 @@ import DisplayCalendar from './components/ui/Admin/Calendario/DisplayCalendar/Di
 import ReportarTardanzaAlumno from './components/ui/Admin/ReportarTardanzaAlumno/ReportarTardanzaAlumno';
 import CambiarPeriodo from './components/ui/Admin/CambiarPeriodo/CambiarPeriodo';
 import AsistenciaAlumnos from './components/ui/Admin/AsistenciaAlumnos/AsistenciaAlumnos';
+import Pensiones from './components/ui/Admin/Pensiones/Pensiones';
+import { ErrorPage } from './components/shared/ErrorPage';
 
 function App() {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ function App() {
             <Route path="admin/reportar-tardanza-alumno" element={<ReportarTardanzaAlumno />} />
             <Route path="admin/cambiar-periodo" element={<CambiarPeriodo />} />
             <Route path="admin/asistencia-alumnos" element={<AsistenciaAlumnos />} />
+            <Route path="admin/gestionarpensiones" element={<Pensiones />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>
@@ -52,9 +54,9 @@ function App() {
       <Route
         path="/*"
         element={
-          <ErrorDiv>
+          <ErrorPage>
             <button onClick={() => navigate(-1)}>Atras</button>
-          </ErrorDiv>
+          </ErrorPage>
         }></Route>
     </Routes>
   );

@@ -23,13 +23,12 @@ export function getMonthsFromAsistenciaRecord(records: { month: MONTH_NAME; day:
     });
   });
   const gridTemplateCols = getGridTemplateColsForAsistenciaTable({ months: tmpMonths, daysByMonth });
-
   return { monthNames: tmpMonths, daysByMonth, gridTemplateCols };
 }
 
 function getGridTemplateColsForAsistenciaTable({ months, daysByMonth }: { months: MONTH_NAME[]; daysByMonth: { [key: string]: number[] } }) {
   let gridTemplateCols: string = `${alumnoNameCellWidth}rem`;
-  const minLength = 12;
+  const minLength = 8;
   months.forEach((month) => {
     const length = daysByMonth[month].length;
     const lengthToAdd = length * dayCellWidth;
@@ -59,15 +58,15 @@ export function getAsistenciaValueFromRecords({
 export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaValue: AsistenciaValue; justificado: undefined | true }) {
   switch (asistenciaValue) {
     case '':
-      return 'gray';
+      return '#9a9c9c';
     case 'A':
-      return 'green';
+      return '#059212';
     case 'T':
-      return 'orange';
+      return '#E8751A';
     case 'F':
-      if (justificado === true) return 'hotpink';
-      return '#973131';
+      if (justificado === true) return '#FFAAAA';
+      return '#C21010';
     default:
-      return 'gray';
+      return '#535353';
   }
 }

@@ -44,7 +44,7 @@ export default function RatificacionControls({
   return (
     <Container $direction="row" $gap="1rem">
       <Input name="fechaMatricula" label="fecha de matricula" type="date" ref={fechaMatriculaRef} />
-      <Button $primary $width="18rem" $small onClick={() => mutate()} disabled={isLoading}>
+      <Button $primary $width="18rem" $small onClick={() => mutate()} disabled={isLoading} $height="20px">
         Ratificar Seleccionados
       </Button>
     </Container>

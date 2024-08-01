@@ -48,7 +48,7 @@ export default function AllDetailsModal({
   children: ReactNode;
   title: string;
 }) {
-  console.log({ registro });
+  // console.log({ registro });
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const { grado } = useGradoSeccionSearchParams();
   function mapGridTemplateCols(cursosList: CursoMap[]): string {
@@ -70,14 +70,14 @@ export default function AllDetailsModal({
           <Table width="100%" gridTemplateColumns={templateCols} withBorder>
             <Table.Header>
               <Table.Header.Item>
-                <Container $border $width="100%" $height="100%" $center>
+                <Container $border="1ps solid black" $width="100%" $height="100%" $alignItems="center">
                   <CursoLabel>Periodo</CursoLabel>
                 </Container>
               </Table.Header.Item>
-              {cursosList.map((curso) => (
-                <Table.Header.Item key={curso.key}>
+              {cursosList.map((curso, index) => (
+                <Table.Header.Item key={index}>
                   <Container $direction="column" $width="100%">
-                    <Container $height="36px" $center $direction="column">
+                    <Container $height="36px" $alignItems="center" $direction="column">
                       <CursoLabel>{curso.label}</CursoLabel>
                     </Container>
 

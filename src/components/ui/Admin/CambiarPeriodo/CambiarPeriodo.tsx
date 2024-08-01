@@ -15,6 +15,7 @@ import { PeriodosKey } from '../../../../types/documento';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import { Button } from '../../../shared/Button';
 import { queryClient } from '../../../../config/query/query';
+import { errorHandler } from '../../../../utils/errorHandler';
 
 export default function CambiarPeriodo() {
   const nivel = useTypedSelector((state) => state.nivel);
@@ -32,11 +33,11 @@ export default function CambiarPeriodo() {
           {periodo ? PERIODOS_BY_KEY[periodo] : ''}
         </Text>
       </Container>
-      <Container $direction="row" $gap="2rem">
-        <Button $primary $small $width="max-content" onClick={() => changePeriodo()}>
+      <Container $direction="column" $gap="2rem">
+        <Select options={PERIODOS_SELECT_OPTIONS} width="15rem" label="periodo" name="periodo" tiny></Select>
+        <Button $primary $small $width="15rem" onClick={() => changePeriodo()}>
           Cambiar Periodo
         </Button>
-        <Select options={PERIODOS_SELECT_OPTIONS} width="15rem" label="periodo" name="periodo" small></Select>
       </Container>
     </SimpleLayout>
   );
@@ -53,12 +54,16 @@ export default function CambiarPeriodo() {
     }
   }
   async function changePeriodo() {
-    if (periodo === '') throw new Error('Periodo inválido');
-    const response = await Calendario.setCurrentPeriodo({ periodo: newPeriodo as PeriodosKey });
-    updateToken(response);
-    if (!response.data.ok) throw new Error(response.data.message);
-    toaster.success('Periodo actualizado');
-    queryClient.invalidateQueries({ queryKey: ['current-periodo', nivel, año] });
-    queryClient.prefetchQuery({ queryKey: ['current-periodo', nivel, año], queryFn: () => fetchCurrentPeriodo() });
+    try {
+      if (periodo === '') throw new Error('Periodo inválido');
+      const response = await Calendario.setCurrentPeriodo({ periodo: newPeriodo as PeriodosKey });
+      updateToken(response);
+      if (!response.data.ok) throw new Error(response.data.message);
+      toaster.success('Periodo actualizado');
+      queryClient.invalidateQueries({ queryKey: ['current-periodo', nivel, año] });
+      queryClient.prefetchQuery({ queryKey: ['current-periodo', nivel, año], queryFn: () => fetchCurrentPeriodo() });
+    } catch (err) {
+      errorHandler(err);
+    }
   }
 }

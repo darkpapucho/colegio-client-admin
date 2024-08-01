@@ -31,6 +31,7 @@ export function registroReducer(state: RegistroNota[], action: CopyRegistroReduc
       const { alumnoId, periodo, cursoKey, nota } = payload;
       const index = state.findIndex((registro) => registro.alumnoId === alumnoId);
       const numCompetencias = state[index]['cursos'][cursoKey].numCompetencias;
+      console.log({ alumnoId, periodo, cursoKey, nota, index, numCompetencias });
       for (let i = 0; i < numCompetencias; i++) {
         state[index]['cursos'][cursoKey][periodo][i] = nota[i];
       }

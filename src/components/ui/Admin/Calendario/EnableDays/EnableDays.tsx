@@ -73,7 +73,7 @@ export default function EnableDays() {
       const mappedDayList = daysList.map((record) => {
         return { ...record, month: mapNumberToMonthName(record.month) };
       });
-      console.log({ mappedDayList });
+      // console.log({ mappedDayList });
       setIsLoading(true);
       if (!daysList || daysList.length === 0) {
         throw new Error('debes seleccionar un rango de fechas');

@@ -26,7 +26,7 @@ export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $sm
       css`
         font-size: ${theme.iconSize.sm};
       `}
-    color: ${({ $primary, theme }) => ($primary ? theme.colors.orange[800] : theme.colors.gray[200])};
+    color: ${({ $primary, theme }) => ($primary ? theme.colors.primary[800] : theme.colors.tertiary[200])};
   }
   ${({ $interactive }) =>
     $interactive &&
@@ -39,7 +39,7 @@ export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $sm
     `}
   &:hover {
     > svg {
-      color: ${({ theme, $primary }) => ($primary ? theme.colors.orange[400] : theme.colors.indigo[800])};
+      color: ${({ theme, $primary }) => ($primary ? theme.colors.primary[400] : theme.colors.secondary[800])};
     }
   }
   ${({ $color }) =>

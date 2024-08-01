@@ -57,6 +57,7 @@ export function parseRequestDocumentFormData({
   assertFecha(data.fechaEmision, 'Fecha de emisión inválida');
   return { alumno, data };
 }
+
 export function validateRequestDocumentsFormData(requestDocumentsParam: RequestDocumentsParam) {
   if (!requestDocumentsParam.data.gradoDestino) return toaster.error('Debes seleccionar el grado en que el alumno continuará sus estudios');
   if (!requestDocumentsParam.alumno) return toaster.error('No has seleccionado ningún alumno');

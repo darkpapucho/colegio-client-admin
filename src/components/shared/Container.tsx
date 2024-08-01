@@ -1,85 +1,87 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div<{
-  $cursor?: string;
+export type ContainerProps = {
   $padding?: string;
   $direction?: 'row' | 'column';
   $gap?: string;
   $bgColor?: string;
   $width?: string;
-  $center?: boolean;
+  $alignItems?: string;
+  $justifyContent?: string;
   $height?: string;
   $position?: string;
-  $border?: boolean;
-}>`
-  ${({ $cursor }) =>
-    $cursor &&
+  $border?: string;
+  $pointer?: boolean;
+  $color?: string;
+};
+
+export const Container = styled.div<ContainerProps>`
+  display: flex;
+  height: max-content;
+  //pointer
+  ${({ $pointer }) =>
+    $pointer &&
     css`
-      cursor: ${$cursor};
+      cursor: pointer;
     `}
+  //border
   ${({ $border }) =>
     $border &&
     css`
-      border: 1px solid black;
+      border: ${$border};
     `}
-  display: flex;
+  //width
   ${({ $width }) =>
     $width &&
     css`
       width: ${$width};
     `}
-  flex-direction: ${({ $direction }) => $direction || 'column'};
-  /* ${({ $direction }) => {
-    if ($direction === 'row') {
-      return css`
-        align-items: center;
-      `;
-    }
-  }} */
+  flex-direction: ${({ $direction }) => $direction || 'row'};
+
+  //height
   ${({ $height }) =>
     $height &&
     css`
       height: ${$height};
     `}
-  ${({ $center }) =>
-    $center &&
-    css`
-      /* justify-content: center; */
-      align-items: center;
-      text-align: center;
-    `}
-
-    /* ${({ $center, $direction }) => {
-    return $center && $direction === 'column'
-      ? css`
-          justify-content: center;
-          align-items: center;
-          justify-content: center;
-        `
-      : css`
-          align-items: center;
-          justify-content: flex-start;
-        `;
-  }}; 
-  */
+  //padding
   ${({ $padding }) =>
     $padding &&
     css`
       padding: ${$padding};
     `}
+  //gap
   ${({ $gap }) =>
     $gap &&
     css`
       gap: ${$gap};
     `}
+  //background-color
     ${({ $bgColor }) =>
     $bgColor &&
     css`
       background-color: ${$bgColor};
     `}
+  //position
     ${({ $position }) =>
     $position &&
     css`
       position: ${$position};
+    `}
+  //center
+   ${({ $alignItems }) => {
+    return css`
+      align-items: ${$alignItems};
+    `;
+  }}
+   ${({ $justifyContent }) => {
+    return css`
+      justify-content: ${$justifyContent};
+    `;
+  }}
+  ${({ $color }) =>
+    $color &&
+    css`
+      color: ${$color};
     `}
 `;

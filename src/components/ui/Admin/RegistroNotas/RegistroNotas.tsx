@@ -29,20 +29,20 @@ export default function RegistroNotas() {
   const cursosMap: CursoMap[] | undefined = mapCursosList(data ? data[0] : data); //creamos un mapa de cursos a partir de la cursos que vienen del backend
   const [isLoading, setIsLoading] = useState(false);
   const registroFiltered = useEstadoMatriculaFilter<RegistroNota>({ records: data });
-  console.log({ data, cursosMap });
+
   useCustomEvent('customSelect', listener);
   return (
     <RegistroNotasContext.Provider value={{ isLoading, setIsLoading, setData }}>
       <SimpleLayout title="Registro de Notas">
         {data && (
-          <Button $width="max-content" onClick={() => downloadcsv(periodo as PeriodosKey, data)}>
+          <Button $width="max-content" onClick={() => downloadcsv(periodo as PeriodosKey, data)} $green $small>
             Download csv
           </Button>
         )}
 
         <Container $direction="row" $gap="1rem">
           <FilterGradoSeccion handler={() => dataFetcher()} isLoading={isLoading} />
-          <Container $padding="1rem" $bgColor={theme.colors.indigo[200]}>
+          <Container $padding="1rem" $bgColor={theme.colors.secondary[200]}>
             <Select tiny name="periodo" label="periodo" options={PERIODOS_SELECT_OPTIONS} width="14rem" defaultValue={PERIODOS_SELECT_OPTIONS[0]} />
           </Container>
         </Container>
@@ -66,6 +66,7 @@ export default function RegistroNotas() {
   }
   function listener(event: CustomEvent) {
     const { name, value } = event.detail;
+    console.log({ name, value });
     if (name === 'periodo') {
       setSearchParams((prev) => {
         prev.set('periodo', value);
@@ -89,7 +90,6 @@ export default function RegistroNotas() {
 
       return { alumnoId: record.alumnoId, apellidos: record.apellidos, nombres: record.nombres, cursos: { ...newCursos } };
     });
-    console.log({ mappedData });
 
     const dataCSV = json2csv(mappedData);
     const myBlob = new Blob([dataCSV], { type: 'text/csv' });

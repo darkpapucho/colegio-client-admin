@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 import { AiOutlineWhatsApp, AiOutlineMail } from 'react-icons/ai';
 import { IoLocationOutline } from 'react-icons/io5';
-import logo from '/logo3.png';
+import logo from '/logoblue.jpeg';
 import { Image } from '../../shared/Image';
 import { Icon } from '../../shared/Icon';
 const SLoginFooter = styled.div`
   grid-column: 1 / -1;
   grid-row: 3 / 4;
-  background-color: ${({ theme }) => theme.colors.indigo[800]};
+  background-color: ${({ theme }) => theme.colors.secondary[800]};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   padding: 1rem 1rem 0 1rem;
+
   @media (min-width: ${({ theme }) => theme.mediaScreen.small}) {
     flex-direction: row;
   }
@@ -23,8 +24,8 @@ const FooterItem = styled.li`
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-family: ${({ theme }) => theme.fontFamily.newCycle};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-family: ${({ theme }) => theme.fontFamily.text};
+  font-size: ${({ theme }) => theme.fontSizes.tiny};
 `;
 const FooterLogo = styled.div`
   width: 5.2rem;

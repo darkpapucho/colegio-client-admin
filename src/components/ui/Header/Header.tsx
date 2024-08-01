@@ -8,14 +8,14 @@ import { Icon } from '../../shared/Icon';
 import useCustomEvent from '../../../hooks/useCustomEvent';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setAño } from '../../../config/redux/año/slice';
-import { años, nivels } from '../../../utils/var';
+import { AÑOS_SELECT_OPTIONS, NIVELES_SELECT_OPTIONS } from '../../../utils/var';
 import { setNivel } from '../../../config/redux/nivel/slice';
 import { HandleLogOut } from '../../../utils/utils';
 
 const StyledHeader = styled.div`
   grid-column: 2 / span 8;
   grid-row: 1 / 2;
-  /* background-color: ${({ theme }) => theme.colors.indigo[200]}; */
+  /* background-color: ${({ theme }) => theme.colors.secondary[200]}; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,8 +43,8 @@ export default function Header() {
     <StyledHeader id="header">
       {rol !== 'profesor' && (
         <Box>
-          <Select tiny name="año" label="año" options={años} defaultValue={{ label: año + '', value: año }} width="7rem" />
-          <Select tiny name="nivel" label="nivel" options={nivels} defaultValue={{ label: nivel!, value: nivel }} width="9rem" />
+          <Select small name="año" label="año" options={AÑOS_SELECT_OPTIONS} defaultValue={{ label: año + '', value: año }} width="7rem" />
+          <Select small name="nivel" label="nivel" options={NIVELES_SELECT_OPTIONS} defaultValue={{ label: nivel!, value: nivel }} width="12.5rem" />
         </Box>
       )}
       <Box>

@@ -32,7 +32,7 @@ export default function SalonCard({
   });
   return (
     <Container $direction="row" $gap="1.5rem" $width="100%" key={salon.label} $center $border $height="26px">
-      <Container $direction="row" $width={nivel === 'primaria' ? '17rem' : '19rem'} $padding="0 5px" $center $gap="5px" $bgColor={theme.colors.gray[400]}>
+      <Container $direction="row" $width={nivel === 'primaria' ? '17rem' : '19rem'} $padding="0 5px" $center $gap="5px" $bgColor={theme.colors.tertiary[400]}>
         <DisplayHoverMessage
           width="1.5rem"
           message={`Eliminar ${salon.label}`}

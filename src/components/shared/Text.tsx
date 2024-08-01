@@ -7,7 +7,7 @@ export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: b
   ${({ $primary, theme }) =>
     $primary &&
     css`
-      color: ${theme.colors.orange[400]};
+      color: ${theme.colors.primary[400]};
     `}
   ${({ $textAlign }) =>
     $textAlign &&
@@ -36,7 +36,7 @@ export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: b
       }
     }
   }}
-  font-family: ${({ theme }) => theme.fontFamily.libreFranklin};
+  font-family: ${({ theme }) => theme.fontFamily.text};
   ${({ $bold }) =>
     $bold &&
     css`

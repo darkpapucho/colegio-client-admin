@@ -20,7 +20,7 @@ const StyledModal = styled.div<{ $width: WidthCss; $marginTop?: string }>`
 `;
 const ModalHeader = styled.div`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.indigo[600]};
+  background-color: ${({ theme }) => theme.colors.secondary[600]};
   display: flex;
   justify-content: space-between;
   align-items: center;

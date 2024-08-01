@@ -11,17 +11,24 @@ import Loader from '../../Loader/Loader';
 import { errorHandler } from '../../../../utils/errorHandler';
 import toaster from 'react-hot-toast';
 
+import ErrorPageMessage from '../../../shared/ErrorPageMessage';
+import { ErrorPage } from '../../../shared/ErrorPage';
+
 export default function ReportarTardanzaAlumno() {
   const [alumnos, setAlumnos] = useState<AMatriculado[]>([]);
-
+  const presentDate = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
   const { data, isLoading } = useQuery({ queryKey: ['dayId'], queryFn: () => fetchDayId(), refetchOnWindowFocus: false });
   const [loading, setLoading] = useState(false);
+
   if (isLoading || loading) return <Loader />;
-  if (!data) return <>Este día no se encuentra disponible</>;
+  if (!data) return;
+  <ErrorPage>
+    <ErrorPageMessage message={`Este día no a sido habilitado por el administrador como laborable`}></ErrorPageMessage>
+  </ErrorPage>;
   return (
-    <SimpleLayout>
+    <SimpleLayout title={`Reporte de tardanzas ${presentDate}`}>
       <SearchAlumnoBox width="40rem" handler={setAlumnos}></SearchAlumnoBox>
-      {alumnos.length && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
+      {alumnos.length > 0 && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
     </SimpleLayout>
   );
   async function fetchDayId() {

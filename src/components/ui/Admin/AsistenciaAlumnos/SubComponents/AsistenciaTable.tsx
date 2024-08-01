@@ -14,7 +14,7 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
     <Table gridTemplateColumns={gridTemplateCols} width="max-content">
       <Table.Header>
         <Table.Header.Item>
-          <Container $border $width="100%" $height="100%">
+          <Container $border="1px solid black" $width="100%" $height="100%" $justifyContent="center" $alignItems="center">
             Alumno
           </Container>
         </Table.Header.Item>
@@ -31,7 +31,7 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
           return (
             <Fragment key={index}>
               <Table.Body.Item>
-                <Container $direction="row" $width="100%" $border>
+                <Container $direction="row" $width="100%" $border="1px solid black">
                   <Container $width="2.5rem">{`[${index + 1}]`}</Container>
                   <Container>{element.nombreCompleto}</Container>
                 </Container>

@@ -1,5 +1,6 @@
 import { Profesor } from '../../../types/empleado';
 import { SalonProfesor } from './types';
+
 type UpdateTutoria = {
   type: 'updateTutoria';
   payload: { salon: string; value: boolean };
@@ -32,6 +33,7 @@ type AddCursoToSalonAction = {
   type: 'addCursoToSalon';
   payload: { cursoKey: string; cursoLabel: string; salon: string };
 };
+
 export type ProfesorReducerAction = SetProfesorAction | DeleteCursoFromSalonAction | AddCursoToSalonAction | UpdateProfesorData | DeleteSalon | AddSalon | UpdateTutoria;
 export default function ProfesorReducer(state: { profesor: Profesor }, action: ProfesorReducerAction) {
   const { type } = action;

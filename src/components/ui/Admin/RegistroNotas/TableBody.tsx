@@ -32,7 +32,7 @@ const DisplayAlumno = styled.div<{ $index: number }>`
     text-align: left;
   }
   &:hover {
-    color: ${({ theme }) => theme.colors.orange[400]};
+    color: ${({ theme }) => theme.colors.primary[400]};
   }
 `;
 
@@ -83,7 +83,7 @@ export default function TableBody({
 
             <Table.Body.Item $key={index}>
               <Container $width="100%" $direction="row" $bgColor="white" $gap="1px" $padding="0">
-                <Container $width="50%" $bgColor={theme.colors.gray[400]} $center>
+                <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
                   <input
                     min={0}
                     max={10}
@@ -99,7 +99,7 @@ export default function TableBody({
                     }
                   />
                 </Container>
-                <Container $width="50%" $bgColor={theme.colors.gray[400]} $center>
+                <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
                   <input
                     min={0}
                     max={10}
@@ -119,7 +119,7 @@ export default function TableBody({
             </Table.Body.Item>
             <Table.Body.Item $key={index}>
               <Container $width="100%" $direction="row" $bgColor="white" $gap="1px" $padding="0">
-                <Container $width="50%" $bgColor={theme.colors.gray[400]} $center>
+                <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
                   <input
                     min={0}
                     max={10}
@@ -135,7 +135,7 @@ export default function TableBody({
                     }
                   />
                 </Container>
-                <Container $width="50%" $bgColor={theme.colors.gray[400]} $center>
+                <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
                   <input
                     min={0}
                     max={10}

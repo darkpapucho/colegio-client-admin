@@ -18,6 +18,13 @@ export const GradosDestino = {
     { label: 'Sexto', value: 'SEXTO' },
     { label: 'Primero Secundaria', value: 'PRIMERO SECUNDARIA' },
   ],
+  secundaria: [
+    { label: 'Primero', value: 'PRIMERO' },
+    { label: 'Segundo', value: 'SEGUNDO' },
+    { label: 'Tercero', value: 'TERCERO' },
+    { label: 'Cuarto', value: 'CUARTO' },
+    { label: 'Quinto', value: 'QUINTO' },
+  ],
 };
 
 export const ESTADOS_MATRICULA_SELECT_OPTIONS = [
@@ -31,6 +38,52 @@ export const PERIODOS_SELECT_OPTIONS = [
   { label: 'segundo periodo', value: 'segundoPeriodo' },
   { label: 'tercer periodo', value: 'tercerPeriodo' },
   { label: 'cuarto periodo', value: 'cuartoPeriodo' },
+];
+
+//secundaria
+
+export const CURSOS_SECUNDARIA_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [
+  { label: 'Arte y Cultura', key: 'arteCultura', competencias: ['Aprecia las manifestaciones artístico-culturales.', 'Crea proyectos desde los lenguajes artísticos.'] },
+  { label: 'Inglés', key: 'ingles', competencias: ['Se comunica oralmente en inglés.', 'Lee diversos tipos de textos en inglés.', 'Escribe diversos tipos textos en inglés.'] },
+  {
+    label: 'Ciencia y Tecnología',
+    key: 'cienciaTecnologia',
+    competencias: ['Indaga mediante métodos científicos.', 'Explica el mundo basándose en hechos científicos.', 'Diseña y construye soluciones tecnológicas.'],
+  },
+  { label: 'Comunicación', key: 'comunicacion', competencias: ['Se comunica oralmente.', 'Lee diversos tipos de textos.', 'Escribe diversos tipos de textos.'] },
+  {
+    label: 'Educación Física',
+    key: 'educacionFisica',
+    competencias: ['Se desenvuelve de manera autónoma.', 'Asume una vida saludable.', 'Interactúa a través de sus habilidades sociomotrices.'],
+  },
+  { label: 'Religión', key: 'religion', competencias: ['Construye su identidad como persona amada por Dios.', 'Asume a Dios en su proyecto de vida.'] },
+  {
+    label: 'Matemática',
+    key: 'matematica',
+    competencias: [
+      'Resuelve problemas de cantidad.',
+      'Resuelve problemas de regularidad, equivalencia y cambio',
+      'Resuelve problemas de movimiento y localización.',
+      'Resuelve problemas de datos e incertidumbre.',
+    ],
+  },
+  {
+    label: 'Personal Social',
+    key: 'personalSocial',
+    competencias: [
+      'Construye su identidad.',
+      'Convive y participa democráticamente.',
+      'Construye interpretaciones históricas.',
+      'Gestiona responsablemente el espacio y el ambiente',
+      'Gestiona responsablemente los recursos económicos.',
+    ],
+  },
+
+  {
+    label: 'Competencias Transversales',
+    key: 'competenciasTransversales',
+    competencias: ['Se desenvuelve en entornos virtuales generados por las TIC.', 'Gestiona su aprendizaje de manera autónoma.'],
+  },
 ];
 
 //PRIMARIA
@@ -126,5 +179,17 @@ export const SALONES_SELECT_OPTONS = {
     { label: 'Quinto B', value: 'Quinto B' },
     { label: 'Sexto A', value: 'Sexto A' },
     { label: 'Sexto B', value: 'Sexto B' },
+  ],
+  secundaria: [
+    { label: 'Primero A', value: 'Primero A' },
+    { label: 'Primero B', value: 'Primero B' },
+    { label: 'Segundo A', value: 'Segundo A' },
+    { label: 'Segundo B', value: 'Segundo B' },
+    { label: 'Tercero A', value: 'Tercero A' },
+    { label: 'Tercero B', value: 'Tercero B' },
+    { label: 'Cuarto A', value: 'Cuarto A' },
+    { label: 'Cuarto B', value: 'Cuarto B' },
+    { label: 'Quinto A', value: 'Quinto A' },
+    { label: 'Quinto B', value: 'Quinto B' },
   ],
 };

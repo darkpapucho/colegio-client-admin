@@ -40,9 +40,9 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   useCustomEvent('customSelect', listener);
   useCustomEvent('customCheckbox', checkboxListener);
   return (
-    <Container $width="100%" $gap="1.5rem">
+    <Container $width="100%" $gap="1.5rem" $direction="column">
       <Container $direction="row" $gap="1.5rem" $width="100%">
-        <Container $direction="row" $center $gap=".5rem" $width="50%" $border $padding="0 .5rem">
+        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
           <Text $bold $fontSize="small">
             Apellidos:
           </Text>
@@ -52,7 +52,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
           </Icon>
         </Container>
 
-        <Container $direction="row" $center $gap=".5rem" $width="50%" $border $padding="0 .5rem">
+        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
           <Text $bold $fontSize="small">
             Nombres:
           </Text>
@@ -63,7 +63,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
         </Container>
       </Container>
       <Container $direction="row" $gap="1.5rem" $width="100%">
-        <Container $direction="row" $center $gap=".5rem" $width="50%" $border $padding="0 .5rem">
+        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
           <Text $bold $fontSize="small">
             DNI:
           </Text>
@@ -72,7 +72,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
             {locks.dni ? <CiEdit onClick={() => setLocks((old) => ({ ...old, dni: false }))} /> : <FiSave onClick={() => updateProfesorData('dni')} />}
           </Icon>
         </Container>
-        <Container $direction="row" $center $gap=".5rem" $width="50%" $border $padding="0 .5rem">
+        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
           <Text $bold $fontSize="small">
             Teléfono:
           </Text>
@@ -93,7 +93,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
           return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
         })}
       </Container>
-      <Container $direction="row" $center $gap="2rem">
+      <Container $direction="row" $alignItems="center" $gap="2rem">
         <Button disabled={isLoading} $primary $small $width="max-content" onClick={() => guardarCambiosProfesor(profesor)}>
           Guardar Cambios
         </Button>

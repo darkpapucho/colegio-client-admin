@@ -7,7 +7,7 @@ import { Icon } from './Icon';
 
 const StyledSelect = styled.div<{ $width?: string; $tiny?: boolean; $small?: boolean }>`
   padding-left: 2px;
-  background-color: ${({ theme }) => theme.colors.indigo[500]};
+  background-color: ${({ theme }) => theme.colors.secondary[500]};
   border-radius: 6px;
   color: white;
   ${({ $width }) =>
@@ -26,7 +26,7 @@ const StyledSelect = styled.div<{ $width?: string; $tiny?: boolean; $small?: boo
     css`
       font-size: ${theme.fontSizes.sm};
     `}
-  font-family: ${({ theme }) => theme.fontFamily.sourceSans};
+  font-family: ${({ theme }) => theme.fontFamily.header};
 `;
 
 const StyledSelectOpts = styled.div<{ $isOpen: boolean }>`
@@ -49,7 +49,7 @@ const StyledSelectOpts = styled.div<{ $isOpen: boolean }>`
 `;
 const StyledOpt = styled.div<{ $tiny?: boolean; $small?: boolean; $primary?: boolean }>`
   cursor: pointer;
-  background-color: ${({ theme }) => theme.colors.indigo[700]};
+  background-color: ${({ theme }) => theme.colors.secondary[700]};
   width: 100%;
   ${({ $tiny, theme }) =>
     $tiny &&
@@ -62,7 +62,7 @@ const StyledOpt = styled.div<{ $tiny?: boolean; $small?: boolean; $primary?: boo
       padding: ${theme.padding.sm};
     `}
   &:hover {
-    background-color: ${({ theme }) => theme.colors.indigo[500]};
+    background-color: ${({ theme }) => theme.colors.secondary[500]};
   }
   &:last-child {
     border-bottom-left-radius: 6px;
@@ -113,11 +113,11 @@ export default function Select<T>({ name, label, options, width, defaultValue, s
       <StyledSelectedOpt onClick={() => toggle()} $small={small} $tiny={tiny}>
         {selectedOption.label}
         {isOpen ? (
-          <Icon $tiny $primary>
+          <Icon $tiny>
             <BsChevronUp />
           </Icon>
         ) : (
-          <Icon $tiny $primary>
+          <Icon $tiny>
             <BsChevronDown />
           </Icon>
         )}

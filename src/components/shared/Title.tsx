@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const Title = styled.h1<{ $cursive?: boolean; $center?: boolean; $color?: string }>`
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  letter-spacing: 1.8px;
-  font-family: ${({ theme }) => theme.fontFamily.newCycle};
-  color: ${({ $color }) => $color || "black"};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  letter-spacing: 1px;
+  font-family: ${({ theme }) => theme.fontFamily.header};
+  color: ${({ $color }) => $color || 'black'};
   ${({ $center }) =>
     $center &&
     css`
@@ -13,7 +13,7 @@ export const Title = styled.h1<{ $cursive?: boolean; $center?: boolean; $color?:
   ${({ $cursive }) =>
     $cursive &&
     css`
-      font-family: "Young serif", serif;
+      font-family: 'Young serif', serif;
       font-style: italic;
       font-weight: 200;
     `}

@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { FormEvent, useRef, useState } from 'react';
 import Input from '../../shared/Input';
 import { Button } from '../../shared/Button';
-import { Subtitle } from '../../shared/Subtitle';
 import Select from '../../shared/Select';
 import useCustomEvent from '../../../hooks/useCustomEvent';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
 import { setNivel } from '../../../config/redux/nivel/slice';
-import { nivels } from '../../../utils/var';
+import { NIVELES_SELECT_OPTIONS } from '../../../utils/var';
 import { Title } from '../../shared/Title';
 import { Form } from '../../shared/Form';
 import { loginUser } from '../../../config/redux/user/thunks';
@@ -56,8 +55,10 @@ export default function LoginForm() {
   return (
     <StyledLoginForm>
       <Form onSubmit={onSubmit}>
-        <Title>Sistema Intranet</Title>
-        <Subtitle>Ingreso</Subtitle>
+        <div>
+          <Title>Sistema Intranet</Title>
+          <Title>Ingreso</Title>
+        </div>
         <div>
           <Input type="text" $width="100%" label="username" name="username" ref={usernameRef} isError={formErrors.username ? true : false} />
           {formErrors.username && <ErrorMessage message={formErrors.username!} />}
@@ -67,11 +68,11 @@ export default function LoginForm() {
           {formErrors.password && <ErrorMessage message={formErrors.password!} />}
         </div>
         <div>
-          <Select small name="nivel" label="nivel" width="20rem" options={nivels} />
+          <Select small name="nivel" label="nivel" width="12rem" options={NIVELES_SELECT_OPTIONS} />
           {formErrors.nivel && <ErrorMessage message={formErrors.nivel!} />}
         </div>
         <div>
-          <Button $medium $primary type="submit">
+          <Button $primary type="submit" $medium>
             Login
           </Button>
           {user.error && <ErrorMessage message={user.error}></ErrorMessage>}

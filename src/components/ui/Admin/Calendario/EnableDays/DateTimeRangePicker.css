@@ -22,7 +22,7 @@
   flex-grow: 1;
   flex-shrink: 0;
   align-items: center;
-  border: thin solid gray;
+  border: thin solid tertiary;
 }
 
 .react-datetimerange-picker__inputGroup {

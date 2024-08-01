@@ -5,11 +5,13 @@ import { dayCellWidth } from '../utils';
 export default function MonthHeader({ monthName, days }: { monthName: MONTH_NAME; days: number[] }) {
   return (
     <Container $direction="column">
-      <Container $border>{monthName}</Container>
+      <Container $border="1px solid black" $justifyContent="center">
+        {monthName}
+      </Container>
       <Container $direction="row">
         {days.map((day) => {
           return (
-            <Container $border $width={`${dayCellWidth}rem`} key={day}>
+            <Container $border="1px solid black" $width={`${dayCellWidth}rem`} key={day} $justifyContent="center">
               {day}
             </Container>
           );

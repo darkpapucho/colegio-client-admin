@@ -1,6 +1,6 @@
 import { Nivel } from '../types';
 import { Year } from './enums';
-import { SalonInicial, SalonPrimaria } from './salon';
+import { SalonInicial, SalonPrimaria, SalonSecundaria } from './salon';
 
 export interface LoginRequestParams {
   año: Year;
@@ -42,6 +42,6 @@ interface UserInfo {
   correo: string;
   telefono: string;
   specificInfo?: {
-    salones: SalonInicial[] | SalonPrimaria[];
+    salones: SalonInicial[] | SalonPrimaria[] | SalonSecundaria[];
   };
 }

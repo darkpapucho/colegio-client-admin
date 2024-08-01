@@ -7,14 +7,14 @@ import { UserRol } from '../../../types/user';
 
 const Item = styled(NavLink)<{ $active: boolean }>`
   padding: ${({ theme }) => theme.padding.sm};
-
+  font-family: ${({ theme }) => theme.fontFamily.header};
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.6rem;
-  margin: ${({ theme }) => theme.padding.tiny};
+  margin: ${({ theme }) => theme.padding.sm};
   > svg {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: ${({ theme }) => theme.fontSizes.md};
   }
   &:hover {
     box-shadow: 0 0 2px black;
