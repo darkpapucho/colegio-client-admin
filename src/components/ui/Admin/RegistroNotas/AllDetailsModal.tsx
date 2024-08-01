@@ -70,7 +70,7 @@ export default function AllDetailsModal({
           <Table width="100%" gridTemplateColumns={templateCols} withBorder>
             <Table.Header>
               <Table.Header.Item>
-                <Container $border="1ps solid black" $width="100%" $height="100%" $alignItems="center">
+                <Container $border="1px solid black" $width="100%" $height="100%" $alignItems="center">
                   <CursoLabel>Periodo</CursoLabel>
                 </Container>
               </Table.Header.Item>

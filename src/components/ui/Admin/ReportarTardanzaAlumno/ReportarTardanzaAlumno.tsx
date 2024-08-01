@@ -20,17 +20,22 @@ export default function ReportarTardanzaAlumno() {
   const { data, isLoading } = useQuery({ queryKey: ['dayId'], queryFn: () => fetchDayId(), refetchOnWindowFocus: false });
   const [loading, setLoading] = useState(false);
 
-  if (isLoading || loading) return <Loader />;
-  if (!data) return;
-  <ErrorPage>
-    <ErrorPageMessage message={`Este día no a sido habilitado por el administrador como laborable`}></ErrorPageMessage>
-  </ErrorPage>;
+  if (!data)
+    return (
+      <ErrorPage>
+        <ErrorPageMessage message={`Este día no a sido habilitado por el administrador como laborable`}></ErrorPageMessage>
+      </ErrorPage>
+    );
   return (
-    <SimpleLayout title={`Reporte de tardanzas ${presentDate}`}>
-      <SearchAlumnoBox width="40rem" handler={setAlumnos}></SearchAlumnoBox>
-      {alumnos.length > 0 && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
-    </SimpleLayout>
+    <>
+      <SimpleLayout title={`Reporte de tardanzas ${presentDate}`}>
+        <SearchAlumnoBox width="40rem" handler={setAlumnos}></SearchAlumnoBox>
+        {alumnos.length > 0 && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
+      </SimpleLayout>
+      {loading || (isLoading && <Loader />)}
+    </>
   );
+
   async function fetchDayId() {
     const response = await Calendario.fetchDayId();
     updateToken(response);

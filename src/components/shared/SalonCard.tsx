@@ -31,8 +31,8 @@ export default function SalonCard({
     return !salon.cursos.some((curso) => curso.key === option.value.cursoKey);
   });
   return (
-    <Container $direction="row" $gap="1.5rem" $width="100%" key={salon.label} $center $border $height="26px">
-      <Container $direction="row" $width={nivel === 'primaria' ? '17rem' : '19rem'} $padding="0 5px" $center $gap="5px" $bgColor={theme.colors.tertiary[400]}>
+    <Container $direction="row" $gap="1.5rem" $width="100%" key={salon.label} $justifyContent="center" $border="1px solid black" $height="26px">
+      <Container $direction="row" $width={nivel === 'primaria' ? '17rem' : '19rem'} $padding="0 5px" $justifyContent="center" $gap="5px" $bgColor={theme.colors.tertiary[400]}>
         <DisplayHoverMessage
           width="1.5rem"
           message={`Eliminar ${salon.label}`}
@@ -48,7 +48,7 @@ export default function SalonCard({
         </Text>
       </Container>
 
-      <Container $direction="row" $gap="2px" $center $width={nivel === 'primaria' ? '44rem' : '42rem'}>
+      <Container $direction="row" $gap="2px" $justifyContent="center" $width={nivel === 'primaria' ? '44rem' : '42rem'}>
         {salon.cursos.map((curso, id) => {
           return <CursoCard curso={curso} salonLabel={salon.label} deleteCurso={deleteCurso} key={id} />;
         })}
