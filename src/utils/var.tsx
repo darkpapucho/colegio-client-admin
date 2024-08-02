@@ -152,11 +152,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
     //   label: 'Gestionar Empleados',
     //   url: '/menu/admin/vertodosempleados',
     // },
-    {
-      icon: <RxCalendar />,
-      label: 'gestionar pensiones',
-      url: '/menu/admin/gestionarpensiones',
-    },
+    // {
+    //   icon: <RxCalendar />,
+    //   label: 'gestionar pensiones',
+    //   url: '/menu/admin/gestionarpensiones',
+    // },
     {
       icon: <RxCalendar />,
       label: 'Calendario Escolar',

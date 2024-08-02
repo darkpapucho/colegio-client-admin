@@ -6,7 +6,7 @@ export default function useOutsideClick<T extends HTMLElement>(handler: () => vo
   useEffect(() => {
     function handleClick(event: MouseEvent) {
       const target = event.target;
-      if (ref.current && !ref.current.contains(target as HTMLElement)) {
+      if (ref.current && !ref.current.contains(target as T)) {
         handler();
       }
     }
