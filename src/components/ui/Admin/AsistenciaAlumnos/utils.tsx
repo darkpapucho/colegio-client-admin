@@ -1,6 +1,6 @@
 import { MONTH_NAME, VALID_MONTHS } from '../../../../types/enums';
 import { AsistenciaRecord, AsistenciaValue } from './types';
-export const alumnoNameCellWidth = 33;
+export const alumnoNameCellWidth = 36;
 export const dayCellWidth = 2;
 export function sortMonthNames(monthNames: MONTH_NAME[]) {
   return monthNames.sort((prev, curr) => {

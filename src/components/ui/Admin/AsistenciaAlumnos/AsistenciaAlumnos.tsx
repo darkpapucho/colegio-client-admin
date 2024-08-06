@@ -20,6 +20,7 @@ import Loader from '../../Loader/Loader';
 import AsistenciaTable from './SubComponents/AsistenciaTable';
 import { useQuery } from '@tanstack/react-query';
 import { Nivel } from '../../../../types/enums';
+import Documento from '../../../../models/Documento';
 
 export default function AsistenciaAlumnos() {
   const nivel: Nivel = useTypedSelector((state) => state.nivel) as Nivel;
@@ -54,17 +55,23 @@ export default function AsistenciaAlumnos() {
       {isFetching && <Loader />}
       <SimpleLayout>
         <Container $direction="row" $gap="0.5rem">
-          <Select options={PERIODOS_SELECT_OPTIONS} width="13rem" name="periodo" label="periodo" tiny></Select>
+          <Select options={PERIODOS_SELECT_OPTIONS} width="14rem" name="periodo" label="periodo" tiny></Select>
           <Select options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
           <Select options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
           <Button $primary onClick={() => refetch()}>
             Request
           </Button>
         </Container>
+
         {data?.asistencias && data.asistencias.length > 0 && (
-          <Container>
-            <AsistenciaTable asistencias={data.asistencias} availableDays={data.availableDays} />
-          </Container>
+          <>
+            <Button $primary onClick={generateAttendanceListPDF} $width="10rem">
+              PrintList
+            </Button>
+            <Container>
+              <AsistenciaTable asistencias={data.asistencias} availableDays={data.availableDays} />
+            </Container>
+          </>
         )}
       </SimpleLayout>
     </>
@@ -90,6 +97,25 @@ export default function AsistenciaAlumnos() {
       // console.log(response.data.payload);
       console.log(response.data.payload);
       return response.data.payload;
+    } catch (err) {
+      errorHandler(err);
+    }
+  }
+
+  async function generateAttendanceListPDF() {
+    try {
+      const periodo = searchParams.get('periodo') as PeriodosKey;
+      console.log('Requesting attendance list: ');
+      console.log({ grado, seccion, periodo });
+      const response = await Documento.generateAttendanceListPDF({ grado, seccion, periodo });
+      updateToken(response);
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+      const alink = document.createElement('a');
+      alink.href = url;
+      alink.download = `asistencia-${grado}-${seccion}-${periodo}.pdf`;
+      alink.click();
+      alink.remove();
     } catch (err) {
       errorHandler(err);
     }

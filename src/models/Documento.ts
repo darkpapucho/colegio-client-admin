@@ -6,9 +6,14 @@ import { GetHeaders } from '../utils/utils';
 import { RequestDocumentsParam } from '../components/ui/Admin/EmitirDocumentos/utils';
 import { Grado, Seccion } from '../types/enums';
 import { ResponseSchema } from '../types/axiosResponse';
-import { RegistroNota } from '../types/documento';
+import { PeriodosKey, RegistroNota } from '../types/documento';
 
 export default class Documento {
+  static async generateAttendanceListPDF({ grado, seccion, periodo }: { grado: Grado; seccion: Seccion; periodo: PeriodosKey }) {
+    const response = await axios.post(API_BASE_URL + ApiEndPoints.GET_ATTENDANCE_LIST, { grado, seccion, periodo }, { ...GetHeaders(), responseType: 'arraybuffer' });
+    return response;
+  }
+
   static async emitirBoletaNotasIndividual({ alumnoId }: { alumnoId: string }) {
     const END_POINT = ApiEndPoints.EMITIR_BOLETA_NOTAS_INDIVIDUAL + `?alumnoId=${alumnoId}`;
     const response = await axios.get(API_BASE_URL + END_POINT, { ...GetHeaders(), responseType: 'arraybuffer' });
