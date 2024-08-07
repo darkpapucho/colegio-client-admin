@@ -12,8 +12,8 @@ export default function useEstadoMatriculaFilter<T extends { estadoMatricula: Es
     case 'DEFINITIVA':
       matriculadosFiltered = records?.filter((alumno) => alumno.estadoMatricula === 'DEFINITIVA');
       break;
-    case 'PENDIENTE':
-      matriculadosFiltered = records?.filter((alumno) => alumno.estadoMatricula === 'PENDIENTE');
+    case 'EN PROCESO':
+      matriculadosFiltered = records?.filter((alumno) => alumno.estadoMatricula === 'EN PROCESO');
       break;
     case 'TRASLADADO':
       matriculadosFiltered = records?.filter((alumno) => alumno.estadoMatricula === 'TRASLADADO');

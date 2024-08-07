@@ -28,7 +28,7 @@ export const GradosDestino = {
 };
 
 export const ESTADOS_MATRICULA_SELECT_OPTIONS = [
-  { label: 'Pendiente', value: 'PENDIENTE' },
+  { label: 'EN PROCESO', value: 'EN PROCESO' },
   { label: 'Definitiva', value: 'DEFINITIVA' },
   { label: 'Trasladado', value: 'TRASLADADO' },
 ];

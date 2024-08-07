@@ -9,7 +9,7 @@ import { theme } from '../../config/styled/styled';
 import { EstadoMatricula } from '../../types/enums';
 import useSearchAlumnos from '../../hooks/useSearchAlumnos';
 
-const estadosMatricula: EstadoMatricula[] = ['DEFINITIVA', 'PENDIENTE'];
+const estadosMatricula: EstadoMatricula[] = ['DEFINITIVA', 'EN PROCESO'];
 
 export default function SearchAlumnoBox({ width, handler, signal }: { width: WidthCss; handler: (alumnos: AMatriculado[]) => void; signal?: boolean }) {
   const searchBoxRef = useRef<HTMLInputElement | null>(null);

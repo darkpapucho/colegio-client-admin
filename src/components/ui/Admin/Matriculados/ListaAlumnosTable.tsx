@@ -12,7 +12,7 @@ import { Container } from '../../../shared/Container';
 const estados: { label: EstadoMatricula | 'TODOS'; value: EstadoMatricula | 'TODOS' }[] = [
   { label: 'TODOS', value: 'TODOS' },
   { label: 'DEFINITIVA', value: 'DEFINITIVA' },
-  { label: 'PENDIENTE', value: 'PENDIENTE' },
+  { label: 'EN PROCESO', value: 'EN PROCESO' },
   { label: 'TRASLADADO', value: 'TRASLADADO' },
 ];
 const headers = ['ALUMNO', <Filter name="estadoMatricula" label="ESTADO" options={estados} width="10rem"></Filter>, 'DNI', 'GRADO', 'SECCIÓN', 'EDIT'];
