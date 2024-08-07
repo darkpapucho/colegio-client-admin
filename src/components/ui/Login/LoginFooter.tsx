@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { AiOutlineWhatsApp, AiOutlineMail } from 'react-icons/ai';
 import { IoLocationOutline } from 'react-icons/io5';
-import logo from '/logoblue.jpeg';
+import logo from '/logo.png';
 import { Image } from '../../shared/Image';
 import { Icon } from '../../shared/Icon';
 const SLoginFooter = styled.div`

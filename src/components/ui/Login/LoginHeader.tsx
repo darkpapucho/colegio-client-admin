@@ -21,7 +21,7 @@ export default function LoginHeader() {
   return (
     <StyledLoginHeader>
       <Header $center $color="white">
-        PÉREZ DE CUÉLLAR
+        IEP JESÚS EL NAZARENO
       </Header>
     </StyledLoginHeader>
   );
