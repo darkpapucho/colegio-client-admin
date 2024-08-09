@@ -43,8 +43,8 @@ export default class Calendario {
     const response = await axios.get<ResponseSchema<CalendarioList[]>>(API_BASE_URL + ApiEndPoints.FETCH_CALENDARIO, GetHeaders());
     return response;
   }
-  static async fetchDayId() {
-    const response = await axios.get<ResponseSchema<null | { _id: string }>>(API_BASE_URL + ApiEndPoints.FETCH_DAY_ID, GetHeaders());
+  static async fetchDayId(date: Date) {
+    const response = await axios.post<ResponseSchema<null | { _id: string }>>(API_BASE_URL + ApiEndPoints.FETCH_DAY_ID, { date }, GetHeaders());
     return response;
   }
 }
