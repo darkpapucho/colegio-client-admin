@@ -88,7 +88,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
         </Text>
         <Select options={SALONES_SELECT_OPTONS[nivel]} label="--agregar salón--" name="addSalon" width="15rem" tiny></Select>
       </Container>
-      <Container $gap=".4rem">
+      <Container $gap=".4rem" $direction="column">
         {salonesSorted.map((salon) => {
           return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
         })}
