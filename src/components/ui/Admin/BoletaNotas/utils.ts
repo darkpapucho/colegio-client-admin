@@ -4,7 +4,7 @@ import { updateToken } from '../../../../utils/utils';
 import Documento from '../../../../models/Documento';
 import { AMatriculado } from '../../../../types/alumno';
 import { errorHandler } from '../../../../utils/errorHandler';
-import { Grado, Seccion } from '../../../../types/enums';
+import { EstadoMatricula, Grado, Seccion } from '../../../../types/enums';
 
 export async function requestSingleBoleta({ dispatch, selectedAlumno }: { dispatch: Dispatch<BoletaNotasActionReducer>; selectedAlumno: AMatriculado }) {
   try {
@@ -24,13 +24,23 @@ export async function requestSingleBoleta({ dispatch, selectedAlumno }: { dispat
     dispatch({ type: 'clearIsLoading' });
   }
 }
-export async function requestBoletasSalon({ dispatch, grado, seccion }: { dispatch: Dispatch<BoletaNotasActionReducer>; grado: Grado; seccion: Seccion }) {
+export async function requestBoletasSalon({
+  dispatch,
+  grado,
+  seccion,
+  estadosMatricula,
+}: {
+  estadosMatricula: EstadoMatricula[];
+  dispatch: Dispatch<BoletaNotasActionReducer>;
+  grado: Grado;
+  seccion: Seccion;
+}) {
   // console.log({ grado, seccion });
   try {
     dispatch({ type: 'setIsLoading' });
-
+    console.log({ estadosMatricula });
     // if (!grado || !seccion) throw new Error('Debes indicar un grado y una sección.');
-    const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion });
+    const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula });
     updateToken(response);
     const myBlob = new Blob([response.data]);
     const fileURL = URL.createObjectURL(myBlob);

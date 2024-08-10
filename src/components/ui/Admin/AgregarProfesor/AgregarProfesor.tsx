@@ -54,7 +54,7 @@ export default function AgregarProfesor() {
           <Text $bold $fontSize="medium">
             {state.salones.length} {state.salones.length !== 1 ? ' salones:' : ' salón:'}
           </Text>
-          <Select options={SALONES_OPTIONS} label="--agregar salón--" name="addSalon" width="13rem" tiny></Select>
+          <Select options={SALONES_OPTIONS} label="--agregar salón--" name="addSalon" width="15rem" tiny></Select>
         </Container>
         <Container $gap=".4rem" $direction="column" $width="max-content">
           {salonesSorted.map((salon) => {

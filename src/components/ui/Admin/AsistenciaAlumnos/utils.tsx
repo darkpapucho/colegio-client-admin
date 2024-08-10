@@ -55,7 +55,7 @@ export function getAsistenciaValueFromRecords({
   const justificado = result.justificado;
   return { asistencia: { value: result.asistencia, justificado }, dayId: result!.dayId };
 }
-export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaValue: AsistenciaValue; justificado: undefined | true }) {
+export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaValue: AsistenciaValue | undefined; justificado: undefined | true }) {
   switch (asistenciaValue) {
     case '':
       return '#9a9c9c';
@@ -67,6 +67,6 @@ export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaV
       if (justificado === true) return '#FFAAAA';
       return '#C21010';
     default:
-      return '#535353';
+      return '#9a9c9c';
   }
 }

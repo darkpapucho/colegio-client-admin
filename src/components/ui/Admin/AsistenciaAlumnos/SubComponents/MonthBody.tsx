@@ -27,7 +27,7 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
         const result = getAsistenciaValueFromRecords({ monthName, day, records });
         if (!result) {
           return (
-            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid black" $bgColor="black" key={day}>
+            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid black" $bgColor="#9a9c9c" key={day}>
               X
             </DayCell>
           );

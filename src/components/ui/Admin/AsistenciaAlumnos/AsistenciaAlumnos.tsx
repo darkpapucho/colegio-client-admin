@@ -19,8 +19,11 @@ import { updateToken } from '../../../../utils/utils';
 import Loader from '../../Loader/Loader';
 import AsistenciaTable from './SubComponents/AsistenciaTable';
 import { useQuery } from '@tanstack/react-query';
-import { Nivel } from '../../../../types/enums';
+import { EstadoMatricula, Nivel } from '../../../../types/enums';
 import Documento from '../../../../models/Documento';
+import { theme } from '../../../../config/styled/styled';
+import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
+import DescargarPDFBox from './SubComponents/DescargarPDFBox';
 
 export default function AsistenciaAlumnos() {
   const nivel: Nivel = useTypedSelector((state) => state.nivel) as Nivel;
@@ -35,39 +38,35 @@ export default function AsistenciaAlumnos() {
     retry: false,
   });
 
-  useCustomEvent('customSelect', periodoListener);
+  // const [estadosMatricula, setEstadosMatricula] = useState<Set<EstadoMatricula>>(new Set(['DEFINITIVA', 'EN PROCESO']));
 
+  useCustomEvent('customSelect', periodoListener);
+  // useCustomEvent('customCheckbox', checkboxListener);
   useEffect(() => {
     if (!error) return;
     errorHandler(error);
   }, [error]);
-
-  // if (year !== '' + currentYear) {
-  //   return (
-  //     <SimpleLayout>
-  //       <Title>{`Esta operación solo está disponible en el año ${currentYear}`}</Title>
-  //     </SimpleLayout>
-  //   );
-  // }
 
   return (
     <>
       {isFetching && <Loader />}
       <SimpleLayout>
         <Container $direction="row" $gap="0.5rem">
-          <Select options={PERIODOS_SELECT_OPTIONS} width="14rem" name="periodo" label="periodo" tiny></Select>
-          <Select options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
-          <Select options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
-          <Button $primary onClick={() => refetch()}>
-            Request
+          <Container $direction="column" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[200]} $padding="0.5rem">
+            <Container $direction="row" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[100]} $padding="0.5rem">
+              <Select options={PERIODOS_SELECT_OPTIONS} width="14rem" name="periodo" label="periodo" tiny></Select>
+              <Select options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
+              <Select options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
+            </Container>
+            <EstadosMatriculaBox setSearchParams={setSearchParams} />
+          </Container>
+          <Button $primary onClick={() => refetch()} $height="30px">
+            REQUEST
           </Button>
         </Container>
-
+        <DescargarPDFBox setSearchParams={setSearchParams} action={generateAttendanceListPDF} />
         {data?.asistencias && data.asistencias.length > 0 && (
           <>
-            <Button $primary onClick={generateAttendanceListPDF} $width="10rem">
-              PrintList
-            </Button>
             <Container>
               <AsistenciaTable asistencias={data.asistencias} availableDays={data.availableDays} />
             </Container>
@@ -85,17 +84,20 @@ export default function AsistenciaAlumnos() {
       });
     }
   }
+
   async function requestRecords({ grado, seccion }) {
     try {
+      const estadosMatricula = searchParams.get('estadosMatricula') as string | null;
+      if (!estadosMatricula) throw new Error('No se ha seleccionado ningun estado de matricula para la petición');
       const periodo = searchParams.get('periodo') as PeriodosKey | null;
       if (!periodo || !grado || !seccion) {
         throw new Error('Debes seleccioon un grado, una sección y un periodo');
       }
-      const response = await Calendario.getRecordAsistenciaAlumnos({ grado, seccion, periodo });
+      const response = await Calendario.getRecordAsistenciaAlumnos({ grado, seccion, periodo, estadosMatricula: estadosMatricula.split('-') as EstadoMatricula[] });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       // console.log(response.data.payload);
-      console.log(response.data.payload);
+
       return response.data.payload;
     } catch (err) {
       errorHandler(err);
@@ -104,10 +106,21 @@ export default function AsistenciaAlumnos() {
 
   async function generateAttendanceListPDF() {
     try {
+      const withData = searchParams.get('withData');
       const periodo = searchParams.get('periodo') as PeriodosKey;
+      const estadosMatricula = searchParams.get('estadosMatricula');
+      console.log({ withData, periodo, estadosMatricula });
+      if (!withData || !periodo || !estadosMatricula) throw new Error('[EstadosMatricula - Con Datos - Periodo] error');
+
       console.log('Requesting attendance list: ');
       console.log({ grado, seccion, periodo });
-      const response = await Documento.generateAttendanceListPDF({ grado, seccion, periodo });
+      const response = await Documento.generateAttendanceListPDF({
+        estadosMatricula: estadosMatricula.split('-') as EstadoMatricula[],
+        grado,
+        seccion,
+        periodo,
+        withData: withData === 'true' ? true : false,
+      });
       updateToken(response);
       const blob = new Blob([response.data]);
       const url = URL.createObjectURL(blob);

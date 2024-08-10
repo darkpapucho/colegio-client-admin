@@ -10,6 +10,7 @@ const StyledSelect = styled.div<{ $width?: string; $tiny?: boolean; $small?: boo
   background-color: ${({ theme }) => theme.colors.secondary[500]};
   border-radius: 6px;
   color: white;
+  height: max-content;
   ${({ $width }) =>
     $width &&
     css`

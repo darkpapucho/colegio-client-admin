@@ -18,6 +18,9 @@ import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearch
 import { useImmerReducer } from 'use-immer';
 import { BoletaNotasReducer } from './reducer';
 import { onCloseModal, requestBoletasSalon, requestSingleBoleta } from './utils';
+import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
+import { EstadoMatricula } from '../../../../types/enums';
+import { useState } from 'react';
 
 const OPTIONS = [
   { label: 'salón', value: 'salon' },
@@ -25,7 +28,7 @@ const OPTIONS = [
 ];
 
 export default function BoletaNotas() {
-  const { grado, seccion } = useGradoSeccionSearchParams();
+  const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
 
   const [{ mode, loading, alumnos, showModal, selectedAlumno }, dispatch] = useImmerReducer(BoletaNotasReducer, {
     mode: 'salon',
@@ -35,13 +38,9 @@ export default function BoletaNotas() {
     selectedAlumno: undefined,
   });
 
-  // const [modo, setModo] = useState<'individual' | 'salon'>('salon');
-  // const [alumnosResult, setAlumnosResult] = useState<AMatriculado[] | undefined>(undefined);
-  // const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(undefined);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [showModal, setShowModal] = useState<boolean>(false);
+  const [showEstadosMatriculaBox, setShowEstadosMatriculaBox] = useState(true);
 
-  useCustomEvent('customSelect', listener);
+  useCustomEvent('customSelect', selectListener);
   return (
     <SimpleLayout title="Boleta de Notas">
       {showModal && selectedAlumno && (
@@ -54,11 +53,19 @@ export default function BoletaNotas() {
           </Button>
         </SelectedAlumnoModal>
       )}
-      <Container $direction="row" $gap="1rem" $padding="1rem" $bgColor={theme.colors.secondary[200]} $width="13rem">
+      <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
         <Select name="modo" defaultValue={OPTIONS[0]} options={OPTIONS} width="11rem" tiny label="modo"></Select>
+        {showEstadosMatriculaBox && <EstadosMatriculaBox setSearchParams={setSearchParams} />}
       </Container>
+
       {mode === 'individual' && <SearchAlumnoBox handler={searchAlumnosBoxHandler} width="30rem" />}
-      {mode === 'salon' && <FilterGradoSeccion isLoading={loading} handler={() => requestBoletasSalon({ dispatch, grado, seccion })} buttonLabel="Generar Libretas" />}
+      {mode === 'salon' && (
+        <FilterGradoSeccion
+          isLoading={loading}
+          handler={() => requestBoletasSalon({ dispatch, grado, seccion, estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[] })}
+          buttonLabel="Generar Libretas"
+        />
+      )}
       {mode === 'individual' && <DisplayAlumnosTable alumnos={alumnos} actionHandler={actionHandler} icon={<BiCheckCircle />}></DisplayAlumnosTable>}
     </SimpleLayout>
   );
@@ -70,10 +77,16 @@ export default function BoletaNotas() {
   function actionHandler(alumno: AMatriculado) {
     dispatch({ type: 'openSelectedAlumnoModal', payload: alumno });
   }
-  function listener(event: CustomEvent) {
+  function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;
+    console.log({ name, value });
     if (name === 'modo') {
       // setModo(value);
+      if (value === 'salon') {
+        setShowEstadosMatriculaBox(true);
+      } else if (value === 'individual') {
+        setShowEstadosMatriculaBox(false);
+      }
       dispatch({ type: 'changeMode', payload: value });
     }
   }
