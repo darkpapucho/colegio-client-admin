@@ -5,10 +5,12 @@ import { MONTH_NAME } from '../../../../../types/enums';
 import { errorHandler } from '../../../../../utils/errorHandler';
 import { updateToken } from '../../../../../utils/utils';
 import { Container } from '../../../../shared/Container';
-import { MONTHS } from '../../Calendario/EnableDays/utils';
+// import { MONTHS } from '../../Calendario/EnableDays/utils';
 import { AsistenciaRecord, AsistenciaValue } from '../types';
-import { dayCellWidth, getAsistenciaValueFromRecords, getBgColorOfCell } from '../utils';
+import { dayCellWidth, getAsistenciaValueFromRecords, getBgColorOfCell, requestRecords } from '../utils';
 import toaster from 'react-hot-toast';
+import { queryClient } from '../../../../../config/query/query';
+import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
 
 const DayCell = styled(Container)`
   color: black;
@@ -20,6 +22,7 @@ const DayCell = styled(Container)`
 `;
 
 export default function MonthBody({ monthName, days, records, alumnoId }: { alumnoId: string; records: AsistenciaRecord[]; monthName: MONTH_NAME; days: number[] }) {
+  const { grado, seccion, searchParams } = useGradoSeccionSearchParams();
   const year = useTypedSelector((state) => state.año);
   return (
     <Container $direction="row" $width="100%">
@@ -77,12 +80,16 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
       if (!window.confirm(`Justificar falta del ${day}-${monthName}?`)) return;
       const currentYear = new Date().getFullYear();
       if (+year !== currentYear) throw new Error(`Esta operación solo se puede realizar el año ${currentYear}`);
-      const MonthNumber = MONTHS.findIndex((month) => month === monthName);
-      const date = new Date(`${MonthNumber}-${day}-${+year}`);
-      const response = await Calendario.justificarFalta({ alumnoId, dayId, date });
+      // const MonthNumber = MONTHS.findIndex((month) => month === monthName);
+      // const date = new Date(`${MonthNumber}-${day}-${+year}`);
+
+      const response = await Calendario.justificarFalta({ alumnoId, dayId, date: new Date() });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       toaster.success('Se justificó la falta exitosamente');
+      //invalidamos la data antigua del query
+      queryClient.invalidateQueries({ queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')] });
+      queryClient.prefetchQuery({ queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')], queryFn: () => requestRecords({ grado, seccion, searchParams }) });
     } catch (err) {
       errorHandler(err);
     }

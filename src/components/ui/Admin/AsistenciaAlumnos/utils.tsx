@@ -1,5 +1,10 @@
-import { MONTH_NAME, VALID_MONTHS } from '../../../../types/enums';
+import Calendario from '../../../../models/Calendario';
+import { PeriodosKey } from '../../../../types/documento';
+import { EstadoMatricula, Grado, MONTH_NAME, Seccion, VALID_MONTHS } from '../../../../types/enums';
+import { errorHandler } from '../../../../utils/errorHandler';
+import { updateToken } from '../../../../utils/utils';
 import { AsistenciaRecord, AsistenciaValue } from './types';
+
 export const alumnoNameCellWidth = 36;
 export const dayCellWidth = 2;
 export function sortMonthNames(monthNames: MONTH_NAME[]) {
@@ -68,5 +73,26 @@ export function getBgColorOfCell({ asistenciaValue, justificado }: { asistenciaV
       return '#C21010';
     default:
       return '#9a9c9c';
+  }
+}
+
+export async function requestRecords({ grado, seccion, searchParams }: { grado: Grado; seccion: Seccion; searchParams: URLSearchParams }) {
+  try {
+    const estadosMatricula = searchParams.get('estadosMatricula') as string | null;
+    if (!estadosMatricula) throw new Error('No se ha seleccionado ningun estado de matricula para la petición');
+    const periodo = searchParams.get('periodo') as PeriodosKey | null;
+
+    if (!periodo || !grado || !seccion) {
+      throw new Error('Debes seleccioon un grado, una sección y un periodo');
+    }
+    console.log({ grado, seccion, periodo, estadosMatricula });
+    const response = await Calendario.getRecordAsistenciaAlumnos({ grado, seccion, periodo, estadosMatricula: estadosMatricula.split('-') as EstadoMatricula[] });
+    updateToken(response);
+    if (!response.data.ok) throw new Error(response.data.message);
+    // console.log(response.data.payload);
+
+    return response.data.payload;
+  } catch (err) {
+    errorHandler(err);
   }
 }

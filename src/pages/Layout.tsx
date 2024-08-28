@@ -3,6 +3,7 @@ import SideBar from '../components/ui/SideBar/SideBar';
 import Header from '../components/ui/Header/Header';
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import useFetchCurrentPeriodo from '../hooks/useFetchCurrentPeriodo';
 
 const LayoutContainer = styled.div<{ $headerHeight: string }>`
   display: grid;
@@ -16,6 +17,7 @@ const LayoutContent = styled.div`
 `;
 
 export default function Layout() {
+  const _currentPeriodoRequest = useFetchCurrentPeriodo();
   const [headerHeight, setHeaderHeight] = useState<string>('60px');
   useEffect(() => {
     const header = document.getElementById('header');

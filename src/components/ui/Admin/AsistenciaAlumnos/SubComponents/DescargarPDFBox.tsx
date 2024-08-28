@@ -17,7 +17,7 @@ const ContainerBox = styled(Container)`
   }
 `;
 
-export default function DescargarPDFBox({ action, setSearchParams }: { setSearchParams: SetURLSearchParams; action: () => void }) {
+export default function DescargarPDFBox({ downloadPDFHandler, setSearchParams }: { setSearchParams: SetURLSearchParams; downloadPDFHandler: () => void }) {
   const [withData, setWithData] = useState(true);
   useCustomEvent('customCheckbox', checkboxListener);
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function DescargarPDFBox({ action, setSearchParams }: { setSearch
       <Container $bgColor={theme.colors.secondary[100]}>
         <CheckBox name="withData" label="CON DATOS" initialState={withData} width="auto"></CheckBox>
       </Container>
-      <Button $primary onClick={action} $width="14rem" $center $height="30px">
+      <Button $primary onClick={downloadPDFHandler} $width="14rem" $center $height="30px">
         DESCARGAR PDF
       </Button>
     </ContainerBox>

@@ -26,6 +26,7 @@ export default class Calendario {
     const response = await axios.post<
       ResponseSchema<{ asistencias: { nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[]; availableDays: { month: MONTH_NAME; day: number }[] }>
     >(API_BASE_URL + ApiEndPoints.GET_RECORD_ASISTENCIA_ALUMNOS, { grado, seccion, periodo, estadosMatricula }, GetHeaders());
+    console.log({ response });
     return response;
   }
   static async setCurrentPeriodo({ periodo }: { periodo: PeriodosKey }) {
