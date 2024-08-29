@@ -20,7 +20,7 @@ import useFetchCurrentPeriodo, { fetchCurrentPeriodo } from '../../../../hooks/u
 export default function CambiarPeriodo() {
   const nivel = useTypedSelector((state) => state.nivel);
   const año = useTypedSelector((state) => state.año);
-  const { data: periodo, isLoading, error } = useFetchCurrentPeriodo();
+  const { currentPeriodo, isLoading, error } = useFetchCurrentPeriodo();
 
   const [newPeriodo, setNewPeriodo] = useState<PeriodosKey | ''>('');
   useCustomEvent('customSelect', listener);
@@ -36,7 +36,7 @@ export default function CambiarPeriodo() {
         <Text $fontSize="medium">Periodo Activo:</Text>
         <Text $primary $fontSize="medium">
           {' '}
-          {periodo ? PERIODOS_BY_KEY[periodo] : ''}
+          {currentPeriodo ? PERIODOS_BY_KEY[currentPeriodo] : ''}
         </Text>
       </Container>
       <Container $direction="column" $gap="2rem">

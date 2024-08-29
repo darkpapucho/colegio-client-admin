@@ -5,7 +5,8 @@ import { PeriodosKey } from '../types/documento';
 
 export default function useFetchCurrentPeriodo() {
   const { data, isLoading, error } = useQuery({ queryKey: ['current-periodo'], queryFn: () => fetchCurrentPeriodo(), refetchOnWindowFocus: false, retry: 5, staleTime: -1 });
-  return { data, isLoading, error };
+
+  return { currentPeriodo: data, isLoading, error };
 }
 
 export async function fetchCurrentPeriodo() {

@@ -27,7 +27,7 @@ export const RegistroNotasContext = createContext<{
 
 export default function RegistroNotas() {
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
-  const { data: currentPeriodo, isLoading: isLoadingCurrentPeriodo, error } = useFetchCurrentPeriodo();
+  const { currentPeriodo, isLoading: isLoadingCurrentPeriodo, error } = useFetchCurrentPeriodo();
   const periodo = searchParams.get('periodo') || 'primerPeriodo';
   const [data, setData] = useState<RegistroNota[] | undefined>(undefined);
   const cursosMap: CursoMap[] | undefined = mapCursosList(data ? data[0] : data); //creamos un mapa de cursos a partir de la cursos que vienen del backend
@@ -41,7 +41,13 @@ export default function RegistroNotas() {
       errorHandler(error);
     }
   }, [error]);
-
+  useEffect(() => {
+    if (!currentPeriodo) return;
+    setSearchParams((old) => {
+      old.set('periodo', currentPeriodo);
+      return old;
+    });
+  }, [currentPeriodo]);
   return (
     <RegistroNotasContext.Provider value={{ isLoading, setIsLoading, setData }}>
       {isLoading || (isLoadingCurrentPeriodo && <Loader />)}

@@ -17,7 +17,7 @@ const LayoutContent = styled.div`
 `;
 
 export default function Layout() {
-  const _currentPeriodoRequest = useFetchCurrentPeriodo();
+  useFetchCurrentPeriodo();
   const [headerHeight, setHeaderHeight] = useState<string>('60px');
   useEffect(() => {
     const header = document.getElementById('header');

@@ -32,7 +32,7 @@ export default function AsistenciaAlumnos() {
   // const year = useTypedSelector((state) => state.año);
   // const currentYear = new Date().getFullYear(); // YYYY
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
-  const { data: currentPeriodo, isLoading, error: currentPeriodoError } = useFetchCurrentPeriodo();
+  const { currentPeriodo, isLoading, error: currentPeriodoError } = useFetchCurrentPeriodo();
   const { data, isFetching, error, refetch } = useQuery({
     queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')],
     queryFn: () => requestRecords({ grado, seccion, searchParams }),
