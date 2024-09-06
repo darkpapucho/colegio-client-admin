@@ -40,6 +40,17 @@ export const PERIODOS_SELECT_OPTIONS = [
   { label: 'cuarto periodo', value: 'cuartoPeriodo' },
 ];
 
+export const MONTHS_SELECT_OPTIONS = [
+  { label: 'marzo', value: 'marzo' },
+  { label: 'abril', value: 'abril' },
+  { label: 'mayo', value: 'mayo' },
+  { label: 'junio', value: 'junio' },
+  { label: 'julio', value: 'julio' },
+  { label: 'agosto', value: 'agosto' },
+  { label: 'septiembre', value: 'septiembre' },
+  { label: 'octubre', value: 'octubre' },
+];
+
 //secundaria
 
 export const CURSOS_SECUNDARIA_BOLETA_NOTAS: CURSO_BOLETA_NOTA[] = [

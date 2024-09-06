@@ -6,8 +6,23 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { ApiEndPoints } from '../enums/apiEndPoints';
 import { PeriodosKey } from '../types/documento';
 import { EstadoMatricula, Grado, MONTH_NAME, Seccion } from '../types/enums';
-import { AsistenciaRecord } from '../components/ui/Admin/AsistenciaAlumnos/types';
+import { AsistenciaRecord, AsistenciaValue } from '../components/ui/Admin/AsistenciaAlumnos/types';
+import { AsistenciaList } from '../hooks/useUpdateAsistenciaList';
+
 export default class Calendario {
+  static async updateAsistenciaList({ asistenciaList }: { asistenciaList: AsistenciaList }) {
+    const API_END_POINT = ApiEndPoints.UPDATE_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID;
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + API_END_POINT, { asistenciaList }, GetHeaders());
+    return response;
+  }
+
+  static async fetchAsistenciaListByGradoSeccionDayId({ grado, seccion, month, dayId, estadosMatricula }) {
+    const response = await axios.post<
+      ResponseSchema<{ asistenciaList: { nombreCompleto: string; asistencia: AsistenciaValue; alumnoId: string }[]; dayId: string; month: MONTH_NAME }>
+    >(API_BASE_URL + ApiEndPoints.FETCH_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID, { grado, seccion, month, dayId, estadosMatricula }, GetHeaders());
+    return response;
+  }
+
   static async justificarFalta({ alumnoId, dayId, date }: { date: Date; alumnoId: string; dayId: string }) {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.JUSTIFICAR_FALTA, { alumnoId, dayId, date }, GetHeaders());
     return response;
@@ -26,7 +41,6 @@ export default class Calendario {
     const response = await axios.post<
       ResponseSchema<{ asistencias: { nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[]; availableDays: { month: MONTH_NAME; day: number }[] }>
     >(API_BASE_URL + ApiEndPoints.GET_RECORD_ASISTENCIA_ALUMNOS, { grado, seccion, periodo, estadosMatricula }, GetHeaders());
-    console.log({ response });
     return response;
   }
   static async setCurrentPeriodo({ periodo }: { periodo: PeriodosKey }) {

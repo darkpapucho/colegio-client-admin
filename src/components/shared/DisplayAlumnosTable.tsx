@@ -20,7 +20,7 @@ export default function DisplayAlumnosTable({
 }) {
   if (!alumnos) return null;
   return (
-    <Table gridTemplateColumns="22rem 8rem 10rem 10rem 5.5rem" width="content-fit" withBorder>
+    <Table gridTemplateColumns="22rem 8rem 10rem 10rem 5.5rem" width="content-fit">
       {alumnos.length > 0 ? (
         <Table.Header>
           <Table.Header.Item $padding="6px 3px">Alumno</Table.Header.Item>

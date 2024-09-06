@@ -9,7 +9,7 @@ import { Text } from '../../../shared/Text';
 import { Container } from '../../../shared/Container';
 import Select from '../../../shared/Select';
 import { PERIODOS_SELECT_OPTIONS } from '../../../../var/globals';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PeriodosKey } from '../../../../types/documento';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import { Button } from '../../../shared/Button';
@@ -20,15 +20,11 @@ import useFetchCurrentPeriodo, { fetchCurrentPeriodo } from '../../../../hooks/u
 export default function CambiarPeriodo() {
   const nivel = useTypedSelector((state) => state.nivel);
   const año = useTypedSelector((state) => state.año);
-  const { currentPeriodo, isLoading, error } = useFetchCurrentPeriodo();
+  const { currentPeriodo, isLoading } = useFetchCurrentPeriodo();
 
   const [newPeriodo, setNewPeriodo] = useState<PeriodosKey | ''>('');
   useCustomEvent('customSelect', listener);
-  useEffect(() => {
-    if (error) {
-      errorHandler(error);
-    }
-  }, [error]);
+
   return (
     <SimpleLayout>
       {isLoading && <Loader />}

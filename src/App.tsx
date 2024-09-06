@@ -21,8 +21,8 @@ import CambiarPeriodo from './components/ui/Admin/CambiarPeriodo/CambiarPeriodo'
 import AsistenciaAlumnos from './components/ui/Admin/AsistenciaAlumnos/AsistenciaAlumnos';
 import Pensiones from './components/ui/Admin/Pensiones/Pensiones';
 import { ErrorPage } from './components/shared/ErrorPage';
-import { Alumno } from './models/alumno';
 import Alumnos from './components/ui/Admin/Alumnos/Alumnos';
+import PasarAsistencia from './components/ui/Admin/PasarAsistencia/PasarAsistencia';
 
 function App() {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ function App() {
             <Route path="admin/cambiar-periodo" element={<CambiarPeriodo />} />
             <Route path="admin/asistencia-alumnos" element={<AsistenciaAlumnos />} />
             <Route path="admin/gestionarpensiones" element={<Pensiones />} />
+            <Route path="admin/pasar-asistencia" element={<PasarAsistencia />} />
             <Route path="admin/alumnos" element={<Alumnos />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>

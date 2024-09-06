@@ -29,6 +29,9 @@ dependencies:
   react:
     specifier: 18.2.0
     version: 18.2.0
+  react-calendar:
+    specifier: 5.0.0
+    version: 5.0.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
@@ -3068,6 +3071,25 @@ packages:
       clsx: 2.1.0
       get-user-locale: 2.3.1
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      warning: 4.0.3
+    dev: false
+
+  /react-calendar@5.0.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-bHcE5e5f+VUKLd4R19BGkcSQLpuwjKBVG0fKz74cwPW5xDfNsReHdDbfd4z3mdjuUuZzVtw4Q920mkwK5/ZOEg==}
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 18.2.15
+      '@wojtekmaj/date-utils': 1.5.1
+      clsx: 2.1.0
+      get-user-locale: 2.3.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       warning: 4.0.3

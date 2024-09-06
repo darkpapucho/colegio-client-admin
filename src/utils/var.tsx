@@ -83,6 +83,7 @@ export const SEXOS_SELECT_OPTION = [
 export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: MenuItem[] } = {
   admin: [
     { icon: <TbReport />, label: 'Alumnos', url: '/menu/admin/alumnos' },
+    { icon: <TbReport />, label: 'Pasar asistencia', url: '/menu/admin/pasar-asistencia' },
     {
       icon: <TbReport />,
       label: 'Reportar tardanza',

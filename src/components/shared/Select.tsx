@@ -5,7 +5,7 @@ import useClickOutside from '../../hooks/useClickOutside';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import { Icon } from './Icon';
 
-const StyledSelect = styled.div<{ $width?: string; $tiny?: boolean; $small?: boolean }>`
+const StyledSelect = styled.div<{ $height?: string; $width?: string; $tiny?: boolean; $small?: boolean; $rect?: boolean }>`
   padding-left: 2px;
   background-color: ${({ theme }) => theme.colors.secondary[500]};
   border-radius: 6px;
@@ -28,6 +28,17 @@ const StyledSelect = styled.div<{ $width?: string; $tiny?: boolean; $small?: boo
       font-size: ${theme.fontSizes.sm};
     `}
   font-family: ${({ theme }) => theme.fontFamily.header};
+
+  ${({ $height }) =>
+    $height &&
+    css`
+      height: ${$height};
+    `}
+  ${({ $rect }) =>
+    $rect &&
+    css`
+      border-radius: 0;
+    `}
 `;
 
 const StyledSelectOpts = styled.div<{ $isOpen: boolean }>`
@@ -70,7 +81,7 @@ const StyledOpt = styled.div<{ $tiny?: boolean; $small?: boolean; $primary?: boo
     border-bottom-right-radius: 6px;
   }
 `;
-const StyledSelectedOpt = styled.div<{ $tiny?: boolean; $small?: boolean }>`
+const StyledSelectedOpt = styled.div<{ $tiny?: boolean; $small?: boolean; $bgColor?: string }>`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -87,6 +98,11 @@ const StyledSelectedOpt = styled.div<{ $tiny?: boolean; $small?: boolean }>`
     css`
       padding: ${theme.padding.sm};
     `}
+    ${({ $bgColor }) =>
+    $bgColor &&
+    css`
+      background-color: ${$bgColor};
+    `}
 `;
 
 //#MAIN FUNCTIONAL COMPONENT
@@ -99,8 +115,11 @@ interface SelectProps<T> {
   small?: boolean;
   tiny?: boolean;
   label: string;
+  height?: string;
+  bgColor?: string;
+  rect?: boolean;
 }
-export default function Select<T>({ name, label, options, width, defaultValue, small, tiny }: SelectProps<T>) {
+export default function Select<T>({ name, label, options, width, defaultValue, small, tiny, bgColor, height, rect }: SelectProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<{ label: string; value: T | null }>(defaultValue ? defaultValue : { label: label, value: null });
   const { ref } = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
@@ -110,8 +129,8 @@ export default function Select<T>({ name, label, options, width, defaultValue, s
   }
 
   return (
-    <StyledSelect $width={width} ref={ref} $small={small} $tiny={tiny}>
-      <StyledSelectedOpt onClick={() => toggle()} $small={small} $tiny={tiny}>
+    <StyledSelect $width={width} ref={ref} $small={small} $tiny={tiny} $height={height} $rect={rect}>
+      <StyledSelectedOpt onClick={() => toggle()} $small={small} $tiny={tiny} $bgColor={bgColor}>
         {selectedOption.label}
         {isOpen ? (
           <Icon $tiny>

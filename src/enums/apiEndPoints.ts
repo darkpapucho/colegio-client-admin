@@ -27,4 +27,6 @@ export enum ApiEndPoints {
   GET_RECORD_ASISTENCIA_ALUMNOS = '/calendario/get-record-asistencias-grado-seccion-periodo',
   JUSTIFICAR_FALTA = '/calendario/justificar-falta',
   GET_ATTENDANCE_LIST = '/documento/get-attendance-list',
+  FETCH_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID = '/calendario/fetch-asistencia-list-by-grado-seccion-day-id',
+  UPDATE_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID = '/calendario/update-asistencia-list-by-grado-seccion-day-id',
 }
