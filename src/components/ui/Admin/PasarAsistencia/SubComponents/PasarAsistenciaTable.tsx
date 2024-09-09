@@ -4,6 +4,7 @@ import Table from '../../../Table/Table';
 import AsistenciaPicker from './AsistenciaPicker';
 import { AsistenciasReducerAction, AsistenciasReducerState } from '../AsistenciasReducer';
 import { Text } from '../../../../shared/Text';
+import { AsistenciaAlumno } from '../types';
 
 export default function PasarAsistenciasTable({ alumnos, dispatch }: { dispatch: React.Dispatch<AsistenciasReducerAction>; alumnos: AsistenciasReducerState }) {
   //$justifyContent="center" $alignItems="center" $headerPadding="5px"$height="30px"
@@ -32,7 +33,12 @@ export default function PasarAsistenciasTable({ alumnos, dispatch }: { dispatch:
           <Fragment key={index}>
             <Table.Body.Item>{index + 1}</Table.Body.Item>
             <Table.Body.Item>
-              <Container $pointer $width="100%" $padding="0 1rem 0 0" $justifyContent="right" onClick={() => onClickAlumnoName(record)}>
+              <Container
+                $pointer={record.asistencia == undefined ? false : true}
+                $width="100%"
+                $padding="0 1rem 0 0"
+                $justifyContent="right"
+                onClick={() => onClickAlumnoName(record)}>
                 {record.nombreCompleto}
               </Container>
             </Table.Body.Item>
@@ -45,18 +51,21 @@ export default function PasarAsistenciasTable({ alumnos, dispatch }: { dispatch:
     </Table>
   );
 
-  function onClickAlumnoName(record) {
-    if (record.asistencia === 'T') return;
-    dispatch({ type: 'updateAsistencia', payload: { alumnoId: record.alumnoId, value: getNextAsistenciaValue(record.asistencia === '' ? 'A' : record.asistencia) } });
+  function onClickAlumnoName(record: AsistenciaAlumno) {
+    if (record.asistencia == undefined) return;
+    // if (record.asistencia === 'T') return;
+    dispatch({ type: 'updateAsistencia', payload: { alumnoId: record.alumnoId, value: getNextAsistenciaValue(record.asistencia) } });
   }
 
-  function getNextAsistenciaValue(asistenciaValue: 'A' | 'F' | 'T') {
-    if (asistenciaValue === 'A') {
+  function getNextAsistenciaValue(asistenciaValue: 'A' | 'F' | 'T' | '') {
+    if (asistenciaValue === '') {
+      return 'A';
+    } else if (asistenciaValue === 'A') {
       return 'F';
     } else if (asistenciaValue === 'F') {
-      return 'A';
-    } else if (asistenciaValue === 'T') {
       return 'T';
+    } else if (asistenciaValue === 'T') {
+      return '';
     } else {
       throw new Error('invalid asistencia value');
     }

@@ -33,7 +33,6 @@ export default function useUpdateAsistenciaList({
   dayId: string | undefined;
   day: number | undefined;
 }) {
-  console.log({ year, registroAsistencia, month, dayId, day });
   const grado = searchParams.get('grado');
   const seccion = searchParams.get('seccion');
   const estadosMatriculaString = searchParams.get('estadosMatricula');
@@ -75,7 +74,7 @@ export async function updateAsistenciaList({
     day,
     month,
     //eliminar nombreCompleto de los records
-    list: registroAsistencia.map((record) => ({ alumnoId: record.alumnoId, asistencia: record.asistencia === '' ? 'A' : record.asistencia })),
+    list: registroAsistencia.map((record) => ({ alumnoId: record.alumnoId, asistencia: record.asistencia })),
   };
   const totalFaltas: number = asistenciaList.list.filter((record) => record.asistencia === 'F').length;
   const totalTardanzas: number = asistenciaList.list.filter((record) => record.asistencia === 'T').length;

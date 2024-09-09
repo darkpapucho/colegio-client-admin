@@ -1,16 +1,17 @@
 import { theme } from '../../../../../config/styled/styled';
+import { Container } from '../../../../shared/Container';
 // import { Container } from '../../../../shared/Container';
 import Select from '../../../../shared/Select';
 import { AsistenciaValue } from '../../AsistenciaAlumnos/types';
 
 export default function AsistenciaPicker({ alumnoId, value }: { value: AsistenciaValue; alumnoId: string }) {
-  // if (value === 'T') {
-  //   return (
-  //     <Container $height="24px" $width="100%" $bgColor={theme.colors.red[500]} $color="white" $justifyContent="center" $alignItems="center">
-  //       {value}
-  //     </Container>
-  //   );
-  // }
+  if (value == undefined) {
+    return (
+      <Container $height="24px" $width="100%" $bgColor={theme.colors.tertiary[500]} $color="white" $justifyContent="center" $alignItems="center">
+        {'X'}
+      </Container>
+    );
+  }
   return (
     <Select
       tiny

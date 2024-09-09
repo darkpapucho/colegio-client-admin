@@ -86,19 +86,21 @@ export default function PasarAsistencia() {
 
           {selectedMonth && (
             <Container $direction="row" $gap="0.5rem">
-              {months[selectedMonth].map((element) => {
-                return (
-                  <Container
-                    key={element._id}
-                    $padding=".5rem"
-                    $border="1px solid black"
-                    $bgColor={selectedDay?._id === element._id ? theme.colors.primary[100] : theme.colors.secondary[100]}
-                    $pointer
-                    onClick={() => setSelectedDay(element)}>
-                    {element.day}
-                  </Container>
-                );
-              })}
+              {months[selectedMonth]
+                .sort((prev, curr) => (prev.day > curr.day ? 1 : -1))
+                .map((element) => {
+                  return (
+                    <Container
+                      key={element._id}
+                      $padding=".5rem"
+                      $border="1px solid black"
+                      $bgColor={selectedDay?._id === element._id ? theme.colors.primary[100] : theme.colors.secondary[100]}
+                      $pointer
+                      onClick={() => setSelectedDay(element)}>
+                      {element.day}
+                    </Container>
+                  );
+                })}
             </Container>
           )}
         </Container>
@@ -120,12 +122,14 @@ export default function PasarAsistencia() {
       </SimpleLayout>
     </>
   );
+
   function monthSelectListener(event: CustomEvent) {
     const { name, value } = event.detail;
+    const currentMonthName = getCurrentMonthName();
     if (name === 'month') {
       setSelectedMonth(value);
 
-      if (value !== getCurrentMonthName()) {
+      if (value !== currentMonthName) {
         setSelectedDay(undefined);
       } else {
         setSelectedDay(getClosestDay(months, selectedMonth));

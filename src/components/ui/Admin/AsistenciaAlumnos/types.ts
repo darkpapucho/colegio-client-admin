@@ -1,6 +1,6 @@
 import { MONTH_NAME } from '../../../../types/enums';
 
-export type AsistenciaValue = '' | 'A' | 'F' | 'T';
+export type AsistenciaValue = '' | 'A' | 'F' | 'T' | undefined;
 export type AsistenciaRecord = {
   day: number;
   month: MONTH_NAME;
