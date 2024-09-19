@@ -11,6 +11,7 @@ import { setAño } from '../../../config/redux/año/slice';
 import { AÑOS_SELECT_OPTIONS, NIVELES_SELECT_OPTIONS } from '../../../utils/var';
 import { setNivel } from '../../../config/redux/nivel/slice';
 import { HandleLogOut } from '../../../utils/utils';
+import { Text } from '../../shared/Text';
 
 const StyledHeader = styled.div`
   grid-column: 2 / span 8;
@@ -26,9 +27,19 @@ const StyledHeader = styled.div`
 `;
 const Box = styled.div`
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  gap: 0.5rem;
   text-transform: capitalize;
+  @media (min-width: ${({ theme }) => theme.mediaScreen.small}) {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  button {
+    align-self: flex-end;
+  }
 `;
 export default function Header() {
   const { data } = useTypedSelector((state) => state.user);
@@ -48,8 +59,10 @@ export default function Header() {
         </Box>
       )}
       <Box>
-        {data?.nombres + ' ' + data?.apellidos}
-        <Button $danger $small onClick={() => HandleLogOut()}>
+        <Text $bold $fontSize="small">
+          {data?.nombres + ' ' + data?.apellidos}
+        </Text>
+        <Button $danger $small onClick={() => HandleLogOut()} $width="max-content">
           Salir <FaPowerOff />
         </Button>
         <Icon $interactive $small $pointer>

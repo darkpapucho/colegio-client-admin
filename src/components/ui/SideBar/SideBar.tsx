@@ -23,7 +23,10 @@ const Item = styled(NavLink)<{ $active: boolean }>`
     $active &&
     css`
       box-shadow: 0 0 2px black;
-    `}
+    `}/* display: none;
+  @media (min-width: ${({ theme }) => theme.mediaScreen.small}) {
+    display: block;
+  } */
 `;
 
 const SideMenuContainer = styled.aside`
