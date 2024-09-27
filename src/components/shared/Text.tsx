@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Size, WidthCss } from '../../types/globals';
 
-export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: boolean; $width?: WidthCss; $textAlign?: string }>`
+export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: boolean; $width?: WidthCss; $textAlign?: string; $color?: string }>`
   padding: 0;
   margin: 0;
   ${({ $primary, theme }) =>
@@ -46,6 +46,11 @@ export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: b
     $width &&
     css`
       width: ${$width};
+    `};
+  ${({ $color }) =>
+    $color &&
+    css`
+      color: ${$color};
     `};
   /* text-align: right; */
 `;

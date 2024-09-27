@@ -72,4 +72,12 @@ export default class Calendario {
     const response = await axios.post<ResponseSchema<null | { _id: string }>>(API_BASE_URL + ApiEndPoints.FETCH_DAY_ID, { date }, GetHeaders());
     return response;
   }
+  static async fetchTodayTardanzaList({ dayId }: { dayId: string }) {
+    const response = await axios.post<ResponseSchema<{ _id: string; nombreCompleto: string; grado: Grado; seccion: Seccion; records: AsistenciaRecord[] }[]>>(
+      API_BASE_URL + ApiEndPoints.FETCH_TODAY_TARDANZA_LIST,
+      { dayId },
+      GetHeaders(),
+    );
+    return response;
+  }
 }
