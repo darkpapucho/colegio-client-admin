@@ -20,12 +20,12 @@ export default function DisplayAlumnosTable({
 }) {
   if (!alumnos) return null;
   return (
-    <Table gridTemplateColumns="30rem 8rem 10rem 10rem 5.5rem" width="content-fit">
+    <Table gridTemplateColumns="30rem 10rem 5.5rem" width="content-fit">
       {alumnos.length > 0 ? (
         <Table.Header>
           <Table.Header.Item $padding="6px 3px">Alumno</Table.Header.Item>
-          <Table.Header.Item $padding="6px 3px">DNI</Table.Header.Item>
-          <Table.Header.Item $padding="6px 3px">Est. Matrícula</Table.Header.Item>
+          {/* <Table.Header.Item $padding="6px 3px">DNI</Table.Header.Item>
+          <Table.Header.Item $padding="6px 3px">Est. Matrícula</Table.Header.Item> */}
           <Table.Header.Item $padding="6px 3px">Grado</Table.Header.Item>
           <Table.Header.Item $padding="6px 3px"> Action</Table.Header.Item>
         </Table.Header>
@@ -37,12 +37,12 @@ export default function DisplayAlumnosTable({
               <Table.Body.Item $key={index} $padding="4px">
                 {alumno.nombreCompleto}
               </Table.Body.Item>
-              <Table.Body.Item $key={index} $padding="4px">
+              {/* <Table.Body.Item $key={index} $padding="4px">
                 {alumno.dni}
               </Table.Body.Item>
               <Table.Body.Item $key={index} $padding="4px">
                 {alumno.estadoMatricula}
-              </Table.Body.Item>
+              </Table.Body.Item> */}
               <Table.Body.Item $key={index} $padding="4px">
                 {alumno.grado + ' ' + alumno.seccion}{' '}
               </Table.Body.Item>

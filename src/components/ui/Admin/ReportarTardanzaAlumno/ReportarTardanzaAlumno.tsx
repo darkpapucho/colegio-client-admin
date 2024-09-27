@@ -49,7 +49,7 @@ export default function ReportarTardanzaAlumno() {
             <SearchAlumnoBox width="40rem" handler={setAlumnos}></SearchAlumnoBox>
             {alumnos.length > 0 && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
           </Container>
-          {tardanzaList && tardanzaList.length && (
+          {tardanzaList && tardanzaList.length > 0 && (
             <Container $direction="column" $gap="1rem">
               <Text $fontSize="medium" $color="red" $bold>
                 Víctimas de Selena
