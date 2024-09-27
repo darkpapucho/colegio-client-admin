@@ -19,14 +19,18 @@ import Table from '../../Table/Table';
 // import { Icon } from '../../../shared/Icon';
 import { Text } from '../../../shared/Text';
 import { queryClient } from '../../../../config/query/query';
+import { convertGradoToIndex } from '../../../../utils/convertGradoToIndex';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import { Nivel } from '../../../../types/enums';
 
 export default function ReportarTardanzaAlumno() {
   const today = new Date();
   const presentDate = today.toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+  const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [alumnos, setAlumnos] = useState<AMatriculado[]>([]);
-  const { data, isLoading } = useQuery({ queryKey: ['dayId'], queryFn: () => fetchDayId(), refetchOnWindowFocus: false });
+  const { data, isLoading } = useQuery({ queryKey: ['dayId', nivel], queryFn: () => fetchDayId(), refetchOnWindowFocus: false });
   const { data: tardanzaList, isLoading: isFetching } = useQuery({
-    queryKey: ['tardanza-list', data],
+    queryKey: ['tardanza-list', data, nivel],
     queryFn: () => fetchTodayTardanzaList(data?._id),
     enabled: data != undefined,
     refetchOnWindowFocus: false,
@@ -73,27 +77,31 @@ export default function ReportarTardanzaAlumno() {
                   </Table.Header.Item> */}
                 </Table.Header>
                 <Table.Body>
-                  {tardanzaList.map((ele, index) => {
-                    return (
-                      <Fragment key={ele._id}>
-                        {' '}
-                        <Table.Body.Item $key={index} $padding="0.5rem">
-                          <Text $textAlign="left" $width="100%">
-                            {' '}
-                            {`[${index + 1}]-` + ele.nombreCompleto}
-                          </Text>
-                        </Table.Body.Item>
-                        <Table.Body.Item $key={index} $padding="0.5rem">
-                          {ele.grado + ' ' + ele.seccion}
-                        </Table.Body.Item>
-                        {/* <Table.Body.Item $key={index} $padding="0.5rem">
+                  {tardanzaList
+                    .sort((prev, curr) => {
+                      return convertGradoToIndex(prev.grado) > convertGradoToIndex(curr.grado) ? 1 : -1;
+                    })
+                    .map((ele, index) => {
+                      return (
+                        <Fragment key={ele._id}>
+                          {' '}
+                          <Table.Body.Item $key={index} $padding="0.5rem">
+                            <Text $textAlign="left" $width="100%">
+                              {' '}
+                              {`[${index + 1}]-` + ele.nombreCompleto}
+                            </Text>
+                          </Table.Body.Item>
+                          <Table.Body.Item $key={index} $padding="0.5rem">
+                            {ele.grado + ' ' + ele.seccion}
+                          </Table.Body.Item>
+                          {/* <Table.Body.Item $key={index} $padding="0.5rem">
                           <Icon $small $color="red">
                             <FaRegTrashAlt />
                           </Icon>
                         </Table.Body.Item> */}
-                      </Fragment>
-                    );
-                  })}
+                        </Fragment>
+                      );
+                    })}
                 </Table.Body>
               </Table>
             </Container>
@@ -127,8 +135,8 @@ export default function ReportarTardanzaAlumno() {
       const response = await Calendario.reportarTardanzaAlumno({ dayId: data._id, alumnoId: alumno._id });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
-      queryClient.invalidateQueries({ queryKey: ['tardanza-list', data] });
-      queryClient.prefetchQuery({ queryKey: ['tardanza-list', data], queryFn: () => fetchTodayTardanzaList(data?._id) });
+      queryClient.invalidateQueries({ queryKey: ['tardanza-list', data, nivel] });
+      queryClient.prefetchQuery({ queryKey: ['tardanza-list', data, nivel], queryFn: () => fetchTodayTardanzaList(data?._id) });
       toaster.success('Tardanza reportada');
     } catch (err) {
       errorHandler(err);
