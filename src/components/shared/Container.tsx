@@ -17,7 +17,7 @@ export type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   display: flex;
-  height: max-content;
+  height: 100%;
   //pointer
   ${({ $pointer }) =>
     $pointer &&

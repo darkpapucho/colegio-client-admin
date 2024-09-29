@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import SearchAlumnoBox from '../../../shared/SearchAlumnoBox';
 import SimpleLayout from '../../../shared/SimpleLayout';
 import { AMatriculado } from '../../../../types/alumno';
@@ -10,18 +10,14 @@ import { updateToken } from '../../../../utils/utils';
 import Loader from '../../Loader/Loader';
 import { errorHandler } from '../../../../utils/errorHandler';
 import toaster from 'react-hot-toast';
-
 import ErrorPageMessage from '../../../shared/ErrorPageMessage';
 import { ErrorPage } from '../../../shared/ErrorPage';
-// import { FaRegTrashAlt } from 'react-icons/fa';
 import { Container } from '../../../shared/Container';
-import Table from '../../Table/Table';
-// import { Icon } from '../../../shared/Icon';
-import { Text } from '../../../shared/Text';
 import { queryClient } from '../../../../config/query/query';
-import { convertGradoToIndex } from '../../../../utils/convertGradoToIndex';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Nivel } from '../../../../types/enums';
+import { Title } from '../../../shared/Title';
+import ListaTardanzas from './ListaTardanzas';
 
 export default function ReportarTardanzaAlumno() {
   const today = new Date();
@@ -47,65 +43,15 @@ export default function ReportarTardanzaAlumno() {
   return (
     <>
       {(loading || isLoading || isFetching) && <Loader />}
-      <SimpleLayout title={`Reporte de tardanzas ${presentDate}`}>
+      <SimpleLayout>
+        {/* <Title>{`Reporte de tardanzas `}</Title> */}
+        <Title>{'Tardanzas ' + presentDate}</Title>
         <Container $direction="column" $gap="1rem">
           <Container $direction="column" $gap="1rem">
             <SearchAlumnoBox width="40rem" handler={setAlumnos}></SearchAlumnoBox>
             {alumnos.length > 0 && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
           </Container>
-          {tardanzaList && tardanzaList.length > 0 && (
-            <Container $direction="column" $gap="1rem">
-              <Text $fontSize="medium" $color="red" $bold>
-                Víctimas de Selena
-              </Text>
-              <Table gridTemplateColumns="30rem 10rem" width="content-fit">
-                <Table.Header>
-                  <Table.Header.Item $padding="0.5rem">
-                    <Text $width="100%" $textAlign="center" $bold $fontSize="small">
-                      ALUMNO{' '}
-                    </Text>
-                  </Table.Header.Item>
-                  <Table.Header.Item $padding="0.5rem">
-                    <Text $width="100%" $textAlign="center" $bold $fontSize="small">
-                      GRADO
-                    </Text>
-                  </Table.Header.Item>
-                  {/* <Table.Header.Item $padding="0.5rem">
-                    <Text $width="100%" $textAlign="center" $bold $fontSize="small">
-                      {'A'}
-                    </Text>
-                  </Table.Header.Item> */}
-                </Table.Header>
-                <Table.Body>
-                  {tardanzaList
-                    .sort((prev, curr) => {
-                      return convertGradoToIndex(prev.grado) > convertGradoToIndex(curr.grado) ? 1 : -1;
-                    })
-                    .map((ele, index) => {
-                      return (
-                        <Fragment key={ele._id}>
-                          {' '}
-                          <Table.Body.Item $key={index} $padding="0.5rem">
-                            <Text $textAlign="left" $width="100%">
-                              {' '}
-                              {`[${index + 1}]-` + ele.nombreCompleto}
-                            </Text>
-                          </Table.Body.Item>
-                          <Table.Body.Item $key={index} $padding="0.5rem">
-                            {ele.grado + ' ' + ele.seccion}
-                          </Table.Body.Item>
-                          {/* <Table.Body.Item $key={index} $padding="0.5rem">
-                          <Icon $small $color="red">
-                            <FaRegTrashAlt />
-                          </Icon>
-                        </Table.Body.Item> */}
-                        </Fragment>
-                      );
-                    })}
-                </Table.Body>
-              </Table>
-            </Container>
-          )}
+          {tardanzaList && tardanzaList.length > 0 && <ListaTardanzas tardanzasList={tardanzaList} />}
         </Container>
       </SimpleLayout>
     </>

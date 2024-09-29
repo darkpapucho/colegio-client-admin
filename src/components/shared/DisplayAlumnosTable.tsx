@@ -4,6 +4,8 @@ import Table from '../ui/Table/Table';
 import { Icon } from './Icon';
 
 import { ErrorMessage } from './ErrorMessage';
+import { convertGradoToIndex } from '../../utils/convertGradoToIndex';
+import { Container } from './Container';
 
 export default function DisplayAlumnosTable({
   alumnos,
@@ -20,7 +22,7 @@ export default function DisplayAlumnosTable({
 }) {
   if (!alumnos) return null;
   return (
-    <Table gridTemplateColumns="30rem 10rem 5.5rem" width="content-fit">
+    <Table gridTemplateColumns="26rem 10rem 5.5rem" width="content-fit">
       {alumnos.length > 0 ? (
         <Table.Header>
           <Table.Header.Item $padding="6px 3px">Alumno</Table.Header.Item>
@@ -32,27 +34,31 @@ export default function DisplayAlumnosTable({
       ) : null}
       {alumnos.length > 0 ? (
         <Table.Body>
-          {alumnos.map((alumno, index) => (
-            <Fragment key={index}>
-              <Table.Body.Item $key={index} $padding="4px">
-                {alumno.nombreCompleto}
-              </Table.Body.Item>
-              {/* <Table.Body.Item $key={index} $padding="4px">
+          {alumnos
+            .sort((prev, curr) => (convertGradoToIndex(prev.grado) > convertGradoToIndex(curr.grado) ? 1 : -1))
+            .map((alumno, index) => (
+              <Fragment key={index}>
+                <Table.Body.Item $key={index} $padding="4px">
+                  <Container $justifyContent="flex-end" $width="100%" $alignItems="center">
+                    {alumno.nombreCompleto}
+                  </Container>
+                </Table.Body.Item>
+                {/* <Table.Body.Item $key={index} $padding="4px">
                 {alumno.dni}
               </Table.Body.Item>
               <Table.Body.Item $key={index} $padding="4px">
                 {alumno.estadoMatricula}
               </Table.Body.Item> */}
-              <Table.Body.Item $key={index} $padding="4px">
-                {alumno.grado + ' ' + alumno.seccion}{' '}
-              </Table.Body.Item>
-              <Table.Body.Item $key={index} $padding="4px">
-                <Icon $primary $pointer $small onClick={() => actionHandler(alumno)}>
-                  {icon}
-                </Icon>
-              </Table.Body.Item>
-            </Fragment>
-          ))}
+                <Table.Body.Item $key={index} $padding="4px">
+                  {alumno.grado + ' ' + alumno.seccion}{' '}
+                </Table.Body.Item>
+                <Table.Body.Item $key={index} $padding="4px">
+                  <Icon $primary $pointer $small onClick={() => actionHandler(alumno)}>
+                    {icon}
+                  </Icon>
+                </Table.Body.Item>
+              </Fragment>
+            ))}
         </Table.Body>
       ) : (
         <ErrorMessage message="no hubo resultados" align="center"></ErrorMessage>

@@ -29,8 +29,8 @@ export default function SearchAlumnoBox({ width, handler, signal }: { width: Wid
   }, [signal]);
 
   return (
-    <Container $direction="column" $width={width} onKeyDown={(event) => keyEvent(event)}>
-      <Container $direction="row" $width={width} $bgColor={theme.colors.secondary[200]} $padding={theme.padding.md}>
+    <Container $direction="column" $width={width} onKeyDown={(event) => keyEvent(event)} $height="max-content">
+      <Container $direction="row" $width={width} $bgColor={theme.colors.secondary[200]} $padding={theme.padding.md} $height="max-content">
         <Input label="alumno" type="text" $width={width} name="searchBox" ref={searchBoxRef} />
         <Button onClick={() => refetch()} disabled={isFetching} $primary ref={buttonRef}>
           Buscar
