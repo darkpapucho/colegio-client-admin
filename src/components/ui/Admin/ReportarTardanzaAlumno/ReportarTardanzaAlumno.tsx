@@ -84,6 +84,9 @@ export default function ReportarTardanzaAlumno() {
       queryClient.invalidateQueries({ queryKey: ['tardanza-list', data, nivel] });
       queryClient.prefetchQuery({ queryKey: ['tardanza-list', data, nivel], queryFn: () => fetchTodayTardanzaList(data?._id) });
       toaster.success('Tardanza reportada');
+      // const seachAlumnoInput: HTMLInputElement = document.querySelector('#searchAlumnoBox')!;
+      // console.log({ seachAlumnoInput });
+      // seachAlumnoInput.focus();
     } catch (err) {
       errorHandler(err);
     } finally {

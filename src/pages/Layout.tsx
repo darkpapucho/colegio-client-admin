@@ -17,7 +17,7 @@ const LayoutContainer = styled.div<{ $headerHeight: string }>`
 const LayoutContent = styled.div`
   grid-row: 2 / span 1;
   grid-column: 2 / span 8;
-
+  overflow: scroll;
   @media (min-width: ${theme.mediaScreen.small}) {
     grid-row: 2 / span 1;
     grid-column: 3 / span 7;
