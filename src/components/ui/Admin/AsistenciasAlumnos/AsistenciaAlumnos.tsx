@@ -1,7 +1,8 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Container } from '../../../shared/Container';
 
 import MultiTabs from '../../../shared/Widget/MultiTabs';
+import { useEffect } from 'react';
 
 const tabs = [
   { label: 'TARDANZAS', url: 'reportar-tardanzas' },
@@ -10,6 +11,10 @@ const tabs = [
 ];
 
 export default function AsistenciaAlumnos() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('reportar-tardanzas');
+  }, []);
   return (
     <Container $direction="column" $padding="2rem">
       <MultiTabs tabs={tabs}></MultiTabs>

@@ -78,8 +78,8 @@ export default function RegistroAsistenciaAlumnos() {
                     name="periodo"
                     label="periodo"
                     tiny></Select>
-                  <Select defaultValue={grados[nivel][0]} options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
-                  <Select defaultValue={SECCIONES_SELECT_OPTIONS[0]} options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
+                  <Select options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
+                  <Select options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
                   <Button $primary onClick={() => refetch()} $height="30px">
                     REQUEST
                   </Button>

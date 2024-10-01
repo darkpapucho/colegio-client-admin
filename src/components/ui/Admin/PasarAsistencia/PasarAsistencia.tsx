@@ -107,8 +107,8 @@ export default function PasarAsistencia() {
           )}
         </Container>
         <Container $gap="1rem">
-          <Select defaultValue={grados[nivel][0]} options={grados[nivel]} name="grado" label="grado" width={nivel === 'primaria' ? '9rem' : '11rem'} tiny></Select>
-          <Select defaultValue={SECCIONES_SELECT_OPTIONS[0]} options={SECCIONES_SELECT_OPTIONS} label="seccion" name="seccion" tiny></Select>
+          <Select options={grados[nivel]} name="grado" label="grado" width={nivel === 'primaria' ? '9rem' : '11rem'} tiny></Select>
+          <Select options={SECCIONES_SELECT_OPTIONS} label="seccion" name="seccion" tiny></Select>
           <Button $primary onClick={() => fetchAsistenciaList()}>
             Descargar Lista
           </Button>
