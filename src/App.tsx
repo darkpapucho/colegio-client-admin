@@ -18,10 +18,11 @@ import EnableDays from './components/ui/Admin/Calendario/EnableDays/EnableDays';
 import DisplayCalendar from './components/ui/Admin/Calendario/DisplayCalendar/DisplayCalendar';
 import ReportarTardanzaAlumno from './components/ui/Admin/ReportarTardanzaAlumno/ReportarTardanzaAlumno';
 import CambiarPeriodo from './components/ui/Admin/CambiarPeriodo/CambiarPeriodo';
-import AsistenciaAlumnos from './components/ui/Admin/AsistenciaAlumnos/AsistenciaAlumnos';
+import AsistenciaAlumnos from './components/ui/Admin/AsistenciasAlumnos/AsistenciaAlumnos';
 import Pensiones from './components/ui/Admin/Pensiones/Pensiones';
 import { ErrorPage } from './components/shared/ErrorPage';
 import Alumnos from './components/ui/Admin/Alumnos/Alumnos';
+import RegistroAsistenciaAlumnos from './components/ui/Admin/RegistroAsistenciaAlumnos/RegistroAsistenciaAlumnos';
 import PasarAsistencia from './components/ui/Admin/PasarAsistencia/PasarAsistencia';
 
 function App() {
@@ -46,9 +47,13 @@ function App() {
             <Route path="admin/calendario/display-calendar" element={<DisplayCalendar />} />
             <Route path="admin/reportar-tardanza-alumno" element={<ReportarTardanzaAlumno />} />
             <Route path="admin/cambiar-periodo" element={<CambiarPeriodo />} />
-            <Route path="admin/asistencia-alumnos" element={<AsistenciaAlumnos />} />
+            <Route path="admin/asistencia-alumnos" element={<AsistenciaAlumnos />}>
+              <Route path="reportar-tardanzas" element={<ReportarTardanzaAlumno />}></Route>
+              <Route path="pasar-asistencia" element={<PasarAsistencia />}></Route>
+              <Route path="registro-asistencia" element={<RegistroAsistenciaAlumnos />}></Route>
+            </Route>
             <Route path="admin/gestionarpensiones" element={<Pensiones />} />
-            <Route path="admin/pasar-asistencia" element={<PasarAsistencia />} />
+
             <Route path="admin/alumnos" element={<Alumnos />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>

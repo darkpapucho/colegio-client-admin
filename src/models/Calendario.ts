@@ -6,7 +6,7 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { ApiEndPoints } from '../enums/apiEndPoints';
 import { PeriodosKey } from '../types/documento';
 import { EstadoMatricula, Grado, MONTH_NAME, Seccion } from '../types/enums';
-import { AsistenciaRecord, AsistenciaValue } from '../components/ui/Admin/AsistenciaAlumnos/types';
+import { AsistenciaRecord, AsistenciaValue } from '../components/ui/Admin/RegistroAsistenciaAlumnos/types';
 import { AsistenciaList } from '../hooks/useUpdateAsistenciaList';
 
 export default class Calendario {

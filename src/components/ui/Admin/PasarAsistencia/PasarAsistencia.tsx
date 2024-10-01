@@ -10,7 +10,7 @@ import { grados, SECCIONES_SELECT_OPTIONS } from '../../../../utils/var';
 import { MONTHS_SELECT_OPTIONS } from '../../../../var/globals';
 import { Container } from '../../../shared/Container';
 import Select from '../../../shared/Select';
-import SimpleLayout from '../../../shared/SimpleLayout';
+
 import { theme } from '../../../../config/styled/styled';
 import Loader from '../../Loader/Loader';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
@@ -23,6 +23,7 @@ import PasarAsistenciasTable from './SubComponents/PasarAsistenciaTable';
 import { useImmerReducer } from 'use-immer';
 import AsistenciasReducer, { AsistenciasReducerState, AsistenciasReducerAction } from './AsistenciasReducer';
 import useUpdateAsistenciaList from '../../../../hooks/useUpdateAsistenciaList';
+import { Title } from '../../../shared/Title';
 
 export default function PasarAsistencia() {
   const year = useTypedSelector((state) => state.año)!;
@@ -67,7 +68,8 @@ export default function PasarAsistencia() {
   return (
     <>
       {isUpdating || isLoadingCalendario || isLoading || (isFetching && <Loader />)}
-      <SimpleLayout title="Pasar asistencia">
+      <Container $direction="column" $gap="1rem" $padding="2rem 0" $height="max-content">
+        <Title>Pasar asistencia</Title>
         <Container $direction="column" $gap="1rem">
           <EstadosMatriculaBox setSearchParams={setSearchParams} />
           <Container $direction="row" $gap="1rem">
@@ -119,7 +121,7 @@ export default function PasarAsistencia() {
             <PasarAsistenciasTable dispatch={dispatch} alumnos={registroAsistencia} />
           </Container>
         )}
-      </SimpleLayout>
+      </Container>
     </>
   );
 

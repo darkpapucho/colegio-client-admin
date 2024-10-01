@@ -1,4 +1,3 @@
-import SimpleLayout from '../../../shared/SimpleLayout';
 import '../Calendario/EnableDays/Calendar.css';
 import '../Calendario/EnableDays/DateTimeRangePicker.css';
 import { useEffect } from 'react';
@@ -27,7 +26,7 @@ import useFetchCurrentPeriodo from '../../../../hooks/useFetchCurrentPeriodo';
 import { convertPeriodoKeyToLabel } from '../../../../utils/periodo';
 import { requestRecords } from './utils';
 
-export default function AsistenciaAlumnos() {
+export default function RegistroAsistenciaAlumnos() {
   const nivel: Nivel = useTypedSelector((state) => state.nivel) as Nivel;
   // const year = useTypedSelector((state) => state.año);
   // const currentYear = new Date().getFullYear(); // YYYY
@@ -39,8 +38,9 @@ export default function AsistenciaAlumnos() {
     enabled: false,
     refetchOnWindowFocus: false,
     retry: false,
+    refetchOnMount: false,
   });
-  console.log({ data });
+  // console.log({ data });
   // const [estadosMatricula, setEstadosMatricula] = useState<Set<EstadoMatricula>>(new Set(['DEFINITIVA', 'EN PROCESO']));
 
   useCustomEvent('customSelect', periodoListener);
@@ -52,7 +52,6 @@ export default function AsistenciaAlumnos() {
     return;
   }, [error]);
 
-  console.log({ currentPeriodo });
   useEffect(() => {
     if (currentPeriodo) {
       setSearchParams((old) => {
@@ -61,31 +60,32 @@ export default function AsistenciaAlumnos() {
       });
     }
   }, [currentPeriodo]);
+
   return (
     <>
       {(isFetching || isLoading) && <Loader />}
       <>
         {currentPeriodo && (
-          <SimpleLayout>
+          <Container $padding="2rem 0" $height="max-content" $direction="column" $gap="1rem">
             <Container $direction="row" $gap="0.5rem">
               <Container $direction="column" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[200]} $padding="0.5rem">
-                <Container $direction="row" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[100]} $padding="0.5rem">
+                <Container $direction="row" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[100]} $padding="0.5rem" $alignItems="center">
                   <Select
                     key={currentPeriodo}
                     defaultValue={{ label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : ('primerPeriodo' as PeriodosKey)), value: currentPeriodo || 'primerPeriodo' }}
                     options={PERIODOS_SELECT_OPTIONS}
-                    width="14rem"
+                    width="13rem"
                     name="periodo"
                     label="periodo"
                     tiny></Select>
-                  <Select options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
-                  <Select options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
+                  <Select defaultValue={grados[nivel][0]} options={grados[nivel]} width={nivel == 'inicial' ? '11rem' : '9rem'} name="grado" label="grado" tiny></Select>
+                  <Select defaultValue={SECCIONES_SELECT_OPTIONS[0]} options={SECCIONES_SELECT_OPTIONS} width="8rem" name="seccion" label="seccion" tiny></Select>
+                  <Button $primary onClick={() => refetch()} $height="30px">
+                    REQUEST
+                  </Button>
                 </Container>
                 <EstadosMatriculaBox setSearchParams={setSearchParams} />
               </Container>
-              <Button $primary onClick={() => refetch()} $height="30px">
-                REQUEST
-              </Button>
             </Container>
             <DescargarPDFBox setSearchParams={setSearchParams} downloadPDFHandler={generateAttendanceListPDF} />
             {data?.asistencias && data.asistencias.length > 0 && (
@@ -95,7 +95,7 @@ export default function AsistenciaAlumnos() {
                 </Container>
               </>
             )}
-          </SimpleLayout>
+          </Container>
         )}
       </>
     </>

@@ -1,4 +1,4 @@
-import { AsistenciaValue } from '../AsistenciaAlumnos/types';
+import { AsistenciaValue } from '../RegistroAsistenciaAlumnos/types';
 import { AsistenciaAlumno } from './types';
 
 export type AsistenciasReducerState = AsistenciaAlumno[];

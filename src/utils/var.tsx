@@ -1,7 +1,6 @@
 import { MenuItem } from '../types/globals';
 import { HiAcademicCap } from 'react-icons/hi';
 import { FiUserPlus, FiUsers } from 'react-icons/fi';
-import { TbReport } from 'react-icons/tb';
 import { PiBookOpenTextLight } from 'react-icons/pi';
 import { CgUserAdd, CgUserList, CgUserRemove } from 'react-icons/cg';
 import { RxCalendar } from 'react-icons/rx';
@@ -82,13 +81,18 @@ export const SEXOS_SELECT_OPTION = [
 
 export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: MenuItem[] } = {
   admin: [
-    // { icon: <TbReport />, label: 'Alumnos', url: '/menu/admin/alumnos' },
-    { icon: <TbReport />, label: 'Pasar asistencia', url: '/menu/admin/pasar-asistencia' },
     {
-      icon: <TbReport />,
-      label: 'Reportar tardanza',
-      url: '/menu/admin/reportar-tardanza-alumno',
+      icon: <PiListChecksBold />,
+      label: 'Asistencia Alumnos',
+      url: '/menu/admin/asistencia-alumnos',
     },
+    // { icon: <TbReport />, label: 'Alumnos', url: '/menu/admin/alumnos' },
+    // { icon: <TbReport />, label: 'Pasar asistencia', url: '/menu/admin/pasar-asistencia' },
+    // {
+    //   icon: <TbReport />,
+    //   label: 'Reportar tardanza',
+    //   url: '/menu/admin/reportar-tardanza-alumno',
+    // },
     {
       icon: <CgUserAdd />,
       label: 'Nueva Matrícula',
@@ -144,11 +148,7 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
     //   label: 'Descargar Files-Notas',
     //   url: '/menu/admin/manejarnotasprofesores',
     // },
-    {
-      icon: <PiListChecksBold />,
-      label: 'Asistencia Alumnos',
-      url: '/menu/admin/asistencia-alumnos',
-    },
+
     // {
     //   icon: <PiUsersFourBold />,
     //   label: 'Gestionar Empleados',

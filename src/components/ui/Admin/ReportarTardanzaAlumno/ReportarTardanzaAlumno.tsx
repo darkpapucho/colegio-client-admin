@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import SearchAlumnoBox from '../../../shared/SearchAlumnoBox';
-import SimpleLayout from '../../../shared/SimpleLayout';
 import { AMatriculado } from '../../../../types/alumno';
 import DisplayAlumnosTable from '../../../shared/DisplayAlumnosTable';
 import { Fa500Px } from 'react-icons/fa';
@@ -43,7 +42,7 @@ export default function ReportarTardanzaAlumno() {
   return (
     <>
       {(loading || isLoading || isFetching) && <Loader />}
-      <SimpleLayout>
+      <Container $direction="column" $padding="2rem 0" $gap="1rem" $height="max-content">
         {/* <Title>{`Reporte de tardanzas `}</Title> */}
         <Title>{'Tardanzas ' + presentDate}</Title>
         <Container $direction="column" $gap="1rem">
@@ -53,7 +52,7 @@ export default function ReportarTardanzaAlumno() {
           </Container>
           {tardanzaList && tardanzaList.length > 0 && <ListaTardanzas tardanzasList={tardanzaList} />}
         </Container>
-      </SimpleLayout>
+      </Container>
     </>
   );
 

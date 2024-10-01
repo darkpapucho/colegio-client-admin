@@ -4,7 +4,7 @@ import { Container } from '../../../shared/Container';
 import Table from '../../Table/Table';
 import { Text } from '../../../shared/Text';
 import { Grado, Seccion } from '../../../../types/enums';
-import { AsistenciaRecord } from '../AsistenciaAlumnos/types';
+import { AsistenciaRecord } from '../RegistroAsistenciaAlumnos/types';
 
 export default function ListaTardanzas({
   tardanzasList,

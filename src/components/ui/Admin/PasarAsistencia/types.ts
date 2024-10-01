@@ -1,4 +1,4 @@
-import { AsistenciaValue } from '../AsistenciaAlumnos/types';
+import { AsistenciaValue } from '../RegistroAsistenciaAlumnos/types';
 
 export type AsistenciaAlumno = {
   nombreCompleto: string;

@@ -16,6 +16,7 @@ export type ContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
+  box-sizing: border-box;
   display: flex;
   height: 100%;
   //pointer

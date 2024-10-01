@@ -4,7 +4,7 @@ import { AsistenciasReducerState } from '../components/ui/Admin/PasarAsistencia/
 import { queryClient } from '../config/query/query';
 import toaster from 'react-hot-toast';
 import { errorHandler } from '../utils/errorHandler';
-import { AsistenciaValue } from '../components/ui/Admin/AsistenciaAlumnos/types';
+import { AsistenciaValue } from '../components/ui/Admin/RegistroAsistenciaAlumnos/types';
 import { fetchAsistenciaListByGradoSeccionDayId } from './useAsistenciaListByGradoSeccion';
 import Calendario from '../models/Calendario';
 import { updateToken } from '../utils/utils';

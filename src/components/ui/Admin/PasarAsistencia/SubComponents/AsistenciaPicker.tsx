@@ -2,7 +2,7 @@ import { theme } from '../../../../../config/styled/styled';
 import { Container } from '../../../../shared/Container';
 // import { Container } from '../../../../shared/Container';
 import Select from '../../../../shared/Select';
-import { AsistenciaValue } from '../../AsistenciaAlumnos/types';
+import { AsistenciaValue } from '../../RegistroAsistenciaAlumnos/types';
 
 export default function AsistenciaPicker({ alumnoId, value }: { value: AsistenciaValue; alumnoId: string }) {
   if (value == undefined) {
