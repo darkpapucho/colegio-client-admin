@@ -8,19 +8,19 @@ import { theme } from '../config/styled/styled';
 
 const LayoutContainer = styled.div<{ $headerHeight: string }>`
   display: grid;
-  grid-template-rows: 100px calc(100vh - 140px);
+  grid-template-rows: 100px calc(100vh - 100px);
   grid-template-columns: 1fr repeat(8, minmax(max-content, 200px)) 1fr;
   @media (min-width: ${theme.mediaScreen.small}) {
-    grid-template-rows: 80px calc(100vh - 120px);
+    grid-template-rows: 80px calc(100vh - 80px);
   }
 `;
 const LayoutContent = styled.div`
   grid-row: 2 / span 1;
   grid-column: 2 / span 8;
   /* overflow: scroll; */
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 100px);
   @media (min-width: ${theme.mediaScreen.small}) {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 80px);
     grid-row: 2 / span 1;
     grid-column: 3 / span 7;
   }
