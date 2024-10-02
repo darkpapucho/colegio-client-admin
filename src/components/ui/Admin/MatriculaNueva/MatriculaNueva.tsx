@@ -1,9 +1,11 @@
-import SimpleLayout from '../../../shared/SimpleLayout';
+import { Container } from '../../../shared/Container';
+import { Title } from '../../../shared/Title';
 import MatriculaNuevaForm from './MatriculaNuevaForm';
 export default function MatriculaNueva() {
   return (
-    <SimpleLayout title="Matrícula directa">
+    <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
+      <Title>Nueva matrícula</Title>
       <MatriculaNuevaForm />
-    </SimpleLayout>
+    </Container>
   );
 }

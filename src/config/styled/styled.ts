@@ -124,6 +124,8 @@ export const GlobalStyle = createGlobalStyle`
     font-size: calc(.8rem + .2vw);
     font-family: inherit;
     color: inherit;
+    overflow:auto;
+
   }
   a,a:visited,a:active{
     text-decoration: none;

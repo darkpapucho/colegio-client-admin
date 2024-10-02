@@ -2,13 +2,14 @@ import { Spinner } from '../../../shared/Spinner';
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
 import useAlumnosMatriculados from '../../../../hooks/useAlumnosMatriculados';
 import { ErrorMessage } from '../../../shared/ErrorMessage';
-import SimpleLayout from '../../../shared/SimpleLayout';
 import ListaAlumnosTable from './ListaAlumnosTable';
 import { useState } from 'react';
 import { AMatriculado } from '../../../../types/alumno';
 import EditarAlumnoModal from './EditarAlumnoModal';
 import EditarAlumnoForm from './EditarAlumnoForm';
 import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
+import { Container } from '../../../shared/Container';
+import { Title } from '../../../shared/Title';
 
 export default function Matriculados() {
   const { grado, seccion } = useGradoSeccionSearchParams();
@@ -24,12 +25,13 @@ export default function Matriculados() {
           <EditarAlumnoForm alumno={selectedAlumno} onCloseModal={onCloseModal} />
         </EditarAlumnoModal>
       )}
-      <SimpleLayout title="Listar alumnos matriculados">
+      <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
+        <Title>Alumnos matriculados</Title>
         <FilterGradoSeccion handler={refetch} isLoading={isFetching} />
 
         {error instanceof Error && <ErrorMessage width={'30rem'} message={error.message} align="center" />}
         <ListaAlumnosTable alumnos={matriculados} setSelectedAlumno={setSelectedAlumno} setShowModal={setShowModal} />
-      </SimpleLayout>
+      </Container>
     </>
   );
   function onCloseModal() {

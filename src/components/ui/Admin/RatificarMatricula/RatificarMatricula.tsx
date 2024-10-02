@@ -7,13 +7,13 @@ import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearch
 import RatificacionTable from './RatificacionTable';
 import { Button } from '../../../shared/Button';
 import { useQuery } from '@tanstack/react-query';
-import SimpleLayout from '../../../shared/SimpleLayout';
 import { handleFetchRatificarList } from './utils';
 import RatificacionControls from './RatificacionControls';
 import { useState } from 'react';
 import { AMatriculado } from '../../../../types/alumno';
 import ErrorPageMessage from '../../../shared/ErrorPageMessage';
 import { ErrorPage } from '../../../shared/ErrorPage';
+import { Title } from '../../../shared/Title';
 
 export default function RatificarMatricula() {
   const nivel = useTypedSelector((state) => state.nivel);
@@ -43,7 +43,8 @@ export default function RatificarMatricula() {
   return (
     <>
       {isFetching && <Loader />}
-      <SimpleLayout title={`Ratificación ded matrícula ${año}`}>
+      <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
+        <Title>{`Ratificación ded matrícula ${año}`}</Title>
         <Container $gap="1rem" $padding="0" $direction={'row'}>
           <Select name="grado" label="grado" width="14rem" options={grados[nivel]} tiny></Select>
           <Select name="seccion" label="seccion" width="8rem" options={SECCIONES_SELECT_OPTIONS} tiny></Select>
@@ -55,7 +56,7 @@ export default function RatificarMatricula() {
           <RatificacionControls setSelectedAlumnos={setSelectedAlumnos} selectedAlumnos={selectedAlumnos} />
           <RatificacionTable selectedAlumnos={selectedAlumnos} alumnos={alumnos} setSelectedAlumnos={setSelectedAlumnos} />
         </Container>
-      </SimpleLayout>
+      </Container>
     </>
   );
 }

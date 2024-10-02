@@ -2,7 +2,6 @@
 import { theme } from '../../../../config/styled/styled';
 import { Container } from '../../../shared/Container';
 import Select from '../../../shared/Select';
-import SimpleLayout from '../../../shared/SimpleLayout';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import SearchAlumnoBox from '../../../shared/SearchAlumnoBox';
 import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
@@ -21,6 +20,7 @@ import { onCloseModal, requestBoletasSalon, requestSingleBoleta } from './utils'
 import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
 import { EstadoMatricula } from '../../../../types/enums';
 import { useState } from 'react';
+import { Title } from '../../../shared/Title';
 
 const OPTIONS = [
   { label: 'salón', value: 'salon' },
@@ -42,7 +42,8 @@ export default function BoletaNotas() {
 
   useCustomEvent('customSelect', selectListener);
   return (
-    <SimpleLayout title="Boleta de Notas">
+    <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
+      <Title>Boleta de Notas</Title>
       {showModal && selectedAlumno && (
         <SelectedAlumnoModal selectedAlumno={selectedAlumno} onCloseModal={() => onCloseModal(dispatch)}>
           <Button $primary $small onClick={() => requestSingleBoleta({ dispatch, selectedAlumno })} $width="100%" disabled={loading}>
@@ -67,7 +68,7 @@ export default function BoletaNotas() {
         />
       )}
       {mode === 'individual' && <DisplayAlumnosTable alumnos={alumnos} actionHandler={actionHandler} icon={<BiCheckCircle />}></DisplayAlumnosTable>}
-    </SimpleLayout>
+    </Container>
   );
 
   //TODO: update all SearchALumnoBox to its new handler

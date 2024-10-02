@@ -24,6 +24,8 @@ import { ErrorPage } from './components/shared/ErrorPage';
 import Alumnos from './components/ui/Admin/Alumnos/Alumnos';
 import RegistroAsistenciaAlumnos from './components/ui/Admin/RegistroAsistenciaAlumnos/RegistroAsistenciaAlumnos';
 import PasarAsistencia from './components/ui/Admin/PasarAsistencia/PasarAsistencia';
+import MatriculaALumnos from './components/ui/Admin/MatriculaAlumnos/MatriculaAlumnos';
+import NotasAlumnos from './components/ui/Admin/NotasAlumnos/NotasAlumnos';
 
 function App() {
   const navigate = useNavigate();
@@ -33,9 +35,16 @@ function App() {
       <Route element={<RequireAuth />}>
         <Route path="/menu" element={<Layout />}>
           <Route element={<RequireAdmin />}>
-            <Route path="admin/matriculadirecta" element={<MatriculaNueva />} />
-            <Route path="admin/ratificarmatricula" element={<RatificarMatricula />} />
-            <Route path="admin/matriculados" element={<Matriculados />} />
+            <Route path="admin/matricula-alumnos" element={<MatriculaALumnos />}>
+              <Route path="matriculados" element={<Matriculados />} />
+              <Route path="nueva-matricula" element={<MatriculaNueva />} />
+              <Route path="ratificar-matricula" element={<RatificarMatricula />} />
+              <Route path="retirar" element={<RetirarAlumno />} />
+            </Route>
+            <Route path="admin/notas-alumnos" element={<NotasAlumnos />}>
+              <Route path="registro" element={<RegistroNotas />} />
+              <Route path="boletas" element={<BoletaNotas />} />
+            </Route>
             <Route path="admin/retiraralumno" element={<RetirarAlumno />} />
             <Route path="admin/emitirdocumentos" element={<EmitirDocumentos />} />
             <Route path="admin/registronotas" element={<RegistroNotas />} />

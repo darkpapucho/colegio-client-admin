@@ -2,10 +2,10 @@ import { MenuItem } from '../types/globals';
 import { HiAcademicCap } from 'react-icons/hi';
 import { FiUserPlus, FiUsers } from 'react-icons/fi';
 import { PiBookOpenTextLight } from 'react-icons/pi';
-import { CgUserAdd, CgUserList, CgUserRemove } from 'react-icons/cg';
+import { CgUserList } from 'react-icons/cg';
 import { RxCalendar } from 'react-icons/rx';
-import { RiUserFollowLine, RiFileList3Line, RiExchangeBoxLine } from 'react-icons/ri';
-import { FaRegFilePdf } from 'react-icons/fa';
+import { RiFileList3Line, RiExchangeBoxLine } from 'react-icons/ri';
+// import { FaRegFilePdf } from 'react-icons/fa';
 import { API_BASE_URL } from '../var/globals';
 import { CursoMap } from '../types/documento';
 import { PiListChecksBold } from 'react-icons/pi';
@@ -86,48 +86,24 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Asistencia Alumnos',
       url: '/menu/admin/asistencia-alumnos',
     },
-    // { icon: <TbReport />, label: 'Alumnos', url: '/menu/admin/alumnos' },
-    // { icon: <TbReport />, label: 'Pasar asistencia', url: '/menu/admin/pasar-asistencia' },
-    // {
-    //   icon: <TbReport />,
-    //   label: 'Reportar tardanza',
-    //   url: '/menu/admin/reportar-tardanza-alumno',
-    // },
+    { icon: <CgUserList />, label: 'Matrícula Alumnos', url: '/menu/admin/matricula-alumnos' },
+
     {
-      icon: <CgUserAdd />,
-      label: 'Nueva Matrícula',
-      url: '/menu/admin/matriculadirecta',
-    },
-    {
-      icon: <CgUserRemove />,
-      label: 'Retirar Alumno',
-      url: '/menu/admin/retiraralumno',
-    },
-    {
-      icon: <RiUserFollowLine />,
-      label: 'ratificar matricula',
-      url: '/menu/admin/ratificarmatricula',
-    },
-    {
-      icon: <CgUserList />,
-      label: 'Matriculados',
-      url: '/menu/admin/matriculados',
+      icon: <PiBookOpenTextLight />,
+      label: 'Notas Alumnos',
+      url: '/menu/admin/notas-alumnos',
     },
     {
       icon: <RiFileList3Line />,
       label: 'emitir documentos',
       url: '/menu/admin/emitirdocumentos',
     },
-    {
-      icon: <FaRegFilePdf />,
-      label: 'Emitir boleta de notas',
-      url: '/menu/admin/boletadenotas',
-    },
-    {
-      icon: <PiBookOpenTextLight />,
-      label: 'Registro Notas',
-      url: '/menu/admin/registronotas',
-    },
+    // {
+    //   icon: <FaRegFilePdf />,
+    //   label: 'Emitir boleta de notas',
+    //   url: '/menu/admin/boletadenotas',
+    // },
+
     {
       icon: <FiUserPlus />,
       label: 'Agregar Profesor',
@@ -138,27 +114,6 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Profesores',
       url: '/menu/admin/gestionarprofesores',
     },
-    // {
-    //   icon: <TbDeviceTabletUp />,
-    //   label: 'Subir Files-notas',
-    //   url: '/menu/admin/subirnotasexcelfiles',
-    // },
-    // {
-    //   icon: <TbDeviceTabletDown />,
-    //   label: 'Descargar Files-Notas',
-    //   url: '/menu/admin/manejarnotasprofesores',
-    // },
-
-    // {
-    //   icon: <PiUsersFourBold />,
-    //   label: 'Gestionar Empleados',
-    //   url: '/menu/admin/vertodosempleados',
-    // },
-    // {
-    //   icon: <RxCalendar />,
-    //   label: 'gestionar pensiones',
-    //   url: '/menu/admin/gestionarpensiones',
-    // },
     {
       icon: <RxCalendar />,
       label: 'Calendario Escolar',

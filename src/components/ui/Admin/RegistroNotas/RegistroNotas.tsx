@@ -1,5 +1,4 @@
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
-import SimpleLayout from '../../../shared/SimpleLayout';
 import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
 import RegistroNotasTable from './RegistroNotasTable';
 import { fetchRegistroNotas, mapCursosList } from './utils';
@@ -18,6 +17,7 @@ import { Button } from '../../../shared/Button';
 import useFetchCurrentPeriodo from '../../../../hooks/useFetchCurrentPeriodo';
 import { convertPeriodoKeyToLabel } from '../../../../utils/periodo';
 import Loader from '../../Loader/Loader';
+import { Title } from '../../../shared/Title';
 
 export const RegistroNotasContext = createContext<{
   setData: Dispatch<SetStateAction<RegistroNota[] | undefined>>;
@@ -46,7 +46,8 @@ export default function RegistroNotas() {
   return (
     <RegistroNotasContext.Provider value={{ isLoading, setIsLoading, setData }}>
       {isLoading || (isLoadingCurrentPeriodo && <Loader />)}
-      <SimpleLayout title="Registro de Notas">
+      <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
+        <Title>Registro de notas</Title>
         {data && (
           <Button $width="max-content" onClick={() => downloadcsv(periodo as PeriodosKey, data)} $green $small>
             Download csv
@@ -68,7 +69,7 @@ export default function RegistroNotas() {
           </Container>
         </Container>
         {!isLoading && data && cursosMap && <RegistroNotasTable data={registroFiltered!} cursosMap={cursosMap} />}
-      </SimpleLayout>
+      </Container>
     </RegistroNotasContext.Provider>
   );
   async function dataFetcher() {
