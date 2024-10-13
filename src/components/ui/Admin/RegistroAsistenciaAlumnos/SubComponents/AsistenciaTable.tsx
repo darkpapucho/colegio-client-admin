@@ -4,12 +4,13 @@ import { getMonthsFromAsistenciaRecord } from '../utils';
 import MonthBody from './MonthBody';
 import MonthHeader from './MonthHeader';
 import { Container } from '../../../../shared/Container';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { MONTH_NAME } from '../../../../../types/enums';
 
 export default function AsistenciaTable({ asistencias, availableDays }: { asistencias: AsistenciasList; availableDays: { month: MONTH_NAME; day: number }[] }) {
   const { monthNames, daysByMonth, gridTemplateCols } = getMonthsFromAsistenciaRecord(availableDays);
-
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  console.log({ selectedRow });
   return (
     <Table gridTemplateColumns={gridTemplateCols} width="max-content">
       <Table.Header>
@@ -31,7 +32,12 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
           return (
             <Fragment key={index}>
               <Table.Body.Item>
-                <Container $direction="row" $width="100%" $border="1px solid black">
+                <Container
+                  $bgColor={index === selectedRow ? 'yellow' : 'white'}
+                  $direction="row"
+                  $width="100%"
+                  $border="1px solid black"
+                  onClick={() => handleTableClick({ index, currentSelectedRow: selectedRow })}>
                   <Container $width="2.5rem">{`[${index + 1}]`}</Container>
                   <Container>{element.nombreCompleto}</Container>
                 </Container>
@@ -39,7 +45,14 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
               {monthNames.map((monthName) => {
                 return (
                   <Table.Body.Item key={monthName}>
-                    <MonthBody alumnoId={element.alumnoId} monthName={monthName} records={element.records} days={daysByMonth[monthName]} />
+                    <MonthBody
+                      isSelected={selectedRow === index}
+                      onClick={() => handleTableClick({ index, currentSelectedRow: selectedRow })}
+                      alumnoId={element.alumnoId}
+                      monthName={monthName}
+                      records={element.records}
+                      days={daysByMonth[monthName]}
+                    />
                   </Table.Body.Item>
                 );
               })}
@@ -49,4 +62,12 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
       </Table.Body>
     </Table>
   );
+
+  function handleTableClick({ index, currentSelectedRow }: { index: number; currentSelectedRow: null | number }) {
+    if (currentSelectedRow == index) {
+      setSelectedRow(null);
+    } else {
+      setSelectedRow(index);
+    }
+  }
 }

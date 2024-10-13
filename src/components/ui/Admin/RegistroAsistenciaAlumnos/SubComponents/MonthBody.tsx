@@ -12,25 +12,40 @@ import toaster from 'react-hot-toast';
 import { queryClient } from '../../../../../config/query/query';
 import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
 
-const DayCell = styled(Container)`
-  color: black;
-  &:hover {
+const DayCell = styled(Container)<{ $isSelected: boolean }>`
+  color: white;
+  /* &:hover {
     filter: brightness(140%);
     color: black;
-  }
+  } */
+  filter: ${({ $isSelected }) => ($isSelected ? 'brightness(140%)' : 'brightness(100%)')};
   justify-content: center;
 `;
 
-export default function MonthBody({ monthName, days, records, alumnoId }: { alumnoId: string; records: AsistenciaRecord[]; monthName: MONTH_NAME; days: number[] }) {
+export default function MonthBody({
+  monthName,
+  days,
+  records,
+  alumnoId,
+  onClick,
+  isSelected,
+}: {
+  isSelected: boolean;
+  onClick: () => void;
+  alumnoId: string;
+  records: AsistenciaRecord[];
+  monthName: MONTH_NAME;
+  days: number[];
+}) {
   const { grado, seccion, searchParams } = useGradoSeccionSearchParams();
   const year = useTypedSelector((state) => state.año);
   return (
-    <Container $direction="row" $width="100%">
+    <Container $direction="row" $width="100%" onClick={onClick}>
       {days.map((day) => {
         const result = getAsistenciaValueFromRecords({ monthName, day, records });
         if (!result) {
           return (
-            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid black" $bgColor="#9a9c9c" key={day}>
+            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid black" $bgColor="#9a9c9c" key={day} $isSelected={isSelected}>
               X
             </DayCell>
           );
@@ -38,6 +53,7 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
         if (result.asistencia.value === 'F' && result.asistencia.justificado == undefined) {
           return (
             <DayCell
+              $isSelected={isSelected}
               $pointer
               onClick={() => justificarFalta({ alumnoId, dayId: result.dayId, monthName, day, asistencia: result.asistencia.value })}
               $width={`${dayCellWidth}rem`}
@@ -50,6 +66,7 @@ export default function MonthBody({ monthName, days, records, alumnoId }: { alum
         }
         return (
           <DayCell
+            $isSelected={isSelected}
             // onClick={() => justificarFalta({ alumnoId, dayId:result.dayId, monthName, day, asistencia: result.asistencia.value })}
             $width={`${dayCellWidth}rem`}
             $border="1px solid black"
