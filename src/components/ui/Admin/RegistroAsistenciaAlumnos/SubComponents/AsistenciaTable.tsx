@@ -47,7 +47,7 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
                   <Table.Body.Item key={monthName}>
                     <MonthBody
                       isSelected={selectedRow === index}
-                      onClick={() => handleTableClick({ index, currentSelectedRow: selectedRow })}
+                      // onClick={() => handleTableClick({ index, currentSelectedRow: selectedRow })}
                       alumnoId={element.alumnoId}
                       monthName={monthName}
                       records={element.records}

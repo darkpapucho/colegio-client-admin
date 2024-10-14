@@ -27,11 +27,11 @@ export default function MonthBody({
   days,
   records,
   alumnoId,
-  onClick,
+
   isSelected,
 }: {
   isSelected: boolean;
-  onClick: () => void;
+
   alumnoId: string;
   records: AsistenciaRecord[];
   monthName: MONTH_NAME;
@@ -40,7 +40,7 @@ export default function MonthBody({
   const { grado, seccion, searchParams } = useGradoSeccionSearchParams();
   const year = useTypedSelector((state) => state.año);
   return (
-    <Container $direction="row" $width="100%" onClick={onClick}>
+    <Container $direction="row" $width="100%">
       {days.map((day) => {
         const result = getAsistenciaValueFromRecords({ monthName, day, records });
         if (!result) {
