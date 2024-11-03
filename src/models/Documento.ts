@@ -35,10 +35,20 @@ export default class Documento {
     const response = await axios.get(API_BASE_URL + END_POINT, { ...GetHeaders(), responseType: 'arraybuffer' });
     return response;
   }
-  static async emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula }: { estadosMatricula: EstadoMatricula[]; grado: Grado; seccion: Seccion }) {
+  static async emitirBoletasNotasGradoSeccion({
+    grado,
+    seccion,
+    estadosMatricula,
+    zipped,
+  }: {
+    zipped: boolean;
+    estadosMatricula: EstadoMatricula[];
+    grado: Grado;
+    seccion: Seccion;
+  }) {
     console.log({ grado, seccion, estadosMatricula });
     const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
-    const response = await axios.post(API_BASE_URL + END_POINT, { grado, seccion, estadosMatricula }, { ...GetHeaders(), responseType: 'arraybuffer' });
+    const response = await axios.post(API_BASE_URL + END_POINT, { grado, seccion, estadosMatricula, zipped }, { ...GetHeaders(), responseType: 'arraybuffer' });
     return response;
   }
 

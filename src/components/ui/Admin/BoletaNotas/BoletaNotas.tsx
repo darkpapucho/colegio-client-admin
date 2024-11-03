@@ -63,7 +63,7 @@ export default function BoletaNotas() {
       {mode === 'salon' && (
         <FilterGradoSeccion
           isLoading={loading}
-          handler={() => requestBoletasSalon({ dispatch, grado, seccion, estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[] })}
+          handler={() => requestBoletasSalon({ zipped: true, dispatch, grado, seccion, estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[] })}
           buttonLabel="Generar Libretas"
         />
       )}

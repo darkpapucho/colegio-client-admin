@@ -29,24 +29,26 @@ export async function requestBoletasSalon({
   grado,
   seccion,
   estadosMatricula,
+  zipped,
 }: {
   estadosMatricula: EstadoMatricula[];
   dispatch: Dispatch<BoletaNotasActionReducer>;
   grado: Grado;
   seccion: Seccion;
+  zipped: boolean;
 }) {
   // console.log({ grado, seccion });
   try {
     dispatch({ type: 'setIsLoading' });
     console.log({ estadosMatricula });
     // if (!grado || !seccion) throw new Error('Debes indicar un grado y una sección.');
-    const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula });
+    const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula, zipped });
     updateToken(response);
     const myBlob = new Blob([response.data]);
     const fileURL = URL.createObjectURL(myBlob);
     const alink = document.createElement('a');
     alink.href = fileURL;
-    alink.download = `Boletas ${grado}-${seccion}.pdf`;
+    alink.download = `Boletas ${grado}-${seccion}.${zipped ? 'zip' : 'pdf'}`;
     alink.click();
     alink.remove();
     dispatch({ type: 'clearIsLoading' });
