@@ -40,7 +40,6 @@ export async function requestBoletasSalon({
   // console.log({ grado, seccion });
   try {
     dispatch({ type: 'setIsLoading' });
-    console.log({ estadosMatricula });
     // if (!grado || !seccion) throw new Error('Debes indicar un grado y una sección.');
     const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula, zipped });
     updateToken(response);

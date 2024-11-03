@@ -19,14 +19,17 @@ import { BoletaNotasReducer } from './reducer';
 import { onCloseModal, requestBoletasSalon, requestSingleBoleta } from './utils';
 import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
 import { EstadoMatricula } from '../../../../types/enums';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Title } from '../../../shared/Title';
 
 const OPTIONS = [
   { label: 'salón', value: 'salon' },
   { label: 'individual', value: 'individual' },
 ];
-
+const zippedOptions = [
+  { label: 'zipped', value: 'zipped' },
+  { label: 'pdf', value: 'pdf' },
+];
 export default function BoletaNotas() {
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
 
@@ -41,6 +44,13 @@ export default function BoletaNotas() {
   const [showEstadosMatriculaBox, setShowEstadosMatriculaBox] = useState(true);
 
   useCustomEvent('customSelect', selectListener);
+
+  useEffect(() => {
+    setSearchParams((old) => {
+      old.set('formato', 'zipped');
+      return old;
+    });
+  }, []);
   return (
     <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
       <Title>Boleta de Notas</Title>
@@ -56,6 +66,9 @@ export default function BoletaNotas() {
       )}
       <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
         <Select name="modo" defaultValue={OPTIONS[0]} options={OPTIONS} width="11rem" tiny label="modo"></Select>
+        <Select name="formato" defaultValue={zippedOptions[0]} options={zippedOptions} width="11rem" tiny label="formato"></Select>
+      </Container>
+      <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
         {showEstadosMatriculaBox && <EstadosMatriculaBox setSearchParams={setSearchParams} />}
       </Container>
 
@@ -63,7 +76,15 @@ export default function BoletaNotas() {
       {mode === 'salon' && (
         <FilterGradoSeccion
           isLoading={loading}
-          handler={() => requestBoletasSalon({ zipped: true, dispatch, grado, seccion, estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[] })}
+          handler={() =>
+            requestBoletasSalon({
+              zipped: searchParams.get('formato') === 'zipped' ? true : false,
+              dispatch,
+              grado,
+              seccion,
+              estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[],
+            })
+          }
           buttonLabel="Generar Libretas"
         />
       )}
@@ -89,6 +110,11 @@ export default function BoletaNotas() {
         setShowEstadosMatriculaBox(false);
       }
       dispatch({ type: 'changeMode', payload: value });
+    } else if (name === 'formato') {
+      setSearchParams((old) => {
+        old.set('formato', value);
+        return old;
+      });
     }
   }
 }
