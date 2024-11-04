@@ -66,11 +66,13 @@ export default function BoletaNotas() {
       )}
       <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
         <Select name="modo" defaultValue={OPTIONS[0]} options={OPTIONS} width="11rem" tiny label="modo"></Select>
-        <Select name="formato" defaultValue={zippedOptions[0]} options={zippedOptions} width="11rem" tiny label="formato"></Select>
+        {showEstadosMatriculaBox && <Select name="formato" defaultValue={zippedOptions[0]} options={zippedOptions} width="11rem" tiny label="formato"></Select>}
       </Container>
-      <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
-        {showEstadosMatriculaBox && <EstadosMatriculaBox setSearchParams={setSearchParams} />}
-      </Container>
+      {showEstadosMatriculaBox && (
+        <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
+          <EstadosMatriculaBox setSearchParams={setSearchParams} />
+        </Container>
+      )}
 
       {mode === 'individual' && <SearchAlumnoBox handler={searchAlumnosBoxHandler} width="30rem" />}
       {mode === 'salon' && (
