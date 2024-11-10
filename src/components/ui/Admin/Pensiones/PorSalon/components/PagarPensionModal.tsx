@@ -6,7 +6,7 @@ import Input from '../../../../../shared/Input';
 import Modal from '../../../../../shared/Modal';
 import { Text } from '../../../../../shared/Text';
 import { MONTHS } from '../../../Calendario/EnableDays/utils';
-import { getPensionBgColor } from './utils';
+import { getDisplayPensionCardBgColor } from './utils';
 import { errorHandler } from '../../../../../../utils/errorHandler';
 import { Pensiones } from '../../../../../../models/Pensiones';
 import { updateToken } from '../../../../../../utils/utils';
@@ -31,16 +31,16 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
             </Text>
             <Container $direction="row" $width="max-content" $gap="1rem" $border="1px solid black">
               <Container $direction="column" $width="max-content" $bgColor="#0f0f0f" $padding="1rem" $gap="1rem" $height="8rem" $alignItems="center" $justifyContent="center">
-                <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+                <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
                   {convertIndexToMonth(selectedData.pension.mes).toUpperCase()}
                 </Text>
-                <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+                <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
                   S/. {selectedData.pension.monto_pagar}
                 </Text>
               </Container>
               <Container $direction="column" $padding="1rem" $gap="1rem" $justifyContent="center">
                 <Input type="datetime-local" name="fecha" label="" ref={fechaRef} />
-                <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+                <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
                   {'Abonado: S/. ' + selectedData.pension.monto_pagado}
                 </Text>
               </Container>
@@ -67,10 +67,10 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
       {loading && <Loader />}
       <Modal width="36rem" title={selectedData.estudiante.nombreCompleto.toUpperCase()} onCloseModal={onCloseModal}>
         <Container $direction="column" $width="100%" $bgColor="#0f0f0f" $padding="1rem">
-          <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+          <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {convertIndexToMonth(selectedData.pension.mes).toUpperCase()}
           </Text>
-          <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+          <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {new Date(selectedData.pension.fecha).toLocaleDateString('es-ES', {
               day: '2-digit',
               month: 'long',
@@ -80,10 +80,10 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
               second: '2-digit',
             })}
           </Text>
-          <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+          <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {'S/. ' + selectedData.pension.monto_pagado}
           </Text>
-          <Text $bold $fontSize="small" $color={getPensionBgColor(selectedData.pension, new Date().getMonth())}>
+          <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {'Recibo:' + selectedData.pension.reciboId ? selectedData.pension.reciboId : 'aqui falta el recibo'}
           </Text>
         </Container>
