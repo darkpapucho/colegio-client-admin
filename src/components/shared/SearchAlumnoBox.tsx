@@ -15,6 +15,7 @@ export default function SearchAlumnoBox({ width, handler, signal }: { width: Wid
   const searchBoxRef = useRef<HTMLInputElement | null>(null);
   const { isFetching, alumnos, refetch, error } = useSearchAlumnos({ searchBoxRef, estadosMatricula });
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     if (!alumnos) return;
     handler(alumnos);

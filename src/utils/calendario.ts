@@ -14,19 +14,18 @@ export function getClosestDay(months: { [key: string]: Omit<CalendarioList, 'mon
   if (selectedMonth == undefined) return undefined;
 
   const currentDay = +new Date().toLocaleDateString('es-es', { day: 'numeric' });
-  console.log({ currentDay });
+
   const foundDay = months[selectedMonth].find((element) => {
-    console.log({ elementDay: element.day });
     return element.day === currentDay;
   });
-  console.log({ foundDay });
+
   if (foundDay) {
     return foundDay;
   } else if (months[selectedMonth].length > 0) {
     //sort days
     const sortedDays = months[selectedMonth].sort((prev, curr) => (prev > curr ? 1 : -1));
     const closestDay = sortedDays.reduce((prev, curr) => (Math.abs(curr.day - currentDay) < Math.abs(prev.day - currentDay) ? curr : prev));
-    console.log({ closestDay });
+
     return closestDay;
   } else {
     return undefined;

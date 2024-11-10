@@ -35,7 +35,7 @@ export default function PasarAsistencia() {
   const [selectedDay, setSelectedDay] = useState<Omit<CalendarioList, 'month'> | undefined>(undefined);
 
   const { data, isLoading, refetch: fetchAsistenciaList } = useFetchAsistenciaList({ searchParams, dayId: selectedDay?._id, month: selectedMonth });
-  console.log({ data });
+
   const [registroAsistencia, dispatch] = useImmerReducer<AsistenciasReducerState, AsistenciasReducerAction>(AsistenciasReducer, []);
 
   const { mutate, isLoading: isUpdating } = useUpdateAsistenciaList({

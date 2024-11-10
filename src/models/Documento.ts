@@ -46,7 +46,6 @@ export default class Documento {
     grado: Grado;
     seccion: Seccion;
   }) {
-    console.log({ grado, seccion, estadosMatricula });
     const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
     const response = await axios.post(API_BASE_URL + END_POINT, { grado, seccion, estadosMatricula, zipped }, { ...GetHeaders(), responseType: 'arraybuffer' });
     return response;

@@ -9,6 +9,7 @@ import { RiFileList3Line, RiExchangeBoxLine } from 'react-icons/ri';
 import { API_BASE_URL } from '../var/globals';
 import { CursoMap } from '../types/documento';
 import { PiListChecksBold } from 'react-icons/pi';
+import { BiMoneyWithdraw } from 'react-icons/bi';
 
 export const baseUrl = API_BASE_URL;
 
@@ -124,6 +125,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <RiExchangeBoxLine />,
       label: 'Cambiar Periodo',
       url: '/menu/admin/cambiar-periodo',
+    },
+    {
+      icon: <BiMoneyWithdraw />,
+      label: 'Pensiones',
+      url: '/menu/admin/pensiones',
     },
   ],
   promotor: [

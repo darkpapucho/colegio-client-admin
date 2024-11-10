@@ -42,6 +42,20 @@ export const SContainer = styled.div<{ $width?: string; $type: string; $isError?
         transform: scale(1.1);
       }
     }
+    &[type='datetime-local'] {
+      background-color: rgba(0, 0, 0, 0);
+      &::-webkit-calendar-picker-indicator {
+        //display: none;
+        //-webkit-appearance: none;
+        height: 20px;
+        position: relative;
+        width: 20px;
+        cursor: pointer;
+      }
+      &::-webkit-calendar-picker-indicator:hover {
+        transform: scale(1.1);
+      }
+    }
   }
 `;
 const SLabel = styled.label<{ $hasContent: boolean; $type: string }>`

@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import Modal from '../../../shared/Modal';
-import { Overlay } from '../../../shared/Overlay';
 import { CursoMap, RegistroNota } from '../../../../types/documento';
 import Table from '../../Table/Table';
 import { Container } from '../../../shared/Container';
@@ -62,80 +61,77 @@ export default function AllDetailsModal({
     return template;
   }
   const templateCols = mapGridTemplateCols(cursosList);
-  console.log({ templateCols });
+
   return (
-    <>
-      <Modal onCloseModal={onCloseModal} width="1000px" title={title}>
-        <Container $direction="column" $gap="1rem">
-          <Table width="100%" gridTemplateColumns={templateCols} withBorder>
-            <Table.Header>
-              <Table.Header.Item>
-                <Container $border="1px solid black" $width="100%" $height="100%" $alignItems="center">
-                  <CursoLabel>Periodo</CursoLabel>
+    <Modal onCloseModal={onCloseModal} width="1000px" title={title}>
+      <Container $direction="column" $gap="1rem">
+        <Table width="100%" gridTemplateColumns={templateCols} withBorder>
+          <Table.Header>
+            <Table.Header.Item>
+              <Container $border="1px solid black" $width="100%" $height="100%" $alignItems="center">
+                <CursoLabel>Periodo</CursoLabel>
+              </Container>
+            </Table.Header.Item>
+            {cursosList.map((curso, index) => (
+              <Table.Header.Item key={index}>
+                <Container $direction="column" $width="100%">
+                  <Container $height="36px" $alignItems="center" $direction="column">
+                    <CursoLabel>{curso.label}</CursoLabel>
+                  </Container>
+
+                  <CompTransCont>
+                    {getCursosInfo({ nivel, grado })
+                      .find((cursoInfo) => cursoInfo.key === curso.key)
+                      ?.competencias.map((competencia, index) => (
+                        <DisplayHoverMessage
+                          key={index}
+                          label={index + 1}
+                          message={competencia}
+                          width={`${100 / getCursosInfo({ nivel, grado }).find((cursoInfo) => cursoInfo.key === curso.key)!.competencias.length}%`}
+                        />
+                      ))}
+                  </CompTransCont>
                 </Container>
               </Table.Header.Item>
-              {cursosList.map((curso, index) => (
-                <Table.Header.Item key={index}>
-                  <Container $direction="column" $width="100%">
-                    <Container $height="36px" $alignItems="center" $direction="column">
-                      <CursoLabel>{curso.label}</CursoLabel>
-                    </Container>
-
-                    <CompTransCont>
-                      {getCursosInfo({ nivel, grado })
-                        .find((cursoInfo) => cursoInfo.key === curso.key)
-                        ?.competencias.map((competencia, index) => (
-                          <DisplayHoverMessage
-                            key={index}
-                            label={index + 1}
-                            message={competencia}
-                            width={`${100 / getCursosInfo({ nivel, grado }).find((cursoInfo) => cursoInfo.key === curso.key)!.competencias.length}%`}
-                          />
-                        ))}
-                    </CompTransCont>
-                  </Container>
-                </Table.Header.Item>
-              ))}
-            </Table.Header>
-            <Table.Body>
-              <Table.Body.Item $key={0}>Primer Periodo</Table.Body.Item>
-              {cursosList.map((curso, index) => (
-                <Table.Body.Item key={index} $key={0}>
-                  {registro.cursos[curso.key].primerPeriodo.map((nota) => (
-                    <NotasContainer>{nota}</NotasContainer>
-                  ))}
-                </Table.Body.Item>
-              ))}
-              <Table.Body.Item $key={1}>Segundo Periodo</Table.Body.Item>
-              {cursosList.map((curso) => (
-                <Table.Body.Item key={curso.code} $key={1}>
-                  {registro.cursos[curso.key].segundoPeriodo.map((nota) => (
-                    <NotasContainer>{nota}</NotasContainer>
-                  ))}
-                </Table.Body.Item>
-              ))}
-              <Table.Body.Item $key={2}>Tercer Periodo</Table.Body.Item>
-              {cursosList.map((curso) => (
-                <Table.Body.Item key={curso.code} $key={2}>
-                  {registro.cursos[curso.key].tercerPeriodo.map((nota) => (
-                    <NotasContainer>{nota}</NotasContainer>
-                  ))}
-                </Table.Body.Item>
-              ))}
-              <Table.Body.Item $key={3}>Cuarto Periodo</Table.Body.Item>
-              {cursosList.map((curso) => (
-                <Table.Body.Item key={curso.code} $key={3}>
-                  {registro.cursos[curso.key].cuartoPeriodo.map((nota) => (
-                    <NotasContainer>{nota}</NotasContainer>
-                  ))}
-                </Table.Body.Item>
-              ))}
-            </Table.Body>
-          </Table>
-          {children}
-        </Container>
-      </Modal>
-      <Overlay />
-    </>
+            ))}
+          </Table.Header>
+          <Table.Body>
+            <Table.Body.Item $key={0}>Primer Periodo</Table.Body.Item>
+            {cursosList.map((curso, index) => (
+              <Table.Body.Item key={index} $key={0}>
+                {registro.cursos[curso.key].primerPeriodo.map((nota) => (
+                  <NotasContainer>{nota}</NotasContainer>
+                ))}
+              </Table.Body.Item>
+            ))}
+            <Table.Body.Item $key={1}>Segundo Periodo</Table.Body.Item>
+            {cursosList.map((curso) => (
+              <Table.Body.Item key={curso.code} $key={1}>
+                {registro.cursos[curso.key].segundoPeriodo.map((nota) => (
+                  <NotasContainer>{nota}</NotasContainer>
+                ))}
+              </Table.Body.Item>
+            ))}
+            <Table.Body.Item $key={2}>Tercer Periodo</Table.Body.Item>
+            {cursosList.map((curso) => (
+              <Table.Body.Item key={curso.code} $key={2}>
+                {registro.cursos[curso.key].tercerPeriodo.map((nota) => (
+                  <NotasContainer>{nota}</NotasContainer>
+                ))}
+              </Table.Body.Item>
+            ))}
+            <Table.Body.Item $key={3}>Cuarto Periodo</Table.Body.Item>
+            {cursosList.map((curso) => (
+              <Table.Body.Item key={curso.code} $key={3}>
+                {registro.cursos[curso.key].cuartoPeriodo.map((nota) => (
+                  <NotasContainer>{nota}</NotasContainer>
+                ))}
+              </Table.Body.Item>
+            ))}
+          </Table.Body>
+        </Table>
+        {children}
+      </Container>
+    </Modal>
   );
 }

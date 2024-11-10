@@ -90,7 +90,9 @@ export default function BoletaNotas() {
           buttonLabel="Generar Libretas"
         />
       )}
-      {mode === 'individual' && <DisplayAlumnosTable alumnos={alumnos} actionHandler={actionHandler} icon={<BiCheckCircle />}></DisplayAlumnosTable>}
+      {mode === 'individual' && alumnos && alumnos!.length > 0 && (
+        <DisplayAlumnosTable alumnos={alumnos} actionHandler={actionHandler} icon={<BiCheckCircle />}></DisplayAlumnosTable>
+      )}
     </Container>
   );
 
@@ -103,7 +105,6 @@ export default function BoletaNotas() {
   }
   function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;
-    console.log({ name, value });
     if (name === 'modo') {
       // setModo(value);
       if (value === 'salon') {

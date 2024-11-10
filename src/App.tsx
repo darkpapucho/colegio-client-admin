@@ -26,6 +26,7 @@ import RegistroAsistenciaAlumnos from './components/ui/Admin/RegistroAsistenciaA
 import PasarAsistencia from './components/ui/Admin/PasarAsistencia/PasarAsistencia';
 import MatriculaALumnos from './components/ui/Admin/MatriculaAlumnos/MatriculaAlumnos';
 import NotasAlumnos from './components/ui/Admin/NotasAlumnos/NotasAlumnos';
+import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/PensionesByGradoSeccion';
 
 function App() {
   const navigate = useNavigate();
@@ -61,7 +62,9 @@ function App() {
               <Route path="pasar-asistencia" element={<PasarAsistencia />}></Route>
               <Route path="registro-asistencia" element={<RegistroAsistenciaAlumnos />}></Route>
             </Route>
-            <Route path="admin/gestionarpensiones" element={<Pensiones />} />
+            <Route path="admin/pensiones" element={<Pensiones />}>
+              <Route path="salon" element={<PensionesByGradoSeccion />} />
+            </Route>
 
             <Route path="admin/alumnos" element={<Alumnos />} />
           </Route>

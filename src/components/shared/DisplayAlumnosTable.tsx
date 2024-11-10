@@ -20,7 +20,7 @@ export default function DisplayAlumnosTable({
   alumnos: AMatriculado[] | undefined;
   icon: JSX.Element;
 }) {
-  if (!alumnos) return null;
+  if (!alumnos) return <></>;
   return (
     <Table gridTemplateColumns="26rem 10rem 5.5rem" width="content-fit">
       {alumnos.length > 0 ? (
@@ -34,7 +34,7 @@ export default function DisplayAlumnosTable({
       ) : null}
       {alumnos.length > 0 ? (
         <Table.Body>
-          {alumnos
+          {[...alumnos]
             .sort((prev, curr) => (convertGradoToIndex(prev.grado) > convertGradoToIndex(curr.grado) ? 1 : -1))
             .map((alumno, index) => (
               <Fragment key={index}>

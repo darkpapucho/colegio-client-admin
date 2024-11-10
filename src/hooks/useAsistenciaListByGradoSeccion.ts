@@ -40,7 +40,6 @@ export default function useFetchAsistenciaList({
 
 export async function fetchAsistenciaListByGradoSeccionDayId({ grado, seccion, month, dayId, estadosMatricula }) {
   try {
-    console.log('requesting fresh data');
     if (!grado || !seccion || !month || !dayId || !estadosMatricula || estadosMatricula.length == 0) throw new Error('invalid request data');
 
     const response = await Calendario.fetchAsistenciaListByGradoSeccionDayId({ grado, seccion, month, dayId, estadosMatricula });

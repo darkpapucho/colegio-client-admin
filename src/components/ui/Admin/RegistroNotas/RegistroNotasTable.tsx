@@ -72,13 +72,10 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
 
   function customSelectListener(event: CustomEvent) {
     const { name, value } = event.detail;
-    console.log({ name, value });
     if (name === EVENT_NAME) {
       dispatch({ type: 'updateNotaCurso', payload: value });
     } else if (name === 'editCompetencia') {
       const { cursoKey, index, nota, periodo } = value;
-      console.log('periodo selected listener');
-      console.log({ cursoKey, index, nota, periodo });
       dispatchSelectedRegistro({ type: 'updateNotasSelectedRegistroAction', payload: { nota, index, cursoKey, periodo } });
     }
   }
