@@ -1,9 +1,11 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { AMatriculado } from '../../../../types/alumno';
 import { Container } from '../../../shared/Container';
 import { Icon } from '../../../shared/Icon';
 import { StyledInput } from '../../../shared/StyledInput';
 import { CiEdit } from 'react-icons/ci';
+import { AiOutlineSave } from 'react-icons/ai';
+import { MdAdd } from 'react-icons/md';
 import { Text } from '../../../shared/Text';
 import Select from '../../../shared/Select';
 import { grados, SECCIONES_SELECT_OPTIONS, SEXOS_SELECT_OPTION } from '../../../../utils/var';
@@ -11,19 +13,21 @@ import { Button } from '../../../shared/Button';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import { ESTADOS_MATRICULA_SELECT_OPTIONS } from '../../../../var/globals';
 import { Alumno } from '../../../../models/alumno';
-import { errorHandler } from '../../../../utils/errorHandler';
+
 import toaster from 'react-hot-toast';
 import { capitalizeString, updateToken } from '../../../../utils/utils';
 import { editarAlumnoSchema } from '../../../../utils/zodSchemas';
-import { queryClient } from '../../../../config/query/query';
-import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
+
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { handleFetchMatriculados } from '../../../../hooks/useAlumnosMatriculados';
+
 import useEditarAlumno from '../../../../hooks/useEditarAlumno';
+import AgregarApoderadoCard from './AgregarApoderadoCard';
+import EditarApoderadoCard from './EditarApoderadoCard';
 
 export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModal: () => void; alumno: AMatriculado | undefined }) {
-  const { grado, seccion } = useGradoSeccionSearchParams();
-  const año = useTypedSelector((state) => state.año);
+  // const [editApoderados, setEditApoderados] = useState(false);
+  const [showAgregarApoderadoCard, setShowAgregarApoderadoCard] = useState(false);
+
   const nivel = useTypedSelector((state) => state.nivel);
   const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(alumno ? { ...alumno } : alumno);
   const [disables, setDisables] = useState({
@@ -44,21 +48,9 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
   const fechaMatriculaRef = useRef<HTMLInputElement | null>(null);
   const fechaRetiroRef = useRef<HTMLInputElement | null>(null);
 
-  const { error, isError, isSuccess, isLoading, editarAlumno } = useEditarAlumno(handleSubmit);
+  const { isLoading, editarAlumno } = useEditarAlumno(handleSubmit, onCloseModal);
 
   useCustomEvent('customSelect', customSelectListener);
-  useEffect(() => {
-    if (isSuccess === true) {
-      queryClient.invalidateQueries(['matriculados', grado, seccion, año]);
-      queryClient.prefetchQuery({ queryKey: ['matriculados', grado, seccion, año], queryFn: () => handleFetchMatriculados({ grado, seccion }) });
-      onCloseModal();
-    }
-  }, [isSuccess]);
-  useEffect(() => {
-    if (error != null) {
-      errorHandler(error);
-    }
-  }, [isError]);
 
   if (!selectedAlumno) return null;
   return (
@@ -71,7 +63,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             </Text>
             <StyledInput defaultValue={selectedAlumno.nombres} disabled={disables['nombres']} $width="60%" ref={nombresRef} />
             <Icon $primary $pointer onClick={() => handleToggleEnability('nombres')} $small>
-              <CiEdit />
+              {disables.nombres ? <CiEdit /> : <AiOutlineSave />}
             </Icon>
           </Container>
           <Container $direction="row" $width="100%">
@@ -80,7 +72,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             </Text>
             <StyledInput defaultValue={selectedAlumno.apellidos} disabled={disables['apellidos']} $width="60%" ref={apellidosRef} />
             <Icon $primary $pointer onClick={() => handleToggleEnability('apellidos')} $small>
-              <CiEdit />
+              {disables.apellidos ? <CiEdit /> : <AiOutlineSave />}
             </Icon>
           </Container>
           <Container $direction="row" $width="100%">
@@ -89,7 +81,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             </Text>
             <StyledInput defaultValue={selectedAlumno.dni} disabled={disables['dni']} $width="60%" ref={dniRef} />
             <Icon $primary $pointer onClick={() => handleToggleEnability('dni')} $small>
-              <CiEdit />
+              {disables.dni ? <CiEdit /> : <AiOutlineSave />}
             </Icon>
           </Container>
 
@@ -99,7 +91,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             </Text>
             <StyledInput defaultValue={selectedAlumno.codigoEstudiante} disabled={disables['codigoEstudiante']} $width="60%" ref={codigoEstudianteRef} />
             <Icon $primary $pointer onClick={() => handleToggleEnability('codigoEstudiante')} $small>
-              <CiEdit />
+              {disables.codigoEstudiante ? <CiEdit /> : <AiOutlineSave />}
             </Icon>
           </Container>
           <Container $direction="row" $width="100%">
@@ -108,7 +100,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             </Text>
             <StyledInput type="date" defaultValue={selectedAlumno.fechaMatricula.slice(0, 10)} disabled={disables['fechaMatricula']} $width="60%" ref={fechaMatriculaRef} />
             <Icon $primary $pointer onClick={() => handleToggleEnability('fechaMatricula')} $small>
-              <CiEdit />
+              {disables.fechaMatricula ? <CiEdit /> : <AiOutlineSave />}
             </Icon>
           </Container>
           {selectedAlumno.fechaRetiro && (
@@ -118,7 +110,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
               </Text>
               <StyledInput type="date" defaultValue={selectedAlumno.fechaRetiro.slice(0, 10)} disabled={disables['fechaRetiro']} $width="60%" ref={fechaRetiroRef} />
               <Icon $primary $pointer onClick={() => handleToggleEnability('fechaRetiro')} $small>
-                <CiEdit />
+                {disables.fechaRetiro ? <CiEdit /> : <AiOutlineSave />}
               </Icon>
             </Container>
           )}
@@ -182,6 +174,25 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
           </Container>
         </Container>
       </Container>
+      {/* <Button $width="max-content" $danger={editApoderados} $primary={!editApoderados} onClick={() => setEditApoderados((old) => !old)}>
+        {editApoderados ? 'Cancelar' : 'Editar Apoderados'}
+      </Button> */}
+
+      <Container $width="100%" $gap="1rem" $direction="column">
+        {(!selectedAlumno.apoderados || selectedAlumno.apoderados.length < 2) && !showAgregarApoderadoCard && (
+          <Button $width="100%" $green onClick={() => setShowAgregarApoderadoCard(true)}>
+            Agregar Apoderado <MdAdd />
+          </Button>
+        )}
+        {showAgregarApoderadoCard && <AgregarApoderadoCard onCancel={onCloseModal} alumnoId={selectedAlumno._id} />}
+        {selectedAlumno.apoderados && selectedAlumno.apoderados.length > 0 && (
+          <Container $width="100%" $direction="column">
+            {selectedAlumno.apoderados.map((apoderado, index) => {
+              return <EditarApoderadoCard key={index} apoderado={apoderado} alumnoId={selectedAlumno._id} />;
+            })}
+          </Container>
+        )}
+      </Container>
 
       <Button $primary $small disabled={isLoading} onClick={() => editarAlumno()}>
         Editar{' '}
@@ -218,7 +229,7 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
     updateToken(response);
     if (response.data.ok) {
       if (response.data.payload) {
-        toaster.success('Datos actulizados');
+        toaster.success('Datos actualizados');
       }
     }
   }

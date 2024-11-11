@@ -33,4 +33,5 @@ export enum ApiEndPoints {
   FETCH_PENSIONES_LIST_BY_GRADO_SECCION = '/pensiones/get-lista-by-grado-seccion',
   PAGAR_PENSION_ALUMNOID_MES = '/pensiones/pagar-pension-alumnoid-mes',
   UPDATE_MONTO_PAGAR_PENSIONES = '/pensiones/update-monto-pagar-pensiones',
+  AGREGAR_APODERADO = '/alumno/agregar-apoderado',
 }

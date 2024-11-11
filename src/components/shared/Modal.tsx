@@ -18,6 +18,7 @@ const ModalContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  transform-origin: top;
 `;
 const StyledModal = styled.div<{ $width: string; $marginTop?: string }>`
   position: absolute;

@@ -41,6 +41,38 @@ const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
 
 z.setErrorMap(customErrorMap);
 
+export const apoderadoSchema = z.object({
+  nombres: z.string().min(4).max(25),
+  apellidos: z.string().min(4).max(25),
+  nombreCompleto: z.string().min(10).max(60),
+  dni: z.string().refine(
+    (value) => {
+      let isValid = false;
+      if (!value || value === '') {
+        return true;
+      } else if (value && value !== '') {
+        isValid = !isNaN(+value) && value.length === 8;
+      }
+      return isValid;
+    },
+    (value) => ({ message: `${value} no es un dni válido` }),
+  ),
+  telefono: z.string().refine(
+    (value) => {
+      let isValid = false;
+      if (!value || value === '') {
+        return true;
+      } else if (value && value !== '') {
+        isValid = !isNaN(+value) && value.length === 9;
+      }
+      return isValid;
+    },
+    (value) => ({ message: `${value} no es un dni válido` }),
+  ),
+  correo: z.preprocess((val) => (val === '' ? null : val), z.string().email().nullable().optional()),
+  relacion: z.string().min(3).max(10),
+});
+
 export const editarAlumnoSchema = z
   .object({
     nombres: z.string().min(4).max(30),
@@ -68,7 +100,8 @@ export const editarAlumnoSchema = z
   .refine(
     (data) => {
       if (data.dni && data.dni !== '') {
-        return data.codigoEstudiante === '000000' + data.dni;
+        //return data.codigoEstudiante === '000000' + data.dni;
+        return data.codigoEstudiante.length === 14;
       }
       return true;
     },
