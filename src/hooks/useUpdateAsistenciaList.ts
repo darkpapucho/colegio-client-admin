@@ -80,7 +80,8 @@ export async function updateAsistenciaList({
   const totalTardanzas: number = asistenciaList.list.filter((record) => record.asistencia === 'T').length;
   if (
     !window.confirm(
-      `Estas seguro que deseas alterar la asistencia del ${new Date(`${year}-${MONTHS.findIndex((element) => element === month) + 1}-${day}`).toLocaleDateString('ES-es', {
+      `Estas seguro que deseas alterar la asistencia del ${new Date(`${year}-${MONTHS.findIndex((element) => element === month) + 1}-${day}`).toLocaleDateString('es-PE', {
+        timeZone: 'America/Lima',
         day: '2-digit',
         month: 'long',
       })}

@@ -20,7 +20,7 @@ export default function AlumnoCard({ selectedAlumno, width }: { selectedAlumno: 
       </div>
       <div>
         <Text $bold>Fecha Matrícula:</Text>
-        <Text>{new Date(selectedAlumno.fechaMatricula).toLocaleDateString('Es-es', { year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
+        <Text>{new Date(selectedAlumno.fechaMatricula).toLocaleDateString('es-PE', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' })}</Text>
       </div>
       <div>
         <Text $bold>Estado Matrícula: </Text>

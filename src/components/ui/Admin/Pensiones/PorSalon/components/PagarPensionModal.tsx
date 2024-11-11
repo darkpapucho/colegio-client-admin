@@ -71,7 +71,8 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
             {convertIndexToMonth(selectedData.pension.mes).toUpperCase()}
           </Text>
           <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
-            {new Date(selectedData.pension.fecha).toLocaleDateString('es-ES', {
+            {new Date(selectedData.pension.fecha).toLocaleDateString('es-PE', {
+              timeZone: 'America/Lima',
               day: '2-digit',
               month: 'long',
               year: 'numeric',

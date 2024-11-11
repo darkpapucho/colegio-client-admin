@@ -2,7 +2,7 @@ import { CalendarioList } from '../types/calendar';
 import { MONTH_NAME } from '../types/enums';
 
 export function getCurrentMonthName() {
-  const currentMonth = new Date().toLocaleDateString('es-es', { month: 'long' });
+  const currentMonth = new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', month: 'long' });
   if (currentMonth === 'enero' || currentMonth === 'febrero') {
     return undefined;
   }
@@ -13,7 +13,7 @@ export function getClosestDay(months: { [key: string]: Omit<CalendarioList, 'mon
   // console.log({ months, selectedMonth });
   if (selectedMonth == undefined) return undefined;
 
-  const currentDay = +new Date().toLocaleDateString('es-es', { day: 'numeric' });
+  const currentDay = +new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: 'numeric' });
 
   const foundDay = months[selectedMonth].find((element) => {
     return element.day === currentDay;

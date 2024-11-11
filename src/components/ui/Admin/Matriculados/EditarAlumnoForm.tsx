@@ -47,7 +47,6 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
   const codigoEstudianteRef = useRef<HTMLInputElement | null>(null);
   const fechaMatriculaRef = useRef<HTMLInputElement | null>(null);
   const fechaRetiroRef = useRef<HTMLInputElement | null>(null);
-
   const { isLoading, editarAlumno } = useEditarAlumno(handleSubmit, onCloseModal);
 
   useCustomEvent('customSelect', customSelectListener);
@@ -184,11 +183,11 @@ export default function EditarAlumnoForm({ alumno, onCloseModal }: { onCloseModa
             Agregar Apoderado <MdAdd />
           </Button>
         )}
-        {showAgregarApoderadoCard && <AgregarApoderadoCard onCancel={onCloseModal} alumnoId={selectedAlumno._id} />}
+        {showAgregarApoderadoCard && <AgregarApoderadoCard closeModal={onCloseModal} onCancel={() => setShowAgregarApoderadoCard(false)} alumnoId={selectedAlumno._id} />}
         {selectedAlumno.apoderados && selectedAlumno.apoderados.length > 0 && (
           <Container $width="100%" $direction="column">
-            {selectedAlumno.apoderados.map((apoderado, index) => {
-              return <EditarApoderadoCard key={index} apoderado={apoderado} alumnoId={selectedAlumno._id} />;
+            {selectedAlumno.apoderados.map((apoderado) => {
+              return <EditarApoderadoCard apoderado={apoderado} alumnoId={selectedAlumno._id} closeModal={onCloseModal} />;
             })}
           </Container>
         )}

@@ -50,8 +50,14 @@ export default function EnableDays() {
             maxDate={new Date(maxDate)}
           />
         </Container>
-        {dateRange && <Text $fontSize="small">{'DEL: ' + new Date(dateRange[0]).toLocaleDateString('ES-es', { day: '2-digit', month: 'long', year: 'numeric' })}</Text>}
-        {dateRange && <Text $fontSize="small">{'AL: ' + new Date(dateRange[1]).toLocaleDateString('ES-es', { day: '2-digit', month: 'long', year: 'numeric' })}</Text>}
+        {dateRange && (
+          <Text $fontSize="small">
+            {'DEL: ' + new Date(dateRange[0]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' })}
+          </Text>
+        )}
+        {dateRange && (
+          <Text $fontSize="small">{'AL: ' + new Date(dateRange[1]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' })}</Text>
+        )}
         <Button $width="max-content" onClick={() => handleSubmit(dateRange as [Date, Date])} $primary>
           Submit
         </Button>
@@ -64,8 +70,8 @@ export default function EnableDays() {
       if (!dateRange) throw new Error('invalid Date range');
       if (
         !window.confirm(`Deseas habilitar
-      Del: ${new Date(dateRange[0]).toLocaleDateString('ES-es', { day: '2-digit', month: 'long', year: 'numeric' })}
-      Al: ${new Date(dateRange[1]).toLocaleDateString('ES-es', { day: '2-digit', month: 'long', year: 'numeric' })}?
+      Del: ${new Date(dateRange[0]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' })}
+      Al: ${new Date(dateRange[1]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' })}?
       `)
       )
         return;

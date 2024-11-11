@@ -34,4 +34,5 @@ export enum ApiEndPoints {
   PAGAR_PENSION_ALUMNOID_MES = '/pensiones/pagar-pension-alumnoid-mes',
   UPDATE_MONTO_PAGAR_PENSIONES = '/pensiones/update-monto-pagar-pensiones',
   AGREGAR_APODERADO = '/alumno/agregar-apoderado',
+  UPDATE_APODERADO_BY_ID = '/alumno/update-apoderado-by-id',
 }

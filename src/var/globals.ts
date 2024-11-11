@@ -1,3 +1,4 @@
+import { TipoApoderado } from '../types/alumno';
 import { CURSO_BOLETA_NOTA } from '../types/documento';
 
 export const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:4000' : import.meta.env.VITE_API_BASE_URL;
@@ -204,3 +205,9 @@ export const SALONES_SELECT_OPTONS = {
     { label: 'Quinto B', value: 'Quinto B' },
   ],
 };
+
+export const apoderadoSelectOptions: { label: TipoApoderado; value: TipoApoderado }[] = [
+  { label: 'MADRE', value: 'MADRE' },
+  { label: 'PADRE', value: 'PADRE' },
+  { label: 'APODERADO', value: 'APODERADO' },
+];

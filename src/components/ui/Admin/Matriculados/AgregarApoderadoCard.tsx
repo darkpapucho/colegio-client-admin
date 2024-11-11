@@ -2,7 +2,7 @@ import { Container } from '../../../shared/Container';
 import { StyledInput } from '../../../shared/StyledInput';
 import { Text } from '../../../shared/Text';
 import { useRef, useState } from 'react';
-import { Apoderado, TipoApoderado } from '../../../../types/alumno';
+import { NuevoApoderado, TipoApoderado } from '../../../../types/alumno';
 import { Alumno } from '../../../../models/alumno';
 import { apoderadoSchema } from '../../../../utils/zodSchemas';
 import { updateToken } from '../../../../utils/utils';
@@ -12,21 +12,16 @@ import { Button } from '../../../shared/Button';
 import Loader from '../../Loader/Loader';
 import Select from '../../../shared/Select';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
+import { apoderadoSelectOptions } from '../../../../var/globals';
 
-const apoderadoSelectOptions: { label: TipoApoderado; value: TipoApoderado }[] = [
-  { label: 'MADRE', value: 'MADRE' },
-  { label: 'PADRE', value: 'PADRE' },
-  { label: 'APODERADO', value: 'APODERADO' },
-];
-
-export default function AgregarApoderadoCard({ alumnoId, onCancel }: { onCancel: () => void; alumnoId: string }) {
+export default function AgregarApoderadoCard({ alumnoId, onCancel, closeModal }: { closeModal: () => void; onCancel: () => void; alumnoId: string }) {
   const nombresRef = useRef<HTMLInputElement | null>(null);
   const apellidosRef = useRef<HTMLInputElement | null>(null);
   const dniRef = useRef<HTMLInputElement | null>(null);
   const telefonoRef = useRef<HTMLInputElement | null>(null);
   const correoRef = useRef<HTMLInputElement | null>(null);
   const [relacion, setRelacion] = useState<TipoApoderado>(apoderadoSelectOptions[0].value);
-  const { isLoading, editarAlumno } = useEditarAlumno(handleAgregarApoderado, onCancel);
+  const { isLoading, editarAlumno } = useEditarAlumno(handleAgregarApoderado, closeModal);
   useCustomEvent('customSelect', selectListener);
   return (
     <>
@@ -99,12 +94,12 @@ export default function AgregarApoderadoCard({ alumnoId, onCancel }: { onCancel:
     }
   }
   async function handleAgregarApoderado() {
-    const nombres = nombresRef.current!.value.toUpperCase();
-    const apellidos = apellidosRef.current!.value.toUpperCase();
-    const dni = dniRef.current!.value;
-    const telefono = telefonoRef.current!.value;
-    const correo = correoRef.current!.value;
-    const apoderado: Apoderado = { nombres, apellidos, nombreCompleto: apellidos + ', ' + nombres, dni, telefono, correo, relacion };
+    const nombres = nombresRef.current!.value.toUpperCase().trim();
+    const apellidos = apellidosRef.current!.value.toUpperCase().trim();
+    const dni = dniRef.current!.value.trim();
+    const telefono = telefonoRef.current!.value.trim();
+    const correo = correoRef.current!.value.trim();
+    const apoderado: NuevoApoderado = { nombres, apellidos, nombreCompleto: apellidos + ', ' + nombres, dni, telefono, correo, relacion };
 
     const parseResult = apoderadoSchema.safeParse(apoderado);
     if (!parseResult.success) {

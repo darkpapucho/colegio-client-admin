@@ -2,7 +2,8 @@ import { EstadoMatricula } from './enums';
 
 type TipoApoderado = 'MADRE' | 'PADRE' | 'APODERADO';
 type Sexo = 'Hombre' | 'Mujer';
-type Apoderado = {
+
+type NuevoApoderado = {
   apellidos: string;
   nombres: string;
   nombreCompleto: string;
@@ -11,6 +12,8 @@ type Apoderado = {
   telefono: string;
   relacion: TipoApoderado;
 };
+
+type Apoderado = NuevoApoderado & { _id: string };
 
 export interface AMatriculado {
   // Alumno Matriculado

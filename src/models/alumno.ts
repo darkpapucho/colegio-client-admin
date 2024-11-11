@@ -2,12 +2,16 @@ import { ApiEndPoints } from '../enums/apiEndPoints';
 import axios, { GenericAbortSignal } from 'axios';
 import { GetHeaders } from '../utils/utils';
 import { EstadoMatricula, Grado, Seccion } from '../types/enums';
-import { AMatriculado, Apoderado, NuevoAlumno, PartialAlumno } from '../types/alumno';
+import { AMatriculado, Apoderado, NuevoAlumno, NuevoApoderado, PartialAlumno } from '../types/alumno';
 import { ResponseSchema } from '../types/axiosResponse';
 import { API_BASE_URL } from '../var/globals';
 
 export class Alumno {
-  static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: Apoderado }) {
+  static async updateApoderadoById({ alumnoId, apoderado }: { alumnoId: string; apoderado: Apoderado }) {
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.UPDATE_APODERADO_BY_ID, { alumnoId, apoderado }, GetHeaders());
+    return response;
+  }
+  static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: NuevoApoderado }) {
     const response = await axios.post<ResponseSchema<{ apoderado: Apoderado }>>(API_BASE_URL + ApiEndPoints.AGREGAR_APODERADO, { alumnoId, apoderado }, GetHeaders());
     return response;
   }

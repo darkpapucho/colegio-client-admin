@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Alumno } from '../models/alumno';
 import { updateToken } from '../utils/utils';
-import { EstadoMatricula } from '../types/enums';
+import { EstadoMatricula, Nivel } from '../types/enums';
 import { QueryKeys } from '../config/query/query';
+import { useTypedSelector } from './useTypedSelector';
 
 export default function useSearchAlumno({
   searchBoxRef,
@@ -11,13 +12,14 @@ export default function useSearchAlumno({
   searchBoxRef: React.MutableRefObject<HTMLInputElement | null>;
   estadosMatricula: EstadoMatricula[];
 }) {
+  const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const {
     isFetching,
     data: alumnos,
     refetch,
     error,
   } = useQuery({
-    queryKey: [QueryKeys.BuscarAlumnos],
+    queryKey: [QueryKeys.BuscarAlumnos, nivel],
     queryFn: ({ signal }) => handleSearch(signal!),
     enabled: false,
   });

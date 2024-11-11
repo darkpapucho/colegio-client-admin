@@ -21,8 +21,9 @@ const ModalContainer = styled.div`
   transform-origin: top;
 `;
 const StyledModal = styled.div<{ $width: string; $marginTop?: string }>`
+  transform-origin: top;
   position: absolute;
-  top: ${({ $marginTop }) => $marginTop || '35%'};
+  top: ${({ $marginTop }) => $marginTop || '45%'};
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 101;
@@ -46,7 +47,7 @@ const ModalHeader = styled.div`
   align-items: center;
   padding: 0.7rem 1rem;
   border-bottom: 2px solid black;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.tiny};
   font-weight: 500;
   color: white;
   user-select: none;
