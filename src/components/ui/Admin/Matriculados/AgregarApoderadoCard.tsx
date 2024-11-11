@@ -29,7 +29,7 @@ export default function AgregarApoderadoCard({ alumnoId, onCancel, closeModal }:
       <Container $direction="column" $width="100%" $gap="1.4rem" $border="1px solid black" $padding="1rem">
         <Container $width="100%" $direction="column" $gap=".1rem">
           <Container $direction="row" $width="100%" $gap=".5rem">
-            <Container $direction="row" $width="50%%" $alignItems="center">
+            <Container $direction="row" $width="50%" $alignItems="center">
               <Text $width="25%" $bold>
                 Nombres:
               </Text>
@@ -43,13 +43,13 @@ export default function AgregarApoderadoCard({ alumnoId, onCancel, closeModal }:
             </Container>
           </Container>
           <Container $direction="row" $width="100%" $gap=".5rem">
-            <Container $direction="row" $width="100%" $alignItems="center">
+            <Container $direction="row" $width="50%" $alignItems="center">
               <Text $width="25%" $bold>
                 DNI:
               </Text>
               <StyledInput $width="75%" ref={dniRef} />
             </Container>
-            <Container $direction="row" $width="100%" $alignItems="center">
+            <Container $direction="row" $width="50%" $alignItems="center">
               <Text $width="25%" $bold>
                 Teléfono:
               </Text>
@@ -57,13 +57,13 @@ export default function AgregarApoderadoCard({ alumnoId, onCancel, closeModal }:
             </Container>
           </Container>
           <Container $direction="row" $width="100%" $gap=".5rem">
-            <Container $direction="row" $width="100%" $alignItems="center">
+            <Container $direction="row" $width="50%" $alignItems="center">
               <Text $width="25%" $bold>
                 Correo:
               </Text>
               <StyledInput $width="75%" ref={correoRef} />
             </Container>
-            <Container $direction="row" $width="100%" $alignItems="center">
+            <Container $direction="row" $width="50%" $alignItems="center">
               <Text $width="25%" $bold>
                 Relación:
               </Text>

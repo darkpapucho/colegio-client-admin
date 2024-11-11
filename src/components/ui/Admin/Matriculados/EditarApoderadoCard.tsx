@@ -53,18 +53,12 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
             Nombres:
           </Text>
           <StyledInput defaultValue={apoderado.nombres} disabled={!editable} $width="75%" ref={nombresRef} />
-          {/* <Icon $primary $pointer onClick={() => handleToggleEnability('nombreCompleto')} $small>
-          {disables.nombres ? <CiEdit /> : <AiOutlineSave />}
-        </Icon> */}
         </Container>
         <Container $direction="row" $width="100%" $alignItems="center">
           <Text $width="25%" $bold>
             Apellidos:
           </Text>
           <StyledInput defaultValue={apoderado.apellidos} disabled={!editable} $width="75%" ref={apellidosRef} />
-          {/* <Icon $primary $pointer onClick={() => handleToggleEnability('dni')} $small>
-          {disables.dni ? <CiEdit /> : <AiOutlineSave />}
-        </Icon> */}
         </Container>
       </Container>
       <Container $direction="row" $width="100%" $gap=".5rem">
@@ -104,7 +98,7 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
           <Select
             rect
             tiny
-            options={apoderadoSelectOptions}
+            options={editable ? apoderadoSelectOptions : [{ label: apoderado.relacion, value: apoderado.relacion }]}
             defaultValue={{ label: apoderado.relacion, value: apoderado.relacion }}
             width="75%"
             label="apoderado"
@@ -139,8 +133,10 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
   }
   function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;
-    if (name === 'apoderado') {
-      setRelacion(value);
+    if (editable) {
+      if (name === 'apoderado') {
+        setRelacion(value);
+      }
     }
   }
 }
