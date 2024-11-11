@@ -88,7 +88,7 @@ export default function PasarAsistencia() {
 
           {selectedMonth && (
             <Container $direction="row" $gap="0.5rem">
-              {months[selectedMonth]
+              {[...months[selectedMonth]]
                 .sort((prev, curr) => (prev.day > curr.day ? 1 : -1))
                 .map((element) => {
                   return (

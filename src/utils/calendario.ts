@@ -2,7 +2,8 @@ import { CalendarioList } from '../types/calendar';
 import { MONTH_NAME } from '../types/enums';
 
 export function getCurrentMonthName() {
-  const currentMonth = new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', month: 'long' });
+  const currentMonth = new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', month: 'long' }).toLowerCase();
+
   if (currentMonth === 'enero' || currentMonth === 'febrero') {
     return undefined;
   }

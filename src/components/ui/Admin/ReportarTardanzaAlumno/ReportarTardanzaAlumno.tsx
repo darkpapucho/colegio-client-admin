@@ -19,8 +19,9 @@ import { Title } from '../../../shared/Title';
 import ListaTardanzas from './ListaTardanzas';
 
 export default function ReportarTardanzaAlumno() {
-  const today = new Date();
-  const presentDate = today.toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' });
+  const today = +new Date().toLocaleDateString('es-ES', { timeZone: 'America/Lima', day: 'numeric' });
+
+  const presentDate = new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' });
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [alumnos, setAlumnos] = useState<AMatriculado[]>([]);
   const { data, isLoading } = useQuery({ queryKey: ['dayId', nivel], queryFn: () => fetchDayId(), refetchOnWindowFocus: false });
