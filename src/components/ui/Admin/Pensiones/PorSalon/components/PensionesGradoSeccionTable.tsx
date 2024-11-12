@@ -29,7 +29,8 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
             setSelectedData(null);
             setShowPagarPensionModal(false);
           }}
-          selectedData={selectedData}></PagarPensionModal>
+          selectedData={selectedData}
+        />
       )}
       <Table gridTemplateColumns="35rem repeat(10, 4rem)" width="content-fit">
         <Table.Header>
@@ -112,6 +113,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 2),
@@ -123,6 +125,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 3),
@@ -134,6 +137,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 4),
@@ -145,6 +149,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 5),
@@ -156,6 +161,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 6),
@@ -167,6 +173,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 7),
@@ -178,6 +185,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 8),
@@ -189,6 +197,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 9),
@@ -200,6 +209,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 10),
@@ -211,6 +221,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <DisplayPensionInfo
+                    $index={index}
                     onClick={() =>
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 11),

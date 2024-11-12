@@ -13,17 +13,18 @@ import { updateToken } from '../../../../../../utils/utils';
 import toaster from 'react-hot-toast';
 import { PensionesByGradoSeccionContext } from '../PensionesByGradoSeccion';
 import Loader from '../../../../Loader/Loader';
+import { StyledInput } from '../../../../../shared/StyledInput';
 
 export default function PagarPensionModal({ selectedData, onCloseModal }: { onCloseModal: () => void; selectedData: { estudiante: AMatriculado; pension: Pension } }) {
   const montoAbonadoRef = useRef<HTMLInputElement | null>(null);
   const fechaRef = useRef<HTMLInputElement | null>(null);
   const { setData } = useContext(PensionesByGradoSeccionContext)!;
-
   const [loading, setLoading] = useState(false);
+
   if (!selectedData.pension.pagado) {
     return (
       <Fragment key={loading.toString()}>
-        {loading && <Loader />}
+        {loading && <Loader $zIndex={200} />}
         <Modal width="36rem" title={selectedData.estudiante.nombreCompleto.toUpperCase()} onCloseModal={onCloseModal}>
           <Container $direction="column" $gap="2rem" $width="100%">
             <Text $width="100%" $textAlign="center" $bold $fontSize="small">
@@ -45,13 +46,24 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
                 </Text>
               </Container>
             </Container>
-            <Input name="monto_abonado" label="monto abonado" type="number" ref={montoAbonadoRef} />
+            <Container $direction="row" $gap=".1rem" $alignItems="center">
+              <Text $bold>S/.</Text>
+              <StyledInput
+                defaultValue={selectedData.pension.monto_pagar - selectedData.pension.monto_pagado}
+                name="monto_abonado"
+                min={0}
+                type="number"
+                ref={montoAbonadoRef}
+                step={10}
+                max={selectedData.pension.monto_pagar}
+              />
+            </Container>
             <Container $gap="1rem" $direction="row">
-              <Button $width="max-content" $primary onClick={pagarPension}>
+              <Button $width="max-content" $primary onClick={pagarPension} disabled={loading}>
                 {' '}
                 Pagar Pension
               </Button>
-              <Button $width="max-content" $danger onClick={onCloseModal}>
+              <Button $width="max-content" $danger onClick={onCloseModal} disabled={loading}>
                 {' '}
                 Cancelar
               </Button>
@@ -64,7 +76,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
   //display informacion
   return (
     <Fragment key={loading.toString()}>
-      {loading && <Loader />}
+      {loading && <Loader $zIndex={200} />}
       <Modal width="36rem" title={selectedData.estudiante.nombreCompleto.toUpperCase()} onCloseModal={onCloseModal}>
         <Container $direction="column" $width="100%" $bgColor="#0f0f0f" $padding="1rem">
           <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
@@ -104,7 +116,8 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
       const fecha = fechaRef.current!.value;
 
       if (!fecha) throw new Error('fecha inválida');
-      if (!monto_abonado || Number(monto_abonado) <= saldoPagar / 2 || Number(monto_abonado) > saldoPagar) {
+      if (!monto_abonado || Number(monto_abonado) > saldoPagar) {
+        //|| Number(monto_abonado) <= saldoPagar / 2
         throw new Error('monto inválido');
       }
       const response = await Pensiones.pagarPensionAlumnoIdMes({

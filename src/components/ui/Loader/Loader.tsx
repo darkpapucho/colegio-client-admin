@@ -1,11 +1,11 @@
 import { Overlay } from '../../shared/Overlay';
 import { Spinner } from '../../shared/Spinner';
 
-export default function Loader() {
+export default function Loader({ $zIndex }: { $zIndex?: number }) {
   return (
     <>
-      <Overlay />
-      <Spinner />
+      <Overlay $zIndex={$zIndex} />
+      <Spinner $zIndex={$zIndex} />
     </>
   );
 }

@@ -32,7 +32,7 @@ export default function EditPensionesModal({ selectedData, onCloseModal }: { onC
   const [loading, setLoading] = useState(false);
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Loader $zIndex={200} />}
       <Modal title={selectedData.estudiante.nombreCompleto} width="40rem" onCloseModal={onCloseModal}>
         <Container $direction="column" $width="100%" $gap="2rem">
           <Text $width="100%" $textAlign="center" $bold $fontSize="small">
@@ -58,7 +58,7 @@ export default function EditPensionesModal({ selectedData, onCloseModal }: { onC
               );
             })}
           </DivContainer>
-          <Button $primary $width="max-content" onClick={saveChanges}>
+          <Button $primary $width="max-content" onClick={saveChanges} disabled={loading}>
             Guardar Cambios
           </Button>
         </Container>
@@ -98,6 +98,7 @@ export default function EditPensionesModal({ selectedData, onCloseModal }: { onC
       errorHandler(err);
     } finally {
       setLoading(false);
+      onCloseModal();
     }
   }
 }

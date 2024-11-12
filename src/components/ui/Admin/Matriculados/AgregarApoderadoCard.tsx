@@ -72,10 +72,10 @@ export default function AgregarApoderadoCard({ alumnoId, onCancel, closeModal }:
           </Container>
         </Container>
         <Container $gap="1rem" $direction="row">
-          <Button $green $width="max-content" onClick={() => editarAlumno()}>
+          <Button $green $width="max-content" onClick={() => editarAlumno()} disabled={isLoading}>
             Agregar
           </Button>
-          <Button $danger $width="max-content" onClick={onCancel}>
+          <Button $danger $width="max-content" onClick={onCancel} disabled={isLoading}>
             Cancelar
           </Button>
         </Container>

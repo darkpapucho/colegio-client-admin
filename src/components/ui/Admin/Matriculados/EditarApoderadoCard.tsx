@@ -35,10 +35,10 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
       {isLoading && <Loader />}
       {editable ? (
         <Container $direction="row" $gap="1rem">
-          <Button $primary $width="max-content" onClick={() => editarAlumno()}>
+          <Button $primary $width="max-content" onClick={() => editarAlumno()} disabled={isLoading}>
             Grabar
           </Button>
-          <Button $danger $width="max-content" onClick={() => setEditable(false)}>
+          <Button $danger $width="max-content" onClick={() => setEditable(false)} disabled={isLoading}>
             Cancel
           </Button>
         </Container>
