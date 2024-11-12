@@ -19,7 +19,7 @@ import useCustomEvent from '../../../../hooks/useCustomEvent';
 import toaster from 'react-hot-toast';
 
 export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }: { closeModal: () => void; apoderado: Apoderado; alumnoId: string }) {
-  const [relacion, setRelacion] = useState<TipoApoderado>(apoderadoSelectOptions[0].value);
+  const [relacion, setRelacion] = useState<TipoApoderado>(apoderado.relacion);
   useCustomEvent('customSelect', selectListener);
   const [editable, setEditable] = useState(false);
   const nombresRef = useRef<HTMLInputElement | null>(null);
@@ -95,17 +95,19 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
           <Text $width="25%" $bold>
             Relación:
           </Text>
-          <Select
-            rect
-            tiny
-            options={editable ? apoderadoSelectOptions : [{ label: apoderado.relacion, value: apoderado.relacion }]}
-            defaultValue={{ label: apoderado.relacion, value: apoderado.relacion }}
-            width="75%"
-            label="apoderado"
-            name="apoderado"></Select>
-          {/* <Icon $primary $pointer onClick={() => handleToggleEnability('relacion')} $small>
-            {disables.relacion ? <CiEdit /> : <AiOutlineSave />}
-          </Icon> */}
+          {editable ? (
+            <Select
+              rect
+              tiny
+              options={editable ? apoderadoSelectOptions : [{ label: apoderado.relacion, value: apoderado.relacion }]}
+              defaultValue={{ label: relacion, value: relacion }}
+              width="75%"
+              label="apoderado"
+              name="apoderado"
+            />
+          ) : (
+            <StyledInput defaultValue={relacion} disabled={true} $width="75%" />
+          )}
         </Container>
       </Container>
     </Container>
@@ -133,10 +135,9 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
   }
   function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;
-    if (editable) {
-      if (name === 'apoderado') {
-        setRelacion(value);
-      }
+
+    if (name === 'apoderado') {
+      setRelacion(value);
     }
   }
 }
