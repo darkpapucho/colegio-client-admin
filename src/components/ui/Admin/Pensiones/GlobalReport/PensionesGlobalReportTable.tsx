@@ -19,26 +19,28 @@ export default function PensionesGlobalReportTable({ data }: { data: { numeroPen
           </Container>
         </Table.Header.Item>
         <Table.Body>
-          {data.map((record, ind) => {
-            return (
-              <Fragment key={ind}>
-                <Table.Body.Item $key={ind}>
-                  <Container $padding="1rem" $width="100%">
-                    <Text $width="100%" $bold $textAlign="center">
-                      {record.numeroPensionesAtrasadas}
-                    </Text>
-                  </Container>
-                </Table.Body.Item>
-                <Table.Body.Item $key={ind}>
-                  <Container $padding="1rem" $width="100%">
-                    <Text $width="100%" $bold $textAlign="center">
-                      {record.totalAlumnos}
-                    </Text>
-                  </Container>
-                </Table.Body.Item>
-              </Fragment>
-            );
-          })}
+          {[...data]
+            .sort((prev, curr) => (prev.numeroPensionesAtrasadas > curr.numeroPensionesAtrasadas ? 1 : -1))
+            .map((record, ind) => {
+              return (
+                <Fragment key={ind}>
+                  <Table.Body.Item $key={ind}>
+                    <Container $padding="1rem" $width="100%">
+                      <Text $width="100%" $bold $textAlign="center">
+                        {record.numeroPensionesAtrasadas}
+                      </Text>
+                    </Container>
+                  </Table.Body.Item>
+                  <Table.Body.Item $key={ind}>
+                    <Container $padding="1rem" $width="100%">
+                      <Text $width="100%" $bold $textAlign="center">
+                        {record.totalAlumnos}
+                      </Text>
+                    </Container>
+                  </Table.Body.Item>
+                </Fragment>
+              );
+            })}
         </Table.Body>
       </Table.Header>
     </Table>
