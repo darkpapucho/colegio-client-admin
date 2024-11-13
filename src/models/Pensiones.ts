@@ -7,6 +7,16 @@ import { AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 
 export class Pensiones {
+  static async getPensionesGlobalReport() {
+    const currentMonth = +new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', month: '2-digit' }) - 1;
+    const response = await axios.post<ResponseSchema<{ numeroPensionesAtrasadas: number; totalAlumnos: number }[]>>(
+      API_BASE_URL + ApiEndPoints.GET_PENSIONES_GLOBAL_REPORT,
+      { currentMonth },
+      GetHeaders(),
+    );
+    return response;
+  }
+
   static async updateMontoPagarPensiones({ pensiones, alumnoId }: { alumnoId: string; pensiones: Pension[] }) {
     const response = await axios.post<ResponseSchema<null>>(`${API_BASE_URL + ApiEndPoints.UPDATE_MONTO_PAGAR_PENSIONES}`, { pensiones, alumnoId }, GetHeaders());
     return response;

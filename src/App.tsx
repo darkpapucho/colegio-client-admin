@@ -27,6 +27,7 @@ import PasarAsistencia from './components/ui/Admin/PasarAsistencia/PasarAsistenc
 import MatriculaALumnos from './components/ui/Admin/MatriculaAlumnos/MatriculaAlumnos';
 import NotasAlumnos from './components/ui/Admin/NotasAlumnos/NotasAlumnos';
 import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/PensionesByGradoSeccion';
+import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/PensionesGlobalReport';
 
 function App() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ function App() {
             </Route>
             <Route path="admin/pensiones" element={<Pensiones />}>
               <Route path="salon" element={<PensionesByGradoSeccion />} />
+              <Route path="global" element={<PensionesGlobalReport />} />
             </Route>
 
             <Route path="admin/alumnos" element={<Alumnos />} />
