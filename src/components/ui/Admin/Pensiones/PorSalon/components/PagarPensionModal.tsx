@@ -154,6 +154,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
           if (record.alumnoId === selectedData.estudiante._id) {
             record.pensiones = record.pensiones.map((pension) => {
               if (pension.mes === selectedData.pension.mes) {
+                pension.monto_pagar = montoPagado;
                 pension.monto_pagado = montoPagado;
                 pension.fecha = fechaPago;
               }
