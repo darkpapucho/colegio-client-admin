@@ -26,6 +26,7 @@ export default function PensionesGlobalReportTable({ data }: { data: { numeroPen
     refetchOnMount: true,
     staleTime: 1000 * 60 * 3,
   });
+
   useEffect(() => {
     if (!error) return;
     errorHandler(error);

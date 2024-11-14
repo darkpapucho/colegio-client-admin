@@ -182,3 +182,5 @@ export enum CursosKeyInicial {
   PSICOMOTRIZ = 'psicomotriz',
   COMPETENCIAS_TRANSVERSALES = 'competenciasTransversales',
 }
+
+export type Salon = SalonesPrimaria | SalonesInicial | SalonesSecundaria;
