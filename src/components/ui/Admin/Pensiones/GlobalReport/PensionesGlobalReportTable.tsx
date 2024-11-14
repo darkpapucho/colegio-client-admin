@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Container } from '../../../../shared/Container';
 import { Text } from '../../../../shared/Text';
 import Table from '../../../Table/Table';
@@ -10,22 +10,29 @@ import { Pensiones } from '../../../../../models/Pensiones';
 import { updateToken } from '../../../../../utils/utils';
 import Loader from '../../../Loader/Loader';
 import AlumnosResultList from './AlumnosResultList';
+import { errorHandler } from '../../../../../utils/errorHandler';
 
 export default function PensionesGlobalReportTable({ data }: { data: { numeroPensionesAtrasadas: number; totalAlumnos: number }[] }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
-  const { isLoading, data: list } = useQuery({
+  const {
+    isFetching,
+    data: list,
+    error,
+  } = useQuery({
     queryKey: ['alumnos-list-by-pensiones-atrasadas', nivel, selectedNumber],
-
     queryFn: () => fetchAlumnosList(),
     enabled: selectedNumber !== null,
     refetchOnMount: true,
     staleTime: 1000 * 60 * 3,
   });
-
+  useEffect(() => {
+    if (!error) return;
+    errorHandler(error);
+  }, [error]);
   return (
-    <Container $direction="row" $gap="1rem">
-      {isLoading && <Loader />}
+    <Container $direction="row" $gap="1rem" $padding="0 0 1rem 0">
+      {isFetching && <Loader />}
       <Table width="content-fit" gridTemplateColumns="7rem 7rem" withBorder>
         <Table.Header>
           <Table.Header.Item>
