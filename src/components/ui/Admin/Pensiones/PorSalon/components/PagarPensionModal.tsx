@@ -14,13 +14,17 @@ import toaster from 'react-hot-toast';
 import { PensionesByGradoSeccionContext } from '../PensionesByGradoSeccion';
 import Loader from '../../../../Loader/Loader';
 import { StyledInput } from '../../../../../shared/StyledInput';
+import { CiEdit } from 'react-icons/ci';
 
 export default function PagarPensionModal({ selectedData, onCloseModal }: { onCloseModal: () => void; selectedData: { estudiante: AMatriculado; pension: Pension } }) {
   const montoAbonadoRef = useRef<HTMLInputElement | null>(null);
   const fechaRef = useRef<HTMLInputElement | null>(null);
   const { setData } = useContext(PensionesByGradoSeccionContext)!;
   const [loading, setLoading] = useState(false);
-
+  //
+  const [editPensionPagada, setEditPensionPagada] = useState(false);
+  const [montoPagado, setMontoPagado] = useState(selectedData.pension.monto_pagado);
+  const [fechaPago, setFechaPago] = useState(selectedData.pension.fecha);
   if (!selectedData.pension.pagado) {
     return (
       <Fragment key={loading.toString()}>
@@ -78,27 +82,55 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
     <Fragment key={loading.toString()}>
       {loading && <Loader $zIndex={200} />}
       <Modal width="36rem" title={selectedData.estudiante.nombreCompleto.toUpperCase()} onCloseModal={onCloseModal}>
-        <Container $direction="column" $width="100%" $bgColor="#0f0f0f" $padding="1rem">
+        <Container $direction="column" $width="100%" $bgColor="#0f0f0f" $padding="1rem" $gap=".6rem">
+          {editPensionPagada ? (
+            <Container $direction="row" $gap="1rem">
+              <Button $primary $width="max-conent" onClick={() => editarPensionPagada()}>
+                Modificar
+              </Button>
+              <Button $danger $width="max-conent" onClick={() => setEditPensionPagada(false)}>
+                Cancelar
+              </Button>
+            </Container>
+          ) : (
+            <Button $green $width="max-content" onClick={() => setEditPensionPagada(true)}>
+              Editar <CiEdit />
+            </Button>
+          )}
           <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {convertIndexToMonth(selectedData.pension.mes).toUpperCase()}
           </Text>
           <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
-            {new Date(selectedData.pension.fecha).toLocaleDateString('es-PE', {
-              timeZone: 'America/Lima',
-              day: '2-digit',
-              month: 'long',
-              year: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-            })}
-          </Text>
-          <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
-            {'S/. ' + selectedData.pension.monto_pagado}
-          </Text>
-          <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {'Recibo:' + selectedData.pension.reciboId ? selectedData.pension.reciboId : 'aqui falta el recibo'}
           </Text>
+          {editPensionPagada ? (
+            <Container $color="white" $direction="row" $gap=".6rem" $alignItems="center">
+              <Text $width="12rem">FECHA DE PAGO</Text>
+              <StyledInput $width="16rem" type="datetime-local" defaultValue={fechaPago} onChange={(e) => setFechaPago(e.currentTarget.value)} />
+            </Container>
+          ) : (
+            <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
+              {new Date(selectedData.pension.fecha).toLocaleDateString('es-PE', {
+                timeZone: 'America/Lima',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+              })}
+            </Text>
+          )}
+          {editPensionPagada ? (
+            <Container $color="white" $direction="row" $gap=".6rem" $alignItems="center">
+              <Text $width="12rem">MONTO PAGADO S/.</Text>
+              <StyledInput $width="16rem" type="number" min={10} step={10} defaultValue={montoPagado} onChange={(ev) => setMontoPagado(+ev.currentTarget.value)} />
+            </Container>
+          ) : (
+            <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
+              {'S/. ' + selectedData.pension.monto_pagado}
+            </Text>
+          )}
         </Container>
       </Modal>
     </Fragment>
@@ -107,7 +139,38 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
   function convertIndexToMonth(index: number) {
     return MONTHS[index];
   }
+  async function editarPensionPagada() {
+    const pensionPagada = selectedData.pension as PensionPagada;
+    console.log({ montoPagado, fechaPago });
+    try {
+      setLoading(true);
+      const response = await Pensiones.editarPensionPagada({ montoPagado, fechaPago, reciboId: pensionPagada.reciboId, alumnoId: selectedData.estudiante._id });
+      console.log({ response });
+      updateToken(response);
+      if (!response.data.ok) throw new Error(response.data.message);
 
+      setData((old) => {
+        const newData = old.map((record) => {
+          if (record.alumnoId === selectedData.estudiante._id) {
+            record.pensiones = record.pensiones.map((pension) => {
+              if (pension.mes === selectedData.pension.mes) {
+                pension.monto_pagado = montoPagado;
+                pension.fecha = fechaPago;
+              }
+              return pension;
+            });
+          }
+          return record;
+        });
+        return newData;
+      });
+      toaster.success('pension editada exitosamente');
+    } catch (err) {
+      errorHandler(err);
+    } finally {
+      setLoading(false);
+    }
+  }
   async function pagarPension() {
     try {
       setLoading(true);
@@ -152,6 +215,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
         });
         return newData;
       });
+
       toaster.success('pension pagada con exito');
     } catch (err) {
       errorHandler(err);
