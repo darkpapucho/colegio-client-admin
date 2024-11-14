@@ -85,10 +85,10 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
         <Container $direction="column" $width="100%" $bgColor="#0f0f0f" $padding="1rem" $gap=".6rem">
           {editPensionPagada ? (
             <Container $direction="row" $gap="1rem">
-              <Button $primary $width="max-conent" onClick={() => editarPensionPagada()}>
+              <Button $primary $width="max-conent" onClick={() => editarPensionPagada()} disabled={loading}>
                 Modificar
               </Button>
-              <Button $danger $width="max-conent" onClick={() => setEditPensionPagada(false)}>
+              <Button $danger $width="max-conent" onClick={() => setEditPensionPagada(false)} disabled={loading}>
                 Cancelar
               </Button>
             </Container>
@@ -145,7 +145,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
     try {
       setLoading(true);
       const response = await Pensiones.editarPensionPagada({ montoPagado, fechaPago, reciboId: pensionPagada.reciboId, alumnoId: selectedData.estudiante._id });
-      console.log({ response });
+
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
 
@@ -166,6 +166,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
         return newData;
       });
       toaster.success('pension editada exitosamente');
+      setEditPensionPagada(false);
     } catch (err) {
       errorHandler(err);
     } finally {
