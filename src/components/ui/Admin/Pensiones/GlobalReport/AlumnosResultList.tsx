@@ -1,16 +1,23 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { AMatriculado } from '../../../../../types/alumno';
 import { Container } from '../../../../shared/Container';
 import { Text } from '../../../../shared/Text';
 import Table from '../../../Table/Table';
-import { Salon } from '../../../../../types/enums';
+import { Nivel, Salon } from '../../../../../types/enums';
 import { convertSalonToIndex } from '../../../../../utils/convertGradoToIndex';
-
+import AlumnoPensionInfoModal from './AlumnoPensionInfoModal';
+import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
+import { FaRegEye } from 'react-icons/fa';
+import { Icon } from '../../../../shared/Icon';
 export default function AlumnosResultList({ data }: { data: { estudiante: AMatriculado; pensiones: Pension[]; numeroPensionesAtrasadas: number }[] }) {
+  const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[] } | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   return (
     <Container $direction="column" $gap="1.5rem">
+      {showModal && selectedAlumno && <AlumnoPensionInfoModal onCloseModal={onCloseModal} selectedAlumno={selectedAlumno}></AlumnoPensionInfoModal>}
       <Text $bold $fontSize="medium">{`CON ${data[0].numeroPensionesAtrasadas} PENSIONES ATRASADAS`}</Text>
-      <Table width="content-fit" gridTemplateColumns="35rem 11rem">
+      <Table width="content-fit" gridTemplateColumns={`35rem ${nivel === 'primaria' ? '9rem' : '11rem'} 4rem`}>
         <Table.Header>
           <Table.Header.Item>
             <Container $width="100%" $padding=".4rem" $alignItems="center">
@@ -21,8 +28,15 @@ export default function AlumnosResultList({ data }: { data: { estudiante: AMatri
           </Table.Header.Item>
           <Table.Header.Item>
             <Container $width="100%" $padding=".4rem" $alignItems="center">
-              <Text $width="100%" $textAlign="center" $bold>
+              <Text $width="100%" $textAlign="left" $bold>
                 GRADO
+              </Text>
+            </Container>
+          </Table.Header.Item>
+          <Table.Header.Item>
+            <Container $width="100%" $padding=".4rem" $alignItems="center">
+              <Text $width="100%" $textAlign="center" $bold>
+                VER
               </Text>
             </Container>
           </Table.Header.Item>
@@ -49,6 +63,22 @@ export default function AlumnosResultList({ data }: { data: { estudiante: AMatri
                       <Text>{record.estudiante.grado + ' ' + record.estudiante.seccion}</Text>
                     </Container>
                   </Table.Body.Item>
+                  <Table.Body.Item $key={index}>
+                    <Container
+                      $width="100%"
+                      $padding=".4rem"
+                      $alignItems="center"
+                      $gap=".4rem"
+                      $justifyContent="center"
+                      onClick={() => {
+                        setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
+                        setShowModal(true);
+                      }}>
+                      <Icon $tiny $pointer $primary>
+                        <FaRegEye />
+                      </Icon>
+                    </Container>
+                  </Table.Body.Item>
                 </Fragment>
               );
             })}
@@ -56,4 +86,8 @@ export default function AlumnosResultList({ data }: { data: { estudiante: AMatri
       </Table>
     </Container>
   );
+  function onCloseModal() {
+    setShowModal(false);
+    setSelectedAlumno(null);
+  }
 }

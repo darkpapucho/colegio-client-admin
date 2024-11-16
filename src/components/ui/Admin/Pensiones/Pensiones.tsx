@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 
 const pensionesTabs = [
   { label: 'Por Salón', url: 'salon' },
-  { label: 'global', url: 'global' },
+  { label: 'Global', url: 'global' },
 
-  { label: 'individual', url: 'individual' },
+  { label: 'Individual', url: 'individual' },
 ];
 
 export default function Pensiones() {

@@ -26,7 +26,13 @@ const DivContainer = styled.div`
   gap: 0.5rem;
 `;
 
-export default function EditPensionesModal({ selectedData, onCloseModal }: { onCloseModal: () => void; selectedData: { estudiante: AMatriculado; pensiones: Pension[] } }) {
+export default function EditMontoPagarPensionesModal({
+  selectedData,
+  onCloseModal,
+}: {
+  onCloseModal: () => void;
+  selectedData: { estudiante: AMatriculado; pensiones: Pension[] };
+}) {
   const { setData } = useContext(PensionesByGradoSeccionContext)!;
   const [pensiones, setPensiones] = useState<Pension[]>(selectedData.pensiones);
   const [loading, setLoading] = useState(false);

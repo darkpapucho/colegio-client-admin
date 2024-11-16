@@ -2,7 +2,6 @@ import { Fragment, useContext, useRef, useState } from 'react';
 import { AMatriculado } from '../../../../../../types/alumno';
 import { Button } from '../../../../../shared/Button';
 import { Container } from '../../../../../shared/Container';
-import Input from '../../../../../shared/Input';
 import Modal from '../../../../../shared/Modal';
 import { Text } from '../../../../../shared/Text';
 import { MONTHS } from '../../../Calendario/EnableDays/utils';
@@ -18,7 +17,7 @@ import { CiEdit } from 'react-icons/ci';
 
 export default function PagarPensionModal({ selectedData, onCloseModal }: { onCloseModal: () => void; selectedData: { estudiante: AMatriculado; pension: Pension } }) {
   const montoAbonadoRef = useRef<HTMLInputElement | null>(null);
-  const fechaRef = useRef<HTMLInputElement | null>(null);
+  const [fechaPagoActual, setFechaPagoActual] = useState(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16));
   const { setData } = useContext(PensionesByGradoSeccionContext)!;
   const [loading, setLoading] = useState(false);
   //
@@ -44,7 +43,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
                 </Text>
               </Container>
               <Container $direction="column" $padding="1rem" $gap="1rem" $justifyContent="center">
-                <Input type="datetime-local" name="fecha" label="" ref={fechaRef} />
+                <StyledInput type="datetime-local" name="fecha" defaultValue={fechaPagoActual} onChange={(eve) => setFechaPagoActual(eve.currentTarget.value)} />
                 <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
                   {'Abonado: S/. ' + selectedData.pension.monto_pagado}
                 </Text>
@@ -178,9 +177,8 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
       setLoading(true);
       const monto_abonado = Number(montoAbonadoRef.current?.value);
       const saldoPagar = Number(selectedData.pension.monto_pagar) - Number(selectedData.pension.monto_pagado);
-      const fecha = fechaRef.current!.value;
-
-      if (!fecha) throw new Error('fecha inválida');
+      console.log({ fechaPagoActual });
+      if (!fechaPagoActual) throw new Error('fecha inválida');
       if (!monto_abonado || Number(monto_abonado) > saldoPagar) {
         //|| Number(monto_abonado) <= saldoPagar / 2
         throw new Error('monto inválido');
@@ -189,7 +187,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
         monto_pagado: selectedData.pension.monto_pagado,
         monto_abonado,
         monto_pagar: selectedData.pension.monto_pagar,
-        fecha,
+        fecha: fechaPagoActual,
         mes: selectedData.pension.mes,
         alumnoId: selectedData.estudiante._id,
       });
@@ -205,7 +203,7 @@ export default function PagarPensionModal({ selectedData, onCloseModal }: { onCl
           if (record.alumnoId === selectedData.estudiante._id) {
             const newPensiones = record.pensiones.map((pension) => {
               if (pension.mes === selectedData.pension.mes) {
-                pension.fecha = fecha;
+                pension.fecha = fechaPagoActual;
                 pension.monto_pagado = Number(monto_abonado) + selectedData.pension.monto_pagado;
                 pension.pagado = saldoPagar - Number(monto_abonado) != 0 ? false : true;
               }

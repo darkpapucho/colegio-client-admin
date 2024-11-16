@@ -15,6 +15,7 @@ import { errorHandler } from '../../../../../utils/errorHandler';
 export default function PensionesGlobalReportTable({ data }: { data: { numeroPensionesAtrasadas: number; totalAlumnos: number }[] }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
+
   const {
     isFetching,
     data: list,

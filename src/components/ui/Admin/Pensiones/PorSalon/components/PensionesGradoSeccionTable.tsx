@@ -4,21 +4,23 @@ import { Container } from '../../../../../shared/Container';
 import Table from '../../../../Table/Table';
 import DisplayPensionInfo from './DisplayPensionInfo';
 import PagarPensionModal from './PagarPensionModal';
-import EditPensionesModal from './EditPensionesModal';
+import EditMontosPagarPensionesModal from './EditMontoPagarPensionesModal';
+import { FaRegEye } from 'react-icons/fa';
+import { Icon } from '../../../../../shared/Icon';
 
 export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[] }) {
   const [showPagarPensionModal, setShowPagarPensionModal] = useState(false);
-  const [showEditPensionesModal, setShowEditPensionesModal] = useState(false);
+  const [showEditMontoPagarPensionesModal, setShowEditMontoPagarPensionesModal] = useState(false);
   const [selectedData, setSelectedData] = useState<{ pension: Pension; estudiante: AMatriculado } | null>(null);
   const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[] } | null>(null);
 
   return (
     <Container $direction="column" $width="max-content" $gap=".5rem">
-      {showEditPensionesModal && selectedAlumno && (
-        <EditPensionesModal
+      {showEditMontoPagarPensionesModal && selectedAlumno && (
+        <EditMontosPagarPensionesModal
           selectedData={selectedAlumno}
           onCloseModal={() => {
-            setShowEditPensionesModal(false);
+            setShowEditMontoPagarPensionesModal(false);
             setSelectedAlumno(null);
           }}
         />
@@ -95,19 +97,20 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
             return (
               <Fragment key={record.alumnoId}>
                 <Table.Body.Item $key={index}>
-                  <Container
-                    $direction="row"
-                    $pointer
-                    $gap=".5rem"
-                    $width="100%"
-                    $padding=".5rem"
-                    $justifyContent="left"
-                    $border="1px solid black"
-                    onClick={() => {
-                      setShowEditPensionesModal(true);
-                      setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
-                    }}>
-                    <Container $width="max-content">{`[${index + 1}]`}</Container>
+                  <Container $direction="row" $gap=".5rem" $width="100%" $padding=".5rem" $justifyContent="left" $border="1px solid black">
+                    <Container
+                      $width="3rem"
+                      $alignItems="center"
+                      $gap=".4rem"
+                      $justifyContent="center"
+                      onClick={() => {
+                        setShowEditMontoPagarPensionesModal(true);
+                        setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
+                      }}>
+                      <Icon $tiny $pointer $primary>
+                        <FaRegEye />
+                      </Icon>
+                    </Container>
                     <Container>{record.estudiante.nombreCompleto}</Container>
                   </Container>
                 </Table.Body.Item>
