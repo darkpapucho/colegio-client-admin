@@ -5,6 +5,7 @@ import Modal from '../../../../shared/Modal';
 import { Text } from '../../../../shared/Text';
 import { MONTHS } from '../../Calendario/EnableDays/utils';
 import { getDisplayPensionCardBgColor } from '../PorSalon/components/utils';
+import { theme } from '../../../../../config/styled/styled';
 const DivContainer = styled.div`
   width: 100%;
   display: grid;
@@ -27,17 +28,19 @@ export default function AlumnoPensionInfoModal({ onCloseModal, selectedAlumno }:
           <Container $direction="column" $gap="1rem" $width="100%">
             {selectedAlumno.estudiante.apoderados?.map((apoderado, index) => {
               return (
-                <Container $direction="column" $gap="1rem" $width="100%" $border="1px solid black" $padding="1rem" key={index}>
-                  <Text $bold $width="50%">
-                    {apoderado.relacion}
-                  </Text>
-                  <Container $direction="row" $gap="1rem" $alignItems="center">
-                    <Text $width="60%"> {apoderado.nombreCompleto}</Text>
-                    <Text $width="40%">{'DNI: ' + apoderado.dni}</Text>
+                <Container $direction="column" $gap="0" $width="100%" $border="1px solid black" key={index}>
+                  <Container $width="100%" $border="1px solid black" $padding="1rem" key={index} $bgColor={theme.colors.primary[400]}>
+                    <Text $color="white" $width="60%" $bold>
+                      {apoderado.relacion}{' '}
+                    </Text>
                   </Container>
-                  <Container $direction="row" $gap="1rem" $alignItems="center">
-                    <Text $width="60%">{apoderado.correo}</Text>
-                    <Text $width="40%"> {'Telf.: ' + apoderado.telefono}</Text>
+                  <Container $direction="row" $gap="1rem" $alignItems="center" $padding="1rem">
+                    <Text $width="70%"> {apoderado.nombreCompleto}</Text>
+                    <Text $width="30%">{'DNI: ' + apoderado.dni}</Text>
+                  </Container>
+                  <Container $direction="row" $gap="1rem" $alignItems="center" $padding="1rem">
+                    <Text $width="70%">{apoderado.correo}</Text>
+                    <Text $width="30%"> {'Telf.: ' + apoderado.telefono}</Text>
                   </Container>
                 </Container>
               );
