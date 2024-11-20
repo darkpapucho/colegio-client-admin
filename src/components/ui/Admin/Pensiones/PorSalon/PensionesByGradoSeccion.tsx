@@ -36,7 +36,7 @@ export default function PensionesByGradoSeccion() {
   return (
     <PensionesByGradoSeccionContext.Provider value={{ setData }}>
       {loading && <Loader />}
-      <Container $direction="column" $padding="0" $width="100%" $gap="1.5rem">
+      <Container $direction="column" $padding="0 0 3rem 0" $width="100%" $gap="1.5rem">
         <EstadosMatriculaBox setSearchParams={setSearchParams} />
         <Container $direction="row" $width="max-content" $gap=".5rem">
           <Select tiny options={grados[nivel]} label="grado" name="grado" width={`${nivel === 'inicial' ? '12rem' : '9rem'}`}></Select>

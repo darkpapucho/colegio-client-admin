@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { WidthCss } from '../../types/globals';
 import { theme } from '../../config/styled/styled';
 
-export const StyledInput = styled.input<{ $width?: WidthCss; $grow?: boolean }>`
+export const StyledInput = styled.input<{ $width?: WidthCss; $grow?: boolean; $pointer?: boolean }>`
   outline: none;
   border: none;
   padding: 4px;
@@ -13,6 +13,11 @@ export const StyledInput = styled.input<{ $width?: WidthCss; $grow?: boolean }>`
     background-color: ${theme.colors.tertiary[200]};
   }
   font-size: 1.3rem;
+  ${({ $pointer }) =>
+    $pointer &&
+    css`
+      cursor: pointer;
+    `}
   ${({ $width }) =>
     $width &&
     css`

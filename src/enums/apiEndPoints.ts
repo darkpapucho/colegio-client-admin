@@ -38,4 +38,5 @@ export enum ApiEndPoints {
   GET_PENSIONES_GLOBAL_REPORT = '/pensiones/get-pensiones-global-report',
   GET_ALUMNOS_BY_NUMERO_PENSIONES_ATRASADAS = '/pensiones/get-lista-by-numero-pensiones-atrasadas',
   EDITAR_PENSION_PAGADA = '/pensiones/editar-pension-pagada',
+  EDITAR_COMENTARIO_PENSION = '/pensiones/editar-comentario-pension',
 }

@@ -10,7 +10,7 @@ import { MONTH_NAME } from '../../../../../types/enums';
 export default function AsistenciaTable({ asistencias, availableDays }: { asistencias: AsistenciasList; availableDays: { month: MONTH_NAME; day: number }[] }) {
   const { monthNames, daysByMonth, gridTemplateCols } = getMonthsFromAsistenciaRecord(availableDays);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
-  console.log({ selectedRow });
+
   return (
     <Table gridTemplateColumns={gridTemplateCols} width="max-content">
       <Table.Header>

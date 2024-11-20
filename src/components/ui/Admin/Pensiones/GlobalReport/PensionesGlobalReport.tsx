@@ -20,7 +20,6 @@ export default function PensionesGlobalReport() {
       const response = await Pensiones.getPensionesGlobalReport();
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
-      console.log({ response });
       setData(response.data.payload);
     } catch (err) {
       errorHandler(err);

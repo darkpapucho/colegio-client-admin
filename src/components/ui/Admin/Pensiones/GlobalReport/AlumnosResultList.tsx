@@ -9,8 +9,12 @@ import AlumnoPensionInfoModal from './AlumnoPensionInfoModal';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { FaRegEye } from 'react-icons/fa';
 import { Icon } from '../../../../shared/Icon';
-export default function AlumnosResultList({ data }: { data: { estudiante: AMatriculado; pensiones: Pension[]; numeroPensionesAtrasadas: number }[] }) {
-  const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[] } | null>(null);
+export default function AlumnosResultList({
+  data,
+}: {
+  data: { estudiante: AMatriculado; pensiones: Pension[]; numeroPensionesAtrasadas: number; comentario?: ComentarioPension }[];
+}) {
+  const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[]; comentario?: ComentarioPension } | null>(null);
   const [showModal, setShowModal] = useState(false);
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   return (
@@ -71,7 +75,7 @@ export default function AlumnosResultList({ data }: { data: { estudiante: AMatri
                       $gap=".4rem"
                       $justifyContent="center"
                       onClick={() => {
-                        setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
+                        setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones, comentario: record.comentario });
                         setShowModal(true);
                       }}>
                       <Icon $tiny $pointer $primary>

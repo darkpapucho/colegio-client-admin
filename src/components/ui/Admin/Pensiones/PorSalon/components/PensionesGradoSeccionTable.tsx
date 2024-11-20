@@ -2,14 +2,14 @@ import { Fragment, useState } from 'react';
 import { AMatriculado } from '../../../../../../types/alumno';
 import { Container } from '../../../../../shared/Container';
 import Table from '../../../../Table/Table';
-import DisplayPensionInfo from './DisplayPensionInfo';
-import PagarPensionModal from './PagarPensionModal';
+import PensionInfoCard from './PensionInfoCard';
+import DisplayPensionData from './DisplayPensionData';
 import EditMontosPagarPensionesModal from './EditMontoPagarPensionesModal';
 import { FaRegEye } from 'react-icons/fa';
 import { Icon } from '../../../../../shared/Icon';
 
 export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[] }) {
-  const [showPagarPensionModal, setShowPagarPensionModal] = useState(false);
+  const [showPensionData, setShowPensionData] = useState(false);
   const [showEditMontoPagarPensionesModal, setShowEditMontoPagarPensionesModal] = useState(false);
   const [selectedData, setSelectedData] = useState<{ pension: Pension; estudiante: AMatriculado } | null>(null);
   const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[] } | null>(null);
@@ -25,20 +25,25 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
           }}
         />
       )}
-      {showPagarPensionModal && selectedData && (
-        <PagarPensionModal
+      {showPensionData && selectedData && (
+        <DisplayPensionData
           onCloseModal={() => {
             setSelectedData(null);
-            setShowPagarPensionModal(false);
+            setShowPensionData(false);
           }}
           selectedData={selectedData}
         />
       )}
-      <Table gridTemplateColumns="35rem repeat(10, 4rem)" width="content-fit">
+      <Table gridTemplateColumns="35rem 8rem repeat(10, 4rem)" width="content-fit">
         <Table.Header>
           <Table.Header.Item>
             <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
               ALUMNO
+            </Container>
+          </Table.Header.Item>
+          <Table.Header.Item>
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+              DNI
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
@@ -115,7 +120,12 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   </Container>
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <Container $width="100%" $border="1px solid black" $justifyContent="center" $alignItems="center">
+                    {record.estudiante.dni ?? ''}
+                  </Container>
+                </Table.Body.Item>
+                <Table.Body.Item $key={index}>
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -127,7 +137,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -139,7 +149,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -151,7 +161,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -163,7 +173,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -175,7 +185,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -187,7 +197,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -199,7 +209,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -211,7 +221,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -223,7 +233,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                   />
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
-                  <DisplayPensionInfo
+                  <PensionInfoCard
                     $index={index}
                     onClick={() =>
                       handleClick(
@@ -245,6 +255,6 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
   function handleClick(pension: Pension | undefined, estudiante: AMatriculado) {
     if (!pension) return;
     setSelectedData({ pension, estudiante });
-    setShowPagarPensionModal(true);
+    setShowPensionData(true);
   }
 }

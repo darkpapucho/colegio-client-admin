@@ -16,3 +16,8 @@ type PensionPagada = {
 };
 
 type Pension = PensionPagada | PensionNoPagada;
+
+type ComentarioPension = {
+  fecha: string;
+  detalle: string;
+};

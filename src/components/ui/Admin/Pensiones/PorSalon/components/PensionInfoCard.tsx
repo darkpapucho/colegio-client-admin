@@ -10,7 +10,7 @@ const DisplayPensionContainer = styled(Container)<{ $index: number }>`
     `}
 `;
 
-export default function DisplayPensionInfo({ pension, onClick, $index }: { $index: number; onClick: () => void; pension: Pension | undefined }) {
+export default function PensionInfoCard({ pension, onClick, $index }: { $index: number; onClick: () => void; pension: Pension | undefined }) {
   const mesActual = new Date().getMonth();
   return (
     <DisplayPensionContainer

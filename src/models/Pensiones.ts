@@ -7,6 +7,11 @@ import { AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 
 export class Pensiones {
+  static async editComentarioPension({ detalle, fecha, alumnoId }: { alumnoId: string; detalle: string; fecha: string }) {
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.EDITAR_COMENTARIO_PENSION, { alumnoId, detalle, fecha }, GetHeaders());
+    return response;
+  }
+
   static async editarPensionPagada({ alumnoId, reciboId, montoPagado, fechaPago }: { alumnoId: string; reciboId: string; montoPagado: number; fechaPago: string }) {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.EDITAR_PENSION_PAGADA, { alumnoId, reciboId, montoPagado, fechaPago }, GetHeaders());
     return response;
@@ -14,11 +19,10 @@ export class Pensiones {
   static async getAlumnosListByNumPensionesAtrasadas({ numeroPensionesAtrasadas }: { numeroPensionesAtrasadas: number }) {
     const currentMonth = +new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', month: '2-digit' }) - 1;
 
-    const response = await axios.post<ResponseSchema<{ numeroPensionesAtrasadas: number; alumnoId: string; pensiones: Pension[]; estudiante: AMatriculado }[]>>(
-      API_BASE_URL + ApiEndPoints.GET_ALUMNOS_BY_NUMERO_PENSIONES_ATRASADAS,
-      { numeroPensionesAtrasadas, currentMonth },
-      GetHeaders(),
-    );
+    const response = await axios.post<
+      ResponseSchema<{ comentario?: { fecha: string; detalle: string }; numeroPensionesAtrasadas: number; alumnoId: string; pensiones: Pension[]; estudiante: AMatriculado }[]>
+    >(API_BASE_URL + ApiEndPoints.GET_ALUMNOS_BY_NUMERO_PENSIONES_ATRASADAS, { numeroPensionesAtrasadas, currentMonth }, GetHeaders());
+
     return response;
   }
 
