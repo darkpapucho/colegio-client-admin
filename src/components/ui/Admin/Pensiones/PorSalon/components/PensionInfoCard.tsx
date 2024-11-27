@@ -2,15 +2,15 @@ import styled, { css } from 'styled-components';
 import { Container } from '../../../../../shared/Container';
 import { getDisplayPensionCardContent, getDisplayPensionCardBgColor } from './utils';
 
-const DisplayPensionContainer = styled(Container)<{ $index: number }>`
+const DisplayPensionContainer = styled(Container)<{ $index: boolean }>`
   ${({ $index }) =>
-    $index % 2 &&
+    $index &&
     css`
-      filter: brightness(125%);
+      filter: brightness(70%);
     `}
 `;
 
-export default function PensionInfoCard({ pension, onClick, $index }: { $index: number; onClick: () => void; pension: Pension | undefined }) {
+export default function PensionInfoCard({ pension, onClick, $index }: { $index: boolean; onClick: () => void; pension: Pension | undefined }) {
   const mesActual = new Date().getMonth();
   return (
     <DisplayPensionContainer

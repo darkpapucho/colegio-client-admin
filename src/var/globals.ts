@@ -50,6 +50,8 @@ export const MONTHS_SELECT_OPTIONS = [
   { label: 'agosto', value: 'agosto' },
   { label: 'septiembre', value: 'septiembre' },
   { label: 'octubre', value: 'octubre' },
+  { label: 'noviembre', value: 'noviembre' },
+  { label: 'diciembre', value: 'diciembre' },
 ];
 
 //secundaria

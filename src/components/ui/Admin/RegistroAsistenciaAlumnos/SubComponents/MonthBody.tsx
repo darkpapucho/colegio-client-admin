@@ -11,6 +11,7 @@ import { dayCellWidth, getAsistenciaValueFromRecords, getBgColorOfCell, requestR
 import toaster from 'react-hot-toast';
 import { queryClient } from '../../../../../config/query/query';
 import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
+import { MONTHS } from '../../Calendario/EnableDays/utils';
 
 const DayCell = styled(Container)<{ $isSelected: boolean }>`
   color: white;
@@ -99,8 +100,8 @@ export default function MonthBody({
       if (+year !== currentYear) throw new Error(`Esta operación solo se puede realizar el año ${currentYear}`);
       // const MonthNumber = MONTHS.findIndex((month) => month === monthName);
       // const date = new Date(`${MonthNumber}-${day}-${+year}`);
-
-      const response = await Calendario.justificarFalta({ alumnoId, dayId, date: new Date() });
+      const monthIndex = MONTHS.findIndex((name) => name === monthName)! + 1;
+      const response = await Calendario.justificarFalta({ alumnoId, dayId, date: new Date(`${monthIndex}-${day}-${currentYear}`) });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       toaster.success('Se justificó la falta exitosamente');
