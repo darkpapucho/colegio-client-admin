@@ -11,7 +11,7 @@ export default function PensionesGlobalReport() {
     fetchPensionesGlobalReport();
   }, []);
   return (
-    <Container $direction="column" $gap="1rem">
+    <Container $direction="row" $gap="1rem">
       <PensionesGlobalReportTable data={data} />
     </Container>
   );

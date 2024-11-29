@@ -28,6 +28,7 @@ import MatriculaALumnos from './components/ui/Admin/MatriculaAlumnos/MatriculaAl
 import NotasAlumnos from './components/ui/Admin/NotasAlumnos/NotasAlumnos';
 import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/PensionesByGradoSeccion';
 import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/PensionesGlobalReport';
+import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/GlobalReport/RecordPensionesByDateRange/RecordPensionesByDateRange';
 
 function App() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function App() {
             <Route path="admin/pensiones" element={<Pensiones />}>
               <Route path="salon" element={<PensionesByGradoSeccion />} />
               <Route path="global" element={<PensionesGlobalReport />} />
+              <Route path="consultas" element={<RecordPensionesByDateRange />} />
             </Route>
 
             <Route path="admin/alumnos" element={<Alumnos />} />

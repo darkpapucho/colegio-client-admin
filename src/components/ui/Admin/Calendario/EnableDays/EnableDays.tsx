@@ -45,7 +45,7 @@ export default function EnableDays() {
             onChange={setDateRange}
             disabled={isLoading}
             disableClock={true}
-            format="dd-MM-y"
+            format="dd-MM-yyyy"
             minDate={new Date(minDate)}
             maxDate={new Date(maxDate)}
           />

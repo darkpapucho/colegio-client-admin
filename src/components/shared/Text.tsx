@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { Size, WidthCss } from '../../types/globals';
+import { Size } from '../../types/globals';
 
-export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: boolean; $width?: WidthCss; $textAlign?: string; $color?: string }>`
+export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: boolean; $width?: string; $textAlign?: string; $color?: string }>`
   padding: 0;
   margin: 0;
   ${({ $primary, theme }) =>

@@ -7,7 +7,7 @@ const pensionesTabs = [
   { label: 'Por Salón', url: 'salon' },
   { label: 'Global', url: 'global' },
 
-  { label: 'Individual', url: 'individual' },
+  { label: 'Consultas', url: 'consultas' },
 ];
 
 export default function Pensiones() {

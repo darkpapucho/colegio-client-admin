@@ -7,6 +7,14 @@ import { AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 
 export class Pensiones {
+  static async getRecordPensionesPagadasByDateRange({ initDate, endDate }) {
+    const response = await axios.post<ResponseSchema<{ alumno: { nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>>(
+      API_BASE_URL + ApiEndPoints.GET_RECORD_PENSIONES_BY_DATE_RANGE,
+      { initDate, endDate },
+      GetHeaders(),
+    );
+    return response;
+  }
   static async editComentarioPension({ detalle, fecha, alumnoId }: { alumnoId: string; detalle: string; fecha: string }) {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.EDITAR_COMENTARIO_PENSION, { alumnoId, detalle, fecha }, GetHeaders());
     return response;
