@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
-import { Grado, Nivel, Seccion } from '../../../../../../types/enums';
-import { Container } from '../../../../../shared/Container';
-import Table from '../../../../Table/Table';
-import { Text } from '../../../../../shared/Text';
-import { theme } from '../../../../../../config/styled/styled';
-import { useTypedSelector } from '../../../../../../hooks/useTypedSelector';
-import { MONTHS } from '../../../Calendario/EnableDays/utils';
-import DisplayHoverMessage from '../../../../../shared/DisplayHoverMessage';
+import { Grado, Nivel, Seccion } from '../../../../../types/enums';
+import { Container } from '../../../../shared/Container';
+import Table from '../../../Table/Table';
+import { Text } from '../../../../shared/Text';
+import { theme } from '../../../../../config/styled/styled';
+import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
+import { MONTHS } from '../../Calendario/EnableDays/utils';
+import DisplayHoverMessage from '../../../../shared/DisplayHoverMessage';
 
 export default function RecordPensionesPagadasTable({ data }: { data: { alumno: { nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[] }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;

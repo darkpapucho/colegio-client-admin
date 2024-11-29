@@ -1,16 +1,16 @@
 import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
-import { Container } from '../../../../../shared/Container';
-import { Text } from '../../../../../shared/Text';
-import { Button } from '../../../../../shared/Button';
+import { Container } from '../../../../shared/Container';
+import { Text } from '../../../../shared/Text';
+import { Button } from '../../../../shared/Button';
 import { useState } from 'react';
 // import { validateDay } from '../../../Calendario/EnableDays/utils';
-import { Pensiones } from '../../../../../../models/Pensiones';
-import { updateToken } from '../../../../../../utils/utils';
-import { errorHandler } from '../../../../../../utils/errorHandler';
-import Loader from '../../../../Loader/Loader';
-import { Grado, Salon, Seccion } from '../../../../../../types/enums';
+import { Pensiones } from '../../../../../models/Pensiones';
+import { updateToken } from '../../../../../utils/utils';
+import { errorHandler } from '../../../../../utils/errorHandler';
+import Loader from '../../../Loader/Loader';
+import { Grado, Salon, Seccion } from '../../../../../types/enums';
 import RecordPensionesPagadasTable from './RecordPensionesPagadasTable';
-import { convertSalonToIndex } from '../../../../../../utils/convertGradoToIndex';
+import { convertSalonToIndex } from '../../../../../utils/convertGradoToIndex';
 
 type ValuePiece = Date | null;
 type DateRangeValue = ValuePiece | [ValuePiece, ValuePiece];

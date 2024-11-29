@@ -28,7 +28,7 @@ import MatriculaALumnos from './components/ui/Admin/MatriculaAlumnos/MatriculaAl
 import NotasAlumnos from './components/ui/Admin/NotasAlumnos/NotasAlumnos';
 import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/PensionesByGradoSeccion';
 import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/PensionesGlobalReport';
-import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/GlobalReport/RecordPensionesByDateRange/RecordPensionesByDateRange';
+import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/Consultas/RecordPensionesByDateRange';
 
 function App() {
   const navigate = useNavigate();

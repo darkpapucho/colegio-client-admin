@@ -78,7 +78,7 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
       const monto_abonado = Number(montoAbonadoRef.current?.value);
       const saldoPagar = Number(selectedData.pension.monto_pagar) - Number(selectedData.pension.monto_pagado);
       if (!fechaPagoActual) throw new Error('fecha inválida');
-      if (!monto_abonado || Number(monto_abonado) > saldoPagar) {
+      if (monto_abonado < 0 || Number(monto_abonado) > saldoPagar) {
         //|| Number(monto_abonado) <= saldoPagar / 2
         throw new Error('monto inválido');
       }
