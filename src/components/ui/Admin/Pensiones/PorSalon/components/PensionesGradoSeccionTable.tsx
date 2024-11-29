@@ -5,7 +5,8 @@ import Table from '../../../../Table/Table';
 import PensionInfoCard from './PensionInfoCard';
 import DisplayPensionData from './DisplayPensionData';
 import EditMontosPagarPensionesModal from './EditMontoPagarPensionesModal';
-import { FaRegEye } from 'react-icons/fa';
+
+import { GrEdit } from 'react-icons/gr';
 import { Icon } from '../../../../../shared/Icon';
 
 export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[] }) {
@@ -116,7 +117,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                         setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
                       }}>
                       <Icon $tiny $primary>
-                        <FaRegEye />
+                        <GrEdit />
                       </Icon>
                     </Container>
                     <Container $padding=".5rem" $width="calc(100% - 3rem)" onClick={() => handleClickAlumnoName(index)}>

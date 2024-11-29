@@ -56,7 +56,7 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
             />
           </Container>
           <Container $gap="1rem" $direction="row">
-            <Button $width="max-content" $primary onClick={pagarPension} disabled={loading}>
+            <Button $width="max-content" $primary onClick={() => pagarPension(selectedData.pension.monto_pagar)} disabled={loading}>
               {' '}
               Pagar Pension
             </Button>
@@ -72,13 +72,13 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
   function convertIndexToMonth(index: number) {
     return MONTHS[index];
   }
-  async function pagarPension() {
+  async function pagarPension(monto_pagar: number) {
     try {
       setLoading(true);
       const monto_abonado = Number(montoAbonadoRef.current?.value);
       const saldoPagar = Number(selectedData.pension.monto_pagar) - Number(selectedData.pension.monto_pagado);
       if (!fechaPagoActual) throw new Error('fecha inválida');
-      if (monto_abonado < 0 || Number(monto_abonado) > saldoPagar) {
+      if ((monto_abonado === 0 && monto_pagar > 0) || Number(monto_abonado) > saldoPagar) {
         //|| Number(monto_abonado) <= saldoPagar / 2
         throw new Error('monto inválido');
       }
