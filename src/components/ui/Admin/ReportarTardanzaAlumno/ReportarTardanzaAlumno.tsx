@@ -14,9 +14,11 @@ import { ErrorPage } from '../../../shared/ErrorPage';
 import { Container } from '../../../shared/Container';
 import { queryClient } from '../../../../config/query/query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
-import { Nivel } from '../../../../types/enums';
+import { Nivel, Salon } from '../../../../types/enums';
 import { Title } from '../../../shared/Title';
 import ListaTardanzas from './ListaTardanzas';
+import { convertSalonToIndex } from '../../../../utils/convertGradoToIndex';
+import useCustomEvent from '../../../../hooks/useCustomEvent';
 
 export default function ReportarTardanzaAlumno() {
   const today = +new Date().toLocaleDateString('es-ES', { timeZone: 'America/Lima', day: 'numeric' });
@@ -30,8 +32,9 @@ export default function ReportarTardanzaAlumno() {
     enabled: data != undefined,
     refetchOnWindowFocus: false,
   });
-
+  const [doSort, setDoSort] = useState(false);
   const [loading, setLoading] = useState(false);
+  useCustomEvent('customCheckbox', checkBoxListener);
 
   if (!data)
     return (
@@ -50,7 +53,7 @@ export default function ReportarTardanzaAlumno() {
             <SearchAlumnoBox width="40rem" handler={setAlumnos}></SearchAlumnoBox>
             {alumnos.length > 0 && <DisplayAlumnosTable alumnos={alumnos} icon={<Fa500Px />} actionHandler={reportTardanzaAlumno}></DisplayAlumnosTable>}
           </Container>
-          {tardanzaList && tardanzaList.length > 0 && <ListaTardanzas tardanzasList={tardanzaList} />}
+          {tardanzaList && tardanzaList.length > 0 && <ListaTardanzas key={tardanzaList.length} tardanzasList={sortTardanzaList(doSort)} sort={doSort} />}
         </Container>
       </Container>
     </>
@@ -90,6 +93,25 @@ export default function ReportarTardanzaAlumno() {
       errorHandler(err);
     } finally {
       setLoading(false);
+    }
+  }
+  function sortTardanzaList(sort: boolean) {
+    if (sort) {
+      return tardanzaList!.sort((prev, curr) => {
+        const prevSalon: Salon = (prev.grado + ' ' + prev.seccion) as Salon;
+        const currSalon: Salon = (curr.grado + ' ' + curr.seccion) as Salon;
+        return convertSalonToIndex(prevSalon) > convertSalonToIndex(currSalon) ? 1 : -1;
+      });
+    } else {
+      return tardanzaList!.sort((prev, curr) => {
+        return new Date(prev.records[0].modified!) > new Date(curr.records[0].modified!) ? 1 : -1;
+      });
+    }
+  }
+  function checkBoxListener(ev: CustomEvent) {
+    const { name, value } = ev.detail;
+    if (name === 'sort') {
+      setDoSort(value);
     }
   }
 }

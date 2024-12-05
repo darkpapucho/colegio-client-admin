@@ -121,7 +121,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
                       </Icon>
                     </Container>
                     <Container $padding=".5rem" $width="calc(100% - 3rem)" onClick={() => handleClickAlumnoName(index)}>
-                      {`[${index}] ` + record.estudiante.nombreCompleto}
+                      {`[${index + 1}] ` + record.estudiante.nombreCompleto}
                     </Container>
                   </Container>
                 </Table.Body.Item>

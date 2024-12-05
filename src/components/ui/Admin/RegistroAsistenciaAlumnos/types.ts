@@ -7,6 +7,7 @@ export type AsistenciaRecord = {
   asistencia: AsistenciaValue;
   dayId: string;
   justificado?: true | undefined;
+  modified?: string;
 };
 export type AsistenciasList = {
   nombreCompleto: string;

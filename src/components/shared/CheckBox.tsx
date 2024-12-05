@@ -19,9 +19,9 @@ const StyledCheckboxContainer = styled.div<{ $width?: WidthCss }>`
   align-items: center;
   padding: 0;
 `;
-export default function CheckBox({ name, label, width, initialState }: { initialState: boolean; width: WidthCss; label: string; name: string }) {
+export default function CheckBox({ name, label, width, initialState }: { initialState: boolean; width?: WidthCss; label: string; name: string }) {
   return (
-    <StyledCheckboxContainer $width={width} onClick={() => publish(!initialState)}>
+    <StyledCheckboxContainer $width={width ?? '4.5rem'} onClick={() => publish(!initialState)}>
       <Text $fontSize="small">{label}</Text>
       <Icon $primary $small $pointer>
         {initialState ? <FaRegCheckSquare /> : <FaRegSquare />}
