@@ -104,7 +104,7 @@ export default function ReportarTardanzaAlumno() {
       });
     } else {
       return tardanzaList!.sort((prev, curr) => {
-        return new Date(prev.records[0].modified!) > new Date(curr.records[0].modified!) ? 1 : -1;
+        return new Date(prev.records[0].modified!) < new Date(curr.records[0].modified!) ? 1 : -1;
       });
     }
   }
