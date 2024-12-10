@@ -1,24 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { errorHandler } from '../utils/errorHandler';
-import useFetchCurrentPeriodo from './useFetchCurrentPeriodo';
 import { Alumno } from '../models/alumno';
 import { PeriodosKey } from '../types/documento';
 import { updateToken } from '../utils/utils';
 import { useTypedSelector } from './useTypedSelector';
 import { Nivel } from '../types/enums';
 
-export function useResumenTardanzasList() {
+export function useResumenTardanzasList(periodo: PeriodosKey | undefined) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
-  const { currentPeriodo, isLoading } = useFetchCurrentPeriodo();
-  const {
-    data: list,
-    isFetching,
-    error,
-  } = useQuery({
-    queryKey: [`resumen-tardanzas-${currentPeriodo}-${nivel}`],
-    queryFn: () => fetchTardanzasList(currentPeriodo),
-    enabled: currentPeriodo != undefined,
+
+  const { data, isFetching, error, refetch } = useQuery({
+    queryKey: [`resumen-tardanzas-${periodo}-${nivel}`],
+    queryFn: () => fetchTardanzasList(periodo),
+    enabled: periodo != undefined,
   });
 
   useEffect(() => {
@@ -26,7 +21,7 @@ export function useResumenTardanzasList() {
     errorHandler(error);
   }, [error]);
 
-  return { list, isFetching, isLoading };
+  return { data, isFetching, refetch };
 }
 async function fetchTardanzasList(periodo: PeriodosKey | undefined) {
   if (!periodo) throw new Error('periovo was not provided');

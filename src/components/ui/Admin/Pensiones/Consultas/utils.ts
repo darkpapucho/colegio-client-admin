@@ -22,8 +22,8 @@ export function getRecordBgColor({ grado, seccion }: { grado: Grado; seccion: Se
       if (seccion === 'A') return 'hsl(186 74% 50%)';
       else return 'hsl(186 74% 72%)';
     case 'SEXTO':
-      if (seccion === 'A') return 'hsl(223 74% 56%)';
-      else return 'hsl(223 74% 76%)';
+      if (seccion === 'A') return 'hsl(210 74% 80%)';
+      else return 'hsl(223 74% 71%)';
     default:
       return 'hsl(223 14% 66%)';
   }

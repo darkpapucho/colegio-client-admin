@@ -74,7 +74,15 @@ export default function RecordPensionesByDateRange() {
           </Button>
         </Container>
       </Container>
-      {data && <RecordPensionesPagadasTable data={data} />}
+      {data && (
+        <RecordPensionesPagadasTable
+          data={data.sort((prev, curr) => {
+            const prevSalon = convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon);
+            const currSalon = convertSalonToIndex((curr.alumno.grado + ' ' + prev.alumno.seccion) as Salon);
+            return prevSalon > currSalon ? 1 : -1;
+          })}
+        />
+      )}
     </Container>
   );
   async function handleSubmit(dateRange: [Date, Date]) {
