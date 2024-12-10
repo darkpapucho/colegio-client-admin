@@ -19,7 +19,7 @@ export default function ProfesoresTable({ data }: { data: Profesor[] }) {
   const { setShowModal, dispatch } = useContext(ProfesoresContext)!;
 
   return (
-    <Table gridTemplateColumns="15rem 15rem 7rem 5rem 5rem" width="content-fit">
+    <Table gridTemplateColumns="15rem 15rem 7rem 5rem 5rem" width="fit-content">
       <Table.Header>
         <Table.Header.Item $padding="4px">APELLIDOS</Table.Header.Item>
         <Table.Header.Item>NOMBRES</Table.Header.Item>

@@ -10,7 +10,7 @@ export default function PasarAsistenciasTable({ alumnos, dispatch }: { dispatch:
   //$justifyContent="center" $alignItems="center" $headerPadding="5px"$height="30px"
 
   return (
-    <Table gridTemplateColumns="45px 360px 45px" width="content-fit" withBorder>
+    <Table gridTemplateColumns="45px 360px 45px" width="fit-content" withBorder>
       <Table.Header>
         <Table.Header.Item $padding="4px 6px">
           <Text $fontSize="small" $bold>

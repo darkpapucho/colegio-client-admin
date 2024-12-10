@@ -52,7 +52,7 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
           }`}></CriteriosDesempenoModal>
       )}
       {showCDModal && <ConclusionDescriptivaModal registro={selectedRegistro.registro} onCloseModal={onCloseModal} dispatch={dispatch}></ConclusionDescriptivaModal>}
-      <Table withBorder={true} gridTemplateColumns={gridTemplateCols} width="content-fit">
+      <Table withBorder={true} gridTemplateColumns={gridTemplateCols} width="fit-content">
         {cursosMap?.length > 0 && <TableHeader cursosList={cursosMap} />}
         {data.length > 0 && (
           <TableBody

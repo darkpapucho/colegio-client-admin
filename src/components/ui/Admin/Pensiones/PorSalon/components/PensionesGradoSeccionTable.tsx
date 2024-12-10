@@ -36,7 +36,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
           selectedData={selectedData}
         />
       )}
-      <Table gridTemplateColumns="37rem 8rem repeat(10, 4rem)" width="content-fit">
+      <Table gridTemplateColumns="37rem 8rem repeat(10, 4rem)" width="fit-content">
         <Table.Header>
           <Table.Header.Item>
             <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">

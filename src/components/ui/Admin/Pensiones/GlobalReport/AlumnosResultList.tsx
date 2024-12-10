@@ -21,7 +21,7 @@ export default function AlumnosResultList({
     <Container $direction="column" $gap="1.5rem">
       {showModal && selectedAlumno && <AlumnoPensionInfoModal onCloseModal={onCloseModal} selectedAlumno={selectedAlumno}></AlumnoPensionInfoModal>}
       <Text $bold $fontSize="medium">{`CON ${data[0].numeroPensionesAtrasadas} PENSIONES ATRASADAS`}</Text>
-      <Table width="content-fit" gridTemplateColumns={`35rem ${nivel === 'primaria' ? '9rem' : '11rem'} 4rem`}>
+      <Table width="fit-content" gridTemplateColumns={`35rem ${nivel === 'primaria' ? '9rem' : '11rem'} 4rem`}>
         <Table.Header>
           <Table.Header.Item>
             <Container $width="100%" $padding=".4rem" $alignItems="center">

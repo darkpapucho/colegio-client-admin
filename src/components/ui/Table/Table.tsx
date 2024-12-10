@@ -12,7 +12,9 @@ const TableContainer = styled.div<{ $withBorder?: boolean }>`
 
 const StyledTableRow = styled.div<{ $gridTemplateColumns: string; $width: string; $withBorder?: boolean }>`
   display: grid;
-  width: ${({ $width }) => $width};
+  /* width: ${({ $width }) => $width}; */
+  width: fit-content;
+
   grid-template-columns: ${({ $gridTemplateColumns }) => $gridTemplateColumns};
   gap: ${({ $withBorder }) => ($withBorder ? '2px' : 0)};
 `;

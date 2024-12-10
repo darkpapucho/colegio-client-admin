@@ -37,7 +37,7 @@ export default function PensionesGlobalReportTable({ data }: { data: { numeroPen
     <PensionesGlobalReportTableContext.Provider value={{ selectedNumber }}>
       <Container $direction="row" $gap="1rem" $padding="0 0 1rem 0">
         {isFetching && <Loader />}
-        <Table width="content-fit" gridTemplateColumns="7rem 7rem" withBorder>
+        <Table width="fit-content" gridTemplateColumns="7rem 7rem" withBorder>
           <Table.Header>
             <Table.Header.Item>
               <Container $padding="1rem" $width="100%">

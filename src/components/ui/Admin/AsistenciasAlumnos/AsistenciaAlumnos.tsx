@@ -8,6 +8,7 @@ const tabs = [
   { label: 'TARDANZAS', url: 'reportar-tardanzas' },
   { label: 'PASAR ASISTENCIA', url: 'pasar-asistencia' },
   { label: 'REGISTRO ASISTENCIA', url: 'registro-asistencia' },
+  { label: 'RESÚMEN TARDANZAS', url: 'resumen-tardanzas' },
 ];
 
 export default function AsistenciaAlumnos() {

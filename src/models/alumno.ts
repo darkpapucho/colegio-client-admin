@@ -5,8 +5,18 @@ import { EstadoMatricula, Grado, Seccion } from '../types/enums';
 import { AMatriculado, Apoderado, NuevoAlumno, NuevoApoderado, PartialAlumno } from '../types/alumno';
 import { ResponseSchema } from '../types/axiosResponse';
 import { API_BASE_URL } from '../var/globals';
+import { PeriodosKey } from '../types/documento';
 
 export class Alumno {
+  static async getListaMasTardonesByPeriodo({ periodo }: { periodo: PeriodosKey }) {
+    const response = await axios.post<ResponseSchema<{ alumnoId: string; tardanzas: number; estudiante: { nombreCompleto: string; grado: Grado; seccion: Seccion } }[]>>(
+      API_BASE_URL + ApiEndPoints.GET_RECORD_TARDANZAS_LIST_BY_PERIODO,
+      { periodo },
+      GetHeaders(),
+    );
+    return response;
+  }
+
   static async updateApoderadoById({ alumnoId, apoderado }: { alumnoId: string; apoderado: Apoderado }) {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.UPDATE_APODERADO_BY_ID, { alumnoId, apoderado }, GetHeaders());
     return response;

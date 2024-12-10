@@ -28,7 +28,7 @@ export default function ListaTardanzas({
         </Text>
         <CheckBox initialState={sort} label="Ordenar por salón" name="sort" width="13rem"></CheckBox>
       </Container>
-      <Table gridTemplateColumns="30rem 10rem" width="content-fit">
+      <Table gridTemplateColumns="30rem 10rem" width="fit-content">
         <Table.Header>
           <Table.Header.Item $padding="6px 3px">Alumno</Table.Header.Item>
 

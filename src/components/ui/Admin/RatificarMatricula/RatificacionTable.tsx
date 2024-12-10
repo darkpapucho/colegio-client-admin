@@ -22,7 +22,7 @@ export default function RatificacionTable({
   useCustomEvent('customSelect', changeSeccionListener);
   if (!alumnos) return null;
   return (
-    <Table gridTemplateColumns="35rem 8rem 10rem 12rem 5rem" width="content-fit">
+    <Table gridTemplateColumns="35rem 8rem 10rem 12rem 5rem" width="fit-content">
       <Table.Header>
         <Table.Header.Item $padding="6px 3px">ALUMNO</Table.Header.Item>
         <Table.Header.Item $padding="6px 3px">DNI</Table.Header.Item>

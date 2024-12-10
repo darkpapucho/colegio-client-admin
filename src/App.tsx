@@ -29,6 +29,7 @@ import NotasAlumnos from './components/ui/Admin/NotasAlumnos/NotasAlumnos';
 import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/PensionesByGradoSeccion';
 import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/PensionesGlobalReport';
 import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/Consultas/RecordPensionesByDateRange';
+import ResumenTardanzas from './components/ui/Admin/AsistenciasAlumnos/ResumenTardanzas/ResumenTardanzas';
 
 function App() {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function App() {
               <Route path="reportar-tardanzas" element={<ReportarTardanzaAlumno />}></Route>
               <Route path="pasar-asistencia" element={<PasarAsistencia />}></Route>
               <Route path="registro-asistencia" element={<RegistroAsistenciaAlumnos />}></Route>
+              <Route path="resumen-tardanzas" element={<ResumenTardanzas />} />
             </Route>
             <Route path="admin/pensiones" element={<Pensiones />}>
               <Route path="salon" element={<PensionesByGradoSeccion />} />

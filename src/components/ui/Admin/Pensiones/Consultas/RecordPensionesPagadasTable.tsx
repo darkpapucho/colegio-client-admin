@@ -32,7 +32,7 @@ export default function RecordPensionesPagadasTable({ data }: { data: { alumno: 
           }, 0)}
         </Text>
       </Container>
-      <Table withBorder gridTemplateColumns={`35rem ${nivel === 'inicial' ? '11rem' : '8rem'} 1fr`} width="content-fit">
+      <Table withBorder gridTemplateColumns={`35rem ${nivel === 'inicial' ? '11rem' : '8rem'} 1fr`} width="fit-content">
         <Table.Header>
           <Table.Header.Item>
             <Container $width="100%" $padding=".5rem" $justifyContent="center">

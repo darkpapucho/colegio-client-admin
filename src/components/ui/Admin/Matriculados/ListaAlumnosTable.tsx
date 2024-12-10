@@ -31,7 +31,7 @@ export default function ListaAlumnosTable({
   return (
     <>
       {matriculadosFiltered && (
-        <Table width="content-fit" gridTemplateColumns="35rem  14rem 10rem 12rem 10rem 5rem" withBorder>
+        <Table width="fit-content" gridTemplateColumns="35rem  14rem 10rem 12rem 10rem 5rem" withBorder>
           <Table.Header>
             {headers.map((item, index) => (
               <Table.Header.Item key={index}>{item}</Table.Header.Item>
