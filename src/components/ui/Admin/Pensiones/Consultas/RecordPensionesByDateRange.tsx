@@ -20,7 +20,7 @@ export default function RecordPensionesByDateRange() {
   const maxDate = `${currentYear}-12-31`;
   const [dateRange, setDateRange] = useState<DateRangeValue>([new Date(), new Date()]);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<{ alumno: { nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>([]);
+  const [data, setData] = useState<{ alumno: { dni: string; nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>([]);
   return (
     <Container $width="100%" $direction="column" $gap="2rem">
       {isLoading && <Loader />}
