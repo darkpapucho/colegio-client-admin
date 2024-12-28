@@ -34,7 +34,12 @@ export default function EmitirDocumentosForm({ selectedAlumno, onCloseModal }: {
     <Container $width="100%" $direction="column" $gap="2rem">
       <Container $direction="row" $width="100%" $height="auto">
         <AlumnoCard selectedAlumno={selectedAlumno} width="60%" />
-        <SelectDocumentosBox width="40%" />
+        <SelectDocumentosBox
+          width="40%"
+          certificadoConducta={selectedDocuments.certificadoConducta}
+          certificadoNoAdeudo={selectedDocuments.certificadoNoAdeudo}
+          resolucionTraslado={selectedDocuments.resolucionTraslado}
+        />
       </Container>
       <Container $width="100%" $gap="2rem" $direction="column">
         <Input label="Colegio Destino" name="colegioDestino" type="text" $width="100%" ref={colegioDestinoRef}></Input>
@@ -68,6 +73,10 @@ export default function EmitirDocumentosForm({ selectedAlumno, onCloseModal }: {
   }
   async function requestDocuments() {
     try {
+      //si esque no se a seleccionado por lo menos un documento
+      if (!Object.values(selectedDocuments).some((element) => element == true)) {
+        throw new Error('debes seleccionar por lo menos un documento');
+      }
       setIsLoading(true);
       //this function also updates the token
       const blob = await handleRequestDocuments({
