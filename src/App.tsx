@@ -37,6 +37,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login></Login>} />
       <Route element={<RequireAuth />}>
+        
         <Route path="/menu" element={<Layout />}>
           <Route element={<RequireAdmin />}>
             <Route path="admin/matricula-alumnos" element={<MatriculaALumnos />}>

@@ -7,7 +7,8 @@ type AddCursoAction = {
 export type ProfesorData = {
   nombres: string;
   apellidos: string;
-  dni: number;
+  dni: STRING;
   telefono?: number;
+  correo?: string;
   salones: SalonProfesor[];
 };

@@ -17,7 +17,7 @@ import { errorHandler } from '../../../utils/errorHandler';
 import { StyledInput } from '../StyledInput';
 import { CiEdit } from 'react-icons/ci';
 import { FiSave } from 'react-icons/fi';
-import { asserts } from '../../../utils/assert';
+import { assertCorreo, asserts } from '../../../utils/assert';
 import { SALONES_SELECT_OPTONS } from '../../../var/globals';
 import SalonCard from '../SalonCard';
 import { ProfesoresContext } from './ProfesorContext';
@@ -31,12 +31,13 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   const { dispatch, setShowModal } = useContext(ProfesoresContext)!;
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const año = useTypedSelector((state) => state.año) as Year;
-  const [locks, setLocks] = useState({ nombres: true, apellidos: true, dni: true, telefono: true });
+  const [locks, setLocks] = useState({ nombres: true, apellidos: true, dni: true, telefono: true, correo: true });
   const [isLoading, setIsLoading] = useState(false);
   const apellidosRef = useRef<HTMLInputElement | null>(null);
   const nombresRef = useRef<HTMLInputElement | null>(null);
   const dniRef = useRef<HTMLInputElement | null>(null);
   const telefonoRef = useRef<HTMLInputElement | null>(null);
+  const correoRef = useRef<HTMLInputElement | null>(null);
   useCustomEvent('customSelect', listener);
   useCustomEvent('customCheckbox', checkboxListener);
   return (
@@ -79,6 +80,17 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
           <StyledInput $grow defaultValue={profesor.telefono ? profesor.telefono : ''} disabled={locks.telefono} ref={telefonoRef} />
           <Icon $primary $small $pointer>
             {locks.telefono ? <CiEdit onClick={() => setLocks((old) => ({ ...old, telefono: false }))} /> : <FiSave onClick={() => updateProfesorData('telefono')} />}
+          </Icon>
+        </Container>
+      </Container>
+      <Container $direction="row" $gap="1.5rem" $width="100%">
+        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
+          <Text $bold $fontSize="small">
+            Correo:
+          </Text>
+          <StyledInput $grow defaultValue={profesor.correo} disabled={locks.correo} ref={correoRef} />
+          <Icon $primary $small $pointer>
+            {locks.correo ? <CiEdit onClick={() => setLocks((old) => ({ ...old, correo: false }))} /> : <FiSave onClick={() => updateProfesorData('correo')} />}
           </Icon>
         </Container>
       </Container>
@@ -134,11 +146,10 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       setIsLoading(false);
     }
   }
-  function updateProfesorData(field: 'apellidos' | 'nombres' | 'dni' | 'telefono') {
+  function updateProfesorData(field: 'apellidos' | 'nombres' | 'dni' | 'telefono' | 'correo') {
     try {
       if (field === 'apellidos') {
         const value = apellidosRef.current!.value;
-
         dispatch({ type: 'updateProfesorData', payload: { value, field } });
         setLocks((old) => ({ ...old, [field]: true }));
       } else if (field === 'nombres') {
@@ -153,6 +164,11 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
       } else if (field === 'telefono') {
         const value = telefonoRef.current!.value;
         asserts(value === '' || (value.length === 9 && typeof +value === 'number'), 'Teléfono inválido');
+        dispatch({ type: 'updateProfesorData', payload: { value, field } });
+        setLocks((old) => ({ ...old, [field]: true }));
+      } else if (field === 'correo') {
+        const value = correoRef.current!.value;
+        assertCorreo(value);
         dispatch({ type: 'updateProfesorData', payload: { value, field } });
         setLocks((old) => ({ ...old, [field]: true }));
       }

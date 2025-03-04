@@ -10,9 +10,9 @@ export class User {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.RESET_PROFESOR_PASSWORD, { dni, userId }, GetHeaders());
     return response;
   }
-  static async crearProfesor({ nombres, apellidos, dni, telefono, salones }: ProfesorData) {
+  static async crearProfesor(profesor: ProfesorData) {
     const END_POINT = ApiEndPoints.CREAR_PROFESOR;
-    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { nombres, apellidos, dni, telefono, salones }, GetHeaders());
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { ...profesor }, GetHeaders());
     return response;
   }
 }

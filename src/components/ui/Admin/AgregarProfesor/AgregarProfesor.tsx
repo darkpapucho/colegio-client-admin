@@ -10,7 +10,7 @@ import Select from '../../../shared/Select';
 import { useState, useRef } from 'react';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Nivel } from '../../../../types/enums';
-import { asserts } from '../../../../utils/assert';
+import { assertCorreo, asserts } from '../../../../utils/assert';
 import { errorHandler } from '../../../../utils/errorHandler';
 import { generateSalones, updateToken } from '../../../../utils/utils';
 import SalonCard from '../../../shared/SalonCard';
@@ -38,6 +38,7 @@ export default function AgregarProfesor() {
   const nombresRef = useRef<HTMLInputElement | null>(null);
   const dniRef = useRef<HTMLInputElement | null>(null);
   const telefonoRef = useRef<HTMLInputElement | null>(null);
+  const correoRef = useRef<HTMLInputElement | null>(null);
   useCustomEvent('customSelect', listener);
   useCustomEvent('customCheckbox', checkboxListener);
   return (
@@ -49,6 +50,7 @@ export default function AgregarProfesor() {
           <Input label="Nombres" ref={nombresRef} name="nombres" type="text" $width="100%"></Input>
           <Input label="DNI" ref={dniRef} name="dni" type="text" $width="100%"></Input>
           <Input label="Teléfono" ref={telefonoRef} name="telefono" type="text" $width="100%"></Input>
+          <Input label="Correo" ref={correoRef} name="correo" type="text" $width="100%"></Input>
         </Container>
         <Container $direction="row" $gap="1rem" $width="100%">
           <Text $bold $fontSize="medium">
@@ -103,11 +105,12 @@ export default function AgregarProfesor() {
       const apellidos = apellidosRef.current!.value.trim().toUpperCase();
       const dni = dniRef.current!.value.trim();
       const telefono = telefonoRef.current!.value.trim();
-
+      const correo = correoRef.current!.value.trim();
       //validaciones
       asserts(nombres.length >= 4, 'nombres debe contener al menos 4 caracteres');
       asserts(apellidos.length >= 8, 'apellidos debe contener al menos 8 caracteres');
       asserts(dni.length === 8 && typeof +dni === 'number', 'DNI inválido');
+      assertCorreo(correo);
       if (telefono.length > 0) {
         asserts(telefono.length === 9 && typeof +telefono === 'number', 'teléfono inválido');
       }
@@ -122,7 +125,8 @@ export default function AgregarProfesor() {
       const profesorData: ProfesorData = {
         nombres,
         apellidos,
-        dni: +dni,
+        dni: dni,
+        correo,
         salones: state.salones,
       };
       if (telefono.length > 0) profesorData.telefono = +telefono;

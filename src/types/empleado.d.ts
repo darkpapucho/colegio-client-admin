@@ -6,6 +6,7 @@ export type Profesor = {
   dni: number;
   salones: SalonProfesor[];
   telefono?: number;
+  correo?: string;
   rol: 'profesor';
   userId: string;
   _id: string;

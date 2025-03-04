@@ -39,3 +39,9 @@ export function assertGradoDestino(grado: any): asserts grado is GradoDestino {
   if (result.success) return;
   throw new Error('Grado de destino inválido');
 }
+
+export function assertCorreo(correo: any) {
+  const result = z.string().email().optional().safeParse(correo);
+  if (result.success) return;
+  throw new Error('Correo inválido');
+}

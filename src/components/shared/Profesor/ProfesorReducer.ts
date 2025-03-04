@@ -16,7 +16,7 @@ type DeleteSalon = {
 };
 type UpdateProfesorData = {
   type: 'updateProfesorData';
-  payload: { field: 'nombres' | 'apellidos' | 'dni' | 'telefono'; value: string };
+  payload: { field: 'nombres' | 'apellidos' | 'dni' | 'telefono' | 'correo'; value: string };
 };
 type SetProfesorAction = {
   type: 'setProfesor';
@@ -60,6 +60,7 @@ export default function ProfesorReducer(state: { profesor: Profesor }, action: P
       switch (field) {
         case 'nombres':
         case 'apellidos':
+        case 'correo':
           state.profesor[field] = value;
           break;
         case 'dni':
