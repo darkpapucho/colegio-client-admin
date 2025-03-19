@@ -20,6 +20,7 @@ export default class Calendario {
     const response = await axios.post<
       ResponseSchema<{ asistenciaList: { nombreCompleto: string; asistencia: AsistenciaValue; alumnoId: string }[]; dayId: string; month: MONTH_NAME }>
     >(API_BASE_URL + ApiEndPoints.FETCH_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID, { grado, seccion, month, dayId, estadosMatricula }, GetHeaders());
+    console.log({ response });
     return response;
   }
 
@@ -70,11 +71,9 @@ export default class Calendario {
   }
   static async fetchDayId(day: number) {
     const response = await axios.post<ResponseSchema<null | { _id: string }>>(API_BASE_URL + ApiEndPoints.FETCH_DAY_ID, { day }, GetHeaders());
-    console.log({ response });
     return response;
   }
   static async fetchTodayTardanzaList({ dayId }: { dayId: string }) {
-    console.log('fetching today tardanza list');
     const response = await axios.post<ResponseSchema<{ _id: string; nombreCompleto: string; grado: Grado; seccion: Seccion; records: AsistenciaRecord[] }[]>>(
       API_BASE_URL + ApiEndPoints.FETCH_TODAY_TARDANZA_LIST,
       { dayId },
