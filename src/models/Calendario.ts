@@ -20,7 +20,6 @@ export default class Calendario {
     const response = await axios.post<
       ResponseSchema<{ asistenciaList: { nombreCompleto: string; asistencia: AsistenciaValue; alumnoId: string }[]; dayId: string; month: MONTH_NAME }>
     >(API_BASE_URL + ApiEndPoints.FETCH_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID, { grado, seccion, month, dayId, estadosMatricula }, GetHeaders());
-    console.log({ response });
     return response;
   }
 

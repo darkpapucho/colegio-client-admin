@@ -43,6 +43,7 @@ export async function fetchAsistenciaListByGradoSeccionDayId({ grado, seccion, m
     if (!grado || !seccion || !month || !dayId || !estadosMatricula || estadosMatricula.length == 0) throw new Error('invalid request data');
 
     const response = await Calendario.fetchAsistenciaListByGradoSeccionDayId({ grado, seccion, month, dayId, estadosMatricula });
+
     updateToken(response);
     if (!response.data.ok) throw new Error(response.data.message);
     return response.data.payload;
