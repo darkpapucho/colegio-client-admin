@@ -16,7 +16,7 @@ export default function RecordPensionesPagadasTable({
 }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [selectedRecord, setSelectedRecord] = useState<number | null>(null);
-  console.log({ selectedRecord });
+
   if (data.length === 0) {
     return (
       <Text $width="100%" $color="red" $bold $fontSize="medium" $textAlign="center">
@@ -135,7 +135,6 @@ export default function RecordPensionesPagadasTable({
     </Container>
   );
   function handleClickAlumnoName(index: number) {
-    console.log({ selectedRecord, index });
     if (index === selectedRecord) {
       return setSelectedRecord(null);
     }

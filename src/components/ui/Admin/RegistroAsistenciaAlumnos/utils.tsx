@@ -85,11 +85,10 @@ export async function requestRecords({ grado, seccion, searchParams }: { grado: 
     if (!periodo || !grado || !seccion) {
       throw new Error('Debes seleccioon un grado, una sección y un periodo');
     }
-    console.log({ grado, seccion, periodo, estadosMatricula });
+
     const response = await Calendario.getRecordAsistenciaAlumnos({ grado, seccion, periodo, estadosMatricula: estadosMatricula.split('-') as EstadoMatricula[] });
     updateToken(response);
     if (!response.data.ok) throw new Error(response.data.message);
-    // console.log(response.data.payload);
 
     return response.data.payload;
   } catch (err) {

@@ -77,6 +77,7 @@ export default function MatriculaNuevaForm() {
           onClick={() => {
             try {
               const nuevoAlumno = parseEditarAlumnoFormData({ grado, seccion, sexo, apellidosRef, nombresRef, dniRef, codigoEstudiante, fechaMatriculaRef });
+
               mutate(nuevoAlumno);
             } catch (err) {
               errorHandler(err);

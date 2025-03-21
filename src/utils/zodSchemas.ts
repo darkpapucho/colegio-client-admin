@@ -108,40 +108,50 @@ export const editarAlumnoSchema = z
     (_data) => ({ message: `Código de estudiante inválido`, path: ['codigoEstudiante'] }),
   );
 
-export const nuevoAlumnoSchema = z
-  .object({
-    nombres: z.string().min(4).max(30),
-    apellidos: z.string().min(4).max(30),
-    grado: z.enum(VALID_GRADOS),
-    seccion: z.enum(VALID_SECCIONES),
-    fechaMatricula: z.string().datetime(),
-    sexo: z.enum(VALID_SEXOS),
-    dni: z
-      .string()
-      .optional()
-      .refine(
-        (value) => {
-          let isValid = false;
-          if (!value || value === '') {
-            return true;
-          } else if (value && value !== '') {
-            isValid = !isNaN(+value) && value.length === 8;
-          }
-          return isValid;
-        },
-        (value) => ({ message: `${value} no es un dni válido` }),
-      ),
-    codigoEstudiante: z.string().length(14, { message: 'codigo estudiante debe ser de 14 dígitos' }),
-  })
-  .refine(
-    (data) => {
-      if (data.dni && data.dni !== '') {
-        return data.codigoEstudiante === '000000' + data.dni;
+export const nuevoAlumnoSchema = z.object({
+  nombres: z.string().min(4).max(30),
+  apellidos: z.string().min(4).max(30),
+  grado: z.enum(VALID_GRADOS),
+  seccion: z.enum(VALID_SECCIONES),
+  fechaMatricula: z.string().datetime(),
+  sexo: z.enum(VALID_SEXOS),
+  dni: z
+    .string()
+    .optional()
+    .refine(
+      (value) => {
+        let isValid = false;
+        if (!value || value === '') {
+          return true;
+        } else if (value && value !== '') {
+          isValid = !isNaN(+value) && value.length === 8;
+        }
+        return isValid;
+      },
+      (value) => ({ message: `${value} no es un dni válido` }),
+    ),
+  codigoEstudiante: z
+    .string()
+    .optional()
+    .refine((value) => {
+      let isValid = false;
+      if (!value || value === '') {
+        isValid = true;
+      } else if (value && value != '') {
+        isValid = value.length == 14;
       }
-      return true;
-    },
-    (data) => ({ message: `codigo de estudiante inválido: ${data}`, path: ['codigoEstudiante'] }),
-  );
+      return isValid;
+    }),
+});
+// .refine(
+//   (data) => {
+//     if (data.dni && data.dni !== '') {
+//       return data.codigoEstudiante === '000000' + data.dni;
+//     }
+//     return true;
+//   },
+//   (data) => ({ message: `codigo de estudiante inválido: ${data}`, path: ['codigoEstudiante'] }),
+// );
 
 export const loginSchema = z.object({
   username: z
