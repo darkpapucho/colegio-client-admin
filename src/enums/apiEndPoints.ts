@@ -26,7 +26,7 @@ export enum ApiEndPoints {
   DELETE_PROFESOR = '/empleado/delete-profesor',
   GET_RECORD_ASISTENCIA_ALUMNOS = '/calendario/get-record-asistencias-grado-seccion-periodo',
   JUSTIFICAR_FALTA = '/calendario/justificar-falta',
-  GET_ATTENDANCE_LIST = '/documento/get-attendance-list',
+  GET_ATTENDANCE_LIST = '/calendario/get-pdf-attendance-list-by-grado-seccion-periodo',
   FETCH_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID = '/calendario/fetch-asistencia-list-by-grado-seccion-day-id',
   UPDATE_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID = '/calendario/update-asistencia-list-by-grado-seccion-day-id',
   FETCH_TODAY_TARDANZA_LIST = '/calendario/fetch-today-tardanza-list',

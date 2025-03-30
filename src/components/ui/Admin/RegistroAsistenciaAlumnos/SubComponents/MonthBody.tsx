@@ -28,7 +28,6 @@ export default function MonthBody({
   days,
   records,
   alumnoId,
-
   isSelected,
 }: {
   isSelected: boolean;
