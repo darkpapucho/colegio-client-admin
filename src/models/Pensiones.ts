@@ -78,6 +78,7 @@ export class Pensiones {
       { grado, seccion, estadosMatricula },
       GetHeaders(),
     );
+
     return response;
   }
 }

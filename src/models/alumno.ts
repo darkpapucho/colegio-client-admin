@@ -51,9 +51,9 @@ export class Alumno {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { alumno: { ...alumno } }, GetHeaders());
     return response;
   }
-  static async ratificarMatricula({ alumnos, grado }: { alumnos: AMatriculado[]; grado: Grado }) {
+  static async ratificarMatricula({ alumnos, grado, fechaMatricula }: { fechaMatricula: string; alumnos: AMatriculado[]; grado: Grado }) {
     const END_POINT = ApiEndPoints.RATIFICAR_MATRICULA + `?grado=${grado}`;
-    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { alumnos }, GetHeaders());
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { alumnos, fechaMatricula }, GetHeaders());
     return response;
   }
   static async retirarAlumno({ _id, fechaRetiro }: { _id: string; fechaRetiro: string }) {

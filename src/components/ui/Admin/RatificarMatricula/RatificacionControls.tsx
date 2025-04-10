@@ -61,7 +61,7 @@ export default function RatificacionControls({
       const { fechaRetiro: _fechaRetiro, ...rest } = alumno;
       return { ...rest };
     });
-    const response = await Alumno.ratificarMatricula({ alumnos: parsedAlumnos, grado });
+    const response = await Alumno.ratificarMatricula({ alumnos: parsedAlumnos, grado, fechaMatricula });
     if (!response.data.ok) throw new Error(response.data.message);
     toaster.success('la operación se realizó exitosamente');
     return response.data.ok;
