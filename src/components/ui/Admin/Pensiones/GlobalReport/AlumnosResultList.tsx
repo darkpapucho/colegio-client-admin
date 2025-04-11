@@ -14,6 +14,7 @@ export default function AlumnosResultList({
 }: {
   data: { estudiante: AMatriculado; pensiones: Pension[]; numeroPensionesAtrasadas: number; comentario?: ComentarioPension }[];
 }) {
+  console.log(data[0]);
   const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[]; comentario?: ComentarioPension } | null>(null);
   const [showModal, setShowModal] = useState(false);
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;

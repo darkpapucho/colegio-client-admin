@@ -15,6 +15,7 @@ export class Pensiones {
     );
     return response;
   }
+  //TODO: fix this end point
   static async editComentarioPension({ detalle, fecha, alumnoId }: { alumnoId: string; detalle: string; fecha: string }) {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.EDITAR_COMENTARIO_PENSION, { alumnoId, detalle, fecha }, GetHeaders());
     return response;
