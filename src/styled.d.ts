@@ -1,4 +1,5 @@
 import 'styled-components';
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     iconSize: {
@@ -102,4 +103,8 @@ declare module 'styled-components' {
       opacity: string;
     };
   }
+  // export interface CSSProperties {
+  //   'field-sizing'?: 'content' | 'fixed';
+  //   fieldSizing?: 'content' | 'fixed'; // also try camelCase version
+  // }
 }

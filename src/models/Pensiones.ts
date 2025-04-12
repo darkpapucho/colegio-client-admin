@@ -15,11 +15,6 @@ export class Pensiones {
     );
     return response;
   }
-  //TODO: fix this end point
-  static async editComentarioPension({ detalle, fecha, alumnoId }: { alumnoId: string; detalle: string; fecha: string }) {
-    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.EDITAR_COMENTARIO_PENSION, { alumnoId, detalle, fecha }, GetHeaders());
-    return response;
-  }
 
   static async editarPensionPagada({ alumnoId, reciboId, montoPagado, fechaPago }: { alumnoId: string; reciboId: string; montoPagado: number; fechaPago: string }) {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.EDITAR_PENSION_PAGADA, { alumnoId, reciboId, montoPagado, fechaPago }, GetHeaders());

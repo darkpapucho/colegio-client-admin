@@ -41,4 +41,5 @@ export enum ApiEndPoints {
   EDITAR_COMENTARIO_PENSION = '/anotaciones-relevantes/editar-anotacion-relevante-by-alumnoId',
   GET_RECORD_PENSIONES_BY_DATE_RANGE = '/pensiones/get-record-pensiones-pagadas-by-date-range',
   GET_RECORD_TARDANZAS_LIST_BY_PERIODO = '/alumno/get-list-of-alumnos-with-most-tardanzas',
+  DELETE_ANOTACION_RELEVANTE = '/anotaciones-relevantes/eliminar-anotacion-relevante-by-alumno-id',
 }

@@ -78,7 +78,7 @@ export default function AlumnosResultList({
                         setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones, comentario: record.comentario });
                         setShowModal(true);
                       }}>
-                      <Icon $pointer $primary>
+                      <Icon $pointer $primary={record.comentario ? true : false}>
                         <FaEdit />
                       </Icon>
                     </Container>

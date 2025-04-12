@@ -26,7 +26,7 @@ export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $sm
       css`
         font-size: ${theme.iconSize.sm};
       `}
-    color: ${({ $primary, theme }) => ($primary ? theme.colors.primary[800] : theme.colors.tertiary[200])};
+    color: ${({ $primary, theme }) => ($primary ? theme.colors.primary[800] : theme.colors.tertiary[600])};
   }
   ${({ $interactive }) =>
     $interactive &&
