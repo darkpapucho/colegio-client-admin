@@ -7,7 +7,8 @@ import { AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 
 export class Pensiones {
-  static async getRecordPensionesPagadasByDateRange({ initDate, endDate }) {
+  static async getRecordPensionesPagadasByDateRange({ initDate, endDate }: { initDate: string; endDate: string }) {
+    //fetch las pensiones pagadas dentro de un rango de fechas (fecha de pago)
     const response = await axios.post<ResponseSchema<{ alumno: { dni: string; nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>>(
       API_BASE_URL + ApiEndPoints.GET_RECORD_PENSIONES_BY_DATE_RANGE,
       { initDate, endDate },

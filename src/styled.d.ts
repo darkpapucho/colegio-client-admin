@@ -103,8 +103,4 @@ declare module 'styled-components' {
       opacity: string;
     };
   }
-  // export interface CSSProperties {
-  //   'field-sizing'?: 'content' | 'fixed';
-  //   fieldSizing?: 'content' | 'fixed'; // also try camelCase version
-  // }
 }

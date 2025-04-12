@@ -10,25 +10,31 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: 3.3.4
-        version: 3.3.4(react-hook-form@7.49.3)
+        version: 3.3.4(react-hook-form@7.49.3(react@18.2.0))
       '@reduxjs/toolkit':
         specifier: 1.9.7
-        version: 1.9.7(react-redux@8.1.3)(react@18.2.0)
+        version: 1.9.7(react-redux@8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(redux@4.2.1))(react@18.2.0)
       '@tanstack/react-query':
         specifier: 4.36.1
-        version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
+        version: 4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@tanstack/react-query-devtools':
         specifier: 5.21.4
-        version: 5.21.4(@tanstack/react-query@4.36.1)(react@18.2.0)
+        version: 5.21.4(@tanstack/react-query@4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      '@types/tinycolor2':
+        specifier: ^1.4.6
+        version: 1.4.6
       '@wojtekmaj/react-datetimerange-picker':
         specifier: 5.5.0
-        version: 5.5.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.5.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       axios:
         specifier: 1.5.1
         version: 1.5.1
+      chart.js:
+        specifier: ^4.4.8
+        version: 4.4.8
       framer-motion:
         specifier: 11.11.11
-        version: 11.11.11(react-dom@18.2.0)(react@18.2.0)
+        version: 11.11.11(@emotion/is-prop-valid@1.2.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       json-2-csv:
         specifier: 5.5.1
         version: 5.5.1
@@ -37,7 +43,10 @@ importers:
         version: 18.2.0
       react-calendar:
         specifier: 5.0.0
-        version: 5.0.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.0.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-chartjs-2:
+        specifier: ^5.3.0
+        version: 5.3.0(chart.js@4.4.8)(react@18.2.0)
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
@@ -46,19 +55,22 @@ importers:
         version: 7.49.3(react@18.2.0)
       react-hot-toast:
         specifier: 2.4.1
-        version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.4.1(csstype@3.1.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-icons:
         specifier: 4.11.0
         version: 4.11.0(react@18.2.0)
       react-redux:
         specifier: 8.1.3
-        version: 8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+        version: 8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(redux@4.2.1)
       react-router-dom:
         specifier: 6.16.0
-        version: 6.16.0(react-dom@18.2.0)(react@18.2.0)
+        version: 6.16.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       styled-components:
         specifier: 6.0.8
-        version: 6.0.8(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      tinycolor2:
+        specifier: ^1.6.0
+        version: 1.6.0
       use-immer:
         specifier: 0.9.0
         version: 0.9.0(immer@9.0.21)(react@18.2.0)
@@ -74,7 +86,7 @@ importers:
         version: 18.2.7
       '@typescript-eslint/eslint-plugin':
         specifier: 6.0.0
-        version: 6.0.0(@typescript-eslint/parser@6.0.0)(eslint@8.45.0)(typescript@5.0.2)
+        version: 6.0.0(@typescript-eslint/parser@6.0.0(eslint@8.45.0)(typescript@5.0.2))(eslint@8.45.0)(typescript@5.0.2)
       '@typescript-eslint/parser':
         specifier: 6.0.0
         version: 6.0.0(eslint@8.45.0)(typescript@5.0.2)
@@ -957,6 +969,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.19':
     resolution: {integrity: sha512-kf37QtfW+Hwx/buWGMPcR60iF9ziHa6r/CZJIHbmcm4+0qrXiVdxegAH0F6yddEVQ7zdkjcGCgCzUu+BcbhQxw==}
 
+  '@kurkle/color@0.3.4':
+    resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
+
   '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
     resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
 
@@ -1040,6 +1055,9 @@ packages:
 
   '@types/stylis@4.2.1':
     resolution: {integrity: sha512-OSaMrXUKxVigGlKRrET39V2xdhzlztQ9Aqumn1WbCBKHOi9ry7jKSd7rkyj0GzmWaU960Rd+LpOFpLfx5bMQAg==}
+
+  '@types/tinycolor2@1.4.6':
+    resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}
 
   '@types/use-sync-external-store@0.0.3':
     resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
@@ -1214,6 +1232,10 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
+
+  chart.js@4.4.8:
+    resolution: {integrity: sha512-IkGZlVpXP+83QpMm4uxEiGqSI7jFizwVtF3+n5Pc3k7sMO+tkd0qxh2OzLhenM0K80xtmAONWGBn082EiBQSDA==}
+    engines: {pnpm: '>=8'}
 
   chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
@@ -1759,6 +1781,12 @@ packages:
       '@types/react':
         optional: true
 
+  react-chartjs-2@5.3.0:
+    resolution: {integrity: sha512-UfZZFnDsERI3c3CZGxzvNJd02SHjaSJ8kgW1djn65H1KK8rehwTjyrRKOG3VTMG8wtHZ5rgAO5oTHtHi9GCCmw==}
+    peerDependencies:
+      chart.js: ^4.1.1
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   react-clock@4.6.0:
     resolution: {integrity: sha512-Yz+vwrwrfVRSBw3BdmX/Mc7mVdQYJQ5Pi00qDzGLyLNWQuEmp5PC2oYjQAsDalLjekeDwBIGD7OLcKnkAp1kcw==}
     peerDependencies:
@@ -2021,6 +2049,9 @@ packages:
 
   tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
+
+  tinycolor2@1.6.0:
+    resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
 
   to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
@@ -3051,7 +3082,7 @@ snapshots:
 
   '@eslint/js@8.44.0': {}
 
-  '@hookform/resolvers@3.3.4(react-hook-form@7.49.3)':
+  '@hookform/resolvers@3.3.4(react-hook-form@7.49.3(react@18.2.0))':
     dependencies:
       react-hook-form: 7.49.3(react@18.2.0)
 
@@ -3084,6 +3115,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  '@kurkle/color@0.3.4': {}
+
   '@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3':
     optional: true
 
@@ -3099,14 +3132,15 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  '@reduxjs/toolkit@1.9.7(react-redux@8.1.3)(react@18.2.0)':
+  '@reduxjs/toolkit@1.9.7(react-redux@8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(redux@4.2.1))(react@18.2.0)':
     dependencies:
       immer: 9.0.21
-      react: 18.2.0
-      react-redux: 8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       redux: 4.2.1
       redux-thunk: 2.4.2(redux@4.2.1)
       reselect: 4.1.8
+    optionalDependencies:
+      react: 18.2.0
+      react-redux: 8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(redux@4.2.1)
 
   '@remix-run/router@1.9.0': {}
 
@@ -3114,18 +3148,19 @@ snapshots:
 
   '@tanstack/query-devtools@5.21.3': {}
 
-  '@tanstack/react-query-devtools@5.21.4(@tanstack/react-query@4.36.1)(react@18.2.0)':
+  '@tanstack/react-query-devtools@5.21.4(@tanstack/react-query@4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@tanstack/query-devtools': 5.21.3
-      '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query': 4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
-  '@tanstack/react-query@4.36.1(react-dom@18.2.0)(react@18.2.0)':
+  '@tanstack/react-query@4.36.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@tanstack/query-core': 4.36.1
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
+    optionalDependencies:
+      react-dom: 18.2.0(react@18.2.0)
 
   '@types/hoist-non-react-statics@3.3.3':
     dependencies:
@@ -3158,9 +3193,11 @@ snapshots:
 
   '@types/stylis@4.2.1': {}
 
+  '@types/tinycolor2@1.4.6': {}
+
   '@types/use-sync-external-store@0.0.3': {}
 
-  '@typescript-eslint/eslint-plugin@6.0.0(@typescript-eslint/parser@6.0.0)(eslint@8.45.0)(typescript@5.0.2)':
+  '@typescript-eslint/eslint-plugin@6.0.0(@typescript-eslint/parser@6.0.0(eslint@8.45.0)(typescript@5.0.2))(eslint@8.45.0)(typescript@5.0.2)':
     dependencies:
       '@eslint-community/regexpp': 4.9.1
       '@typescript-eslint/parser': 6.0.0(eslint@8.45.0)(typescript@5.0.2)
@@ -3177,6 +3214,7 @@ snapshots:
       natural-compare-lite: 1.4.0
       semver: 7.5.4
       ts-api-utils: 1.0.3(typescript@5.0.2)
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - supports-color
@@ -3189,6 +3227,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 6.0.0
       debug: 4.3.4
       eslint: 8.45.0
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - supports-color
@@ -3205,6 +3244,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.45.0
       ts-api-utils: 1.0.3(typescript@5.0.2)
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - supports-color
@@ -3220,6 +3260,7 @@ snapshots:
       is-glob: 4.0.3
       semver: 7.5.4
       ts-api-utils: 1.0.3(typescript@5.0.2)
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - supports-color
@@ -3256,18 +3297,19 @@ snapshots:
 
   '@wojtekmaj/date-utils@1.5.1': {}
 
-  '@wojtekmaj/react-datetimerange-picker@5.5.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)':
+  '@wojtekmaj/react-datetimerange-picker@5.5.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@types/react': 18.2.15
       clsx: 2.1.0
       make-event-props: 1.6.2
       prop-types: 15.8.1
       react: 18.2.0
-      react-calendar: 4.8.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
-      react-clock: 4.6.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
-      react-datetime-picker: 5.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-calendar: 4.8.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-clock: 4.6.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-datetime-picker: 5.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
-      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+    optionalDependencies:
+      '@types/react': 18.2.15
     transitivePeerDependencies:
       - '@types/react-dom'
 
@@ -3375,6 +3417,10 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  chart.js@4.4.8:
+    dependencies:
+      '@kurkle/color': 0.3.4
 
   chokidar@3.5.3:
     dependencies:
@@ -3617,11 +3663,13 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
-  framer-motion@11.11.11(react-dom@18.2.0)(react@18.2.0):
+  framer-motion@11.11.11(@emotion/is-prop-valid@1.2.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
+      tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.6.2
 
   fs-readdir-recursive@1.1.0: {}
 
@@ -3882,9 +3930,8 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-calendar@4.8.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+  react-calendar@4.8.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@types/react': 18.2.15
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.0
       get-user-locale: 2.3.1
@@ -3892,58 +3939,69 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       warning: 4.0.3
-
-  react-calendar@5.0.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.2.15
+
+  react-calendar@5.0.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.0
       get-user-locale: 2.3.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       warning: 4.0.3
-
-  react-clock@4.6.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.2.15
+
+  react-chartjs-2@5.3.0(chart.js@4.4.8)(react@18.2.0):
+    dependencies:
+      chart.js: 4.4.8
+      react: 18.2.0
+
+  react-clock@4.6.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.0
       get-user-locale: 2.3.1
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-
-  react-date-picker@10.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.2.15
+
+  react-date-picker@10.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.0
       get-user-locale: 2.3.1
       make-event-props: 1.6.2
       prop-types: 15.8.1
       react: 18.2.0
-      react-calendar: 4.8.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-calendar: 4.8.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
-      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       update-input-width: 1.4.2
+    optionalDependencies:
+      '@types/react': 18.2.15
     transitivePeerDependencies:
       - '@types/react-dom'
 
-  react-datetime-picker@5.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+  react-datetime-picker@5.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@types/react': 18.2.15
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.0
       get-user-locale: 2.3.1
       make-event-props: 1.6.2
       prop-types: 15.8.1
       react: 18.2.0
-      react-calendar: 4.8.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
-      react-clock: 4.6.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
-      react-date-picker: 10.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-calendar: 4.8.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-clock: 4.6.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-date-picker: 10.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
-      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
-      react-time-picker: 6.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-time-picker: 6.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+    optionalDependencies:
+      '@types/react': 18.2.15
     transitivePeerDependencies:
       - '@types/react-dom'
 
@@ -3953,21 +4011,22 @@ snapshots:
       react: 18.2.0
       scheduler: 0.23.0
 
-  react-fit@1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+  react-fit@1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@types/react': 18.2.15
-      '@types/react-dom': 18.2.7
       detect-element-overflow: 1.4.2
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tiny-warning: 1.0.3
+    optionalDependencies:
+      '@types/react': 18.2.15
+      '@types/react-dom': 18.2.7
 
   react-hook-form@7.49.3(react@18.2.0):
     dependencies:
       react: 18.2.0
 
-  react-hot-toast@2.4.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
+  react-hot-toast@2.4.1(csstype@3.1.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       goober: 2.1.13(csstype@3.1.2)
       react: 18.2.0
@@ -3983,23 +4042,24 @@ snapshots:
 
   react-is@18.2.0: {}
 
-  react-redux@8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1):
+  react-redux@8.1.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(redux@4.2.1):
     dependencies:
       '@babel/runtime': 7.23.1
       '@types/hoist-non-react-statics': 3.3.3
-      '@types/react': 18.2.15
-      '@types/react-dom': 18.2.7
       '@types/use-sync-external-store': 0.0.3
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       react-is: 18.2.0
-      redux: 4.2.1
       use-sync-external-store: 1.2.0(react@18.2.0)
+    optionalDependencies:
+      '@types/react': 18.2.15
+      '@types/react-dom': 18.2.7
+      react-dom: 18.2.0(react@18.2.0)
+      redux: 4.2.1
 
   react-refresh@0.14.0: {}
 
-  react-router-dom@6.16.0(react-dom@18.2.0)(react@18.2.0):
+  react-router-dom@6.16.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@remix-run/router': 1.9.0
       react: 18.2.0
@@ -4011,19 +4071,20 @@ snapshots:
       '@remix-run/router': 1.9.0
       react: 18.2.0
 
-  react-time-picker@6.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+  react-time-picker@6.6.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      '@types/react': 18.2.15
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.0
       get-user-locale: 2.3.1
       make-event-props: 1.6.2
       prop-types: 15.8.1
       react: 18.2.0
-      react-clock: 4.6.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-clock: 4.6.0(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
-      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      react-fit: 1.7.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       update-input-width: 1.4.2
+    optionalDependencies:
+      '@types/react': 18.2.15
     transitivePeerDependencies:
       - '@types/react-dom'
 
@@ -4125,7 +4186,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-components@6.0.8(react-dom@18.2.0)(react@18.2.0):
+  styled-components@6.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/cli': 7.23.0(@babel/core@7.23.0)
       '@babel/core': 7.23.0
@@ -4166,6 +4227,8 @@ snapshots:
   text-table@0.2.0: {}
 
   tiny-warning@1.0.3: {}
+
+  tinycolor2@1.6.0: {}
 
   to-fast-properties@2.0.0: {}
 

@@ -67,7 +67,7 @@ export default function RecordPensionesByDateRange() {
           </Container>
         </Container>
         <Container $width="100%" $justifyContent="center">
-          <Button $primary onClick={() => handleSubmit(dateRange as [Date, Date])} disabled={isLoading}>
+          <Button $primary onClick={() => handleRequestData(dateRange as [Date, Date])} disabled={isLoading}>
             <Text $width="15rem" $textAlign="center" $bold>
               Consultar
             </Text>
@@ -85,7 +85,7 @@ export default function RecordPensionesByDateRange() {
       )}
     </Container>
   );
-  async function handleSubmit(dateRange: [Date, Date]) {
+  async function handleRequestData(dateRange: [Date, Date]) {
     try {
       if (!dateRange) throw new Error('Debes seleccionar un rango de fechas');
       setIsLoading(true);
