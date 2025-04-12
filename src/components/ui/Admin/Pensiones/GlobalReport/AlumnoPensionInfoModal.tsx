@@ -36,7 +36,7 @@ export default function AlumnoPensionInfoModal({
               return <ApoderadoInfoCard apoderado={apoderado} index={index} key={index} />;
             })}
           </Container>
-          <ComentarioCard comentario={selectedAlumno.comentario} alumnoId={selectedAlumno.estudiante._id} />
+          <ComentarioCard comentario={selectedAlumno.comentario} alumnoId={selectedAlumno.estudiante._id} onCloseModal={onCloseModal} />
           <DivContainer>
             {selectedAlumno.pensiones.map((pension) => {
               return (

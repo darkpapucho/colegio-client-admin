@@ -14,7 +14,7 @@ import { Nivel } from '../../../../../types/enums';
 import { fetchAlumnosList } from './utils';
 import { Text } from '../../../../shared/Text';
 import TextArea from '../../../../shared/TextArea';
-export default function ComentarioCard({ comentario, alumnoId }: { alumnoId: string; comentario: ComentarioPension | undefined }) {
+export default function ComentarioCard({ comentario, alumnoId, onCloseModal }: { onCloseModal: () => void; alumnoId: string; comentario: ComentarioPension | undefined }) {
   const now = new Date();
   const currentDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16);
   const [loading, setLoading] = useState(false);
@@ -46,8 +46,8 @@ export default function ComentarioCard({ comentario, alumnoId }: { alumnoId: str
       if (!response.data.ok) throw new Error(response.data.message);
       queryClient.invalidateQueries({ queryKey: ['alumnos-list-by-pensiones-atrasadas', nivel, selectedNumber] });
       queryClient.prefetchQuery({ queryKey: ['alumnos-list-by-pensiones-atrasadas', nivel, selectedNumber], queryFn: () => fetchAlumnosList({ selectedNumber }) });
-
       toaster.success('comentario grabado');
+      onCloseModal();
     } catch (err) {
       errorHandler(err);
     } finally {

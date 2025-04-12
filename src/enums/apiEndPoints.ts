@@ -38,7 +38,7 @@ export enum ApiEndPoints {
   GET_PENSIONES_GLOBAL_REPORT = '/pensiones/get-pensiones-global-report',
   GET_ALUMNOS_BY_NUMERO_PENSIONES_ATRASADAS = '/pensiones/get-lista-by-numero-pensiones-atrasadas',
   EDITAR_PENSION_PAGADA = '/pensiones/editar-pension-pagada',
-  EDITAR_COMENTARIO_PENSION = '/pensiones/editar-comentario-pension',
+  EDITAR_COMENTARIO_PENSION = '/anotaciones-relevantes/editar-anotacion-relevante-by-alumnoId',
   GET_RECORD_PENSIONES_BY_DATE_RANGE = '/pensiones/get-record-pensiones-pagadas-by-date-range',
   GET_RECORD_TARDANZAS_LIST_BY_PERIODO = '/alumno/get-list-of-alumnos-with-most-tardanzas',
 }

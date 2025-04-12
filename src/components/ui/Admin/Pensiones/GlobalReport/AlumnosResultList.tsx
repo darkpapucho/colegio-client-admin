@@ -7,14 +7,13 @@ import { Nivel, Salon } from '../../../../../types/enums';
 import { convertSalonToIndex } from '../../../../../utils/convertGradoToIndex';
 import AlumnoPensionInfoModal from './AlumnoPensionInfoModal';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
-import { FaRegEye } from 'react-icons/fa';
 import { Icon } from '../../../../shared/Icon';
+import { FaEdit } from 'react-icons/fa';
 export default function AlumnosResultList({
   data,
 }: {
   data: { estudiante: AMatriculado; pensiones: Pension[]; numeroPensionesAtrasadas: number; comentario?: ComentarioPension }[];
 }) {
-  console.log(data[0]);
   const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[]; comentario?: ComentarioPension } | null>(null);
   const [showModal, setShowModal] = useState(false);
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
@@ -79,8 +78,8 @@ export default function AlumnosResultList({
                         setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones, comentario: record.comentario });
                         setShowModal(true);
                       }}>
-                      <Icon $tiny $pointer $primary>
-                        <FaRegEye />
+                      <Icon $pointer $primary>
+                        <FaEdit />
                       </Icon>
                     </Container>
                   </Table.Body.Item>
