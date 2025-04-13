@@ -17,8 +17,14 @@ import {
   Legend,
 } from 'chart.js';
 import tinycolor from 'tinycolor2';
+import styled from 'styled-components';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+const ChartContainer = styled(Container)`
+  canvas {
+    border: 1px solid black;
+  }
+`;
 
 export default function AlumnosResultList({
   data,
@@ -36,7 +42,9 @@ export default function AlumnosResultList({
 
   return (
     <Container $direction="column" $gap="2rem" $width="100%" $border="2px solid black" $padding="0 2rem">
-      <Text $width="100%" $bold $fontSize="medium" $textAlign="center">{`CON ${data[0].numeroPensionesAtrasadas} PENSIONES ATRASADAS`}</Text>
+      <Text $width="100%" $bold $fontSize="medium" $textAlign="center">{`CON ${data[0].numeroPensionesAtrasadas} ${
+        data[0].numeroPensionesAtrasadas == 1 ? 'PENSION ATRASADA' : 'PENSIONES ATRASADAS'
+      }`}</Text>
       <Container $direction="row" $gap="2rem">
         {showModal && selectedAlumno && <AlumnoPensionInfoModal onCloseModal={onCloseModal} selectedAlumno={selectedAlumno}></AlumnoPensionInfoModal>}
         <Container $direction="column" $gap="1.5rem">
@@ -108,38 +116,52 @@ export default function AlumnosResultList({
             </Table.Body>
           </Table>
         </Container>
-        <Container $direction="row">
+        <Container $direction="row" $height="480px" $width="420px">
           <Pie
             options={{
+              layout: {
+                padding: {},
+              },
               plugins: {
                 legend: {
-                  align: 'start',
-                  display: true,
+                  title: {
+                    padding: {
+                      top: 10,
+                      height: 40,
+                      width: 420,
+                    },
+                    position: 'center',
+                    color: 'green',
+                    display: true,
+                    text: `CON ${data[0].numeroPensionesAtrasadas} ${data[0].numeroPensionesAtrasadas == 1 ? 'PENSION ATRASADA' : 'PENSIONES ATRASADAS'}`,
+                  },
                   position: 'top',
-                  textDirection: 'left',
+                  align: 'start',
                   labels: {
-                    textAlign: 'right',
-                    boxWidth: 5, // Adjust legend color box size
-                    padding: 8, // Spacing between items
-                    usePointStyle: true, // Use circles instead of squares
+                    textAlign: 'left',
+                    boxWidth: 12,
+                    usePointStyle: false, // Use circles instead of squares
                   },
                 },
               },
             }}
             data={{
-              labels: sortedSalones.map((salon) => {
-                let numAlumnos: number = 0;
-                data.forEach((row) => {
-                  const estudianteSalon = (row.estudiante.grado + ' ' + row.estudiante.seccion) as Salon;
-                  if (estudianteSalon === salon) {
-                    numAlumnos++;
-                  }
-                });
-                return `${salon}: ${((numAlumnos * 100) / data.length).toFixed(1)}% `.padEnd(18, '#');
-              }),
+              labels: sortedSalones
+                .map((salon) => {
+                  let numAlumnos: number = 0;
+                  data.forEach((row) => {
+                    const estudianteSalon = (row.estudiante.grado + ' ' + row.estudiante.seccion) as Salon;
+                    if (estudianteSalon === salon) {
+                      numAlumnos++;
+                    }
+                  });
+                  return { label: `${salon}: [${((numAlumnos * 100) / data.length).toFixed(1)}%]`.padEnd(20, '#'), cantidad: numAlumnos };
+                })
+                .sort((prev, curr) => (prev.cantidad > curr.cantidad ? 1 : -1))
+                .map((row) => row.label),
               datasets: [
                 {
-                  label: 'SALON',
+                  label: 'Alumnos',
                   data: sortedSalones.map((salon) => {
                     let numAlumnos: number = 0;
                     data.forEach((row) => {
@@ -156,7 +178,8 @@ export default function AlumnosResultList({
                   borderWidth: 1,
                 },
               ],
-            }}></Pie>
+            }}
+          />
         </Container>
       </Container>
     </Container>
