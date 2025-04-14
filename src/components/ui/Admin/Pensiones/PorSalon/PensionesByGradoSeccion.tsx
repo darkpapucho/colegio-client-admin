@@ -44,6 +44,9 @@ export default function PensionesByGradoSeccion() {
           <Button $primary $width="max-content" onClick={fetchList}>
             Buscar
           </Button>
+          <Button $primary $width="max-content" onClick={downloadPDF}>
+            Descargar PDF
+          </Button>
         </Container>
         {data && data.length > 0 && <PensionesGradoSeccionTable data={data} />}
       </Container>
@@ -65,6 +68,22 @@ export default function PensionesByGradoSeccion() {
       errorHandler(err);
     } finally {
       setLoading(false);
+    }
+  }
+  async function downloadPDF() {
+    try {
+      if (!grado || !seccion) throw new Error('missing grado / sección');
+      const response = await Pensiones.downloadPensionesTableGradoSeccionPDF({ grado, seccion });
+      updateToken(response);
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+      const alink = document.createElement('a');
+      alink.href = url;
+      alink.download = `pensiones-${grado}-${seccion}.pdf`;
+      alink.click();
+      alink.remove();
+    } catch (err) {
+      errorHandler(err);
     }
   }
 }

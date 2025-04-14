@@ -30,6 +30,7 @@ import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/Pe
 import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/PensionesGlobalReport';
 import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/Consultas/RecordPensionesByDateRange';
 import ResumenTardanzas from './components/ui/Admin/AsistenciasAlumnos/ResumenTardanzas/ResumenTardanzas';
+import Yape from './components/ui/Admin/Yape/Yape';
 
 function App() {
   const navigate = useNavigate();
@@ -37,7 +38,6 @@ function App() {
     <Routes>
       <Route path="/" element={<Login></Login>} />
       <Route element={<RequireAuth />}>
-        
         <Route path="/menu" element={<Layout />}>
           <Route element={<RequireAdmin />}>
             <Route path="admin/matricula-alumnos" element={<MatriculaALumnos />}>
@@ -72,7 +72,7 @@ function App() {
               <Route path="global" element={<PensionesGlobalReport />} />
               <Route path="consultas" element={<RecordPensionesByDateRange />} />
             </Route>
-
+            <Route path="admin/pagos" element={<Yape />} />
             <Route path="admin/alumnos" element={<Alumnos />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>

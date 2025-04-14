@@ -42,4 +42,6 @@ export enum ApiEndPoints {
   GET_RECORD_PENSIONES_BY_DATE_RANGE = '/pensiones/get-record-pensiones-pagadas-by-date-range',
   GET_RECORD_TARDANZAS_LIST_BY_PERIODO = '/alumno/get-list-of-alumnos-with-most-tardanzas',
   DELETE_ANOTACION_RELEVANTE = '/anotaciones-relevantes/eliminar-anotacion-relevante-by-alumno-id',
+  NUEVO_PAGO_YAPE = '/pagos/nuevo-pago-yape',
+  DOWNLOAD_PENSION_TABLE_GRADO_SECCION_PDF = '/pensiones/download-pension-table-grado-seccion-pdf',
 }

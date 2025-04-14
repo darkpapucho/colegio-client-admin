@@ -100,12 +100,6 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'emitir documentos',
       url: '/menu/admin/emitirdocumentos',
     },
-    // {
-    //   icon: <FaRegFilePdf />,
-    //   label: 'Emitir boleta de notas',
-    //   url: '/menu/admin/boletadenotas',
-    // },
-
     {
       icon: <FiUserPlus />,
       label: 'Agregar Profesor',
@@ -131,6 +125,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <BiMoneyWithdraw />,
       label: 'Pensiones',
       url: '/menu/admin/pensiones',
+    },
+    {
+      icon: <BiMoneyWithdraw />,
+      label: 'Pagos Yape',
+      url: '/menu/admin/pagos',
     },
   ],
   promotor: [

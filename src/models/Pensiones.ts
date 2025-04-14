@@ -7,6 +7,10 @@ import { AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 
 export class Pensiones {
+  static async downloadPensionesTableGradoSeccionPDF({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
+    const response = await axios.post(API_BASE_URL + ApiEndPoints.DOWNLOAD_PENSION_TABLE_GRADO_SECCION_PDF, { grado, seccion }, { responseType: 'arraybuffer', ...GetHeaders() });
+    return response;
+  }
   static async getRecordPensionesPagadasByDateRange({ initDate, endDate }: { initDate: string; endDate: string }) {
     //fetch las pensiones pagadas dentro de un rango de fechas (fecha de pago)
     const response = await axios.post<ResponseSchema<{ alumno: { dni: string; nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>>(

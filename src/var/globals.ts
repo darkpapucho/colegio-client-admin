@@ -2,6 +2,7 @@ import { TipoApoderado } from '../types/alumno';
 import { CURSO_BOLETA_NOTA } from '../types/documento';
 
 export const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:4000' : import.meta.env.VITE_API_BASE_URL;
+export const MP_PUBLIC_KEY = import.meta.env.DEV ? 'TEST-faa93dcf-370f-4596-9e91-187b7acc35b8' : import.meta.env.VITE_MP_PUBLIC_KEY;
 //import.meta.env.DEV ? 'http://localhost:4000' :
 export const GradosDestino = {
   inicial: [

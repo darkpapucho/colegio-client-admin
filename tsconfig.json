@@ -19,9 +19,9 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false
-    // "typeRoots": ["./node_modules/@types", "./src/@types"]
+    "noImplicitAny": false,
+    "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/components/ui/Admin/Yape/Yape.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
