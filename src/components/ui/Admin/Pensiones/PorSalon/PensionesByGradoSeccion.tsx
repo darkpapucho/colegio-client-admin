@@ -102,7 +102,7 @@ export default function PensionesByGradoSeccion() {
   }
   function checkBoxListener(e: CustomEvent) {
     const { name, value } = e.detail;
-    console.log({ name, value });
+
     if (name == 'all') {
       setAllGrades(value);
     }
