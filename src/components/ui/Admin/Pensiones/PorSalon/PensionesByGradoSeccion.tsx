@@ -13,6 +13,8 @@ import { AMatriculado } from '../../../../../types/alumno';
 import PensionesGradoSeccionTable from './components/PensionesGradoSeccionTable';
 import Loader from '../../../Loader/Loader';
 import EstadosMatriculaBox from '../../../../shared/EstadosMatriculaBox';
+import CheckBox from '../../../../shared/CheckBox';
+import useCustomEvent from '../../../../../hooks/useCustomEvent';
 
 export const PensionesByGradoSeccionContext = createContext<{
   setData: React.Dispatch<
@@ -29,10 +31,13 @@ export const PensionesByGradoSeccionContext = createContext<{
 
 export default function PensionesByGradoSeccion() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
+  const año = useTypedSelector((state) => state.año);
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
   const [data, setData] = useState<{ alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[]>([]);
-
+  const [allGrades, setAllGrades] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+
+  useCustomEvent('customCheckbox', checkBoxListener);
   return (
     <PensionesByGradoSeccionContext.Provider value={{ setData }}>
       {loading && <Loader />}
@@ -47,6 +52,9 @@ export default function PensionesByGradoSeccion() {
           <Button $primary $width="max-content" onClick={downloadPDF}>
             Descargar PDF
           </Button>
+          <Container $width="45px" $border="1px solid gray" $padding="0 6px">
+            <CheckBox initialState={allGrades} width="45px" label="All" name="all" />
+          </Container>
         </Container>
         {data && data.length > 0 && <PensionesGradoSeccionTable data={data} />}
       </Container>
@@ -72,18 +80,31 @@ export default function PensionesByGradoSeccion() {
   }
   async function downloadPDF() {
     try {
-      if (!grado || !seccion) throw new Error('missing grado / sección');
-      const response = await Pensiones.downloadPensionesTableGradoSeccionPDF({ grado, seccion });
+      //si no hay allGrades -> si debe haber grado y seccion
+      //si hay AllGrades -> grado y seccion ya no importan
+      // !p->(q & r)     p->!q
+
+      if (!allGrades && (!grado || !seccion)) {
+        throw new Error('missing grado / sección');
+      }
+      const response = await Pensiones.downloadPensionesTableGradoSeccionPDF({ grado, seccion, allGrades });
       updateToken(response);
       const blob = new Blob([response.data]);
       const url = URL.createObjectURL(blob);
       const alink = document.createElement('a');
       alink.href = url;
-      alink.download = `pensiones-${grado}-${seccion}.pdf`;
+      alink.download = !allGrades && grado && seccion ? `pensiones-${grado}-${seccion}-${año}.pdf` : `pensiones-${nivel}-${año}.pdf`;
       alink.click();
       alink.remove();
     } catch (err) {
       errorHandler(err);
+    }
+  }
+  function checkBoxListener(e: CustomEvent) {
+    const { name, value } = e.detail;
+    console.log({ name, value });
+    if (name == 'all') {
+      setAllGrades(value);
     }
   }
 }
