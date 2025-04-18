@@ -46,10 +46,10 @@ export default function PensionesByGradoSeccion() {
         <Container $direction="row" $width="max-content" $gap=".5rem">
           <Select tiny options={grados[nivel]} label="grado" name="grado" width={`${nivel === 'inicial' ? '12rem' : '9rem'}`}></Select>
           <Select tiny options={SECCIONES_SELECT_OPTIONS} label="sección" name="seccion" width="7.5rem"></Select>
-          <Button $primary $width="max-content" onClick={fetchList}>
+          <Button $primary $width="max-content" onClick={fetchList} disabled={loading}>
             Buscar
           </Button>
-          <Button $primary $width="max-content" onClick={downloadPDF}>
+          <Button $primary $width="max-content" onClick={downloadPDF} disabled={loading}>
             Descargar PDF
           </Button>
           <Container $width="45px" $border="1px solid gray" $padding="0 6px">
@@ -80,9 +80,7 @@ export default function PensionesByGradoSeccion() {
   }
   async function downloadPDF() {
     try {
-      //si no hay allGrades -> si debe haber grado y seccion
-      //si hay AllGrades -> grado y seccion ya no importan
-      // !p->(q & r)     p->!q
+      setLoading(true);
 
       if (!allGrades && (!grado || !seccion)) {
         throw new Error('missing grado / sección');
@@ -98,6 +96,8 @@ export default function PensionesByGradoSeccion() {
       alink.remove();
     } catch (err) {
       errorHandler(err);
+    } finally {
+      setLoading(false);
     }
   }
   function checkBoxListener(e: CustomEvent) {

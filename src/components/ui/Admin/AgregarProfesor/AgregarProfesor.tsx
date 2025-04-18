@@ -30,7 +30,7 @@ export default function AgregarProfesor() {
     return curr.order > prev.order ? -1 : 1;
   });
   const SALONES_OPTIONS = SALONES_SELECT_OPTONS[nivel].filter((option) => {
-    return !salonesSorted.some((salon) => salon.label === option.label);
+    return !salonesSorted.some((salon) => salon.label === option.value); //18-04-2025 changed option.label for option.value
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function AgregarProfesor() {
   const dniRef = useRef<HTMLInputElement | null>(null);
   const telefonoRef = useRef<HTMLInputElement | null>(null);
   const correoRef = useRef<HTMLInputElement | null>(null);
-  useCustomEvent('customSelect', listener);
+  useCustomEvent('customSelect', selectListener);
   useCustomEvent('customCheckbox', checkboxListener);
   return (
     <SimpleLayout title="Agregar nuevo profesor">
@@ -74,7 +74,7 @@ export default function AgregarProfesor() {
       </Container>
     </SimpleLayout>
   );
-  function listener(event: CustomEvent) {
+  function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;
     if (name === 'addCurso') {
       dispatch({ type: 'addCursoToSalon', payload: value });
