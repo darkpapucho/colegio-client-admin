@@ -44,4 +44,7 @@ export enum ApiEndPoints {
   DELETE_ANOTACION_RELEVANTE = '/anotaciones-relevantes/eliminar-anotacion-relevante-by-alumno-id',
   NUEVO_PAGO_YAPE = '/pagos/nuevo-pago-yape',
   DOWNLOAD_PENSION_TABLE_GRADO_SECCION_PDF = '/pensiones/download-pension-table-grado-seccion-pdf',
+  FETCH_ANUNCIOS_GENERALES = '/announcements/fetch-announcements',
+  ADD_NUEVO_ANUNCIO_GENERAL = '/announcements/add-announcement',
+  DELETE_ANUNCIO_GENERAL = '/announcements/delete-announcement',
 }

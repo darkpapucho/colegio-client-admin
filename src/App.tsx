@@ -31,6 +31,7 @@ import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/
 import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/Consultas/RecordPensionesByDateRange';
 import ResumenTardanzas from './components/ui/Admin/AsistenciasAlumnos/ResumenTardanzas/ResumenTardanzas';
 import Yape from './components/ui/Admin/Yape/Yape';
+import Anuncios from './components/ui/Admin/Anuncios/Anuncios';
 
 function App() {
   const navigate = useNavigate();
@@ -74,6 +75,7 @@ function App() {
             </Route>
             <Route path="admin/pagos" element={<Yape />} />
             <Route path="admin/alumnos" element={<Alumnos />} />
+            <Route path="admin/anuncios" element={<Anuncios />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

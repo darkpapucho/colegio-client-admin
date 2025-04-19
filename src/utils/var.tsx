@@ -10,6 +10,7 @@ import { API_BASE_URL } from '../var/globals';
 import { CursoMap } from '../types/documento';
 import { PiListChecksBold } from 'react-icons/pi';
 import { BiMoneyWithdraw } from 'react-icons/bi';
+import { GrAnnounce } from 'react-icons/gr';
 
 export const baseUrl = API_BASE_URL;
 
@@ -125,6 +126,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <BiMoneyWithdraw />,
       label: 'Pensiones',
       url: '/menu/admin/pensiones',
+    },
+    {
+      icon: <GrAnnounce />,
+      label: 'Anuncios',
+      url: '/menu/admin/anuncios',
     },
     {
       icon: <BiMoneyWithdraw />,

@@ -19,6 +19,8 @@ const ModalContainer = styled.div`
   left: 0;
   right: 0;
   transform-origin: top;
+  touch-action: none;
+  user-select: none;
 `;
 const StyledModal = styled.div<{ $width: string; $marginTop?: string }>`
   transform-origin: top;
