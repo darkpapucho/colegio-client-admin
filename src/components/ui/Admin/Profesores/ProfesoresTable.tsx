@@ -12,6 +12,7 @@ import { queryClient } from '../../../../config/query/query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { fetchProfesores } from './utils';
 import toaster from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 export default function ProfesoresTable({ data }: { data: Profesor[] }) {
   const nivel = useTypedSelector((state) => state.nivel);
@@ -19,9 +20,8 @@ export default function ProfesoresTable({ data }: { data: Profesor[] }) {
   const { setShowModal, dispatch } = useContext(ProfesoresContext)!;
 
   return (
-    <Table gridTemplateColumns="15rem 15rem 7rem 5rem 5rem" width="fit-content">
+    <Table gridTemplateColumns="22rem 8rem 4rem 4rem" width="fit-content">
       <Table.Header>
-        <Table.Header.Item $padding="4px">APELLIDOS</Table.Header.Item>
         <Table.Header.Item>NOMBRES</Table.Header.Item>
         <Table.Header.Item>DNI</Table.Header.Item>
         <Table.Header.Item>DET.</Table.Header.Item>
@@ -31,11 +31,8 @@ export default function ProfesoresTable({ data }: { data: Profesor[] }) {
         {data.map((profesor, i) => {
           return (
             <Fragment key={profesor._id}>
-              <Table.Body.Item $padding="6px" $key={i}>
-                {profesor.apellidos}
-              </Table.Body.Item>
-              <Table.Body.Item $padding="6px" $key={i}>
-                {profesor.nombres}
+              <Table.Body.Item $padding="6px" $key={i} $align="left">
+                <Link to={`/menu/admin/gestionarprofesores/${profesor._id}`}>{profesor.apellidos + ' ' + profesor.nombres}</Link>
               </Table.Body.Item>
               <Table.Body.Item $padding="6px" $key={i}>
                 {profesor.dni}

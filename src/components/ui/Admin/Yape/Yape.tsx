@@ -6,7 +6,7 @@ import { MP_PUBLIC_KEY } from '../../../../var/globals';
 import Pagos from '../../../../models/Pagos';
 import { updateToken } from '../../../../utils/utils';
 // const mercadoPagoBaseUrl = 'https://api.mercadopago.com';
-console.log({ MP_PUBLIC_KEY });
+
 declare global {
   interface Window {
     MercadoPago: any;
@@ -27,7 +27,13 @@ export default function Yape() {
       <div>
         <div>
           <label htmlFor="payerPhone">Phone Number</label>
-          <input id="form-checkout__payerPhone" name="payerPhone" type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.currentTarget.value)} />
+          <input
+            id="form-checkout__payerPhone"
+            name="payerPhone"
+            type="text"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.currentTarget.value)}
+          />
         </div>
         <div>
           <label htmlFor="payerOTP">OTP</label>
@@ -55,11 +61,10 @@ export default function Yape() {
       setLoading(true);
       const yape = mp.yape(yapeOptions);
       const yapeToken = await yape.create();
-      console.log({ yapeToken });
+
       const response = await Pagos.nuevoPago({ phone: phoneNumber, email: 'cristhiam@gmail.com', token: yapeToken.id, amount });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
-      console.log({ response });
     } catch (err) {
       errorHandler(err);
     } finally {

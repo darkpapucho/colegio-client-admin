@@ -16,6 +16,7 @@ const SideMenuContainer = styled.aside<{ $isVisible: boolean }>`
   display: ${({ $isVisible }) => {
     return $isVisible ? 'flex' : 'none';
   }};
+
   flex-direction: column;
   font-size: ${({ theme }) => theme.fontSizes.tiny};
   text-transform: capitalize;
@@ -27,9 +28,12 @@ const SideMenuContainer = styled.aside<{ $isVisible: boolean }>`
   @media (min-width: ${theme.mediaScreen.small}) {
     display: flex;
     position: relative;
+
     grid-row: 1 / 3;
     grid-column: 2 / 3;
   }
+  top: 0;
+  left: 0;
 `;
 
 const Item = styled(NavLink)<{ $active: boolean }>`

@@ -8,6 +8,7 @@ import { theme } from '../config/styled/styled';
 
 const LayoutContainer = styled.div<{ $headerHeight: string }>`
   display: grid;
+  position: relative;
   grid-template-rows: 100px calc(100vh - 100px);
   grid-template-columns: 1fr repeat(8, minmax(max-content, 200px)) 1fr;
   @media (min-width: ${theme.mediaScreen.small}) {

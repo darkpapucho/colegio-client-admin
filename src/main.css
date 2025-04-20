@@ -18,4 +18,13 @@
     font-family: sans-serif;
     /* color: #333; */
   }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    width: 100%;
+    @container (width>640px) {
+      width: 40%;
+    }
+    max-height: 200px;
+  }
 }

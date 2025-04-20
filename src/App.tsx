@@ -32,6 +32,7 @@ import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/Consulta
 import ResumenTardanzas from './components/ui/Admin/AsistenciasAlumnos/ResumenTardanzas/ResumenTardanzas';
 import Yape from './components/ui/Admin/Yape/Yape';
 import Anuncios from './components/ui/Admin/Anuncios/Anuncios';
+import TeacherPage from './components/ui/Admin/TeacherPage/TeacherPage';
 
 function App() {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ function App() {
       <Route element={<RequireAuth />}>
         <Route path="/menu" element={<Layout />}>
           <Route element={<RequireAdmin />}>
+            <Route path="admin/gestionarprofesores/:teacher" element={<TeacherPage />} />
             <Route path="admin/matricula-alumnos" element={<MatriculaALumnos />}>
               <Route path="matriculados" element={<Matriculados />} />
               <Route path="nueva-matricula" element={<MatriculaNueva />} />
@@ -56,7 +58,7 @@ function App() {
             <Route path="admin/registronotas" element={<RegistroNotas />} />
             <Route path="admin/boletadenotas" element={<BoletaNotas />} />
             <Route path="admin/agregarprofesor" element={<AgregarProfesor />} />
-            <Route path="admin/gestionarprofesores" element={<Profesores />} />
+            <Route path="admin/gestionarprofesores" element={<Profesores />}></Route>
             <Route path="admin/calendario" element={<Calendario />} />
             <Route path="admin/calendario/enable-days" element={<EnableDays />} />
             <Route path="admin/calendario/display-calendar" element={<DisplayCalendar />} />

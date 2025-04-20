@@ -1,4 +1,11 @@
 import { SalonProfesor } from '../components/shared/Profesor/types';
+import { AnuncioProfesor } from './anuncios';
+export type HorarioCell = {
+  curso: string;
+  salon: string;
+  startTime: string;
+  endTime: string;
+};
 
 export type Profesor = {
   nombres: string;
@@ -10,4 +17,6 @@ export type Profesor = {
   rol: 'profesor';
   userId: string;
   _id: string;
+  anuncios: AnuncioProfesor[];
+  horario: HorarioCell[];
 };

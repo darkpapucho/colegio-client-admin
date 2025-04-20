@@ -8,8 +8,8 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react-hooks/exhaustive-deps': 'off', // empty array in useEffect and others
-    'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-locals': 'warn',
   },
 };

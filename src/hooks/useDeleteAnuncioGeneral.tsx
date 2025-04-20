@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { errorHandler } from '../utils/errorHandler';
 import toast from 'react-hot-toast';
 
-export default function useDeleteAnuncioGeneral(anuncioId: string) {
+export default function useDeleteAnuncioGeneral() {
   const nivel = useTypedSelector((state) => state.nivel)!;
   const año = useTypedSelector((state) => state.año)!;
   const { mutate, isLoading, error } = useMutation({

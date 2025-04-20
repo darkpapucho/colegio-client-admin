@@ -46,7 +46,7 @@ const RightContainer = styled.div`
 `;
 export default function Anuncios() {
   const { data, isFetching } = useFetchAnuncios();
-  console.log({ data });
+
   return (
     <>
       {isFetching && <Loader />}

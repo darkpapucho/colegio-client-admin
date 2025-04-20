@@ -5,7 +5,7 @@ import useDeleteAnuncioGeneral from '../../hooks/useDeleteAnuncioGeneral';
 import Loader from '../ui/Loader/Loader';
 
 export default function AnuncioGeneralCard({ anuncio }: { anuncio: AnuncioGeneral }) {
-  const { isLoading, mutate } = useDeleteAnuncioGeneral(anuncio._id);
+  const { isLoading, mutate } = useDeleteAnuncioGeneral();
   return (
     <>
       {isLoading && <Loader />}

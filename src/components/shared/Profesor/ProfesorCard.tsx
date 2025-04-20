@@ -41,66 +41,86 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   useCustomEvent('customSelect', listener);
   useCustomEvent('customCheckbox', checkboxListener);
   return (
-    <Container $width="100%" $gap="1.5rem" $direction="column">
-      <Container $direction="row" $gap="1.5rem" $width="100%">
-        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
+    <div className="@container flex flex-col gap-4 w-full">
+      <Container $direction="column" $gap="1.5rem" $width="100%">
+        {/* <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem"> */}
+        <div className="flex w-full items-center border-1 border-black px-[1rem]">
           <Text $bold $fontSize="small">
             Apellidos:
           </Text>
           <StyledInput $grow defaultValue={profesor.apellidos} disabled={locks.apellidos} ref={apellidosRef} />
           <Icon $primary $small $pointer>
-            {locks.apellidos ? <CiEdit onClick={() => setLocks((old) => ({ ...old, apellidos: false }))} /> : <FiSave onClick={() => updateProfesorData('apellidos')} />}
+            {locks.apellidos ? (
+              <CiEdit onClick={() => setLocks((old) => ({ ...old, apellidos: false }))} />
+            ) : (
+              <FiSave onClick={() => updateProfesorData('apellidos')} />
+            )}
           </Icon>
-        </Container>
+        </div>
+        {/* </Container> */}
 
-        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
+        <div className="flex w-full items-center border-1 border-black px-[1rem]">
           <Text $bold $fontSize="small">
             Nombres:
           </Text>
           <StyledInput $grow defaultValue={profesor.nombres} disabled={locks.nombres} ref={nombresRef} />
           <Icon $primary $small $pointer>
-            {locks.nombres ? <CiEdit onClick={() => setLocks((old) => ({ ...old, nombres: false }))} /> : <FiSave onClick={() => updateProfesorData('nombres')} />}
+            {locks.nombres ? (
+              <CiEdit onClick={() => setLocks((old) => ({ ...old, nombres: false }))} />
+            ) : (
+              <FiSave onClick={() => updateProfesorData('nombres')} />
+            )}
           </Icon>
-        </Container>
-      </Container>
-      <Container $direction="row" $gap="1.5rem" $width="100%">
-        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
+        </div>
+
+        <div className="flex w-full items-center border-1 border-black px-[1rem]">
           <Text $bold $fontSize="small">
             DNI:
           </Text>
           <StyledInput $grow defaultValue={profesor.dni} disabled={locks.dni} ref={dniRef} />
           <Icon $primary $small $pointer>
-            {locks.dni ? <CiEdit onClick={() => setLocks((old) => ({ ...old, dni: false }))} /> : <FiSave onClick={() => updateProfesorData('dni')} />}
+            {locks.dni ? (
+              <CiEdit onClick={() => setLocks((old) => ({ ...old, dni: false }))} />
+            ) : (
+              <FiSave onClick={() => updateProfesorData('dni')} />
+            )}
           </Icon>
-        </Container>
-        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
+        </div>
+        <div className="flex w-full items-center border-1 border-black px-[1rem]">
           <Text $bold $fontSize="small">
             Teléfono:
           </Text>
           <StyledInput $grow defaultValue={profesor.telefono ? profesor.telefono : ''} disabled={locks.telefono} ref={telefonoRef} />
           <Icon $primary $small $pointer>
-            {locks.telefono ? <CiEdit onClick={() => setLocks((old) => ({ ...old, telefono: false }))} /> : <FiSave onClick={() => updateProfesorData('telefono')} />}
+            {locks.telefono ? (
+              <CiEdit onClick={() => setLocks((old) => ({ ...old, telefono: false }))} />
+            ) : (
+              <FiSave onClick={() => updateProfesorData('telefono')} />
+            )}
           </Icon>
-        </Container>
-      </Container>
-      <Container $direction="row" $gap="1.5rem" $width="100%">
-        <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem">
+        </div>
+        <div className="flex w-full items-center border-1 border-black px-[1rem]">
           <Text $bold $fontSize="small">
             Correo:
           </Text>
           <StyledInput $grow defaultValue={profesor.correo} disabled={locks.correo} ref={correoRef} />
           <Icon $primary $small $pointer>
-            {locks.correo ? <CiEdit onClick={() => setLocks((old) => ({ ...old, correo: false }))} /> : <FiSave onClick={() => updateProfesorData('correo')} />}
+            {locks.correo ? (
+              <CiEdit onClick={() => setLocks((old) => ({ ...old, correo: false }))} />
+            ) : (
+              <FiSave onClick={() => updateProfesorData('correo')} />
+            )}
           </Icon>
-        </Container>
+        </div>
       </Container>
+
       <Container $direction="row" $gap="1rem" $width="100%">
         <Text $bold $fontSize="medium">
           {profesor.salones.length} {profesor.salones.length !== 1 ? ' salones:' : ' salón:'}
         </Text>
         <Select options={SALONES_SELECT_OPTONS[nivel]} label="--agregar salón--" name="addSalon" width="15rem" tiny></Select>
       </Container>
-      <Container $gap=".4rem" $direction="column">
+      <Container $gap=".4rem" $direction="column" $width="100%">
         {salonesSorted.map((salon) => {
           return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
         })}
@@ -109,14 +129,19 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
         <Button disabled={isLoading} $primary $small $width="max-content" onClick={() => guardarCambiosProfesor(profesor)}>
           Guardar Cambios
         </Button>
-        <Button disabled={isLoading} $secondary $small $width="max-content" onClick={() => resetProfesorPassword({ dni: profesor.dni, userId: profesor.userId })}>
+        <Button
+          disabled={isLoading}
+          $secondary
+          $small
+          $width="max-content"
+          onClick={() => resetProfesorPassword({ dni: profesor.dni, userId: profesor.userId })}>
           Reset Password
         </Button>
         <Button disabled={isLoading} $danger $small $width="max-content" onClick={closeModal}>
           Cancelar
         </Button>
       </Container>
-    </Container>
+    </div>
   );
   function listener(event: CustomEvent) {
     const { name, value } = event.detail;

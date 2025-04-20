@@ -31,21 +31,24 @@ export default function SalonCard({
     return !salon.cursos.some((curso) => curso.key === option.value.cursoKey);
   });
   return (
-    <Container $direction="row" $gap="1.5rem" $width="max-content" key={salon.label} $alignItems="center" $justifyContent="center" $border="1px solid black" $height="26px">
-      <Container $direction="row" $width="max-content" $padding="0 5px" $justifyContent="center" $gap="5px" $bgColor={theme.colors.tertiary[400]}>
-        <DisplayHoverMessage
-          width="1.5rem"
-          message={`Eliminar ${salon.label}`}
-          label={
-            <Icon $primary $pointer onClick={() => deleteSalon(salon.label)}>
-              <FaRegTrashAlt />
-            </Icon>
-          }
-        />
-        <CheckBox initialState={salon.tutor} width="5.5rem" label="Tutor" name={salon.label} />
-        <Text key={salon.label} $textAlign="right" $bold $width={nivel === 'primaria' ? '8rem' : '10rem'}>
-          {salon.label + ': '}
-        </Text>
+    <Container $direction="column" $gap="4px" $width="100%" key={salon.label} $border="1px solid black">
+      <Container $direction="row" $width="100%" $justifyContent="space-between" $bgColor={theme.colors.tertiary[400]}>
+        <div className="flex gap-4 items-center">
+          <DisplayHoverMessage
+            width="1.5rem"
+            message={`Eliminar ${salon.label}`}
+            label={
+              <Icon $primary $pointer onClick={() => deleteSalon(salon.label)}>
+                <FaRegTrashAlt fontSize={'14px'} />
+              </Icon>
+            }
+          />
+          <CheckBox initialState={salon.tutor} width="4rem" label="Tutor" name={salon.label} />
+          <Text key={salon.label} $textAlign="right" $bold $width={nivel === 'primaria' ? '8rem' : '10rem'}>
+            {salon.label + ': '}
+          </Text>
+        </div>
+        <Select width="22rem" options={CURSOS_OPTIONS_DYNAMIC} label="--agregar curso--" name="addCurso" tiny></Select>
       </Container>
 
       <Container $direction="row" $gap="2px" $justifyContent="start" $width="max-content">
@@ -53,7 +56,6 @@ export default function SalonCard({
           return <CursoCard curso={curso} salonLabel={salon.label} deleteCurso={deleteCurso} key={id} />;
         })}
       </Container>
-      <Select width="22rem" options={CURSOS_OPTIONS_DYNAMIC} label="--agregar curso--" name="addCurso" tiny></Select>
     </Container>
   );
   //   function deleteSalon(salonLabel: string) {

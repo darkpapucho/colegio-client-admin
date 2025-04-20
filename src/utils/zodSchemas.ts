@@ -21,7 +21,7 @@ function zodErrorHandler({ issue, ctx }: { issue: ZodIssueOptionalMessage; ctx: 
     code,
     path: [field],
   } = issue;
-  console.log({ issue, ctx });
+
   if (data === '') return `${mapFieldNames[field]} no puede ser un campo vacío.`;
   switch (code) {
     case 'too_small':
