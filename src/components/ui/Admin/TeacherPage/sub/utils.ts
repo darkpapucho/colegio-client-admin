@@ -115,9 +115,10 @@ export function parseHorarioProfesor(horario: HorarioCell[]) {
 
   horas.forEach((element) => {
     const hora = Math.floor(element); //entero
-    const minutos = Math.round(element - hora); //entero
+    const minutos = Math.round((element - hora) * 100); //entero
     const lunes = horario.find((record) => {
       const recordDate = new Date(record.startTime);
+
       const recordDay = recordDate.getDate(); // 1,2,3,4,5
       const recordHora = recordDate.getHours();
       const recordMinutos = recordDate.getMinutes();
@@ -126,6 +127,7 @@ export function parseHorarioProfesor(horario: HorarioCell[]) {
     });
     const martes = horario.find((record) => {
       const recordDate = new Date(record.startTime);
+
       const recordDay = recordDate.getDate(); // 1,2,3,4,5
       const recordHora = recordDate.getHours();
       const recordMinutos = recordDate.getMinutes();
@@ -133,6 +135,7 @@ export function parseHorarioProfesor(horario: HorarioCell[]) {
     });
     const miercoles = horario.find((record) => {
       const recordDate = new Date(record.startTime);
+
       const recordDay = recordDate.getDate(); // 1,2,3,4,5
       const recordHora = recordDate.getHours();
       const recordMinutos = recordDate.getMinutes();

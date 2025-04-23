@@ -4,8 +4,9 @@ import Table from '../../../Table/Table';
 import { parseCursoToDisplayCalendarCurso, parseHorarioProfesor, parseHoraToDisplay, parseSalonToDisplayCalendarSalon } from './utils';
 
 export default function HorarioProfesor({ horario }: { horario: HorarioCell[] }) {
+  console.log({ horario });
   const parsedData = parseHorarioProfesor(horario);
-
+  console.log({ parsedData });
   return (
     <Table gridTemplateColumns="6rem repeat(5, minmax(6rem, 18rem))" width="fit-content" withBorder>
       <Table.Header>
