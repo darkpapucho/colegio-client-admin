@@ -149,7 +149,7 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
     { label: 'profesor3', url: 'admin', icon: <HiAcademicCap /> },
   ],
 };
-
+//mapa de los cursos de ambos niveles para los registros de notas
 export const CURSOS_MAP: CursoMap[] = [
   { key: 'matematica', label: 'Matemática', code: 'MA' },
   { key: 'cienciaTecnologia', label: 'Ciencia y Tecnología', code: 'CT' },
@@ -161,6 +161,7 @@ export const CURSOS_MAP: CursoMap[] = [
   { key: 'religion', label: 'Religión', code: 'RE' },
   { key: 'psicomotriz', label: 'Psicomotriz', code: 'PZ' },
   { key: 'competenciasTransversales', label: 'Competencias Transversales', code: 'CX' },
+  { key: 'computacion', label: 'Computación', code: 'CP' },
 ];
 export const CURSOS_CODES_MAP = {
   matematica: 'MA',
@@ -173,6 +174,7 @@ export const CURSOS_CODES_MAP = {
   religion: 'RE',
   psicomotriz: 'PZ',
   competenciasTransversales: 'CX',
+  computacion: 'CP',
 };
 export const NOTAS_OPTIONS = [
   { label: 'A', value: 'A' },

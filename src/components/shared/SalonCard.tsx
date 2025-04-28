@@ -30,6 +30,7 @@ export default function SalonCard({
   const CURSOS_OPTIONS_DYNAMIC = CURSOS_OPTIONS.filter((option) => {
     return !salon.cursos.some((curso) => curso.key === option.value.cursoKey);
   });
+
   return (
     <Container $direction="column" $gap="4px" $width="100%" key={salon.label} $border="1px solid black">
       <Container $direction="row" $width="100%" $justifyContent="space-between" $bgColor={theme.colors.tertiary[400]}>

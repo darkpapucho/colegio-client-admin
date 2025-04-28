@@ -33,7 +33,7 @@ export default function RegistroNotas() {
   const cursosMap: CursoMap[] | undefined = mapCursosList(data ? data[0] : data); //creamos un mapa de cursos a partir de la cursos que vienen del backend
   const [isLoading, setIsLoading] = useState(false);
   const registroFiltered = useEstadoMatriculaFilter<RegistroNota>({ records: data });
-
+  console.log({ cursosMap, registroFiltered });
   useCustomEvent('customSelect', listener);
 
   useEffect(() => {
@@ -64,7 +64,10 @@ export default function RegistroNotas() {
               label="periodo"
               options={PERIODOS_SELECT_OPTIONS}
               width="14rem"
-              defaultValue={{ label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : 'primerPeriodo'), value: currentPeriodo ? currentPeriodo : 'primerPeriodo' }}
+              defaultValue={{
+                label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : 'primerPeriodo'),
+                value: currentPeriodo ? currentPeriodo : 'primerPeriodo',
+              }}
             />
           </Container>
         </Container>
@@ -76,6 +79,7 @@ export default function RegistroNotas() {
     try {
       setIsLoading(true);
       const registroNotas = await fetchRegistroNotas({ grado, seccion });
+      console.log({ registroNotas });
       if (!registroNotas || registroNotas.length === 0) {
         toaster.error('LISTA VACÍA');
       }
