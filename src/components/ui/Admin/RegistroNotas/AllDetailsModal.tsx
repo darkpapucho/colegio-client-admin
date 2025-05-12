@@ -6,7 +6,7 @@ import { Container } from '../../../shared/Container';
 import { getCursosInfo } from '../../../../utils/utils';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
-import { Nivel } from '../../../../types/enums';
+import { Grado, Nivel } from '../../../../types/enums';
 import DisplayHoverMessage from '../../../shared/DisplayHoverMessage';
 import styled from 'styled-components';
 
@@ -52,7 +52,7 @@ export default function AllDetailsModal({
   const { grado } = useGradoSeccionSearchParams();
   function mapGridTemplateCols(cursosList: CursoMap[]): string {
     const template = cursosList.reduce((acc, curr) => {
-      const length = getCursosInfo({ nivel, grado }).find((curso) => curso.key === curr.key)?.competencias.length;
+      const length = getCursosInfo({ nivel, grado: grado as Grado }).find((curso) => curso.key === curr.key)?.competencias.length;
       if (curr.key === 'competenciasTransversales') {
         return (acc = acc + '110px ');
       }
@@ -80,14 +80,17 @@ export default function AllDetailsModal({
                   </Container>
 
                   <CompTransCont>
-                    {getCursosInfo({ nivel, grado })
+                    {getCursosInfo({ nivel, grado: grado as Grado })
                       .find((cursoInfo) => cursoInfo.key === curso.key)
                       ?.competencias.map((competencia, index) => (
                         <DisplayHoverMessage
                           key={index}
                           label={index + 1}
                           message={competencia}
-                          width={`${100 / getCursosInfo({ nivel, grado }).find((cursoInfo) => cursoInfo.key === curso.key)!.competencias.length}%`}
+                          width={`${
+                            100 /
+                            getCursosInfo({ nivel, grado: grado as Grado }).find((cursoInfo) => cursoInfo.key === curso.key)!.competencias.length
+                          }%`}
                         />
                       ))}
                   </CompTransCont>

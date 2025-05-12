@@ -21,7 +21,7 @@ export default function RatificacionControls({
   const fechaMatriculaRef = useRef<HTMLInputElement | null>(null);
   const { grado, seccion } = useGradoSeccionSearchParams();
   const { isLoading, mutate, error } = useMutation({
-    mutationFn: () => handleRatificarMatricula({ alumnos: selectedAlumnos, grado, fechaMatricula: fechaMatriculaRef.current!.value }),
+    mutationFn: () => handleRatificarMatricula({ alumnos: selectedAlumnos, grado: grado as Grado, fechaMatricula: fechaMatriculaRef.current!.value }),
     mutationKey: ['ratificar-list', grado],
     onSuccess: () => {
       queryClient.invalidateQueries(['ratificar-list', grado]);

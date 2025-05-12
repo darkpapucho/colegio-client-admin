@@ -17,7 +17,7 @@ import { updateToken } from '../../../../utils/utils';
 import Loader from '../../Loader/Loader';
 import AsistenciaTable from './SubComponents/AsistenciaTable';
 import { useQuery } from '@tanstack/react-query';
-import { EstadoMatricula, Nivel } from '../../../../types/enums';
+import { EstadoMatricula, Grado, Nivel, Seccion } from '../../../../types/enums';
 import Documento from '../../../../models/Documento';
 import { theme } from '../../../../config/styled/styled';
 import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
@@ -34,7 +34,7 @@ export default function RegistroAsistenciaAlumnos() {
   const { currentPeriodo, isLoading } = useFetchCurrentPeriodo();
   const { data, isFetching, error, refetch } = useQuery({
     queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')],
-    queryFn: () => requestRecords({ grado, seccion, searchParams }),
+    queryFn: () => requestRecords({ grado: grado as Grado, seccion: seccion as Seccion, searchParams }),
     enabled: false,
     refetchOnWindowFocus: false,
     retry: false,
@@ -69,10 +69,19 @@ export default function RegistroAsistenciaAlumnos() {
           <Container $padding="2rem 0" $height="max-content" $direction="column" $gap="1rem">
             <Container $direction="row" $gap="0.5rem">
               <Container $direction="column" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[200]} $padding="0.5rem">
-                <Container $direction="row" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[100]} $padding="0.5rem" $alignItems="center">
+                <Container
+                  $direction="row"
+                  $gap="0.5rem"
+                  $border="1px solid black"
+                  $bgColor={theme.colors.secondary[100]}
+                  $padding="0.5rem"
+                  $alignItems="center">
                   <Select
                     key={currentPeriodo}
-                    defaultValue={{ label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : ('primerPeriodo' as PeriodosKey)), value: currentPeriodo || 'primerPeriodo' }}
+                    defaultValue={{
+                      label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : ('primerPeriodo' as PeriodosKey)),
+                      value: currentPeriodo || 'primerPeriodo',
+                    }}
                     options={PERIODOS_SELECT_OPTIONS}
                     width="13rem"
                     name="periodo"
@@ -141,8 +150,8 @@ export default function RegistroAsistenciaAlumnos() {
 
       const response = await Documento.generateAttendanceListPDF({
         estadosMatricula: estadosMatricula.split('-') as EstadoMatricula[],
-        grado,
-        seccion,
+        grado: grado as Grado,
+        seccion: seccion as Seccion,
         periodo,
         withData: withData === 'true' ? true : false,
       });

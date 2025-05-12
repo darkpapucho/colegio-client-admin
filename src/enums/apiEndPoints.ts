@@ -47,4 +47,6 @@ export enum ApiEndPoints {
   FETCH_ANUNCIOS_GENERALES = '/announcements/fetch-announcements',
   ADD_NUEVO_ANUNCIO_GENERAL = '/announcements/add-announcement',
   DELETE_ANUNCIO_GENERAL = '/announcements/delete-announcement',
+  GET_CURSOS_BY_SALON = '/cursos/get-cursos-salon',
+  UPDATE_CURSOS_BY_SALON = '/cursos/update-cursos-salon',
 }

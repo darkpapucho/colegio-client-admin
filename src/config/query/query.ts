@@ -28,6 +28,7 @@ export enum QueryKeys {
   BuscarAlumnos = 'buscar-alumnos',
   Matriculados = 'matriculados',
   RegistroNotas = 'registro-notas',
+  CursosSalon = 'cursos-salon',
 }
 queryClient.setMutationDefaults([MutationKeys.MatricularNuevoAlumno], {
   mutationFn: (nuevoAlumno: NuevoAlumno) => handleMatricularNuevoAlumno(nuevoAlumno),

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import Calendario from '../../../../../models/Calendario';
-import { MONTH_NAME } from '../../../../../types/enums';
+import { Grado, MONTH_NAME, Seccion } from '../../../../../types/enums';
 import { errorHandler } from '../../../../../utils/errorHandler';
 import { updateToken } from '../../../../../utils/utils';
 import { Container } from '../../../../shared/Container';
@@ -106,7 +106,10 @@ export default function MonthBody({
       toaster.success('Se justificó la falta exitosamente');
       //invalidamos la data antigua del query
       queryClient.invalidateQueries({ queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')] });
-      queryClient.prefetchQuery({ queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')], queryFn: () => requestRecords({ grado, seccion, searchParams }) });
+      queryClient.prefetchQuery({
+        queryKey: ['asistencia-list', grado, seccion, searchParams.get('periodo')],
+        queryFn: () => requestRecords({ grado: grado as Grado, seccion: seccion as Seccion, searchParams }),
+      });
     } catch (err) {
       errorHandler(err);
     }

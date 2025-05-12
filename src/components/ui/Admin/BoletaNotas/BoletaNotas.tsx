@@ -18,7 +18,7 @@ import { useImmerReducer } from 'use-immer';
 import { BoletaNotasReducer } from './reducer';
 import { onCloseModal, requestBoletasSalon, requestSingleBoleta } from './utils';
 import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
-import { EstadoMatricula } from '../../../../types/enums';
+import { EstadoMatricula, Grado, Seccion } from '../../../../types/enums';
 import { useEffect, useState } from 'react';
 import { Title } from '../../../shared/Title';
 
@@ -64,12 +64,28 @@ export default function BoletaNotas() {
           </Button>
         </SelectedAlumnoModal>
       )}
-      <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
+      <Container
+        $alignItems="center"
+        $direction="row"
+        $gap="1rem"
+        $padding="0.5rem"
+        $bgColor={theme.colors.secondary[200]}
+        $width="max-content"
+        $height="44px">
         <Select name="modo" defaultValue={OPTIONS[0]} options={OPTIONS} width="11rem" tiny label="modo"></Select>
-        {showEstadosMatriculaBox && <Select name="formato" defaultValue={zippedOptions[0]} options={zippedOptions} width="11rem" tiny label="formato"></Select>}
+        {showEstadosMatriculaBox && (
+          <Select name="formato" defaultValue={zippedOptions[0]} options={zippedOptions} width="11rem" tiny label="formato"></Select>
+        )}
       </Container>
       {showEstadosMatriculaBox && (
-        <Container $alignItems="center" $direction="row" $gap="1rem" $padding="0.5rem" $bgColor={theme.colors.secondary[200]} $width="max-content" $height="44px">
+        <Container
+          $alignItems="center"
+          $direction="row"
+          $gap="1rem"
+          $padding="0.5rem"
+          $bgColor={theme.colors.secondary[200]}
+          $width="max-content"
+          $height="44px">
           <EstadosMatriculaBox setSearchParams={setSearchParams} />
         </Container>
       )}
@@ -82,8 +98,8 @@ export default function BoletaNotas() {
             requestBoletasSalon({
               zipped: searchParams.get('formato') === 'zipped' ? true : false,
               dispatch,
-              grado,
-              seccion,
+              grado: grado as Grado,
+              seccion: seccion as Seccion,
               estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[],
             })
           }

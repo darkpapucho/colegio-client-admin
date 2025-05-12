@@ -18,7 +18,11 @@ export default class Calendario {
 
   static async fetchAsistenciaListByGradoSeccionDayId({ grado, seccion, month, dayId, estadosMatricula }) {
     const response = await axios.post<
-      ResponseSchema<{ asistenciaList: { nombreCompleto: string; asistencia: AsistenciaValue; alumnoId: string }[]; dayId: string; month: MONTH_NAME }>
+      ResponseSchema<{
+        asistenciaList: { nombreCompleto: string; asistencia: AsistenciaValue; alumnoId: string }[];
+        dayId: string;
+        month: MONTH_NAME;
+      }>
     >(API_BASE_URL + ApiEndPoints.FETCH_ASISTENCIA_LIST_BY_GRADO_SECCION_DAY_ID, { grado, seccion, month, dayId, estadosMatricula }, GetHeaders());
     return response;
   }
@@ -39,7 +43,10 @@ export default class Calendario {
     seccion: Seccion;
   }) {
     const response = await axios.post<
-      ResponseSchema<{ asistencias: { nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[]; availableDays: { month: MONTH_NAME; day: number }[] }>
+      ResponseSchema<{
+        asistencias: { nombreCompleto: string; alumnoId: string; records: AsistenciaRecord[] }[];
+        availableDays: { month: MONTH_NAME; day: number }[];
+      }>
     >(API_BASE_URL + ApiEndPoints.GET_RECORD_ASISTENCIA_ALUMNOS, { grado, seccion, periodo, estadosMatricula }, GetHeaders());
     return response;
   }
@@ -73,11 +80,9 @@ export default class Calendario {
     return response;
   }
   static async fetchTodayTardanzaList({ dayId }: { dayId: string }) {
-    const response = await axios.post<ResponseSchema<{ _id: string; nombreCompleto: string; grado: Grado; seccion: Seccion; records: AsistenciaRecord[] }[]>>(
-      API_BASE_URL + ApiEndPoints.FETCH_TODAY_TARDANZA_LIST,
-      { dayId },
-      GetHeaders(),
-    );
+    const response = await axios.post<
+      ResponseSchema<{ _id: string; nombreCompleto: string; grado: Grado; seccion: Seccion; records: AsistenciaRecord[] }[]>
+    >(API_BASE_URL + ApiEndPoints.FETCH_TODAY_TARDANZA_LIST, { dayId }, GetHeaders());
     return response;
   }
 }

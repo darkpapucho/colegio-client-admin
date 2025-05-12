@@ -33,6 +33,8 @@ import ResumenTardanzas from './components/ui/Admin/AsistenciasAlumnos/ResumenTa
 import Yape from './components/ui/Admin/Yape/Yape';
 import Anuncios from './components/ui/Admin/Anuncios/Anuncios';
 import TeacherPage from './components/ui/Admin/TeacherPage/TeacherPage';
+import RecordNotas from './components/ui/Admin/RecordNotas/RecordNotas';
+import CursosManagment from './components/ui/Admin/CursosManagment/CursosManagment';
 
 function App() {
   const navigate = useNavigate();
@@ -78,6 +80,8 @@ function App() {
             <Route path="admin/pagos" element={<Yape />} />
             <Route path="admin/alumnos" element={<Alumnos />} />
             <Route path="admin/anuncios" element={<Anuncios />} />
+            <Route path="admin/test-notas" element={<RecordNotas />} />
+            <Route path="admin/cursos" element={<CursosManagment />} />
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

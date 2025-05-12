@@ -3,9 +3,10 @@ import { Grado, Seccion } from '../types/enums';
 import useCustomEvent from './useCustomEvent';
 
 export default function useGradoSeccionSearchParams() {
+  //all this hook need to be used is selects with name of grado and seccion
   const [searchParams, setSearchParams] = useSearchParams();
-  const grado = (searchParams.get('grado') as Grado) || '';
-  const seccion = (searchParams.get('seccion') as Seccion) || '';
+  const grado = (searchParams.get('grado') as Grado | undefined) || '';
+  const seccion = (searchParams.get('seccion') as Seccion | undefined) || '';
   // assertGrado(grado);
   // assertSeccion(seccion);
   useCustomEvent('customSelect', listener);
@@ -25,5 +26,5 @@ export default function useGradoSeccionSearchParams() {
     }
   }
 
-  return { searchParams, setSearchParams, grado, seccion };
+  return { searchParams, setSearchParams, grado: grado as Grado | '', seccion: seccion as Seccion | '' };
 }

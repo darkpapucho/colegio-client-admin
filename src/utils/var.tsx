@@ -137,6 +137,16 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       label: 'Pagos Yape',
       url: '/menu/admin/pagos',
     },
+    {
+      icon: <BiMoneyWithdraw />,
+      label: 'TEST NOTAS',
+      url: '/menu/admin/test-notas',
+    },
+    {
+      icon: <BiMoneyWithdraw />,
+      label: 'CURSOS',
+      url: '/menu/admin/cursos',
+    },
   ],
   promotor: [
     { label: 'promotor1', url: 'admin', icon: <HiAcademicCap /> },

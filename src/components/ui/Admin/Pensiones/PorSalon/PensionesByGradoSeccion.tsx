@@ -2,7 +2,7 @@ import { createContext, useState } from 'react';
 import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Pensiones } from '../../../../../models/Pensiones';
-import { EstadoMatricula, Nivel } from '../../../../../types/enums';
+import { EstadoMatricula, Grado, Nivel, Seccion } from '../../../../../types/enums';
 import { errorHandler } from '../../../../../utils/errorHandler';
 import { updateToken } from '../../../../../utils/utils';
 import { grados, SECCIONES_SELECT_OPTIONS } from '../../../../../utils/var';
@@ -85,7 +85,7 @@ export default function PensionesByGradoSeccion() {
       if (!allGrades && (!grado || !seccion)) {
         throw new Error('missing grado / sección');
       }
-      const response = await Pensiones.downloadPensionesTableGradoSeccionPDF({ grado, seccion, allGrades });
+      const response = await Pensiones.downloadPensionesTableGradoSeccionPDF({ grado: grado as Grado, seccion: seccion as Seccion, allGrades });
       updateToken(response);
       const blob = new Blob([response.data]);
       const url = URL.createObjectURL(blob);

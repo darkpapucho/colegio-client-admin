@@ -77,7 +77,7 @@ export default function NuevoAnuncioForm() {
       </FormContainer>
     </>
   );
-  async function addAnuncio({ title, content, userId }: { title: string; content: string; userId }) {
+  async function addAnuncio({ title, content, userId }: { title: string; content: string; userId: string }) {
     // const title = titleRef.current!.value;
     // const content = contentRef.current!.value;
     // const userId = user.data!._id;
