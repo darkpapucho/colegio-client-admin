@@ -63,7 +63,7 @@ export default function CursosManagment() {
       return !isContained;
     });
     setDynamicCursosSelectOptions(newCursosSelectOptions);
-  }, [isFetching, isLoading]);
+  }, [data]);
   return (
     <SimpleLayout title="Cursos por Salón">
       {isFetching || (isLoading && <Loader />)}
@@ -71,7 +71,7 @@ export default function CursosManagment() {
         <Container $direction="row" $gap="1rem" $height="30px" $alignItems="center">
           <Select options={grados[nivel]} width="12rem" label="grado" name="grado" tiny />
           <Select options={secciones} width="9rem" label="sección" name="seccion" tiny />
-          <Button onClick={() => refetch()} $primary $height="auto" disabled={isFetching}>
+          <Button onClick={() => refetch()} $primary $height="auto" disabled={isFetching || isLoading}>
             Fetch
           </Button>
         </Container>
@@ -82,7 +82,7 @@ export default function CursosManagment() {
               <Text $fontSize="medium">{`${grado} ${seccion}`}</Text>
               <Select options={dynamicCursosSelectOptions} width="15rem" label="cursos" name="cursos" tiny />
             </Container>
-            <Button onClick={() => mutate()} $primary $width="12rem">
+            <Button onClick={() => mutate()} $primary $width="12rem" disabled={isFetching || isLoading}>
               Guardar Cambios
             </Button>
             <CursosContainer cursos={cursosSalon} onDelete={deleteCurso} />

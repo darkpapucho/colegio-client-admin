@@ -10,7 +10,7 @@ export default function CursoCard({ curso, onDelete }: { curso: CURSO; onDelete:
       $gap="1rem"
       $alignItems="center"
       $border="1px solid black"
-      $width="14rem"
+      $width="16rem"
       $padding="2px 6px"
       $justifyContent="space-between">
       <p>{curso.label}</p>

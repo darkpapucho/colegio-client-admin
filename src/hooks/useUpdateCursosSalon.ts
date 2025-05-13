@@ -8,7 +8,7 @@ import { queryClient, QueryKeys } from '../config/query/query';
 import { updateToken } from '../utils/utils';
 import { useEffect } from 'react';
 import { errorHandler } from '../utils/errorHandler';
-
+import toaster from 'react-hot-toast';
 export default function useUpdateCursosSalon(cursos: CURSO[] | null) {
   const { grado, seccion } = useGradoSeccionSearchParams();
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
@@ -25,6 +25,7 @@ export default function useUpdateCursosSalon(cursos: CURSO[] | null) {
       //     queryKey: ['cursos', grado, seccion, nivel, year],
       //     queryFn: fetchCursosBySalon.bind(null, grado as Grado, seccion as Seccion),
       //   });
+      toaster.success('cursos actualizados');
     },
   });
   useEffect(() => {

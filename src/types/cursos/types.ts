@@ -19,6 +19,18 @@ export const CURSOS_VALIDOS = [
   { label: 'Biología', key: 'biologia', code: 'BI', short: 'BIOL' },
   { label: 'Química', key: 'quimica', code: 'QI', short: 'QUIM' },
   { label: 'Psicomotriz', key: 'psicomotriz', code: 'PZ', short: 'PSIC' },
+  { label: 'Raz. Verbal', key: 'razVerbal', code: 'RV', short: 'RVER' },
+  { label: 'Raz. Matemático', key: 'razMatematico', code: 'RM', short: 'RMAT' },
+  { label: 'Comp. Linguística', key: 'compLinguistica', code: 'CL', short: 'CLIN' },
+  { label: 'Plan Lector', key: 'planLector', code: 'PL', short: 'PLEC' },
+  { label: 'Ortografía', key: 'ortografia', code: 'OR', short: 'ORTG' },
+  { label: 'Ed. Cívica', key: 'edCivica', code: 'EC', short: 'ECIV' },
+  {
+    label: 'Literatura',
+    key: 'literatura',
+    code: 'LT',
+    short: 'LITE',
+  },
 ] as const;
 
 export type CURSO = (typeof CURSOS_VALIDOS)[number];
