@@ -3,11 +3,11 @@ import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento
 import { Container } from '../../../shared/Container';
 import { theme } from '../../../../config/styled/styled';
 import { DeterminateState, convertPeriodoKeyToIndex } from './utils';
-import { CopyRegistroReducer } from './registroReducer';
 import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import { IconBG } from './IconBG';
 import { Fragment } from 'react';
 import styled from 'styled-components';
+import { InicialRegistroReducer } from './Table/Inicial/registroReducerInicial';
 const DisplayAlumno = styled.div<{ $index: number }>`
   color: white;
   cursor: pointer;
@@ -51,7 +51,7 @@ export default function TableBody({
   openConclusionesDescriptivasModal: (registro: RegistroNota) => void;
   periodo: PeriodosKey;
   copyRegistro: RegistroNota[];
-  dispatch: React.Dispatch<CopyRegistroReducer>;
+  dispatch: React.Dispatch<InicialRegistroReducer>;
 }) {
   return (
     <Table.Body>
@@ -130,7 +130,13 @@ export default function TableBody({
                     onChange={(event) =>
                       dispatch({
                         type: 'updateTardanzasInasistencias',
-                        payload: { periodo, alumnoId: registro.alumnoId, value: +event.target.value, field: 'inasistencias', subfield: 'justificadas' },
+                        payload: {
+                          periodo,
+                          alumnoId: registro.alumnoId,
+                          value: +event.target.value,
+                          field: 'inasistencias',
+                          subfield: 'justificadas',
+                        },
                       })
                     }
                   />
@@ -146,7 +152,13 @@ export default function TableBody({
                     onChange={(event) =>
                       dispatch({
                         type: 'updateTardanzasInasistencias',
-                        payload: { periodo, alumnoId: registro.alumnoId, value: +event.target.value, field: 'inasistencias', subfield: 'injustificadas' },
+                        payload: {
+                          periodo,
+                          alumnoId: registro.alumnoId,
+                          value: +event.target.value,
+                          field: 'inasistencias',
+                          subfield: 'injustificadas',
+                        },
                       })
                     }
                   />

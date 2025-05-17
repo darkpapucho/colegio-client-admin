@@ -1,19 +1,21 @@
-import { PeriodosKey, RegistroNota } from '../../../../types/documento';
-import { Nota } from '../../../../types/enums';
+import { PeriodosKey } from '../../../../types/documento';
+
+import { RecordNotas } from '../../../../types/notas';
+import { convertPeriodoKeyToIndex } from './utils';
 
 export type SelectedRegistroState = {
-  registro: RegistroNota;
+  registro: RecordNotas;
   cursoKey: string;
 };
 
 type SetSelectedRegistroAction = {
   type: 'setSelectedRegistro';
-  payload: { registro: RegistroNota; cursoKey: string };
+  payload: { registro: RecordNotas; cursoKey: string };
 };
 
 type UpdateNotaSelectedRegistroAction = {
   type: 'updateNotasSelectedRegistroAction';
-  payload: { nota: Nota; index: number; cursoKey: string; periodo: PeriodosKey };
+  payload: { nota: number; cursoKey: string; periodo: PeriodosKey };
 };
 type ClearSelectedRegistro = {
   type: 'clearSelectedRegistro';
@@ -30,8 +32,8 @@ export default function SelectedRegistroReducer(state: SelectedRegistroState, ac
 
     case 'updateNotasSelectedRegistroAction': {
       if (!state.registro) return;
-      const { nota, index, cursoKey, periodo } = action.payload;
-      state.registro.cursos[cursoKey][periodo][index] = nota;
+      const { nota, cursoKey, periodo } = action.payload;
+      state.registro.cursos[cursoKey][convertPeriodoKeyToIndex(periodo)] = nota;
       break;
     }
     // case 'clearSelectedRegistro':

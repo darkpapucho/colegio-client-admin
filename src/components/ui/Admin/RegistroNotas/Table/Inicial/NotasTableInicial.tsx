@@ -1,24 +1,24 @@
 import { useState } from 'react';
-import Table from '../../Table/Table';
-import { CursoMap, RegistroNota } from '../../../../types/documento';
-import useCustomEvent from '../../../../hooks/useCustomEvent';
-import TableHeader from './TableHeader';
-import ConclusionDescriptivaModal from './ConclusionDescriptivaModal';
-import { EVENT_NAME, getSelectedPeriodo } from './utils';
-import TableBody from './TableBody';
 import { useSearchParams } from 'react-router-dom';
-import { registroReducer } from './registroReducer';
 import { useImmerReducer } from 'use-immer';
-import SubmitRegistro from './SubmitRegistro';
-import CriteriosDesempenoModal from './CriteriosDesempenoModal';
-import SelectedRegistroReducer from './selectedRegistroReducer';
-import AllDetailsModal from './AllDetailsModal';
-import { Button } from '../../../shared/Button';
+import useCustomEvent from '../../../../../../hooks/useCustomEvent';
+import { CursoMap, RegistroNota } from '../../../../../../types/documento';
+import { Button } from '../../../../../shared/Button';
+import Table from '../../../../Table/Table';
+import AllDetailsModal from '../../AllDetailsModal';
+import ConclusionDescriptivaModal from '../../ConclusionDescriptivaModal';
+import CriteriosDesempenoModal from '../../CriteriosDesempenoModal';
+import SubmitRegistro from '../../SubmitRegistro';
+import TableBody from '../../TableBody';
+import TableHeader from '../../TableHeader';
+import { getSelectedPeriodo, convertPeriodoKeyToIndex, EVENT_NAME } from '../../utils';
+import { inicialRegistroReducer } from './registroReducerInicial';
+import SelectedRegistroReducer from './selectedRegistroReducerBackup';
 
-export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: CursoMap[]; data: RegistroNota[] }) {
+export default function NotasTableInicial({ data, cursosMap }: { cursosMap: CursoMap[]; data: RegistroNota[] }) {
   const [searchParams] = useSearchParams();
-  const [copyRegistro, dispatch] = useImmerReducer(registroReducer, data);
-
+  const [copyRegistro, dispatch] = useImmerReducer(inicialRegistroReducer, data);
+  const periodo = getSelectedPeriodo(searchParams);
   const gridTemplateCols = `34rem 12rem repeat(${cursosMap.length}, 5rem) 8rem 8rem 4rem`;
 
   const [showCDModal, setShowCDModal] = useState(false); //conc. descriptivas modal
@@ -51,7 +51,16 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
             cursosMap.find((map) => map.key === selectedRegistro!.cursoKey)!.label
           }`}></CriteriosDesempenoModal>
       )}
-      {showCDModal && <ConclusionDescriptivaModal registro={selectedRegistro.registro} onCloseModal={onCloseModal} dispatch={dispatch}></ConclusionDescriptivaModal>}
+      {showCDModal && (
+        <ConclusionDescriptivaModal
+          nivel="inicial"
+          alumno={selectedRegistro.registro.apellidos + ', ' + selectedRegistro.registro.nombres}
+          alumnoId={selectedRegistro.registro.alumnoId}
+          initialValue={selectedRegistro.registro.conclusionesDescriptivas[convertPeriodoKeyToIndex(periodo)]}
+          onCloseModal={onCloseModal}
+          dispatch={dispatch}
+        />
+      )}
       <Table withBorder={true} gridTemplateColumns={gridTemplateCols} width="fit-content">
         {cursosMap?.length > 0 && <TableHeader cursosList={cursosMap} />}
         {data.length > 0 && (
@@ -60,9 +69,9 @@ export default function RegistroNotasTable({ data, cursosMap }: { cursosMap: Cur
             cursosMap={cursosMap}
             openEditNotasModal={openEditNotasModal}
             dispatch={dispatch}
-            key={getSelectedPeriodo(searchParams)}
+            key={periodo}
             copyRegistro={copyRegistro}
-            periodo={getSelectedPeriodo(searchParams)}
+            periodo={periodo}
             openConclusionesDescriptivasModal={openConclusionesDescriptivasModal}
           />
         )}

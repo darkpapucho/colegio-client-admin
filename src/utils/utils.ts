@@ -7,9 +7,15 @@ import { logoutUser } from '../config/redux/user/slice';
 import { setAño } from '../config/redux/año/slice';
 import { setNivel } from '../config/redux/nivel/slice';
 import { Grado, Nivel, Year } from '../types/enums';
-import { CURSOS_INICIAL_3_4_BOLETA_NOTAS, CURSOS_INICIAL_5_BOLETA_NOTAS, CURSOS_PRIMARIA_BOLETA_NOTAS, CURSOS_SECUNDARIA_BOLETA_NOTAS } from '../var/globals';
+import {
+  CURSOS_INICIAL_3_4_BOLETA_NOTAS,
+  CURSOS_INICIAL_5_BOLETA_NOTAS,
+  CURSOS_PRIMARIA_BOLETA_NOTAS,
+  CURSOS_SECUNDARIA_BOLETA_NOTAS,
+} from '../var/globals';
 import { CURSO_BOLETA_NOTA } from '../types/documento';
-import { MultiSelectOptionType } from '../components/shared/MultiSelect/types';
+import { CURSOS_VALIDOS } from '../types/cursos/types';
+import { SalonProfesor } from '../components/shared/Profesor/types';
 
 export function capitalizeString(string: string) {
   const elements = string.split(' ');
@@ -63,8 +69,20 @@ export function getCursosInfo({ nivel, grado }: { nivel: Nivel; grado: Grado }):
     throw new Error('Nivel Inválido');
   }
 }
-
-export function generateSalones(nivel: Nivel): MultiSelectOptionType[] {
+export function getCursosSelectOptions({ nivel, grado }: { nivel: Nivel; grado: Grado }): { key: string; label: string }[] {
+  if (nivel === 'inicial') {
+    if (grado === 'Grupo 5 años') {
+      return CURSOS_INICIAL_5_BOLETA_NOTAS;
+    } else {
+      return CURSOS_INICIAL_3_4_BOLETA_NOTAS;
+    }
+  } else if (nivel === 'primaria') {
+    return [...CURSOS_VALIDOS];
+  } else {
+    throw new Error('Nivel Inválido');
+  }
+}
+export function generateSalones(nivel: Nivel): SalonProfesor[] {
   if (nivel === 'primaria') {
     return [
       {

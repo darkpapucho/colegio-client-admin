@@ -4,7 +4,7 @@ import ProfesorCard from '../../../shared/Profesor/ProfesorCard';
 
 export default function ProfesorCardModal({ profesor, onCloseModal }: { onCloseModal: () => void; profesor: Profesor }) {
   return (
-    <Modal width="42rem" title={`${profesor.apellidos}, ${profesor.nombres}`} onCloseModal={onCloseModal}>
+    <Modal width="52rem" title={`${profesor.apellidos}, ${profesor.nombres}`} onCloseModal={onCloseModal}>
       <ProfesorCard profesor={profesor} />
     </Modal>
   );

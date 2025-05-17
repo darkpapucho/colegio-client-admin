@@ -19,7 +19,7 @@ type DeleteCursoFromSalonAction = {
 };
 type AddCursoToSalonAction = {
   type: 'addCursoToSalon';
-  payload: { cursoKey: string; cursoLabel: string; salon: string };
+  payload: { key: string; label: string; salon: string; code: string; short: string };
 };
 export type SalonReducerActions = AddCursoToSalonAction | DeleteCursoFromSalonAction | DeleteSalon | AddSalon | UpdateTutoria;
 export default function SalonesReducer(state: { salones: SalonProfesor[] }, action: SalonReducerActions) {
@@ -43,10 +43,11 @@ export default function SalonesReducer(state: { salones: SalonProfesor[] }, acti
       break;
 
     case 'addCursoToSalon': {
-      const salonIndex = state.salones.findIndex((salon) => salon.label === action.payload.salon);
-      const cursoIndex = state.salones[salonIndex].cursos.findIndex((curso) => curso.key === action.payload.cursoKey);
+      const { label, key, short, code, salon } = action.payload;
+      const salonIndex = state.salones.findIndex((row) => row.label === salon);
+      const cursoIndex = state.salones[salonIndex].cursos.findIndex((curso) => curso.key === key);
       if (cursoIndex === -1) {
-        state.salones[salonIndex].cursos.push({ label: action.payload.cursoLabel, key: action.payload.cursoKey });
+        state.salones[salonIndex].cursos.push({ label, key, short, code });
       }
       break;
     }

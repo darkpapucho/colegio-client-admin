@@ -10,7 +10,7 @@ import { Text } from '../../../shared/Text';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { useSearchParams } from 'react-router-dom';
 import { RegistroNota } from '../../../../types/documento';
-import { CopyRegistroReducer } from './registroReducer';
+import { InicialRegistroReducer } from './Table/Inicial/registroReducerInicial';
 
 export default function CriteriosDesempenoModal({
   title,
@@ -18,7 +18,7 @@ export default function CriteriosDesempenoModal({
   onCloseModal,
   dispatch,
 }: {
-  dispatch: React.Dispatch<CopyRegistroReducer>;
+  dispatch: React.Dispatch<InicialRegistroReducer>;
   onCloseModal: () => void;
   selectedRegistro: { registro: RegistroNota; cursoKey: string };
   title: string;
@@ -48,7 +48,12 @@ export default function CriteriosDesempenoModal({
                   selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][periodo][index] === ''
                     ? '-'
                     : selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][periodo][index],
-                value: { cursoKey: selectedRegistro!.cursoKey, index, nota: selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][periodo][index], periodo },
+                value: {
+                  cursoKey: selectedRegistro!.cursoKey,
+                  index,
+                  nota: selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][periodo][index],
+                  periodo,
+                },
               };
 
               return (
@@ -79,7 +84,10 @@ export default function CriteriosDesempenoModal({
           onClick={() => {
             const nota = [...selectedRegistro!.registro.cursos[selectedRegistro!.cursoKey!][getSelectedPeriodo(searchParams)]];
             const periodo = getSelectedPeriodo(searchParams);
-            dispatch({ type: 'updateNotaCurso', payload: { periodo, nota, cursoKey: selectedRegistro!.cursoKey!, alumnoId: selectedRegistro!.registro.alumnoId } });
+            dispatch({
+              type: 'updateNotaCurso',
+              payload: { periodo, nota, cursoKey: selectedRegistro!.cursoKey!, alumnoId: selectedRegistro!.registro.alumnoId },
+            });
             onCloseModal();
           }}>
           Grabar

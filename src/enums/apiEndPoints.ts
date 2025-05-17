@@ -9,7 +9,7 @@ export enum ApiEndPoints {
   EMITIR_DOCUMENTOS = '/documento/emitirdocumentos',
   EDITAR_ALUMNO = '/alumno/editar',
   FETCH_REGISTRO_NOTAS = '/documento/fetch-registro-notas-salon',
-  UPDATE_REGISTRO_NOTAS = '/documento/update-registro-notas',
+  UPDATE_REGISTRO_NOTAS_INICIAL = '/documento/update-registro-notas',
   EMITIR_BOLETAS_NOTAS_GRADO_SECCION = '/documento/generar-boletas-notas-grado-seccion',
   EMITIR_BOLETA_NOTAS_INDIVIDUAL = '/documento/generar-boleta-nota-individual',
   CREAR_PROFESOR = '/empleado/crear-profesor',
@@ -49,4 +49,7 @@ export enum ApiEndPoints {
   DELETE_ANUNCIO_GENERAL = '/announcements/delete-announcement',
   GET_CURSOS_BY_SALON = '/cursos/get-cursos-salon',
   UPDATE_CURSOS_BY_SALON = '/cursos/update-cursos-salon',
+  GET_NOTAS_BY_GRADO_SECCION = '/notas/get-notas-by-grado-seccion',
+  UPDATE_RECORD_NOTAS_PRIMARIA = '/notas/update-record-notas-primaria',
+  GENERATE_LIBRETAS_PRIMARIA_GRADO_SECCION = '/notas/generate-libretas-primaria-grado-seccion',
 }

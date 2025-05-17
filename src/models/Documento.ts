@@ -47,7 +47,11 @@ export default class Documento {
     seccion: Seccion;
   }) {
     const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
-    const response = await axios.post(API_BASE_URL + END_POINT, { grado, seccion, estadosMatricula, zipped }, { ...GetHeaders(), responseType: 'arraybuffer' });
+    const response = await axios.post(
+      API_BASE_URL + END_POINT,
+      { grado, seccion, estadosMatricula, zipped },
+      { ...GetHeaders(), responseType: 'arraybuffer' },
+    );
     return response;
   }
 
@@ -62,7 +66,7 @@ export default class Documento {
     return response;
   }
   static async updateRegistroNotas({ grado, seccion, registro }: { grado: Grado; seccion: Seccion; registro: RegistroNota[] }) {
-    const END_POINT = ApiEndPoints.UPDATE_REGISTRO_NOTAS;
+    const END_POINT = ApiEndPoints.UPDATE_REGISTRO_NOTAS_INICIAL;
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { grado, seccion, registro }, GetHeaders());
     return response;
   }

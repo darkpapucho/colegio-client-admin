@@ -31,10 +31,17 @@ type DeleteCursoFromSalonAction = {
 };
 type AddCursoToSalonAction = {
   type: 'addCursoToSalon';
-  payload: { cursoKey: string; cursoLabel: string; salon: string };
+  payload: { key: string; label: string; code: string; short: string; salon: string };
 };
 
-export type ProfesorReducerAction = SetProfesorAction | DeleteCursoFromSalonAction | AddCursoToSalonAction | UpdateProfesorData | DeleteSalon | AddSalon | UpdateTutoria;
+export type ProfesorReducerAction =
+  | SetProfesorAction
+  | DeleteCursoFromSalonAction
+  | AddCursoToSalonAction
+  | UpdateProfesorData
+  | DeleteSalon
+  | AddSalon
+  | UpdateTutoria;
 export default function ProfesorReducer(state: { profesor: Profesor }, action: ProfesorReducerAction) {
   const { type } = action;
   switch (type) {
@@ -74,9 +81,14 @@ export default function ProfesorReducer(state: { profesor: Profesor }, action: P
     }
     case 'addCursoToSalon': {
       const salonIndex = state.profesor.salones.findIndex((salon) => salon.label === action.payload.salon);
-      const cursoIndex = state.profesor.salones[salonIndex].cursos.findIndex((curso) => curso.key === action.payload.cursoKey);
+      const cursoIndex = state.profesor.salones[salonIndex].cursos.findIndex((curso) => curso.key === action.payload.key);
       if (cursoIndex === -1) {
-        state.profesor.salones[salonIndex].cursos.push({ label: action.payload.cursoLabel, key: action.payload.cursoKey });
+        state.profesor.salones[salonIndex].cursos.push({
+          label: action.payload.label,
+          key: action.payload.key,
+          short: action.payload.short,
+          code: action.payload.code,
+        });
       }
       break;
     }

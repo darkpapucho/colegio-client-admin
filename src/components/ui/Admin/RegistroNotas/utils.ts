@@ -1,6 +1,6 @@
 import Documento from '../../../../models/Documento';
 import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
-import { Nota } from '../../../../types/enums';
+import { Grado, Nota, Seccion } from '../../../../types/enums';
 import { updateToken } from '../../../../utils/utils';
 import { CURSOS_MAP } from '../../../../utils/var';
 
@@ -21,7 +21,7 @@ export function convertPeriodoKeyToIndex(periodo: PeriodosKey): number {
   }
 }
 
-export async function fetchRegistroNotas({ grado, seccion }): Promise<RegistroNota[]> {
+export async function fetchRegistroNotas({ grado, seccion }: { grado: Grado | ''; seccion: Seccion | '' }): Promise<RegistroNota[]> {
   if (grado === '' || seccion === '') throw new Error('debes seleccionar un grado y una seccion');
   const response = await Documento.fetchRegistroNotas({ grado, seccion });
 

@@ -4,14 +4,14 @@ import { Container } from './Container';
 import DisplayHoverMessage from './DisplayHoverMessage';
 import { Icon } from './Icon';
 import Select from './Select';
-
 import CursoCard from './CursoCard';
-import { getCursosInfo } from '../../utils/utils';
 import { Text } from './Text';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Nivel } from '../../types/enums';
 import { theme } from '../../config/styled/styled';
 import { SalonProfesor } from './Profesor/types';
+import useCursosSelectOptions from '../../hooks/useCursosSelectOptions';
+import Loader from '../ui/Loader/Loader';
 
 export default function SalonCard({
   salon,
@@ -22,17 +22,21 @@ export default function SalonCard({
   salon: SalonProfesor;
   deleteSalon: (salonLabel: string) => void;
 }) {
+  const { grado, seccion } = salon.value;
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
-
-  const CURSOS_OPTIONS = getCursosInfo({ nivel, grado: salon.value.grado }).map((record) => {
-    return { label: record.label, value: { cursoKey: record.key, cursoLabel: record.label, salon: salon.label } };
-  });
-  const CURSOS_OPTIONS_DYNAMIC = CURSOS_OPTIONS.filter((option) => {
-    return !salon.cursos.some((curso) => curso.key === option.value.cursoKey);
-  });
+  const { cursosOptions, isFetching } = useCursosSelectOptions({ grado, seccion });
+  // const CURSOS_OPTIONS = getCursosSelectOptions({ nivel, grado: salon.value.grado }).map((record) => {
+  //   return { label: record.label, value: { cursoKey: record.key, cursoLabel: record.label, salon: salon.label } };
+  // });
+  const CURSOS_OPTIONS_DYNAMIC = cursosOptions
+    ? cursosOptions.filter((option) => {
+        return !salon.cursos.some((curso) => curso.key === option.value.key);
+      })
+    : [];
 
   return (
     <Container $direction="column" $gap="4px" $width="100%" key={salon.label} $border="1px solid black">
+      {isFetching && <Loader />}
       <Container $direction="row" $width="100%" $justifyContent="space-between" $bgColor={theme.colors.tertiary[400]}>
         <div className="flex gap-4 items-center">
           <DisplayHoverMessage

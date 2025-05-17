@@ -1,6 +1,5 @@
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { theme } from '../../config/styled/styled';
-import { CURSOS_CODES_MAP } from '../../utils/var';
 import { Container } from './Container';
 import DisplayHoverMessage from './DisplayHoverMessage';
 import { Icon } from './Icon';
@@ -11,12 +10,13 @@ export default function CursoCard({
   deleteCurso,
 }: {
   deleteCurso: ({ cursoKey, salonLabel }: { cursoKey: string; salonLabel: string }) => void;
-  curso: { label: string; key: string };
+  curso: { label: string; key: string; code: string; short: string };
   salonLabel: string;
 }) {
+  console.log({ curso, salonLabel });
   return (
     <Container $direction="row" $border="1px solid black" $bgColor={theme.colors.secondary[200]} $padding="0 4px" key={curso.label}>
-      <DisplayHoverMessage padding={'2px 3px'} label={CURSOS_CODES_MAP[curso.key]} message={curso.label} />
+      <DisplayHoverMessage padding={'2px 3px'} label={curso.code} message={curso.label} />
       <DisplayHoverMessage
         message={`Eliminar ${curso.label}`}
         label={

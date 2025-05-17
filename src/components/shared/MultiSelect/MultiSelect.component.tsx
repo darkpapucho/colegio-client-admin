@@ -3,13 +3,13 @@ import { WidthCss } from '../../../types/globals';
 import { useEffect } from 'react';
 import { publishEvent } from '../../../utils/customEvent';
 import { RiAddBoxFill } from 'react-icons/ri';
-import { MultiSelectOptionType } from './types';
 import { useImmerReducer } from 'use-immer';
 import MultiSelectReducer from './reducer';
 import { Container } from '../Container';
 import { Button } from '../Button';
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { Text } from '../Text';
+import { SalonProfesor } from '../Profesor/types';
 
 export const OptionsContainer = styled.div`
   position: absolute;
@@ -33,8 +33,8 @@ export const SelectedOptionsContainer = styled.div`
   height: max-content;
 `;
 
-export default function MultiSelect({ items, width, name }: { items: MultiSelectOptionType[]; width: WidthCss; name: string }) {
-  const [state, dispatch] = useImmerReducer(MultiSelectReducer, { options: items, selectedOptions: [] as MultiSelectOptionType[] });
+export default function MultiSelect({ items, width, name }: { items: SalonProfesor[]; width: WidthCss; name: string }) {
+  const [state, dispatch] = useImmerReducer(MultiSelectReducer, { options: items, selectedOptions: [] as SalonProfesor[] });
   useEffect(() => {
     publishEvent('multiSelect', { name, value: state.selectedOptions });
   }, [state.selectedOptions.length]);
@@ -71,11 +71,11 @@ export default function MultiSelect({ items, width, name }: { items: MultiSelect
   );
 
   //clicking an option will remove it from the selected options
-  function addOption(option: MultiSelectOptionType) {
+  function addOption(option: SalonProfesor) {
     dispatch({ type: 'selectOneOption', payload: option });
   }
 
-  function removeOption(option: MultiSelectOptionType) {
+  function removeOption(option: SalonProfesor) {
     dispatch({ type: 'removeOneOption', payload: option });
   }
 }

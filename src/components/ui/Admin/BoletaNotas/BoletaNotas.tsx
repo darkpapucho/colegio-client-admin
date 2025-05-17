@@ -15,12 +15,13 @@ import { Button } from '../../../shared/Button';
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
 // import { updateToken } from '../../../../utils/utils';
 import { useImmerReducer } from 'use-immer';
-import { BoletaNotasReducer } from './reducer';
+import { ActionsType, BoletaNotasReducer } from './reducer';
 import { onCloseModal, requestBoletasSalon, requestSingleBoleta } from './utils';
 import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
-import { EstadoMatricula, Grado, Seccion } from '../../../../types/enums';
+import { EstadoMatricula, Grado, Nivel, Seccion } from '../../../../types/enums';
 import { useEffect, useState } from 'react';
 import { Title } from '../../../shared/Title';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 
 const OPTIONS = [
   { label: 'salón', value: 'salon' },
@@ -32,7 +33,7 @@ const zippedOptions = [
 ];
 export default function BoletaNotas() {
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
-
+  const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [{ mode, loading, alumnos, showModal, selectedAlumno }, dispatch] = useImmerReducer(BoletaNotasReducer, {
     mode: 'salon',
     loading: false,
@@ -94,15 +95,17 @@ export default function BoletaNotas() {
       {mode === 'salon' && (
         <FilterGradoSeccion
           isLoading={loading}
-          handler={() =>
+          handler={() => {
+            console.log('requestin');
             requestBoletasSalon({
+              nivel,
               zipped: searchParams.get('formato') === 'zipped' ? true : false,
               dispatch,
               grado: grado as Grado,
               seccion: seccion as Seccion,
               estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[],
-            })
-          }
+            });
+          }}
           buttonLabel="Generar Libretas"
         />
       )}
