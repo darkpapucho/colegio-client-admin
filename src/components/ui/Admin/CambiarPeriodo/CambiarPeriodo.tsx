@@ -61,9 +61,9 @@ export default function CambiarPeriodo() {
       const response = await Calendario.setCurrentPeriodo({ periodo: newPeriodo as PeriodosKey });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
-      toaster.success('Periodo actualizado');
       queryClient.invalidateQueries({ queryKey: ['current-periodo', nivel, año] });
       queryClient.prefetchQuery({ queryKey: ['current-periodo', nivel, año], queryFn: () => fetchCurrentPeriodo() });
+      toaster.success('Periodo actualizado');
     } catch (err) {
       errorHandler(err);
     }

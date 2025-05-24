@@ -1,16 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import SimpleLayout from '../../../shared/SimpleLayout';
 import { Nivel, Year } from '../../../../types/enums';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useImmerReducer } from 'use-immer';
 import ProfesorReducer, { ProfesorReducerAction } from '../../../shared/Profesor/ProfesorReducer';
 import { Profesor } from '../../../../types/empleado';
 import ProfesorCardModal from './ProfesorCardModal';
 import ProfesoresTable from './ProfesoresTable';
 import Loader from '../../Loader/Loader';
-import { errorHandler } from '../../../../utils/errorHandler';
-import { fetchProfesores } from './utils';
 import { ProfesoresContext, initialState } from '../../../shared/Profesor/ProfesorContext';
 import useFetchProfesores from '../../../../hooks/useFetchProfesores';
 
