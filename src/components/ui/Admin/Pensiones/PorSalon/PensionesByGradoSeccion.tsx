@@ -15,6 +15,9 @@ import Loader from '../../../Loader/Loader';
 import EstadosMatriculaBox from '../../../../shared/EstadosMatriculaBox';
 import CheckBox from '../../../../shared/CheckBox';
 import useCustomEvent from '../../../../../hooks/useCustomEvent';
+import toast from 'react-hot-toast';
+import usePensionesLastUpdateDate from '../../../../../hooks/useLastUpdateDate';
+import { Text } from '../../../../shared/Text';
 
 export const PensionesByGradoSeccionContext = createContext<{
   setData: React.Dispatch<
@@ -36,12 +39,25 @@ export default function PensionesByGradoSeccion() {
   const [data, setData] = useState<{ alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[]>([]);
   const [allGrades, setAllGrades] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-
+  const { date, isFetching } = usePensionesLastUpdateDate();
   useCustomEvent('customCheckbox', checkBoxListener);
   return (
     <PensionesByGradoSeccionContext.Provider value={{ setData }}>
-      {loading && <Loader />}
+      {loading || (isFetching && <Loader />)}
       <Container $direction="column" $padding="0 0 3rem 0" $width="100%" $gap="1.5rem">
+        {date && (
+          <Container $direction="row" $gap="1rem" $alignItems="center">
+            <Text $bold $color="#401004" $fontSize="large">
+              Last updated:{' '}
+            </Text>
+            <Text $bold $color="#401004" $fontSize="large">
+              {new Date(date).toLocaleDateString('es-PE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+            </Text>
+          </Container>
+        )}
+        <Button $green $width="max-content" onClick={setLastUpdateDate} disabled={loading}>
+          Set Last Update Date
+        </Button>
         <EstadosMatriculaBox setSearchParams={setSearchParams} />
         <Container $direction="row" $width="max-content" $gap=".5rem">
           <Select tiny options={grados[nivel]} label="grado" name="grado" width={`${nivel === 'inicial' ? '12rem' : '9rem'}`}></Select>
@@ -60,7 +76,23 @@ export default function PensionesByGradoSeccion() {
       </Container>
     </PensionesByGradoSeccionContext.Provider>
   );
-
+  async function setLastUpdateDate() {
+    try {
+      setLoading(true);
+      const date = new Date().toString();
+      console.log({ date });
+      const response = await Pensiones.setLastUpdateDate(date);
+      console.log({ response });
+      updateToken(response);
+      if (!response.data.ok) throw new Error(response.data.message);
+      toast.success('Last update date sat successfully: ' + date);
+    } catch (err) {
+      console.log(err);
+      errorHandler(err);
+    } finally {
+      setLoading(false);
+    }
+  }
   async function fetchList() {
     try {
       setLoading(true);
