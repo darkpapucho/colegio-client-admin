@@ -16,8 +16,9 @@ import EstadosMatriculaBox from '../../../../shared/EstadosMatriculaBox';
 import CheckBox from '../../../../shared/CheckBox';
 import useCustomEvent from '../../../../../hooks/useCustomEvent';
 import toast from 'react-hot-toast';
-import usePensionesLastUpdateDate from '../../../../../hooks/useLastUpdateDate';
+import usePensionesLastUpdateDate, { fetchLastUpdateDate } from '../../../../../hooks/useLastUpdateDate';
 import { Text } from '../../../../shared/Text';
+import { queryClient } from '../../../../../config/query/query';
 
 export const PensionesByGradoSeccionContext = createContext<{
   setData: React.Dispatch<
@@ -85,6 +86,9 @@ export default function PensionesByGradoSeccion() {
       console.log({ response });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
+      queryClient.invalidateQueries({ queryKey: ['last-update-date', nivel, año] });
+      queryClient.setQueryData(['last-update-date', nivel, año], () => date);
+      //queryClient.prefetchQuery({ queryKey: ['last-update-date', nivel, año], queryFn: fetchLastUpdateDate });
       toast.success('Last update date sat successfully: ' + date);
     } catch (err) {
       console.log(err);
