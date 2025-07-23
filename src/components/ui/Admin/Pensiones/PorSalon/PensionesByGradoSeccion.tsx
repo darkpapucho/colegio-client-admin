@@ -81,9 +81,9 @@ export default function PensionesByGradoSeccion() {
     try {
       setLoading(true);
       const date = new Date().toString();
-      console.log({ date });
+
       const response = await Pensiones.setLastUpdateDate(date);
-      console.log({ response });
+
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       queryClient.invalidateQueries({ queryKey: ['last-update-date', nivel, año] });

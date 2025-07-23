@@ -71,6 +71,8 @@ export default function NotasTablePrimaria({
         </Table.Header>
         <Table.Body>
           {copyRegistro.map((row, index) => {
+            const alumno = row.alumno;
+            console.log({ alumno });
             return (
               <Fragment key={row.alumnoId}>
                 <Table.Body.Item>
@@ -80,6 +82,8 @@ export default function NotasTablePrimaria({
                 </Table.Body.Item>
                 <Table.Body.Item>{row.estadoMatricula}</Table.Body.Item>
                 {cursosSalon.map((curso) => {
+                  const key = curso.key;
+                  console.log({ key });
                   const nota = row.cursos[curso.key][convertPeriodoKeyToIndex(periodo)];
                   return (
                     <Table.Body.Item key={curso.key}>
