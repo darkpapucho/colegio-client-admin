@@ -4,7 +4,8 @@ import { PeriodosKey } from '../../../../../../types/documento';
 import { useState } from 'react';
 import { convertNumberToLetra, getColorsByNota } from './utils';
 import styled from 'styled-components';
-import { Text } from '../../../../../shared/Text';
+import tinycolor from 'tinycolor2';
+import { darkenColor } from '../../../../../../utils/tinyColor';
 
 const NotaText = styled.p<{ $color: string }>`
   width: 100%;
@@ -46,21 +47,23 @@ export default function NotaTab({
   cursoKey,
   alumnoId,
   periodo,
+  $bgColor,
 }: {
   initValue: number;
   dispatch: React.Dispatch<PrimariaRegistroReducer>;
   cursoKey: string;
   alumnoId: string;
   periodo: PeriodosKey;
+  $bgColor: string;
 }) {
   const [value, setValue] = useState<number>(initValue);
   const { bgColor } = getColorsByNota(value);
   return (
     <Container $width="100%" $alignItems="center" $direction="row">
-      <NotaContainer $width="50%" $justifyContent="center" $bgColor="white">
+      <NotaContainer $width="50%" $justifyContent="center" $bgColor={$bgColor}>
         <input type="number" inputMode="numeric" min={0} max={20} onChange={handleChange} value={value}></input>
       </NotaContainer>
-      <Container $width="50%" $justifyContent="center" $alignItems="center" $border="1px solid #cacaca" $bgColor={'#f8f8f8'}>
+      <Container $width="50%" $justifyContent="center" $alignItems="center" $border="1px solid #cacaca" $bgColor={darkenColor($bgColor, 10)}>
         <NotaText $color={bgColor}>{convertNumberToLetra(value)}</NotaText>
       </Container>
     </Container>

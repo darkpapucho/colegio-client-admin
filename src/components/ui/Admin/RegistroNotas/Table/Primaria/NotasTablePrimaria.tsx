@@ -16,6 +16,7 @@ import ConclusionDescriptivaModal from '../../ConclusionDescriptivaModal';
 import { FaCheck } from 'react-icons/fa';
 import { RiCloseCircleFill } from 'react-icons/ri';
 import SubmitRegistro from '../../SubmitRegistro';
+import { darkenColor } from '../../../../../../utils/tinyColor';
 
 export default function NotasTablePrimaria({
   registro,
@@ -72,28 +73,48 @@ export default function NotasTablePrimaria({
         <Table.Body>
           {copyRegistro.map((row, index) => {
             const alumno = row.alumno;
-            console.log({ alumno });
+
             return (
               <Fragment key={row.alumnoId}>
                 <Table.Body.Item>
-                  <Container $width="100%" $alignItems="center" $justifyContent="flex-start">
+                  <Container
+                    onClick={() => clickAlumnoHandle(row)}
+                    $width="100%"
+                    $alignItems="center"
+                    $justifyContent="flex-start"
+                    $bgColor={selectedRecord?.alumnoId == row.alumnoId ? '#a5fa60' : '#eee'}>
                     {`[${index + 1}]` + row.alumno}
                   </Container>
                 </Table.Body.Item>
-                <Table.Body.Item>{row.estadoMatricula}</Table.Body.Item>
+                <Table.Body.Item>
+                  <Container
+                    $width="100%"
+                    $alignItems="center"
+                    $justifyContent="center"
+                    $bgColor={selectedRecord?.alumnoId == row.alumnoId ? '#a5fa60' : '#eee'}>
+                    {row.estadoMatricula}
+                  </Container>
+                </Table.Body.Item>
                 {cursosSalon.map((curso) => {
-                  const key = curso.key;
-                  console.log({ key });
                   const nota = row.cursos[curso.key][convertPeriodoKeyToIndex(periodo)];
                   return (
                     <Table.Body.Item key={curso.key}>
-                      <NotaTab dispatch={dispatch} periodo={periodo} alumnoId={row.alumnoId} cursoKey={curso.key} initValue={nota} />
+                      <NotaTab
+                        dispatch={dispatch}
+                        periodo={periodo}
+                        alumnoId={row.alumnoId}
+                        cursoKey={curso.key}
+                        initValue={nota}
+                        $bgColor={selectedRecord?.alumnoId == row.alumnoId ? '#a5fa60' : '#eee'}
+                      />
                     </Table.Body.Item>
                   );
                 })}
                 <Table.Body.Item $key={index}>
                   <Container $width="100%" $direction="row" $bgColor="white" $gap="1px" $padding="0">
-                    <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
+                    <Container
+                      $width="50%"
+                      $bgColor={selectedRecord?.alumnoId == row.alumnoId ? darkenColor('#a5fa60', 25) : theme.colors.tertiary[400]}>
                       <input
                         min={0}
                         max={10}
@@ -109,7 +130,9 @@ export default function NotasTablePrimaria({
                         }
                       />
                     </Container>
-                    <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
+                    <Container
+                      $width="50%"
+                      $bgColor={selectedRecord?.alumnoId == row.alumnoId ? darkenColor('#a5fa60', 25) : theme.colors.tertiary[400]}>
                       <input
                         min={0}
                         max={10}
@@ -135,7 +158,9 @@ export default function NotasTablePrimaria({
                 </Table.Body.Item>
                 <Table.Body.Item $key={index}>
                   <Container $width="100%" $direction="row" $bgColor="white" $gap="1px" $padding="0">
-                    <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
+                    <Container
+                      $width="50%"
+                      $bgColor={selectedRecord?.alumnoId == row.alumnoId ? darkenColor('#a5fa60', 25) : theme.colors.tertiary[400]}>
                       <input
                         min={0}
                         max={10}
@@ -157,7 +182,9 @@ export default function NotasTablePrimaria({
                         }
                       />
                     </Container>
-                    <Container $width="50%" $bgColor={theme.colors.tertiary[400]}>
+                    <Container
+                      $width="50%"
+                      $bgColor={selectedRecord?.alumnoId == row.alumnoId ? darkenColor('#a5fa60', 25) : theme.colors.tertiary[400]}>
                       <input
                         min={0}
                         max={10}
@@ -213,5 +240,13 @@ export default function NotasTablePrimaria({
       const { cursoKey, index, nota, periodo } = value;
       // dispatchSelectedRegistro({ type: 'updateNotasSelectedRegistroAction', payload: { nota, cursoKey, periodo } });
     }
+  }
+  function clickAlumnoHandle(record: RecordNotas) {
+    if (selectedRecord) {
+      if (selectedRecord.alumnoId == record.alumnoId) {
+        return setSelectedRecord(undefined);
+      }
+    }
+    setSelectedRecord(record);
   }
 }
