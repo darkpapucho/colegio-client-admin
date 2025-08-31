@@ -6,10 +6,14 @@ import PensionInfoCard from './PensionInfoCard';
 import DisplayPensionData from './DisplayPensionData';
 import EditMontosPagarPensionesModal from './EditMontoPagarPensionesModal';
 
-import { GrEdit } from 'react-icons/gr';
+import { GrEdit, GrCopy } from 'react-icons/gr';
 import { Icon } from '../../../../../shared/Icon';
 
-export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[] }) {
+export default function PensionesGradoSeccionTable({
+  data,
+}: {
+  data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[];
+}) {
   const [showPensionData, setShowPensionData] = useState(false);
   const [showEditMontoPagarPensionesModal, setShowEditMontoPagarPensionesModal] = useState(false);
   const [selectedData, setSelectedData] = useState<{ pension: Pension; estudiante: AMatriculado } | null>(null);
@@ -105,22 +109,24 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
               <Fragment key={record.alumnoId}>
                 <Table.Body.Item $key={index === selectedRow ? 2 : 1}>
                   <Container $direction="row" $gap=".5rem" $width="100%" $justifyContent="left" $border="1px solid black">
-                    <Container
-                      $pointer
-                      $padding=".5rem"
-                      $width="3rem"
-                      $alignItems="center"
-                      $gap=".4rem"
-                      $justifyContent="center"
-                      onClick={() => {
-                        setShowEditMontoPagarPensionesModal(true);
-                        setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
-                      }}>
-                      <Icon $tiny $primary>
+                    <Container $pointer $padding=".5rem" $width="4rem" $alignItems="center" $gap=".8rem" $justifyContent="center">
+                      <Icon
+                        $tiny
+                        $primary
+                        onClick={() => {
+                          setShowEditMontoPagarPensionesModal(true);
+                          setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
+                        }}>
                         <GrEdit />
                       </Icon>
+                      <Icon
+                        $tiny
+                        $primary
+                        onClick={() => copyToClipboard(record.estudiante.apellidos + ', ' + record.estudiante.nombres + '-' + record.estudiante.dni)}>
+                        <GrCopy />
+                      </Icon>
                     </Container>
-                    <Container $padding=".5rem" $width="calc(100% - 3rem)" onClick={() => handleClickAlumnoName(index)}>
+                    <Container $padding=".5rem" $width="calc(100% - 4rem)" onClick={() => handleClickAlumnoName(index)}>
                       {`[${index + 1}] ` + record.estudiante.nombreCompleto}
                     </Container>
                   </Container>
@@ -268,6 +274,11 @@ export default function PensionesGradoSeccionTable({ data }: { data: { alumnoId:
       setSelectedRow(null);
     } else {
       setSelectedRow(rowIndex);
+    }
+  }
+  function copyToClipboard(text: string) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text);
     }
   }
 }
