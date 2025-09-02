@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 export default function useFetchAsistenciaList({
   month,
   dayId,
-
   searchParams,
 }: {
   searchParams: URLSearchParams;

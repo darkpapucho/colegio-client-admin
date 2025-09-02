@@ -30,6 +30,7 @@ export default function PasarAsistencia() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   //const { currentPeriodo, isLoading: isLoadingCurrentPeriodo } = useFetchCurrentPeriodo();
   const { months, isLoading: isLoadingCalendario, isFetching, refetch } = useCalendarioEscolar();
+
   const { searchParams, setSearchParams } = useGradoSeccionSearchParams();
   const [selectedMonth, setSelectedMonth] = useState<MONTH_NAME | undefined>(getCurrentMonthName());
   const [selectedDay, setSelectedDay] = useState<Omit<CalendarioList, 'month'> | undefined>(undefined);
@@ -46,7 +47,7 @@ export default function PasarAsistencia() {
     dayId: selectedDay?._id,
     day: selectedDay?.day,
   });
-
+  console.log({ months, selectedMonth });
   useCustomEvent('customSelect', monthSelectListener);
   useCustomEvent('customSelect', selectListener);
   // useEffect(() => {
