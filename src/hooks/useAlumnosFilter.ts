@@ -18,6 +18,9 @@ export default function useEstadoMatriculaFilter<T extends { estadoMatricula: Es
     case 'TRASLADADO':
       matriculadosFiltered = records?.filter((alumno) => alumno.estadoMatricula === 'TRASLADADO');
       break;
+    case 'RETIRADO':
+      matriculadosFiltered = records?.filter((alumno) => alumno.estadoMatricula === 'RETIRADO');
+      break;
     default:
       matriculadosFiltered = records;
   }

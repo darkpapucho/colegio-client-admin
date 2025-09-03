@@ -29,14 +29,19 @@ export default function MatriculaNuevaForm() {
   const dniRef = useRef<HTMLInputElement | null>(null);
   const [codigoEstudiante, setCodigoEstudiante] = useState<string>('');
   const fechaMatriculaRef = useRef<HTMLInputElement | null>(null);
-  const { isLoading, mutate, isSuccess, error, isError } = useMutation<unknown, unknown, NuevoAlumno, unknown>({ mutationKey: [MutationKeys.MatricularNuevoAlumno] });
+  const { isLoading, mutate, isSuccess, error, isError } = useMutation<unknown, unknown, NuevoAlumno, unknown>({
+    mutationKey: [MutationKeys.MatricularNuevoAlumno],
+  });
   useCustomEvent('customSelect', listener);
 
   useEffect(() => {
     if (isSuccess) {
       toaster.success('La matrícula se realizó exitosamente');
       queryClient.invalidateQueries(['matriculados', grado, seccion, año]);
-      queryClient.prefetchQuery({ queryKey: ['matriculados', grado, seccion, año], queryFn: () => handleFetchMatriculados({ grado, seccion }) });
+      queryClient.prefetchQuery({
+        queryKey: ['matriculados', grado, seccion, año],
+        queryFn: () => handleFetchMatriculados({ grado, seccion, estados: 'EN PROCESO-DEFINITIVA' }),
+      });
     }
   }, [isSuccess]);
 
@@ -55,7 +60,13 @@ export default function MatriculaNuevaForm() {
           <Input name="nombres" type="text" label="nombres" ref={nombresRef} $width="100%" />
           <Input name="dni" type="text" label="dni" ref={dniRef} $width="100%" />
           <Container $gap="1rem" $direction="row">
-            <OutsideCOntrolledInput name="codigoEstudiante" label="código estudiante" type="text" value={codigoEstudiante} setValue={setCodigoEstudiante} />
+            <OutsideCOntrolledInput
+              name="codigoEstudiante"
+              label="código estudiante"
+              type="text"
+              value={codigoEstudiante}
+              setValue={setCodigoEstudiante}
+            />
 
             <Button $primary $small onClick={generarCodigoEstudiante}>
               <RiAiGenerate />
@@ -76,7 +87,16 @@ export default function MatriculaNuevaForm() {
           $small
           onClick={() => {
             try {
-              const nuevoAlumno = parseEditarAlumnoFormData({ grado, seccion, sexo, apellidosRef, nombresRef, dniRef, codigoEstudiante, fechaMatriculaRef });
+              const nuevoAlumno = parseEditarAlumnoFormData({
+                grado,
+                seccion,
+                sexo,
+                apellidosRef,
+                nombresRef,
+                dniRef,
+                codigoEstudiante,
+                fechaMatriculaRef,
+              });
 
               mutate(nuevoAlumno);
             } catch (err) {

@@ -11,7 +11,7 @@ import { useAppDispatch } from './useAppDispatch';
 import { logoutUser } from '../config/redux/user/slice';
 import toaster from 'react-hot-toast';
 import { QueryKeys } from '../config/query/query';
-export default function useAlumnosMatriculados({ grado, seccion }: { grado: Grado | ''; seccion: Seccion | '' }) {
+export default function useAlumnosMatriculados({ grado, seccion, estados }: { grado: Grado | ''; seccion: Seccion | ''; estados: string }) {
   const dispatch = useAppDispatch();
   const año = useTypedSelector((state) => state.año);
   const {
@@ -24,7 +24,7 @@ export default function useAlumnosMatriculados({ grado, seccion }: { grado: Grad
     refetch,
   } = useQuery({
     queryKey: [QueryKeys.Matriculados, grado, seccion, año],
-    queryFn: () => handleFetchMatriculados({ grado, seccion }),
+    queryFn: () => handleFetchMatriculados({ grado, seccion, estados }),
     refetchOnWindowFocus: false,
     staleTime: 0, // 10 min
     enabled: false,
@@ -41,10 +41,19 @@ export default function useAlumnosMatriculados({ grado, seccion }: { grado: Grad
   return { matriculados, isLoading, error, año, refetch, status, isFetching, isError };
 }
 
-export async function handleFetchMatriculados({ grado, seccion }: { grado: Grado | ''; seccion: Seccion | '' }): Promise<AMatriculado[]> {
+export async function handleFetchMatriculados({
+  grado,
+  seccion,
+  estados,
+}: {
+  grado: Grado | '';
+  seccion: Seccion | '';
+  estados?: string;
+}): Promise<AMatriculado[]> {
   assertGrado(grado);
   assertSeccion(seccion);
-  const response = await Alumno.fetchMatriculados({ grado, seccion });
+  const response = await Alumno.fetchMatriculados({ grado, seccion, estados });
+  console.log({ response });
   updateToken(response);
   if (!response.data.ok) throw new Error(response.data.message);
   return response.data.payload.sort((old, current) => {

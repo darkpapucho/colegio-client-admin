@@ -20,11 +20,19 @@ export class Alumno {
   }
 
   static async updateApoderadoById({ alumnoId, apoderado }: { alumnoId: string; apoderado: Apoderado }) {
-    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.UPDATE_APODERADO_BY_ID, { alumnoId, apoderado }, GetHeaders());
+    const response = await axios.post<ResponseSchema<null>>(
+      API_BASE_URL + ApiEndPoints.UPDATE_APODERADO_BY_ID,
+      { alumnoId, apoderado },
+      GetHeaders(),
+    );
     return response;
   }
   static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: NuevoApoderado }) {
-    const response = await axios.post<ResponseSchema<{ apoderado: Apoderado }>>(API_BASE_URL + ApiEndPoints.AGREGAR_APODERADO, { alumnoId, apoderado }, GetHeaders());
+    const response = await axios.post<ResponseSchema<{ apoderado: Apoderado }>>(
+      API_BASE_URL + ApiEndPoints.AGREGAR_APODERADO,
+      { alumnoId, apoderado },
+      GetHeaders(),
+    );
     return response;
   }
 
@@ -40,9 +48,9 @@ export class Alumno {
     return response;
   }
 
-  static async fetchMatriculados({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
+  static async fetchMatriculados({ grado, seccion, estados }: { grado: Grado; seccion: Seccion; estados?: string }) {
     //busca todos los alumnos con cualquier estado de matricula por grado y seccion
-    const END_POINT = ApiEndPoints.FETCH_MATRICULADOS + `?grado=${grado}&seccion=${seccion}`;
+    const END_POINT = ApiEndPoints.FETCH_MATRICULADOS + `?grado=${grado}&seccion=${seccion}&estados=${estados}`;
     const response = await axios.get<ResponseSchema<AMatriculado[]>>(API_BASE_URL + END_POINT, GetHeaders());
     return response;
   }
@@ -61,10 +69,22 @@ export class Alumno {
     const response = await axios.put<ResponseSchema<{ modifiedCount: number }>>(API_BASE_URL + END_POINT, { _id, fechaRetiro }, GetHeaders());
     return response;
   }
-  static async buscarAlumno({ nombreCompleto, estadosMatricula, signal }: { signal: GenericAbortSignal; nombreCompleto: string; estadosMatricula: EstadoMatricula[] }) {
+  static async buscarAlumno({
+    nombreCompleto,
+    estadosMatricula,
+    signal,
+  }: {
+    signal: GenericAbortSignal;
+    nombreCompleto: string;
+    estadosMatricula: EstadoMatricula[];
+  }) {
     //busca alumnos con estado de matricula no "TRASLADADO"
     const END_POINT = ApiEndPoints.BUSCAR_ALUMNO;
-    const response = await axios.post<ResponseSchema<AMatriculado[]>>(API_BASE_URL + END_POINT, { nombreCompleto, estadosMatricula }, { ...GetHeaders(), signal: signal });
+    const response = await axios.post<ResponseSchema<AMatriculado[]>>(
+      API_BASE_URL + END_POINT,
+      { nombreCompleto, estadosMatricula },
+      { ...GetHeaders(), signal: signal },
+    );
     return response;
   }
 }
