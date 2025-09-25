@@ -30,7 +30,7 @@ export default function NotasTablePrimaria({
   const [showCDModal, setShowCDModal] = useState(false);
   const [copyRegistro, dispatch] = useImmerReducer(primariaRegistroReducer, registro);
   const [selectedRecord, setSelectedRecord] = useState<RecordNotas | undefined>(undefined);
-  console.log({ copyRegistro });
+
   const gridTemplateCols = `34rem 12rem repeat(${cursosSalon.length}, 6rem) 8rem 8rem 4rem 4rem`;
 
   useCustomEvent('customSelect', customSelectListener);

@@ -12,8 +12,6 @@ export class Pensiones {
     return response;
   }
   static async setLastUpdateDate(date: string) {
-    console.log('triggered');
-    console.log({ date });
     const response = await axios.post<ResponseSchema<null>>(`${API_BASE_URL + ApiEndPoints.SET_LAST_UPDATE_DATE}`, { date }, GetHeaders());
     return response;
   }

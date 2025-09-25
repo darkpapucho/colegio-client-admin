@@ -63,7 +63,6 @@ export async function requestBoletasSalon({
       alink.remove();
       dispatch({ type: 'clearIsLoading' });
     } else if (nivel === 'primaria') {
-      console.log('es primaria');
       const response = await Notas.generateLibretasPrimariaByGradoSeccion({ grado, seccion, zipped, estadosMatricula });
       updateToken(response);
       const myBlob = new Blob([response.data]);

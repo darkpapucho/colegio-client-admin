@@ -96,7 +96,6 @@ export default function BoletaNotas() {
         <FilterGradoSeccion
           isLoading={loading}
           handler={() => {
-            console.log('requestin');
             requestBoletasSalon({
               nivel,
               zipped: searchParams.get('formato') === 'zipped' ? true : false,

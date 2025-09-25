@@ -47,7 +47,7 @@ export default function PasarAsistencia() {
     dayId: selectedDay?._id,
     day: selectedDay?.day,
   });
-  console.log({ months, selectedMonth });
+
   useCustomEvent('customSelect', monthSelectListener);
   useCustomEvent('customSelect', selectListener);
   // useEffect(() => {

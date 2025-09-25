@@ -3,7 +3,7 @@ import { MONTH_NAME } from '../types/enums';
 
 export function getCurrentMonthName() {
   let currentMonth = new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', month: 'long' }).toLowerCase();
-  console.log({ currentMonth });
+
   if (currentMonth === 'enero' || currentMonth === 'febrero') {
     return undefined;
   }
@@ -14,7 +14,6 @@ export function getCurrentMonthName() {
 }
 
 export function getClosestDay(months: { [key: string]: Omit<CalendarioList, 'month'>[] }, selectedMonth: MONTH_NAME | undefined) {
-  // console.log({ months, selectedMonth });
   if (selectedMonth == undefined) return undefined;
 
   const currentDay = +new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: 'numeric' });

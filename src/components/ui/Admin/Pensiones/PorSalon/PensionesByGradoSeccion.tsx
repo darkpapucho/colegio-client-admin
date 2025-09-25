@@ -91,7 +91,6 @@ export default function PensionesByGradoSeccion() {
       //queryClient.prefetchQuery({ queryKey: ['last-update-date', nivel, año], queryFn: fetchLastUpdateDate });
       toast.success('Last update date sat successfully: ' + date);
     } catch (err) {
-      console.log(err);
       errorHandler(err);
     } finally {
       setLoading(false);

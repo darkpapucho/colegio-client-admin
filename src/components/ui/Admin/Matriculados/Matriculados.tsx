@@ -16,7 +16,7 @@ import { useSearchParams } from 'react-router-dom';
 export default function Matriculados() {
   const { grado, seccion, searchParams, setSearchParams } = useGradoSeccionSearchParams();
   const estados = searchParams.get('estadosMatricula') || '';
-  console.log({ estados });
+
   const { matriculados, isFetching, refetch, error } = useAlumnosMatriculados({ grado, seccion, estados });
   const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(undefined);
   const [showModal, setShowModal] = useState<boolean>(false);

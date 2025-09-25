@@ -55,7 +55,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
         const res = await Notas.getNotasByGradoSeccion({ grado, seccion });
         updateToken(res);
         if (!res.data.ok) throw new Error(res.data.message);
-        console.log({ registroNotas: res.data.payload.registroNotas });
+
         setData(res.data.payload.registroNotas);
       }
       asserts(response != undefined, 'response is undefined');

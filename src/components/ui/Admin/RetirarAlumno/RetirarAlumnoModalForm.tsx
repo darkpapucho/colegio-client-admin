@@ -57,7 +57,7 @@ export default function RetirarAlumnoModalForm({
     const fechaRetiro = fechaRetiroRef.current?.value;
     assertFecha(fechaRetiro, 'fecha de retiro incorrecta');
     if (!selectedAlumno) throw new Error('no se ha seleccionado ningún alumno');
-    const response = await Alumno.retirarAlumno({ _id: selectedAlumno._id, fechaRetiro });
+    const response = await Alumno.retirarAlumno({ _id: selectedAlumno._id, fechaRetiro: new Date(fechaRetiro) });
     if (response.data.ok) {
       if (response.data.payload.modifiedCount > 0) {
         toaster.success('el retiro se completó exitosamente');

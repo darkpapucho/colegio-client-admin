@@ -64,7 +64,7 @@ export class Alumno {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { alumnos, fechaMatricula }, GetHeaders());
     return response;
   }
-  static async retirarAlumno({ _id, fechaRetiro }: { _id: string; fechaRetiro: string }) {
+  static async retirarAlumno({ _id, fechaRetiro }: { _id: string; fechaRetiro: Date }) {
     const END_POINT = ApiEndPoints.RETIRAR_ALUMNO;
     const response = await axios.put<ResponseSchema<{ modifiedCount: number }>>(API_BASE_URL + END_POINT, { _id, fechaRetiro }, GetHeaders());
     return response;
