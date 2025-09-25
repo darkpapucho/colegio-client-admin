@@ -6,11 +6,14 @@ import DisplayAlumnosTable from '../../../shared/DisplayAlumnosTable';
 import { AiOutlineSelect } from 'react-icons/ai';
 import EmitirDocumentosModal from './EmitirDocumentosModal';
 import EmitirDocumentosForm from './EmitirDocumentosForm';
+import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
+import { useSearchParams } from 'react-router-dom';
 
 export default function EmitirDocumentos() {
   const [alumnos, setAlumnos] = useState<AMatriculado[] | undefined>(undefined);
   const [selectedAlumno, setSelectedAlumno] = useState<AMatriculado | undefined>(undefined);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [_searchParams, setSearchParams] = useSearchParams();
   return (
     <SimpleLayout title="Emitir Documentos">
       {showModal && selectedAlumno && (
@@ -18,6 +21,7 @@ export default function EmitirDocumentos() {
           <EmitirDocumentosForm selectedAlumno={selectedAlumno} onCloseModal={onCloseModal} />
         </EmitirDocumentosModal>
       )}
+      <EstadosMatriculaBox setSearchParams={setSearchParams} />
       <SearchAlumnoBox handler={searchAlumnosBoxHandler} width="40rem"></SearchAlumnoBox>
       <DisplayAlumnosTable alumnos={alumnos} actionHandler={actionHandler} icon={<AiOutlineSelect />} />
     </SimpleLayout>

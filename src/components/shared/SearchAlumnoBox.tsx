@@ -8,10 +8,21 @@ import { Button } from './Button';
 import { theme } from '../../config/styled/styled';
 import { EstadoMatricula } from '../../types/enums';
 import useSearchAlumnos from '../../hooks/useSearchAlumnos';
+import { useSearchParams } from 'react-router-dom';
 
-const estadosMatricula: EstadoMatricula[] = ['DEFINITIVA', 'EN PROCESO'];
+// const estadosMatricula: EstadoMatricula[] = ['DEFINITIVA', 'EN PROCESO'];
 
-export default function SearchAlumnoBox({ width, handler, signal }: { width: WidthCss; handler: (alumnos: AMatriculado[]) => void; signal?: boolean }) {
+export default function SearchAlumnoBox({
+  width,
+  handler,
+  signal,
+}: {
+  width: WidthCss;
+  handler: (alumnos: AMatriculado[]) => void;
+  signal?: boolean;
+}) {
+  const [searchParams] = useSearchParams();
+  const estadosMatricula = (searchParams.get('estadosMatricula')?.split('-') || ['DEFINITIVA', 'EN PROCESO']) as EstadoMatricula[];
   const searchBoxRef = useRef<HTMLInputElement | null>(null);
   const { isFetching, alumnos, refetch, error } = useSearchAlumnos({ searchBoxRef, estadosMatricula });
   const buttonRef = useRef<HTMLButtonElement | null>(null);
