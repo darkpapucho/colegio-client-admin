@@ -22,6 +22,7 @@ import { EstadoMatricula, Grado, Nivel, Seccion } from '../../../../types/enums'
 import { useEffect, useState } from 'react';
 import { Title } from '../../../shared/Title';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import CheckBox from '../../../shared/CheckBox';
 
 const OPTIONS = [
   { label: 'salón', value: 'salon' },
@@ -41,11 +42,11 @@ export default function BoletaNotas() {
     showModal: false,
     selectedAlumno: undefined,
   });
-
+  const [excluirAtrasados, setExcluirAtrasados] = useState<boolean>(false);
   const [showEstadosMatriculaBox, setShowEstadosMatriculaBox] = useState(true);
 
   useCustomEvent('customSelect', selectListener);
-
+  useCustomEvent('customCheckbox', checkBoxListener);
   useEffect(() => {
     setSearchParams((old) => {
       old.set('formato', 'zipped');
@@ -77,6 +78,7 @@ export default function BoletaNotas() {
         {showEstadosMatriculaBox && (
           <Select name="formato" defaultValue={zippedOptions[0]} options={zippedOptions} width="11rem" tiny label="formato"></Select>
         )}
+        {mode == 'salon' && <CheckBox name="excluirAtrasados" label="excluir atrasados" initialState={excluirAtrasados} width="14rem" />}
       </Container>
       {showEstadosMatriculaBox && (
         <Container
@@ -103,6 +105,7 @@ export default function BoletaNotas() {
               grado: grado as Grado,
               seccion: seccion as Seccion,
               estadosMatricula: searchParams.get('estadosMatricula')?.split('-') as EstadoMatricula[],
+              excluirAtrasados,
             });
           }}
           buttonLabel="Generar Libretas"
@@ -120,6 +123,12 @@ export default function BoletaNotas() {
   }
   function actionHandler(alumno: AMatriculado) {
     dispatch({ type: 'openSelectedAlumnoModal', payload: alumno });
+  }
+  function checkBoxListener(event: CustomEvent) {
+    const { name, value } = event.detail;
+    if (name == 'excluirAtrasados') {
+      setExcluirAtrasados(value);
+    }
   }
   function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;

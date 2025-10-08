@@ -24,15 +24,17 @@ export default class Notas {
     seccion,
     estadosMatricula,
     zipped,
+    excluirAtrasados,
   }: {
     grado: Grado;
     seccion: Seccion;
     estadosMatricula: EstadoMatricula[];
     zipped: boolean;
+    excluirAtrasados: boolean;
   }) {
     const response = await axios.post(
       API_BASE_URL + ApiEndPoints.GENERATE_LIBRETAS_PRIMARIA_GRADO_SECCION,
-      { grado, seccion, zipped, estadosMatricula },
+      { grado, seccion, zipped, estadosMatricula, excluirAtrasados },
       {
         responseType: 'arraybuffer',
         ...GetHeaders(),

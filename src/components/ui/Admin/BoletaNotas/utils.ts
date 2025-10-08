@@ -38,6 +38,7 @@ export async function requestBoletasSalon({
   estadosMatricula,
   zipped,
   nivel,
+  excluirAtrasados,
 }: {
   estadosMatricula: EstadoMatricula[];
   dispatch: Dispatch<BoletaNotasActionReducer>;
@@ -45,6 +46,7 @@ export async function requestBoletasSalon({
   seccion: Seccion;
   zipped: boolean;
   nivel: Nivel;
+  excluirAtrasados: boolean;
 }) {
   // console.log({ grado, seccion });
   try {
@@ -52,7 +54,7 @@ export async function requestBoletasSalon({
 
     // if (!grado || !seccion) throw new Error('Debes indicar un grado y una sección.');
     if (nivel === 'inicial') {
-      const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula, zipped });
+      const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula, zipped, excluirAtrasados });
       updateToken(response);
       const myBlob = new Blob([response.data]);
       const fileURL = URL.createObjectURL(myBlob);
@@ -63,7 +65,7 @@ export async function requestBoletasSalon({
       alink.remove();
       dispatch({ type: 'clearIsLoading' });
     } else if (nivel === 'primaria') {
-      const response = await Notas.generateLibretasPrimariaByGradoSeccion({ grado, seccion, zipped, estadosMatricula });
+      const response = await Notas.generateLibretasPrimariaByGradoSeccion({ grado, seccion, zipped, estadosMatricula, excluirAtrasados });
       updateToken(response);
       const myBlob = new Blob([response.data]);
       const fileURL = URL.createObjectURL(myBlob);

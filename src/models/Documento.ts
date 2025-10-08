@@ -40,16 +40,18 @@ export default class Documento {
     seccion,
     estadosMatricula,
     zipped,
+    excluirAtrasados,
   }: {
     zipped: boolean;
     estadosMatricula: EstadoMatricula[];
     grado: Grado;
     seccion: Seccion;
+    excluirAtrasados: boolean;
   }) {
     const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
     const response = await axios.post(
       API_BASE_URL + END_POINT,
-      { grado, seccion, estadosMatricula, zipped },
+      { grado, seccion, estadosMatricula, zipped, excluirAtrasados },
       { ...GetHeaders(), responseType: 'arraybuffer' },
     );
     return response;
