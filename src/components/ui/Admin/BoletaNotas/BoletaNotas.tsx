@@ -98,6 +98,9 @@ export default function BoletaNotas() {
         <FilterGradoSeccion
           isLoading={loading}
           handler={() => {
+            if (!grado || !seccion) {
+              return window.alert('grado o seccion inválidos');
+            }
             requestBoletasSalon({
               nivel,
               zipped: searchParams.get('formato') === 'zipped' ? true : false,
