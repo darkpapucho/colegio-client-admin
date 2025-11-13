@@ -8,6 +8,15 @@ import { RecordNotas } from '../types/notas';
 import { CURSO } from '../types/cursos/types';
 
 export default class Notas {
+  static async generarInformeDeRendimiento({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
+    const response = await axios.post<ResponseSchema<string>>(
+      API_BASE_URL + ApiEndPoints.GENERATE_INFORME_RENDIMIENTO,
+      { grado, seccion },
+      { ...GetHeaders() },
+    );
+    console.log({ response });
+    return response;
+  }
   static async getNotasByGradoSeccion({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
     const response = await axios.get<ResponseSchema<{ registroNotas: RecordNotas[]; cursosSalon: CURSO[] }>>(
       API_BASE_URL + ApiEndPoints.GET_NOTAS_BY_GRADO_SECCION + `?grado=${grado}&seccion=${seccion}`,

@@ -11,7 +11,13 @@ import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
 import { Container } from '../../../shared/Container';
 import { Title } from '../../../shared/Title';
 import EstadosMatriculaBox from '../../../shared/EstadosMatriculaBox';
-import { useSearchParams } from 'react-router-dom';
+import { Button } from '../../../shared/Button';
+import { theme } from '../../../../config/styled/styled';
+import { errorHandler } from '../../../../utils/errorHandler';
+import { Alumno } from '../../../../models/alumno';
+import Documento from '../../../../models/Documento';
+import { EstadoMatricula, Grado, Seccion } from '../../../../types/enums';
+import { updateToken } from '../../../../utils/utils';
 
 export default function Matriculados() {
   const { grado, seccion, searchParams, setSearchParams } = useGradoSeccionSearchParams();
@@ -33,7 +39,12 @@ export default function Matriculados() {
       <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
         <Title>Alumnos matriculados</Title>
         <EstadosMatriculaBox setSearchParams={setSearchParams} />
-        <FilterGradoSeccion handler={refetch} isLoading={isFetching} />
+        <Container $alignItems=" center" $bgColor={theme.colors.secondary[300]}>
+          <FilterGradoSeccion handler={refetch} isLoading={isFetching} />
+          <Button $green onClick={generateCSV} $width="max-content" $height="3rem">
+            Generate CSV{' '}
+          </Button>
+        </Container>
 
         {error instanceof Error && <ErrorMessage width={'30rem'} message={error.message} align="center" />}
         <ListaAlumnosTable alumnos={matriculados} setSelectedAlumno={setSelectedAlumno} setShowModal={setShowModal} />
@@ -43,5 +54,34 @@ export default function Matriculados() {
   function onCloseModal() {
     setShowModal(false);
     setSelectedAlumno(undefined);
+  }
+  async function generateCSV() {
+    try {
+      const grado = searchParams.get('grado');
+      const seccion = searchParams.get('seccion');
+      const estadosMatricula = searchParams.get('estadosMatricula');
+      if (!grado || !seccion || !estadosMatricula) {
+        throw new Error('missing grado | sección | estadosMatricula');
+      }
+      const estados = estadosMatricula?.split('-');
+
+      const response = await Documento.generateCSVAlumnosByGradoSeccion({
+        grado: grado as Grado,
+        seccion: seccion as Seccion,
+        estadosMatricula: estados as EstadoMatricula[],
+      });
+      updateToken(response);
+      if (!response.data.ok) throw new Error(response.data.message);
+      const blob = new Blob([response.data.payload]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${grado}-${seccion}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      a.remove();
+    } catch (err) {
+      errorHandler(err);
+    }
   }
 }

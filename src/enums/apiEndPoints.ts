@@ -54,4 +54,6 @@ export enum ApiEndPoints {
   GET_NOTAS_BY_GRADO_SECCION = '/notas/get-notas-by-grado-seccion',
   UPDATE_RECORD_NOTAS_PRIMARIA = '/notas/update-record-notas-primaria',
   GENERATE_LIBRETAS_PRIMARIA_GRADO_SECCION = '/notas/generate-libretas-primaria-grado-seccion',
+  GENERATE_CSV_ALUMNOS_BY_GRADO_SECCION = '/documento/generateCSVAlumnosListByGradoSeccion',
+  GENERATE_INFORME_RENDIMIENTO = '/notas/generar-informe-rendimiento',
 }

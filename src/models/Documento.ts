@@ -9,6 +9,23 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { PeriodosKey, RegistroNota } from '../types/documento';
 
 export default class Documento {
+  static async generateCSVAlumnosByGradoSeccion({
+    grado,
+    seccion,
+    estadosMatricula,
+  }: {
+    grado: Grado;
+    seccion: Seccion;
+    estadosMatricula: EstadoMatricula[];
+  }) {
+    const response = await axios.post<ResponseSchema<string>>(
+      API_BASE_URL + ApiEndPoints.GENERATE_CSV_ALUMNOS_BY_GRADO_SECCION,
+      { grado, seccion, estadosMatricula },
+      { ...GetHeaders() },
+    );
+
+    return response;
+  }
   static async generateAttendanceListPDF({
     grado,
     seccion,
