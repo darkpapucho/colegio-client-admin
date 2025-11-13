@@ -62,25 +62,32 @@ export default function RegistroNotas() {
         {isLoading || (isLoadingCurrentPeriodo && <Loader />)}
         <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
           <Title>Registro de notas</Title>
-          <Container $direction="row" $gap="1rem" $alignItems="center" $bgColor={theme.colors.secondary[200]} $padding="0 0 0 1rem">
-            <Select
-              key={currentPeriodo}
-              tiny
-              name="periodo"
-              label="periodo"
-              options={PERIODOS_SELECT_OPTIONS}
-              width="14rem"
-              defaultValue={{
-                label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : 'primerPeriodo'),
-                value: currentPeriodo ? currentPeriodo : 'primerPeriodo',
-              }}
-            />
-            <FilterGradoSeccion handler={() => dataFetcher()} isLoading={isLoading} />
-
-            <Button $green $width="max-content" $height="3rem" onClick={generarInformeDeRendimiento}>
-              Informe de Rendimiento
-            </Button>
+          <Container $direction="column" $padding="0 0 1rem 0" $bgColor={theme.colors.secondary[200]}>
+            <Container $direction="row" $gap="1rem" $alignItems="center" $bgColor={theme.colors.secondary[200]} $padding="0 0 0 1rem">
+              <Select
+                key={currentPeriodo}
+                tiny
+                name="periodo"
+                label="periodo"
+                options={PERIODOS_SELECT_OPTIONS}
+                width="14rem"
+                defaultValue={{
+                  label: convertPeriodoKeyToLabel(currentPeriodo ? currentPeriodo : 'primerPeriodo'),
+                  value: currentPeriodo ? currentPeriodo : 'primerPeriodo',
+                }}
+              />
+              <FilterGradoSeccion handler={() => dataFetcher()} isLoading={isLoading} />
+            </Container>
+            <Container $direction="row" $gap="1rem" $alignItems="center" $bgColor={theme.colors.secondary[200]} $padding="0 0 0 1rem">
+              <Button $green $width="max-content" $height="3rem" onClick={generarInformeDeRendimientoCSV}>
+                Rendimiento(CSV)
+              </Button>
+              <Button $green $width="max-content" $height="3rem" onClick={generarInformeRendimientoPDF}>
+                Rendimiento(PDF)
+              </Button>
+            </Container>
           </Container>
+
           {!isLoading && data && cursosSalon && (
             <NotasTablePrimaria registro={registroFiltered! as RecordNotas[]} cursosSalon={cursosSalon} periodo={periodo} />
           )}
@@ -124,19 +131,33 @@ export default function RegistroNotas() {
   } else {
     return <>Secundaria</>;
   }
-  async function generarInformeDeRendimiento() {
-    const grado = searchParams.get('grado');
-    const seccion = searchParams.get('seccion');
+  async function generarInformeRendimientoPDF() {
     try {
-      if (!grado || !seccion) throw new Error('missing grado o sección');
-      const response = await Notas.generarInformeDeRendimiento({ grado: grado as Grado, seccion: seccion as Seccion });
+      const { grado, seccion } = GetGradoSeccionFromParams();
+      const response = await Notas.generarInformeRendimientoPDF({ grado, seccion });
+      updateToken(response);
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `informe-rendimiento-${grado}-${seccion}.pdf`;
+      a.click();
+      a.remove();
+    } catch (err) {
+      errorHandler(err);
+    }
+  }
+  async function generarInformeDeRendimientoCSV() {
+    try {
+      const { grado, seccion } = GetGradoSeccionFromParams();
+      const response = await Notas.generarInformeDeRendimientoCSV({ grado, seccion });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       const blob = new Blob([response.data.payload]);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${grado}-${seccion}.csv`;
+      a.download = `informe-rendimiento-${grado}-${seccion}.csv`;
       a.click();
       a.remove();
     } catch (err) {
@@ -203,5 +224,11 @@ export default function RegistroNotas() {
     aLink.download = `registro-${grado}-${seccion}-${periodo}`;
     aLink.click();
     aLink.remove();
+  }
+  function GetGradoSeccionFromParams() {
+    const grado = searchParams.get('grado');
+    const seccion = searchParams.get('seccion');
+    if (!grado || !seccion) throw new Error('missing grado o sección');
+    return { grado: grado as Grado, seccion: seccion as Seccion };
   }
 }

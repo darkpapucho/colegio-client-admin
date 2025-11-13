@@ -76,7 +76,7 @@ export default function Matriculados() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${grado}-${seccion}.csv`;
+      a.download = `lista-matriculados-${grado}-${seccion}.csv`;
       a.click();
       URL.revokeObjectURL(url);
       a.remove();

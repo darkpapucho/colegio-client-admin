@@ -55,5 +55,6 @@ export enum ApiEndPoints {
   UPDATE_RECORD_NOTAS_PRIMARIA = '/notas/update-record-notas-primaria',
   GENERATE_LIBRETAS_PRIMARIA_GRADO_SECCION = '/notas/generate-libretas-primaria-grado-seccion',
   GENERATE_CSV_ALUMNOS_BY_GRADO_SECCION = '/documento/generateCSVAlumnosListByGradoSeccion',
-  GENERATE_INFORME_RENDIMIENTO = '/notas/generar-informe-rendimiento',
+  GENERATE_INFORME_RENDIMIENTO_CSV = '/notas/generar-informe-rendimiento-csv',
+  GENERATE_INFORME_RENDIMIENTO_PDF = '/notas/generar-informe-rendimiento-pdf',
 }
