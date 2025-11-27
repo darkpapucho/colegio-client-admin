@@ -1,9 +1,79 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { VitePWA } from 'vite-plugin-pwa';
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      strategies: 'generateSW',
+      devOptions: {
+        enabled: false, // Disable SW in dev
+        type: 'module', // Use module mode in dev
+      },
+      workbox: {
+        //navigateFallback: "/index.html",
+        //globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}"],
+        // This will automatically cache all assets found during build
+        //globDirectory: ".",
+        runtimeCaching: [
+          {
+            urlPattern: /\.(png|jpg|jpeg|svg|webp|gif|ico)$/,
+            handler: 'CacheFirst' as const,
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+              },
+            },
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/api'),
+            handler: 'CacheFirst' as const,
+            options: {
+              cacheName: 'api-cache',
+              cacheableResponse: {
+                statuses: [0, 200], //only caching gets
+              },
+            },
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/screenshots'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'screenshots-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 30 * 24 * 60 * 60, //30 days
+              },
+            },
+          },
+        ],
+      },
+      includeAssets: ['**/*.{ico,svg,jpeg,jpg,png,webp}'],
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'JN System',
+        short_name: 'JNVA',
+        icons: [
+          { src: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+        ],
+        screenshots: [
+          { sizes: '728x410', type: 'image/jpeg', form_factor: 'wide', src: '/screenshots/728x410.jpeg' },
+          { src: '/screenshots/736x1309.jpeg', sizes: '736x1309', form_factor: 'narrow', type: 'image/jpeg' },
+        ],
+
+        theme_color: '#ffffff',
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/',
+      },
+    }),
+  ],
   server: {
     port: 3000,
   },
