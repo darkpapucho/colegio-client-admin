@@ -15,6 +15,7 @@ import { ErrorMessage } from '../../shared/ErrorMessage';
 import { errorHandler } from '../../../utils/errorHandler';
 import { Nivel, Year } from '../../../types/enums';
 import { loginSchema } from '../../../utils/zodSchemas';
+import { InstallPrompt } from '../../InstallPrompt/InstallPrompt';
 
 const StyledLoginForm = styled.div`
   grid-column: center-start / center-end;
@@ -55,6 +56,7 @@ export default function LoginForm() {
   return (
     <StyledLoginForm>
       <Form onSubmit={onSubmit}>
+        <InstallPrompt />
         <div>
           <Title>Sistema Intranet</Title>
           <Title>Ingreso</Title>
