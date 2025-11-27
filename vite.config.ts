@@ -58,9 +58,10 @@ export default defineConfig({
       manifest: {
         name: 'JN System',
         short_name: 'JNVA',
+        description: 'JN school system',
         icons: [
-          { src: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
         ],
         screenshots: [
           { sizes: '728x410', type: 'image/jpeg', form_factor: 'wide', src: '/screenshots/728x410.jpeg' },
@@ -71,6 +72,10 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
+        //android?
+        scope: '/', // ← Add this
+        orientation: 'portrait', // ← Add this (or "any")
+        categories: ['utilities', 'productivity'], // ← Add relevant categories
       },
     }),
   ],
