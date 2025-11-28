@@ -14,6 +14,7 @@ import ErrorPageMessage from '../../../../shared/ErrorPageMessage';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Year } from '../../../../../types/enums';
 import { useNotification } from '../../../../../hooks/userNotifications';
+import MobileNotificationTest from '../../../../MobileNotifications/MobileNotificationsTest';
 const OPTIONS = [
   { label: 'primer periodo', value: 'primerPeriodo' },
   { label: 'segundo periodo', value: 'segundoPeriodo' },
@@ -56,8 +57,9 @@ export default function ResumenTardanzas() {
             $primary
             $width="max-content"
             onClick={() => showNotification('New Notification', { icon: '/favicon.ico', body: 'automatically send notification from backend' })}>
-            hello
+            Send Notification
           </Button>
+          <MobileNotificationTest />
           {data && (
             <Button $primary $width="max-content" onClick={() => refetch()}>
               Refresh
