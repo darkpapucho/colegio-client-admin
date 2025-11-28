@@ -13,6 +13,7 @@ import { ErrorPage } from '../../../../shared/ErrorPage';
 import ErrorPageMessage from '../../../../shared/ErrorPageMessage';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Year } from '../../../../../types/enums';
+import { useNotification } from '../../../../../hooks/userNotifications';
 const OPTIONS = [
   { label: 'primer periodo', value: 'primerPeriodo' },
   { label: 'segundo periodo', value: 'segundoPeriodo' },
@@ -25,7 +26,9 @@ export default function ResumenTardanzas() {
   const { data, isFetching, refetch } = useResumenTardanzasList(periodo);
   const año = useTypedSelector((state) => state.año) as Year;
   const currentYear = new Date().getFullYear();
+  const { requestPermission, showNotification } = useNotification();
   useCustomEvent('customSelect', customSelectListener);
+  requestPermission();
   useEffect(() => {
     if (!currentPeriodo) return;
     setPeriodo(currentPeriodo);
@@ -49,6 +52,12 @@ export default function ResumenTardanzas() {
             options={OPTIONS}
             width="15rem"
             defaultValue={currentPeriodo ? { label: convertPeriodoKeyToLabel(currentPeriodo!), value: currentPeriodo } : undefined}></Select>
+          <Button
+            $primary
+            $width="max-content"
+            onClick={() => showNotification('New Notification', { icon: '/favicon.ico', body: 'automatically send notification from backend' })}>
+            hello
+          </Button>
           {data && (
             <Button $primary $width="max-content" onClick={() => refetch()}>
               Refresh

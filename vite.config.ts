@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
+const VERSION = '1.0.1';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -14,16 +15,12 @@ export default defineConfig({
         type: 'module', // Use module mode in dev
       },
       workbox: {
-        //navigateFallback: "/index.html",
-        //globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}"],
-        // This will automatically cache all assets found during build
-        //globDirectory: ".",
         runtimeCaching: [
           {
             urlPattern: /\.(png|jpg|jpeg|svg|webp|gif|ico)$/,
             handler: 'CacheFirst' as const,
             options: {
-              cacheName: 'images-cache',
+              cacheName: `images-cache-${VERSION}`,
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
@@ -34,7 +31,7 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.startsWith('/api'),
             handler: 'CacheFirst' as const,
             options: {
-              cacheName: 'api-cache',
+              cacheName: `api-cache-${VERSION}`,
               cacheableResponse: {
                 statuses: [0, 200], //only caching gets
               },
@@ -44,7 +41,7 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.startsWith('/screenshots'),
             handler: 'CacheFirst',
             options: {
-              cacheName: 'screenshots-cache',
+              cacheName: `screenshots-cache-${VERSION}`,
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 30 * 24 * 60 * 60, //30 days
@@ -72,9 +69,9 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/',
-        //android?
+        //android
         scope: '/', // ← Add this
-        orientation: 'portrait', // ← Add this (or "any")
+        orientation: 'any', // ← Add this ("portrait" or "any")
         categories: ['utilities', 'productivity'], // ← Add relevant categories
       },
     }),
