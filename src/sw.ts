@@ -62,13 +62,13 @@ const manifestURLs = manifest.map((entry) => {
   return url.href;
 });
 
-self.addEventListener('install', (event: ExtendableEvent) => {
-  event.waitUntil(
-    caches.open(cacheName).then((cache) => {
-      return cache.addAll(cacheEntries);
-    }),
-  );
-});
+// self.addEventListener('install', (event: ExtendableEvent) => {
+//   event.waitUntil(
+//     caches.open(cacheName).then((cache) => {
+//       return cache.addAll(cacheEntries);
+//     }),
+//   );
+// });
 
 self.addEventListener('activate', (event: ExtendableEvent) => {
   // - clean up outdated runtime cache
