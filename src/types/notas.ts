@@ -1,6 +1,6 @@
 import { EstadoMatricula } from './enums';
 
-export type RecordNotas = {
+export type RecordNotasPrimaria = {
   alumnoId: string;
   estadoMatricula: EstadoMatricula;
   alumno: string;

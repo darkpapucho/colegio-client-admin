@@ -1,7 +1,7 @@
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
 import FilterGradoSeccion from '../../../shared/FilterGradoSeccion';
 import toaster from 'react-hot-toast';
-import { fetchRegistroNotas, mapCursosList } from './utils';
+import { convertPeriodoKeyToIndex, fetchRegistroNotas, mapCursosList } from './utils';
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from 'react';
 import { CursoMap, PeriodosKey, RegistroNota } from '../../../../types/documento';
 import { errorHandler } from '../../../../utils/errorHandler';
@@ -17,7 +17,7 @@ import useFetchCurrentPeriodo from '../../../../hooks/useFetchCurrentPeriodo';
 import { convertPeriodoKeyToLabel } from '../../../../utils/periodo';
 import Loader from '../../Loader/Loader';
 import { Title } from '../../../shared/Title';
-import { RecordNotas } from '../../../../types/notas';
+import { RecordNotasPrimaria } from '../../../../types/notas';
 import { CURSO } from '../../../../types/cursos/types';
 import Notas from '../../../../models/Notas';
 import { Grado, Nivel, Seccion } from '../../../../types/enums';
@@ -25,10 +25,11 @@ import { updateToken } from '../../../../utils/utils';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import NotasTableInicial from './Table/Inicial/NotasTableInicial';
 import NotasTablePrimaria from './Table/Primaria/NotasTablePrimaria';
+import { convertNumberToLetra } from './Table/Primaria/utils';
 
 export const RegistroNotasContext = createContext<{
   //  setData: Dispatch<SetStateAction<NotasCurso[] | undefined>>;
-  setData: Dispatch<SetStateAction<RecordNotas[] | RegistroNota[] | undefined>>;
+  setData: Dispatch<SetStateAction<RecordNotasPrimaria[] | RegistroNota[] | undefined>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 } | null>(null);
@@ -39,12 +40,12 @@ export default function RegistroNotas() {
   const { currentPeriodo, isLoading: isLoadingCurrentPeriodo } = useFetchCurrentPeriodo();
   const periodo = (searchParams.get('periodo') || 'primerPeriodo') as PeriodosKey;
   // const [data, setData] = useState<RegistroNota[] | undefined>(undefined);
-  const [data, setData] = useState<RecordNotas[] | RegistroNota[] | undefined>(undefined); //-----------------
-
+  const [data, setData] = useState<RecordNotasPrimaria[] | RegistroNota[] | undefined>(undefined); //-----------------
+  const [withLetters, setWithLetters] = useState(true);
   const [cursosSalon, setCursosSalon] = useState<CURSO[] | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   // const registroFiltered = useEstadoMatriculaFilter<RegistroNota>({ records: data });
-  const registroFiltered = useEstadoMatriculaFilter<RecordNotas | RegistroNota>({ records: data }); //-------------------
+  const registroFiltered = useEstadoMatriculaFilter<RecordNotasPrimaria | RegistroNota>({ records: data }); //-------------------
 
   useCustomEvent('customSelect', listener);
 
@@ -62,6 +63,16 @@ export default function RegistroNotas() {
         {isLoading || (isLoadingCurrentPeriodo && <Loader />)}
         <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
           <Title>Registro de notas</Title>
+          {data && (
+            <Container $direction="row" $gap="2rem">
+              <Button $width="max-content" onClick={() => downloadcsvPrimaria(data as RecordNotasPrimaria[], periodo)} $green $small>
+                Download csv
+              </Button>
+              <Button $secondary $width="7rem" onClick={() => setWithLetters((old) => !old)}>
+                {withLetters ? 'Numbers' : 'Letters'}
+              </Button>
+            </Container>
+          )}
           <Container $direction="column" $padding="0 0 1rem 0" $bgColor={theme.colors.secondary[200]}>
             <Container $direction="row" $gap="1rem" $alignItems="center" $bgColor={theme.colors.secondary[200]} $padding="0 0 0 1rem">
               <Select
@@ -89,7 +100,7 @@ export default function RegistroNotas() {
           </Container>
 
           {!isLoading && data && cursosSalon && (
-            <NotasTablePrimaria registro={registroFiltered! as RecordNotas[]} cursosSalon={cursosSalon} periodo={periodo} />
+            <NotasTablePrimaria registro={registroFiltered! as RecordNotasPrimaria[]} cursosSalon={cursosSalon} periodo={periodo} />
           )}
         </Container>
       </RegistroNotasContext.Provider>
@@ -102,7 +113,7 @@ export default function RegistroNotas() {
         <Container $direction="column" $height="max-content" $width="100%" $gap="1rem">
           <Title>Registro de notas</Title>
           {data && (
-            <Button $width="max-content" onClick={() => downloadcsv(periodo as PeriodosKey, data as RegistroNota[])} $green $small>
+            <Button $width="max-content" onClick={() => downloadcsvInicial(periodo as PeriodosKey, data as RegistroNota[])} $green $small>
               Download csv
             </Button>
           )}
@@ -199,7 +210,27 @@ export default function RegistroNotas() {
       });
     }
   }
-  function downloadcsv(periodo: PeriodosKey, data: RegistroNota[]) {
+  function downloadcsvPrimaria(data: RecordNotasPrimaria[], periodo: PeriodosKey) {
+    console.log({ data });
+    const mappedData = data.map((record) => {
+      const result: { [key: string]: string | number } = {};
+      result.alumno = record.alumno;
+      Object.keys(record.cursos).forEach((key) => {
+        const nota = record.cursos[key][convertPeriodoKeyToIndex(periodo)];
+        result[key] = withLetters ? convertNumberToLetra(nota) : nota;
+      });
+      return result;
+    });
+    const dataCSV = json2csv(mappedData);
+    const myBlob = new Blob([dataCSV], { type: 'text/csv' });
+    const url = URL.createObjectURL(myBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `notas-${grado}-${seccion}-${withLetters ? 'letras' : 'numeros'}.csv`;
+    a.click();
+    a.remove();
+  }
+  function downloadcsvInicial(periodo: PeriodosKey, data: RegistroNota[]) {
     if (!data) return;
     const mappedData = data.map((record) => {
       const newCursos = Object.keys(record.cursos).map((curso) => {
