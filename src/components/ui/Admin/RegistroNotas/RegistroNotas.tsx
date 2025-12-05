@@ -20,7 +20,7 @@ import { Title } from '../../../shared/Title';
 import { RecordNotasPrimaria } from '../../../../types/notas';
 import { CURSO } from '../../../../types/cursos/types';
 import Notas from '../../../../models/Notas';
-import { Grado, Nivel, Seccion } from '../../../../types/enums';
+import { Grado, Nivel, Nota, Seccion } from '../../../../types/enums';
 import { updateToken } from '../../../../utils/utils';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import NotasTableInicial from './Table/Inicial/NotasTableInicial';
@@ -216,8 +216,14 @@ export default function RegistroNotas() {
       const result: { [key: string]: string | number } = {};
       result.alumno = record.alumno;
       Object.keys(record.cursos).forEach((key) => {
-        const nota = record.cursos[key][convertPeriodoKeyToIndex(periodo)];
-        result[key] = withLetters ? convertNumberToLetra(nota) : nota;
+        let nota: any = record.cursos[key][convertPeriodoKeyToIndex(periodo)];
+        if (withLetters) {
+          nota = withLetters ? convertNumberToLetra(nota) : nota;
+          if (nota == 'B' || nota != 'C') {
+            nota = 'A';
+          }
+        }
+        result[key] = nota;
       });
       return result;
     });
