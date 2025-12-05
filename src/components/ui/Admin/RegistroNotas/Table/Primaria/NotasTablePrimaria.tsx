@@ -3,7 +3,7 @@ import { CURSO } from '../../../../../../types/cursos/types';
 import Table from '../../../../Table/Table';
 import { PeriodosKey } from '../../../../../../types/documento';
 import { convertPeriodoKeyToIndex, EVENT_NAME } from '../../utils';
-import { RecordNotas } from '../../../../../../types/notas';
+import { RecordNotasPrimaria } from '../../../../../../types/notas';
 import SpecialBlock from '../../SpecialBlock';
 import { theme } from '../../../../../../config/styled/styled';
 import { Container } from '../../../../../shared/Container';
@@ -24,12 +24,12 @@ export default function NotasTablePrimaria({
   periodo,
 }: {
   cursosSalon: CURSO[];
-  registro: RecordNotas[];
+  registro: RecordNotasPrimaria[];
   periodo: PeriodosKey;
 }) {
   const [showCDModal, setShowCDModal] = useState(false);
   const [copyRegistro, dispatch] = useImmerReducer(primariaRegistroReducer, registro);
-  const [selectedRecord, setSelectedRecord] = useState<RecordNotas | undefined>(undefined);
+  const [selectedRecord, setSelectedRecord] = useState<RecordNotasPrimaria | undefined>(undefined);
 
   const gridTemplateCols = `34rem 12rem repeat(${cursosSalon.length}, 6rem) 8rem 8rem 4rem 4rem`;
 
@@ -241,7 +241,7 @@ export default function NotasTablePrimaria({
       // dispatchSelectedRegistro({ type: 'updateNotasSelectedRegistroAction', payload: { nota, cursoKey, periodo } });
     }
   }
-  function clickAlumnoHandle(record: RecordNotas) {
+  function clickAlumnoHandle(record: RecordNotasPrimaria) {
     if (selectedRecord) {
       if (selectedRecord.alumnoId == record.alumnoId) {
         return setSelectedRecord(undefined);

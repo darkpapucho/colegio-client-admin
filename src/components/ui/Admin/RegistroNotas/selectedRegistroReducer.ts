@@ -1,16 +1,16 @@
 import { PeriodosKey } from '../../../../types/documento';
 
-import { RecordNotas } from '../../../../types/notas';
+import { RecordNotasPrimaria } from '../../../../types/notas';
 import { convertPeriodoKeyToIndex } from './utils';
 
 export type SelectedRegistroState = {
-  registro: RecordNotas;
+  registro: RecordNotasPrimaria;
   cursoKey: string;
 };
 
 type SetSelectedRegistroAction = {
   type: 'setSelectedRegistro';
-  payload: { registro: RecordNotas; cursoKey: string };
+  payload: { registro: RecordNotasPrimaria; cursoKey: string };
 };
 
 type UpdateNotaSelectedRegistroAction = {

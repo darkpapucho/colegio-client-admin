@@ -1,8 +1,7 @@
-import { PeriodosKey, RegistroNota } from '../../../../../../types/documento';
-import { Nota } from '../../../../../../types/enums';
+import { PeriodosKey } from '../../../../../../types/documento';
 import toaster from 'react-hot-toast';
 import { convertPeriodoKeyToIndex } from '../../utils';
-import { RecordNotas } from '../../../../../../types/notas';
+import { RecordNotasPrimaria } from '../../../../../../types/notas';
 type UpdateTardanzasInasistenciasAction = {
   type: 'updateTardanzasInasistencias';
   payload: {
@@ -25,7 +24,7 @@ type UpdateConclusionesDescriptivasAction = {
 
 export type PrimariaRegistroReducer = UpdateTardanzasInasistenciasAction | UpdateNotaCursoAction | UpdateConclusionesDescriptivasAction;
 
-export function primariaRegistroReducer(state: RecordNotas[], action: PrimariaRegistroReducer) {
+export function primariaRegistroReducer(state: RecordNotasPrimaria[], action: PrimariaRegistroReducer) {
   const { type, payload } = action;
   switch (type) {
     case 'updateNotaCurso': {

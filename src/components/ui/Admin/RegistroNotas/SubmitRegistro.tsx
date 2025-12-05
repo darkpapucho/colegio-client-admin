@@ -11,14 +11,14 @@ import { updateToken } from '../../../../utils/utils';
 import toaster from 'react-hot-toast';
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
 import { fetchRegistroNotas } from './utils';
-import { RecordNotas } from '../../../../types/notas';
+import { RecordNotasPrimaria } from '../../../../types/notas';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import Notas from '../../../../models/Notas';
 import { AxiosResponse } from 'axios';
 import { ResponseSchema } from '../../../../types/axiosResponse';
 import { asserts } from '../../../../utils/assert';
 
-export default function SubmitRegistro({ copyRegistro }: { copyRegistro: RegistroNota[] | RecordNotas[] }) {
+export default function SubmitRegistro({ copyRegistro }: { copyRegistro: RegistroNota[] | RecordNotasPrimaria[] }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const { isLoading, setIsLoading, setData } = useContext(RegistroNotasContext)!;
   const { grado, seccion } = useGradoSeccionSearchParams();
@@ -36,7 +36,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
       </Button> */}
     </Container>
   );
-  async function submitRegistro({ grado, seccion, registro }: { grado: Grado; seccion: Seccion; registro: RegistroNota[] | RecordNotas[] }) {
+  async function submitRegistro({ grado, seccion, registro }: { grado: Grado; seccion: Seccion; registro: RegistroNota[] | RecordNotasPrimaria[] }) {
     try {
       setIsLoading(true);
       let response: AxiosResponse<ResponseSchema<null>, any> | undefined = undefined;
@@ -48,7 +48,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
         const data = await fetchRegistroNotas({ grado, seccion });
         setData(data);
       } else if (nivel === 'primaria') {
-        response = await Notas.updateRecordNotasPrimaria({ registro: registro as RecordNotas[] });
+        response = await Notas.updateRecordNotasPrimaria({ registro: registro as RecordNotasPrimaria[] });
         updateToken(response!);
         if (!response.data.ok) throw new Error(response.data.message);
         toaster.success('Se guardó el registro exitosamente.');
