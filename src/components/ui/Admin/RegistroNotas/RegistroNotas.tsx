@@ -219,7 +219,7 @@ export default function RegistroNotas() {
         let nota: any = record.cursos[key][convertPeriodoKeyToIndex(periodo)];
         if (withLetters) {
           nota = withLetters ? convertNumberToLetra(nota) : nota;
-          if (nota == 'B' || nota != 'C') {
+          if (nota == 'B' || nota == 'C') {
             nota = 'A';
           }
         }
