@@ -93,10 +93,13 @@ export default function LoginForm() {
   }
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
+
     const password = passRef.current?.value;
     const username = usernameRef.current?.value;
+    console.log({ password, username, año, nivel });
     const result = loginSchema.safeParse({ username, password, año, nivel });
     const errors: { [key in keyof LoginFormErrors]?: string } = {};
+    console.log({ errors });
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         errors[issue.path[0]] = issue.message;

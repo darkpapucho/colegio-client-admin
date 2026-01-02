@@ -7,7 +7,9 @@ import { API_BASE_URL } from '../../../var/globals';
 import { ApiEndPoints } from '../../../enums/apiEndPoints';
 
 export const loginUser = createAsyncThunk<ResponseSchema<{ token: string; userInfo: UserInfo }>, LoginRequestParams>('user/login', async (params) => {
+  console.log({ params });
   const requestUrl = API_BASE_URL + ApiEndPoints.LOGIN;
+  console.log({ requestUrl });
   const response = await axios.post<ResponseSchema<{ token: string; userInfo: UserInfo }>>(
     requestUrl,
     {
