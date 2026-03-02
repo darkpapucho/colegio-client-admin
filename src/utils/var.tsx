@@ -26,6 +26,7 @@ export const NIVELES_SELECT_OPTIONS = [
   { label: 'secundaria', value: 'secundaria' },
 ];
 export const AÑOS_SELECT_OPTIONS = [
+  { label: '2026', value: '2026' },
   { label: '2025', value: '2025' },
   { label: '2024', value: '2024' },
   { label: '2023', value: '2023' },
