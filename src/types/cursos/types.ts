@@ -62,3 +62,10 @@ export const DUMMY_DATA: CURSO_NOTAS_RECORD[] = [
     notas: [12, 15, 16, 19],
   },
 ];
+
+export interface CURSO_NIVEL {
+  label: string;
+  key: string;
+  code: string;
+  short: string;
+}

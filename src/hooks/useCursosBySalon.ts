@@ -18,7 +18,7 @@ export default function useCursosBySalon() {
     enabled: false,
     retry: false,
     queryKey: [QueryKeys.CursosSalon, grado, seccion, nivel, year],
-    queryFn: fetchCursosBySalon.bind(null, grado as Grado, seccion as Seccion),
+    queryFn: fetchCursosBySalon.bind(null, grado as Grado),
   });
   useEffect(() => {
     if (!error) return;
@@ -27,8 +27,8 @@ export default function useCursosBySalon() {
   return { data, isFetching, refetch, grado, seccion };
 }
 
-export async function fetchCursosBySalon(grado: Grado, seccion: Seccion) {
-  const response = await Cursos.getCursos({ grado, seccion });
+export async function fetchCursosBySalon(grado: Grado) {
+  const response = await Cursos.getCursos({ grado });
   updateToken(response);
   if (!response.data.ok) throw new Error(response.data.message);
   return response.data.payload.cursos;

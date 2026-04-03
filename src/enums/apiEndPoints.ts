@@ -57,4 +57,5 @@ export enum ApiEndPoints {
   GENERATE_CSV_ALUMNOS_BY_GRADO_SECCION = '/documento/generateCSVAlumnosListByGradoSeccion',
   GENERATE_INFORME_RENDIMIENTO_CSV = '/notas/generar-informe-rendimiento-csv',
   GENERATE_INFORME_RENDIMIENTO_PDF = '/notas/generar-informe-rendimiento-pdf',
+  FETCH_CURSOS_BY_NIVEL = '/cursos/fetch-by-nivel',
 }

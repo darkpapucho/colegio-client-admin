@@ -5,14 +5,12 @@ import { Nivel } from '../../../../types/enums';
 import { grados } from '../../../../utils/var';
 import { Button } from '../../../shared/Button';
 import { Container } from '../../../shared/Container';
-import CursoCard from './Subs/CursoCard';
 import Select from '../../../shared/Select';
 import Loader from '../../Loader/Loader';
 import { CURSO, CURSOS_VALIDOS } from '../../../../types/cursos/types';
 import { Text } from '../../../shared/Text';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
 import SimpleLayout from '../../../shared/SimpleLayout';
-import Cursos from '../../../../models/Cursos';
 import useUpdateCursosSalon from '../../../../hooks/useUpdateCursosSalon';
 import CursosContainer from './Subs/CursosContainer';
 
@@ -21,9 +19,10 @@ const secciones = [
   { label: 'B', value: 'B' },
 ];
 
-const CURSOS_DYNAMIC = [...CURSOS_VALIDOS]
-  .map((row) => ({ label: row.label, value: row.key }))
-  .sort((prev, curr) => (prev.value > curr.value ? 1 : -1)) as { label: string; value: string }[];
+const CURSOS_DYNAMIC = [...CURSOS_VALIDOS].map((row) => ({ label: row.label, value: row.key })).sort((prev, curr) => (prev.value > curr.value ? 1 : -1)) as {
+  label: string;
+  value: string;
+}[];
 
 export default function CursosManagment() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;

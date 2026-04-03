@@ -10,8 +10,8 @@ export default function useCursosSelectOptions({ grado, seccion }: { grado: Grad
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const year = useTypedSelector((state) => state.año) as Year;
   const { data, isFetching, error } = useQuery({
-    queryKey: ['cursos-salon', grado, seccion, nivel, year],
-    queryFn: () => fetchCursosSalon({ grado, seccion }),
+    queryKey: ['cursos-salon', grado, nivel, year],
+    queryFn: () => fetchCursosSalon({ grado }),
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -34,8 +34,9 @@ export default function useCursosSelectOptions({ grado, seccion }: { grado: Grad
   return { cursosOptions, isFetching };
 }
 
-async function fetchCursosSalon({ grado, seccion }) {
-  const response = await Cursos.getCursos({ grado, seccion });
+async function fetchCursosSalon({ grado }) {
+  const response = await Cursos.getCursos({ grado });
+
   updateToken(response);
   if (!response.data.ok) throw new Error(response.data.message);
   return response.data.payload.cursos;
