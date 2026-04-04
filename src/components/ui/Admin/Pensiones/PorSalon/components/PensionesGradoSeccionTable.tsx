@@ -14,6 +14,14 @@ export default function PensionesGradoSeccionTable({
 }: {
   data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[];
 }) {
+  data = data.map((row) => {
+    const nombres = row.estudiante.nombreCompleto.split(', ')[1].split(' ');
+    const newRow = { ...row };
+    if (nombres.length == 3) {
+      newRow.estudiante.nombreCompleto = newRow.estudiante.apellidos + ', ' + nombres[0] + ' ' + nombres[1];
+    }
+    return newRow;
+  });
   const [showPensionData, setShowPensionData] = useState(false);
   const [showEditMontoPagarPensionesModal, setShowEditMontoPagarPensionesModal] = useState(false);
   const [selectedData, setSelectedData] = useState<{ pension: Pension; estudiante: AMatriculado } | null>(null);
