@@ -487,5 +487,152 @@ const primeroSec = {
       short: 'TRIG',
     },
     { label: 'Cívica', key: 'civica', code: 'CI', short: 'CIVI' },
+    { label: 'Redacción', key: 'redaccion', code: 'RD', short: 'REDA' },
+  ],
+};
+
+const segundoSec = {
+  grado: 'PRIMERO',
+  cursos: [
+    { label: 'Álgebra', key: 'algebra', code: 'AL', short: 'ALGE' },
+    {
+      label: 'Aritmética',
+      key: 'aritmetica',
+      code: 'AR',
+      short: 'ARIT',
+    },
+    { label: 'Geometría', key: 'geometria', code: 'GT', short: 'GEOM' },
+    {
+      label: 'Habilidad Matemática',
+      key: 'habilidadMatematica',
+      code: 'HM',
+      short: 'HABM',
+    },
+    {
+      label: 'Arte y Cultura',
+      key: 'arteCultura',
+      code: 'AC',
+      short: 'ARTE',
+    },
+    {
+      label: 'Computación',
+      key: 'computacion',
+      code: 'CP',
+      short: 'COMPU',
+    },
+    { label: 'Religión', key: 'religion', code: 'RE', short: 'RELI' },
+    {
+      label: 'Educación Física',
+      key: 'educacionFisica',
+      code: 'EF',
+      short: 'EEFF',
+    },
+    { label: 'Inglés', key: 'ingles', code: 'IN', short: 'INGL' },
+
+    {
+      label: 'Lenguaje',
+      key: 'lenguaje',
+      code: 'LE',
+      short: 'LENG',
+    },
+    {
+      label: 'Habilidad Verbal',
+      key: 'habilidadVerbal',
+      code: 'HV',
+      short: 'HABV',
+    },
+
+    { label: 'Biología', key: 'biologia', code: 'BI', short: 'BIOL' },
+    { label: 'Física', key: 'fisica', code: 'FI', short: 'FISI' },
+    { label: 'Química', key: 'quimica', code: 'QI', short: 'QUIM' },
+    { label: 'Geografía', key: 'geografia', code: 'GF', short: 'GEOG' },
+    { label: 'Historia', key: 'historia', code: 'HI', short: 'HIST' },
+    {
+      label: 'Literatura',
+      key: 'literatura',
+      code: 'LT',
+      short: 'LITE',
+    },
+    {
+      label: 'Trigonometría',
+      key: 'trigonometria',
+      code: 'TR',
+      short: 'TRIG',
+    },
+    { label: 'Cívica', key: 'civica', code: 'CI', short: 'CIVI' },
+  ],
+};
+
+const terceroSec = {
+  grado: 'PRIMERO',
+  cursos: [
+    { label: 'Álgebra', key: 'algebra', code: 'AL', short: 'ALGE' },
+    {
+      label: 'Aritmética',
+      key: 'aritmetica',
+      code: 'AR',
+      short: 'ARIT',
+    },
+    { label: 'Geometría', key: 'geometria', code: 'GT', short: 'GEOM' },
+    {
+      label: 'Habilidad Matemática',
+      key: 'habilidadMatematica',
+      code: 'HM',
+      short: 'HABM',
+    },
+    {
+      label: 'Arte y Cultura',
+      key: 'arteCultura',
+      code: 'AC',
+      short: 'ARTE',
+    },
+    {
+      label: 'Computación',
+      key: 'computacion',
+      code: 'CP',
+      short: 'COMPU',
+    },
+    { label: 'Religión', key: 'religion', code: 'RE', short: 'RELI' },
+    {
+      label: 'Educación Física',
+      key: 'educacionFisica',
+      code: 'EF',
+      short: 'EEFF',
+    },
+    { label: 'Inglés', key: 'ingles', code: 'IN', short: 'INGL' },
+
+    {
+      label: 'Lenguaje',
+      key: 'lenguaje',
+      code: 'LE',
+      short: 'LENG',
+    },
+    {
+      label: 'Habilidad Verbal',
+      key: 'habilidadVerbal',
+      code: 'HV',
+      short: 'HABV',
+    },
+
+    { label: 'Biología', key: 'biologia', code: 'BI', short: 'BIOL' },
+    { label: 'Física', key: 'fisica', code: 'FI', short: 'FISI' },
+    { label: 'Química', key: 'quimica', code: 'QI', short: 'QUIM' },
+    { label: 'Geografía', key: 'geografia', code: 'GF', short: 'GEOG' },
+    { label: 'Historia', key: 'historia', code: 'HI', short: 'HIST' },
+    {
+      label: 'Literatura',
+      key: 'literatura',
+      code: 'LT',
+      short: 'LITE',
+    },
+    {
+      label: 'Trigonometría',
+      key: 'trigonometria',
+      code: 'TR',
+      short: 'TRIG',
+    },
+    { label: 'Cívica', key: 'civica', code: 'CI', short: 'CIVI' },
+    { label: 'Redacción', key: 'redaccion', code: 'RD', short: 'REDA' },
+    { label: 'Economía', key: 'economia', code: 'EC', short: 'ECON' },
   ],
 };
