@@ -36,9 +36,14 @@ export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: 
               </Button>
             </Container>
           ) : (
+            <Container $direction="row" $gap="1rem">
             <Button $green $width="max-content" onClick={() => setEditPensionPagada(true)}>
               Editar <CiEdit />
             </Button>
+            <Button $primary $width="max-content" onClick={()=> requestRecibo()} disabled={!selectedData.pension.reciboId || loading}>
+              GetRecibo
+            </Button>
+            </Container>
           )}
           <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
             {convertIndexToMonth(selectedData.pension.mes).toUpperCase()}
@@ -81,7 +86,22 @@ export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: 
   function convertIndexToMonth(index: number) {
     return MONTHS[index];
   }
-
+  async function requestRecibo(){
+    try{
+      const response = await Pensiones.requestRecibo({ reciboId: selectedData.pension.reciboId });
+      updateToken(response);
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+      const alink = document.createElement('a');
+      alink.href = url;
+      alink.download = `recibo_${selectedData.pension.reciboId}.pdf`;
+      alink.click();
+      alink.remove();
+      
+    } catch(err){
+      errorHandler(err);
+    }
+  }
   async function editarPensionPagada() {
     const pensionPagada = selectedData.pension as PensionPagada;
 

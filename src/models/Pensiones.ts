@@ -15,7 +15,11 @@ export class Pensiones {
     const response = await axios.post<ResponseSchema<null>>(`${API_BASE_URL + ApiEndPoints.SET_LAST_UPDATE_DATE}`, { date }, GetHeaders());
     return response;
   }
-
+  static async requestRecibo({reciboId}:{reciboId:string}) {
+    const response = await axios.get(`${API_BASE_URL + ApiEndPoints.FETCH_RECIBO_BY_ID}?reciboId=${reciboId}`, {
+      ...GetHeaders(),    responseType: 'arraybuffer' });
+    return response;
+  }
   static async downloadPensionesTableGradoSeccionPDF({ grado, seccion, allGrades }: { allGrades: boolean; grado: Grado; seccion: Seccion }) {
     const response = await axios.post(
       API_BASE_URL + ApiEndPoints.DOWNLOAD_PENSION_TABLE_GRADO_SECCION_PDF,
@@ -88,6 +92,7 @@ export class Pensiones {
   }
 
   static async pagarPensionAlumnoIdMes({
+    mora,
     alumnoId,
     fecha,
     mes,
@@ -95,6 +100,7 @@ export class Pensiones {
     monto_pagar,
     monto_abonado,
   }: {
+    mora:number,
     alumnoId: string;
     fecha: string;
     mes: number;
@@ -104,7 +110,7 @@ export class Pensiones {
   }) {
     const response = await axios.post<ResponseSchema<{ reciboId: string }>>(
       `${API_BASE_URL + ApiEndPoints.PAGAR_PENSION_ALUMNOID_MES}`,
-      { alumnoId, fecha, mes, monto_pagado, monto_pagar, monto_abonado },
+      { alumnoId, fecha, mes, monto_pagado, monto_pagar, monto_abonado, mora },
       GetHeaders(),
     );
     return response;

@@ -9,7 +9,7 @@ import { Text } from '../../../../../shared/Text';
 import { MONTHS } from '../../../Calendario/EnableDays/utils';
 import { Pensiones } from '../../../../../../models/Pensiones';
 import { PensionesByGradoSeccionContext } from '../PensionesByGradoSeccion';
-import { getDisplayPensionCardBgColor } from './utils';
+import calcularMoraPension, { getDisplayPensionCardBgColor } from './utils';
 import { AMatriculado } from '../../../../../../types/alumno';
 import toaster from 'react-hot-toast';
 import Loader from '../../../../Loader/Loader';
@@ -17,6 +17,7 @@ import Loader from '../../../../Loader/Loader';
 export default function PagarPensionCard({ onCloseModal, selectedData }: { selectedData: { estudiante: AMatriculado; pension: PensionNoPagada }; onCloseModal: () => void }) {
   const [loading, setLoading] = useState(false);
   const montoAbonadoRef = useRef<HTMLInputElement | null>(null);
+  const moraRef = useRef<HTMLInputElement | null>(null);
   const [fechaPagoActual, setFechaPagoActual] = useState(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16));
   const { setData } = useContext(PensionesByGradoSeccionContext)!;
   return (
@@ -43,17 +44,31 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
               </Text>
             </Container>
           </Container>
-          <Container $direction="row" $gap=".1rem" $alignItems="center">
-            <Text $bold>S/.</Text>
-            <StyledInput
-              defaultValue={selectedData.pension.monto_pagar - selectedData.pension.monto_pagado}
-              name="monto_abonado"
-              min={0}
-              type="number"
-              ref={montoAbonadoRef}
-              step={10}
-              max={selectedData.pension.monto_pagar}
-            />
+          <Container $direction="row" $gap="1rem" $alignItems="center">
+            <Container $direction="row" $gap=".1rem" $alignItems="center">
+              <Text $bold>S/.</Text>
+              <StyledInput
+                defaultValue={selectedData.pension.monto_pagar - selectedData.pension.monto_pagado}
+                name="monto_abonado"
+                min={0}
+                type="number"
+                ref={montoAbonadoRef}
+                step={10}
+                max={selectedData.pension.monto_pagar}
+              />
+            </Container>
+            <Container $direction="row" $gap=".1rem" $alignItems="center">
+              <Text $bold $color="red">Mora S/.</Text>
+              <StyledInput
+                defaultValue={calcularMoraPension(selectedData.pension.mes)}
+                name="mora"
+                min={0}
+                type="number"
+                ref={moraRef}
+                step={1}
+                max={300}
+              />
+            </Container>
           </Container>
           <Container $gap="1rem" $direction="row">
             <Button $width="max-content" $primary onClick={() => pagarPension(selectedData.pension.monto_pagar)} disabled={loading}>
@@ -76,6 +91,8 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
     try {
       setLoading(true);
       const monto_abonado = Number(montoAbonadoRef.current?.value);
+      const mora = Number(moraRef.current?.value) || 0;
+      console.log({mora});
       const saldoPagar = Number(selectedData.pension.monto_pagar) - Number(selectedData.pension.monto_pagado);
       if (!fechaPagoActual) throw new Error('fecha inválida');
       if ((monto_abonado === 0 && monto_pagar > 0) || Number(monto_abonado) > saldoPagar) {
@@ -84,11 +101,13 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
       }
       const response = await Pensiones.pagarPensionAlumnoIdMes({
         monto_pagado: selectedData.pension.monto_pagado,
+        mora,
         monto_abonado,
         monto_pagar: selectedData.pension.monto_pagar,
         fecha: fechaPagoActual,
         mes: selectedData.pension.mes,
         alumnoId: selectedData.estudiante._id,
+        
       });
 
       updateToken(response);
