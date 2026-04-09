@@ -26,10 +26,13 @@ export default function AgregarProfesor() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const año = useTypedSelector((state) => state.año);
   const [state, dispatch] = useImmerReducer(SalonesReducer, { salones: [] as SalonProfesor[] });
+
   const salonesSorted = [...state.salones].sort((prev, curr) => {
     return curr.order > prev.order ? -1 : 1;
   });
+
   const SALONES_OPTIONS = SALONES_SELECT_OPTONS[nivel].filter((option) => {
+    console.log({ option });
     return !salonesSorted.some((salon) => salon.label === option.value); //18-04-2025 changed option.label for option.value
   });
 
@@ -80,7 +83,11 @@ export default function AgregarProfesor() {
       dispatch({ type: 'addCursoToSalon', payload: value });
     }
     if (name === 'addSalon') {
-      const salon = generateSalones(nivel).find((salon) => salon.label === value);
+      const salonesGenerados = generateSalones(nivel);
+
+      const salon = salonesGenerados.find((row) => {
+        return row.label === value;
+      });
 
       dispatch({ type: 'addSalon', payload: salon! });
     }

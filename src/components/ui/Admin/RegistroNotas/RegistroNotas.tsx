@@ -57,7 +57,7 @@ export default function RegistroNotas() {
     });
   }, [currentPeriodo]);
 
-  if (nivel === 'primaria') {
+  if (nivel === 'primaria' || nivel === 'secundaria') {
     return (
       <RegistroNotasContext.Provider value={{ isLoading, setIsLoading, setData }}>
         {isLoading || (isLoadingCurrentPeriodo && <Loader />)}
@@ -180,8 +180,8 @@ export default function RegistroNotas() {
     if (!grado || !seccion) throw new Error('debes seleccionar grado y seccion');
     try {
       setIsLoading(true);
-
-      if (nivel === 'primaria') {
+      console.log({ nivel });
+      if (nivel === 'primaria' || nivel === 'secundaria') {
         const response = await Notas.getNotasByGradoSeccion({ grado: grado as Grado, seccion: seccion as Seccion });
         updateToken(response);
         if (!response.data.ok) throw new Error(response.data.message);
