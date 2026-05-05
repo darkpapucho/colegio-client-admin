@@ -27,7 +27,7 @@ export class Alumno {
     );
     return response;
   }
-  static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: NuevoApoderado }) {
+  static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: NuevoApoderado| Apoderado }) {
     const response = await axios.post<ResponseSchema<{ apoderado: Apoderado }>>(
       API_BASE_URL + ApiEndPoints.AGREGAR_APODERADO,
       { alumnoId, apoderado },

@@ -128,7 +128,7 @@ export default function EditarApoderadoCard({ alumnoId, apoderado, closeModal }:
 
     updateToken(response);
     if (!response.data.ok) throw new Error(response.data.message);
-    toaster.success('Apoderado agregado exitosamente');
+    toaster.success('Apoderado editado');
   }
   function enableFields() {
     setEditable(true);
