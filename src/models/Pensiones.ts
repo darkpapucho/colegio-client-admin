@@ -5,8 +5,22 @@ import { ApiEndPoints } from '../enums/apiEndPoints';
 import { ResponseSchema } from '../types/axiosResponse';
 import { AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
+import { Pension, PensionesAtrasadasListDetail } from '../types/pensiones';
 
 export class Pensiones {
+  static async cobrarPension({ detalle, fecha, alumnoId }: { detalle: string; fecha: Date; alumnoId: string }) {
+    const response = await axios.post<ResponseSchema<boolean>>(`${API_BASE_URL + ApiEndPoints.COBRAR_PENSION}`, { detalle, fecha, alumnoId }, GetHeaders());
+    return response;
+  }
+  static async fetchAtrasadosList({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
+    //<ResponseSchema<{ alumnoId: string; numPensionesAtrasadas: number; estudiante: AMatriculado }[]>>
+    const response = await axios.post<ResponseSchema<PensionesAtrasadasListDetail[]>>(
+      API_BASE_URL + ApiEndPoints.FETCH_ATRASADOS_LIST,
+      { grado, seccion },
+      GetHeaders(),
+    );
+    return response;
+  }
   static async getLastUpdateDate() {
     const response = await axios.get<ResponseSchema<string>>(API_BASE_URL + ApiEndPoints.GET_LAST_UPDATE_DATE, GetHeaders());
     return response;
@@ -15,9 +29,11 @@ export class Pensiones {
     const response = await axios.post<ResponseSchema<null>>(`${API_BASE_URL + ApiEndPoints.SET_LAST_UPDATE_DATE}`, { date }, GetHeaders());
     return response;
   }
-  static async requestRecibo({reciboId}:{reciboId:string}) {
+  static async requestRecibo({ reciboId }: { reciboId: string }) {
     const response = await axios.get(`${API_BASE_URL + ApiEndPoints.FETCH_RECIBO_BY_ID}?reciboId=${reciboId}`, {
-      ...GetHeaders(),    responseType: 'arraybuffer' });
+      ...GetHeaders(),
+      responseType: 'arraybuffer',
+    });
     return response;
   }
   static async downloadPensionesTableGradoSeccionPDF({ grado, seccion, allGrades }: { allGrades: boolean; grado: Grado; seccion: Seccion }) {
@@ -100,7 +116,7 @@ export class Pensiones {
     monto_pagar,
     monto_abonado,
   }: {
-    mora:number,
+    mora: number;
     alumnoId: string;
     fecha: string;
     mes: number;
@@ -116,18 +132,12 @@ export class Pensiones {
     return response;
   }
 
-  static async fetchListByGradoSeccion({
-    grado,
-    seccion,
-    estadosMatricula,
-  }: {
-    estadosMatricula: EstadoMatricula[];
-    grado: Grado;
-    seccion: Seccion;
-  }) {
-    const response = await axios.post<
-      ResponseSchema<{ alumnoId: string; numPensionesPagadas: number; estudiante: AMatriculado; pensiones: Pension[] }[]>
-    >(`${API_BASE_URL + ApiEndPoints.FETCH_PENSIONES_LIST_BY_GRADO_SECCION}`, { grado, seccion, estadosMatricula }, GetHeaders());
+  static async fetchListByGradoSeccion({ grado, seccion, estadosMatricula }: { estadosMatricula: EstadoMatricula[]; grado: Grado; seccion: Seccion }) {
+    const response = await axios.post<ResponseSchema<{ alumnoId: string; numPensionesPagadas: number; estudiante: AMatriculado; pensiones: Pension[] }[]>>(
+      `${API_BASE_URL + ApiEndPoints.FETCH_PENSIONES_LIST_BY_GRADO_SECCION}`,
+      { grado, seccion, estadosMatricula },
+      GetHeaders(),
+    );
 
     return response;
   }

@@ -11,6 +11,7 @@ import Loader from '../../../Loader/Loader';
 import { Grado, Salon, Seccion } from '../../../../../types/enums';
 import RecordPensionesPagadasTable from './RecordPensionesPagadasTable';
 import { convertSalonToIndex } from '../../../../../utils/convertGradoToIndex';
+import { Pension } from '../../../../../types/pensiones';
 
 type ValuePiece = Date | null;
 type DateRangeValue = ValuePiece | [ValuePiece, ValuePiece];
@@ -89,16 +90,21 @@ export default function RecordPensionesByDateRange() {
     try {
       if (!dateRange) throw new Error('Debes seleccionar un rango de fechas');
       setIsLoading(true);
-      const initDateRaw = new Date(dateRange[0]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' }).split('/');
+      const initDateRaw = new Date(dateRange[0])
+        .toLocaleDateString('es-PE', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' })
+        .split('/');
       const initDate = Array.from(initDateRaw, (_, index) => initDateRaw[initDateRaw.length - 1 - index]).join('-');
-      const endDateRaw = new Date(dateRange[1]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' }).split('/');
+      const endDateRaw = new Date(dateRange[1])
+        .toLocaleDateString('es-PE', { timeZone: 'America/Lima', year: 'numeric', month: '2-digit', day: '2-digit' })
+        .split('/');
       const endDate = Array.from(endDateRaw, (_, index) => endDateRaw[endDateRaw.length - 1 - index]).join('-');
       const response = await Pensiones.getRecordPensionesPagadasByDateRange({ initDate, endDate });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       setData(
         response.data.payload.sort((prev, curr) => {
-          return convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon) > convertSalonToIndex((curr.alumno.grado + ' ' + curr.alumno.seccion) as Salon)
+          return convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon) >
+            convertSalonToIndex((curr.alumno.grado + ' ' + curr.alumno.seccion) as Salon)
             ? 1
             : 0;
         }),

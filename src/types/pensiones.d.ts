@@ -1,4 +1,6 @@
-type PensionNoPagada = {
+import { Apoderado } from './alumno';
+
+export type PensionNoPagada = {
   mes: number;
   pagado: false;
   monto_pagar: number;
@@ -6,7 +8,7 @@ type PensionNoPagada = {
   fecha: '';
 };
 
-type PensionPagada = {
+export type PensionPagada = {
   mes: number;
   pagado: true;
   monto_pagar: number;
@@ -15,9 +17,26 @@ type PensionPagada = {
   reciboId: string;
 };
 
-type Pension = PensionPagada | PensionNoPagada;
+export type Pension = PensionPagada | PensionNoPagada;
 
-type ComentarioPension = {
+export type ComentarioPension = {
   fecha: string;
   detalle: string;
+};
+
+export type PensionesAtrasadasListDetail = {
+  _id: string;
+  nombreCompleto: string;
+  grado: string;
+  seccion: string;
+  dni: string;
+  apoderados: Apoderado[];
+  codigoEstudiante: string;
+  mesesAtrasoDetalle: PensionNoPagada[];
+  totalMesesAtraso: number;
+  pensionesPagadas: number;
+  ultimoCobro?: {
+    detalle: string;
+    fecha: string;
+  };
 };

@@ -19,6 +19,7 @@ import toast from 'react-hot-toast';
 import usePensionesLastUpdateDate, { fetchLastUpdateDate } from '../../../../../hooks/useLastUpdateDate';
 import { Text } from '../../../../shared/Text';
 import { queryClient } from '../../../../../config/query/query';
+import { Pension } from '../../../../../types/pensiones';
 
 export const PensionesByGradoSeccionContext = createContext<{
   setData: React.Dispatch<

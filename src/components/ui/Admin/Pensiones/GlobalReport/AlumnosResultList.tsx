@@ -18,6 +18,7 @@ import {
 } from 'chart.js';
 import tinycolor from 'tinycolor2';
 import styled from 'styled-components';
+import { ComentarioPension, Pension } from '../../../../../types/pensiones';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const ChartContainer = styled(Container)`

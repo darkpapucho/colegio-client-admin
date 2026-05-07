@@ -8,6 +8,7 @@ import { MONTHS } from '../../Calendario/EnableDays/utils';
 import DisplayHoverMessage from '../../../../shared/DisplayHoverMessage';
 import { getRecordBgColor } from './utils';
 import { theme } from '../../../../../config/styled/styled';
+import { Pension } from '../../../../../types/pensiones';
 
 export default function RecordPensionesPagadasTable({
   data,
@@ -71,7 +72,9 @@ export default function RecordPensionesPagadasTable({
                     $padding=".3rem"
                     $direction="row"
                     onClick={() => handleClickAlumnoName(index)}
-                    $bgColor={index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })}>
+                    $bgColor={
+                      index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })
+                    }>
                     <Text $width="3rem">{`[${index + 1}]`}</Text>
                     <Text $width="calc(100% - 3rem)" $textAlign="left">
                       {record.alumno.nombreCompleto}
@@ -84,7 +87,9 @@ export default function RecordPensionesPagadasTable({
                     $padding=".3rem"
                     $direction="row"
                     onClick={() => handleClickAlumnoName(index)}
-                    $bgColor={index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })}>
+                    $bgColor={
+                      index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })
+                    }>
                     <Text $width="100%" $textAlign="center">
                       {record.alumno.dni ?? ''}
                     </Text>
@@ -95,7 +100,9 @@ export default function RecordPensionesPagadasTable({
                     $width="100%"
                     $padding=".3rem"
                     $direction="row"
-                    $bgColor={index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })}>
+                    $bgColor={
+                      index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })
+                    }>
                     <Text $width="100%">
                       {record.alumno.grado} {record.alumno.seccion}
                     </Text>
@@ -107,7 +114,9 @@ export default function RecordPensionesPagadasTable({
                     $gap=".1rem"
                     $width="100%"
                     $justifyContent="flex-start"
-                    $bgColor={index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })}>
+                    $bgColor={
+                      index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })
+                    }>
                     {record.pensiones.map((pension, index) => {
                       return (
                         <Container $padding=".3rem" $border="1px solid black" key={index}>

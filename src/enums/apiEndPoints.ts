@@ -59,4 +59,6 @@ export enum ApiEndPoints {
   GENERATE_INFORME_RENDIMIENTO_PDF = '/notas/generar-informe-rendimiento-pdf',
   FETCH_CURSOS_BY_NIVEL = '/cursos/fetch-by-nivel',
   FETCH_RECIBO_BY_ID = '/pensiones/fetch-recibo-by-id',
+  FETCH_ATRASADOS_LIST = '/pensiones/fetch-atrasados-list',
+  COBRAR_PENSION = '/pensiones/cobrar-pension',
 }

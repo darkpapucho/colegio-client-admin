@@ -7,12 +7,7 @@ import { logoutUser } from '../config/redux/user/slice';
 import { setAño } from '../config/redux/año/slice';
 import { setNivel } from '../config/redux/nivel/slice';
 import { Grado, Nivel, Year } from '../types/enums';
-import {
-  CURSOS_INICIAL_3_4_BOLETA_NOTAS,
-  CURSOS_INICIAL_5_BOLETA_NOTAS,
-  CURSOS_PRIMARIA_BOLETA_NOTAS,
-  CURSOS_SECUNDARIA_BOLETA_NOTAS,
-} from '../var/globals';
+import { CURSOS_INICIAL_3_4_BOLETA_NOTAS, CURSOS_INICIAL_5_BOLETA_NOTAS, CURSOS_PRIMARIA_BOLETA_NOTAS, CURSOS_SECUNDARIA_BOLETA_NOTAS } from '../var/globals';
 import { CURSO_BOLETA_NOTA } from '../types/documento';
 import { CURSOS_VALIDOS } from '../types/cursos/types';
 import { SalonProfesor } from '../components/shared/Profesor/types';
@@ -289,4 +284,12 @@ export function generateSalones(nivel: Nivel): SalonProfesor[] {
       },
     ];
   }
+}
+
+export function recortarNombres(nombres: string) {
+  const partes = nombres.split(' ');
+  if (partes.length > 2) {
+    return partes[0] + ' ' + partes[1];
+  }
+  return nombres;
 }

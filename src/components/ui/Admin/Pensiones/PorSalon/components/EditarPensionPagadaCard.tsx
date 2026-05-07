@@ -14,8 +14,15 @@ import { Pensiones } from '../../../../../../models/Pensiones';
 import toaster from 'react-hot-toast';
 import { PensionesByGradoSeccionContext } from '../PensionesByGradoSeccion';
 import Loader from '../../../../Loader/Loader';
+import { PensionPagada } from '../../../../../../types/pensiones';
 
-export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: { onCloseModal: () => void; selectedData: { estudiante: AMatriculado; pension: PensionPagada } }) {
+export default function EditarPensionPagadaCard({
+  selectedData,
+  onCloseModal,
+}: {
+  onCloseModal: () => void;
+  selectedData: { estudiante: AMatriculado; pension: PensionPagada };
+}) {
   const [loading, setLoading] = useState(false);
   const [editPensionPagada, setEditPensionPagada] = useState(false);
   const [montoPagado, setMontoPagado] = useState(selectedData.pension.monto_pagado);
@@ -37,12 +44,12 @@ export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: 
             </Container>
           ) : (
             <Container $direction="row" $gap="1rem">
-            <Button $green $width="max-content" onClick={() => setEditPensionPagada(true)}>
-              Editar <CiEdit />
-            </Button>
-            <Button $primary $width="max-content" onClick={()=> requestRecibo()} disabled={!selectedData.pension.reciboId || loading}>
-              GetRecibo
-            </Button>
+              <Button $green $width="max-content" onClick={() => setEditPensionPagada(true)}>
+                Editar <CiEdit />
+              </Button>
+              <Button $primary $width="max-content" onClick={() => requestRecibo()} disabled={!selectedData.pension.reciboId || loading}>
+                GetRecibo
+              </Button>
             </Container>
           )}
           <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
@@ -72,7 +79,14 @@ export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: 
           {editPensionPagada ? (
             <Container $color="white" $direction="row" $gap=".6rem" $alignItems="center">
               <Text $width="12rem">MONTO PAGADO S/.</Text>
-              <StyledInput $width="16rem" type="number" min={10} step={10} defaultValue={montoPagado} onChange={(ev) => setMontoPagado(+ev.currentTarget.value)} />
+              <StyledInput
+                $width="16rem"
+                type="number"
+                min={10}
+                step={10}
+                defaultValue={montoPagado}
+                onChange={(ev) => setMontoPagado(+ev.currentTarget.value)}
+              />
             </Container>
           ) : (
             <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
@@ -86,8 +100,8 @@ export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: 
   function convertIndexToMonth(index: number) {
     return MONTHS[index];
   }
-  async function requestRecibo(){
-    try{
+  async function requestRecibo() {
+    try {
       const response = await Pensiones.requestRecibo({ reciboId: selectedData.pension.reciboId });
       updateToken(response);
       const blob = new Blob([response.data]);
@@ -97,8 +111,7 @@ export default function EditarPensionPagadaCard({ selectedData, onCloseModal }: 
       alink.download = `recibo_${selectedData.pension.reciboId}.pdf`;
       alink.click();
       alink.remove();
-      
-    } catch(err){
+    } catch (err) {
       errorHandler(err);
     }
   }

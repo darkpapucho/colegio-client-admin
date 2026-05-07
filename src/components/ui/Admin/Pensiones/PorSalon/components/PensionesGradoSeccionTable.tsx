@@ -8,6 +8,7 @@ import EditMontosPagarPensionesModal from './EditMontoPagarPensionesModal';
 
 import { GrEdit, GrCopy } from 'react-icons/gr';
 import { Icon } from '../../../../../shared/Icon';
+import { Pension } from '../../../../../../types/pensiones';
 
 export default function PensionesGradoSeccionTable({
   data,

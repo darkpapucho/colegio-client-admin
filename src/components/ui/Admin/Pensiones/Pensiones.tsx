@@ -8,6 +8,7 @@ const pensionesTabs = [
   { label: 'Global', url: 'global' },
 
   { label: 'Consultas', url: 'consultas' },
+  { label: 'Atrasados', url: 'atrasados' },
 ];
 
 export default function Pensiones() {

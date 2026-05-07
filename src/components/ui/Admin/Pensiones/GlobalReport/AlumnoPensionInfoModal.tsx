@@ -6,6 +6,7 @@ import { MONTHS } from '../../Calendario/EnableDays/utils';
 import { getDisplayPensionCardBgColor } from '../PorSalon/components/utils';
 import ApoderadoInfoCard from './ApoderadoInfoCard';
 import ComentarioCard from './ComentarioCard';
+import { ComentarioPension, Pension } from '../../../../../types/pensiones';
 const DivContainer = styled.div`
   width: 100%;
   display: grid;
@@ -21,7 +22,7 @@ export default function AlumnoPensionInfoModal({
   onCloseModal,
   selectedAlumno,
 }: {
-  onCloseModal;
+  onCloseModal: () => void;
   selectedAlumno: { estudiante: AMatriculado; pensiones: Pension[]; comentario?: ComentarioPension };
 }) {
   return (

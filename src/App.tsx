@@ -35,6 +35,7 @@ import Anuncios from './components/ui/Admin/Anuncios/Anuncios';
 import TeacherPage from './components/ui/Admin/TeacherPage/TeacherPage';
 import RecordNotas from './components/ui/Admin/RecordNotas/RecordNotas';
 import CursosManagment from './components/ui/Admin/CursosManagment/CursosManagment';
+import PensionesAtrasadosList from './components/ui/Admin/Pensiones/AtrasadosList/PensionesAtrasadosList';
 
 function App() {
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ function App() {
               <Route path="salon" element={<PensionesByGradoSeccion />} />
               <Route path="global" element={<PensionesGlobalReport />} />
               <Route path="consultas" element={<RecordPensionesByDateRange />} />
+              <Route path="atrasados" element={<PensionesAtrasadosList />} />
             </Route>
             <Route path="admin/pagos" element={<Yape />} />
             <Route path="admin/alumnos" element={<Alumnos />} />

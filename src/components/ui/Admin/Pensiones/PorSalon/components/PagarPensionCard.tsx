@@ -13,12 +13,21 @@ import calcularMoraPension, { getDisplayPensionCardBgColor } from './utils';
 import { AMatriculado } from '../../../../../../types/alumno';
 import toaster from 'react-hot-toast';
 import Loader from '../../../../Loader/Loader';
+import { PensionNoPagada } from '../../../../../../types/pensiones';
 
-export default function PagarPensionCard({ onCloseModal, selectedData }: { selectedData: { estudiante: AMatriculado; pension: PensionNoPagada }; onCloseModal: () => void }) {
+export default function PagarPensionCard({
+  onCloseModal,
+  selectedData,
+}: {
+  selectedData: { estudiante: AMatriculado; pension: PensionNoPagada };
+  onCloseModal: () => void;
+}) {
   const [loading, setLoading] = useState(false);
   const montoAbonadoRef = useRef<HTMLInputElement | null>(null);
   const moraRef = useRef<HTMLInputElement | null>(null);
-  const [fechaPagoActual, setFechaPagoActual] = useState(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16));
+  const [fechaPagoActual, setFechaPagoActual] = useState(
+    new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).toISOString().slice(0, 16),
+  );
   const { setData } = useContext(PensionesByGradoSeccionContext)!;
   return (
     <>
@@ -29,7 +38,15 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
             PAGAR PENSIÓN
           </Text>
           <Container $direction="row" $width="max-content" $gap="1rem" $border="1px solid black">
-            <Container $direction="column" $width="max-content" $bgColor="#0f0f0f" $padding="1rem" $gap="1rem" $height="8rem" $alignItems="center" $justifyContent="center">
+            <Container
+              $direction="column"
+              $width="max-content"
+              $bgColor="#0f0f0f"
+              $padding="1rem"
+              $gap="1rem"
+              $height="8rem"
+              $alignItems="center"
+              $justifyContent="center">
               <Text $bold $fontSize="small" $color={getDisplayPensionCardBgColor(selectedData.pension, new Date().getMonth())}>
                 {convertIndexToMonth(selectedData.pension.mes).toUpperCase()}
               </Text>
@@ -58,16 +75,10 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
               />
             </Container>
             <Container $direction="row" $gap=".1rem" $alignItems="center">
-              <Text $bold $color="red">Mora S/.</Text>
-              <StyledInput
-                defaultValue={calcularMoraPension(selectedData.pension.mes)}
-                name="mora"
-                min={0}
-                type="number"
-                ref={moraRef}
-                step={1}
-                max={300}
-              />
+              <Text $bold $color="red">
+                Mora S/.
+              </Text>
+              <StyledInput defaultValue={calcularMoraPension(selectedData.pension.mes)} name="mora" min={0} type="number" ref={moraRef} step={1} max={300} />
             </Container>
           </Container>
           <Container $gap="1rem" $direction="row">
@@ -92,7 +103,7 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
       setLoading(true);
       const monto_abonado = Number(montoAbonadoRef.current?.value);
       const mora = Number(moraRef.current?.value) || 0;
-      console.log({mora});
+      console.log({ mora });
       const saldoPagar = Number(selectedData.pension.monto_pagar) - Number(selectedData.pension.monto_pagado);
       if (!fechaPagoActual) throw new Error('fecha inválida');
       if ((monto_abonado === 0 && monto_pagar > 0) || Number(monto_abonado) > saldoPagar) {
@@ -107,7 +118,6 @@ export default function PagarPensionCard({ onCloseModal, selectedData }: { selec
         fecha: fechaPagoActual,
         mes: selectedData.pension.mes,
         alumnoId: selectedData.estudiante._id,
-        
       });
 
       updateToken(response);

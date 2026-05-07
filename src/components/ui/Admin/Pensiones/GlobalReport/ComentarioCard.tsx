@@ -16,6 +16,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../../../../../config/query/query';
 import AnotacionesRelevantes from '../../../../../models/AnotacionesRelevantes';
 import { AMatriculado } from '../../../../../types/alumno';
+import { ComentarioPension, Pension } from '../../../../../types/pensiones';
 
 type QueryData = {
   comentario?: {

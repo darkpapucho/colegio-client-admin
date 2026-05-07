@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Container } from '../../../../../shared/Container';
 import { getDisplayPensionCardContent, getDisplayPensionCardBgColor } from './utils';
+import { Pension } from '../../../../../../types/pensiones';
 
 const DisplayPensionContainer = styled(Container)<{ $index: boolean }>`
   ${({ $index }) =>

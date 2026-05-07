@@ -13,6 +13,7 @@ import Loader from '../../../../Loader/Loader';
 import { updateToken } from '../../../../../../utils/utils';
 import toaster from 'react-hot-toast';
 import { Text } from '../../../../../shared/Text';
+import { Pension } from '../../../../../../types/pensiones';
 
 const DivContainer = styled.div`
   width: 100%;
@@ -58,7 +59,14 @@ export default function EditMontoPagarPensionesModal({
                   <p>{MONTHS[pension.mes].toUpperCase()}</p>
                   <p>PENSION: S/.{pension.monto_pagar}</p>
                   {!pension.pagado && (
-                    <input onChange={(event) => handleChange(event)} name={pension.mes + ''} type="number" min={0} max={200} defaultValue={pension.monto_pagar} step={10}></input>
+                    <input
+                      onChange={(event) => handleChange(event)}
+                      name={pension.mes + ''}
+                      type="number"
+                      min={0}
+                      max={200}
+                      defaultValue={pension.monto_pagar}
+                      step={10}></input>
                   )}
                 </Container>
               );
