@@ -55,17 +55,21 @@ export default function AgregarProfesor() {
           <Input label="Teléfono" ref={telefonoRef} name="telefono" type="text" $width="100%"></Input>
           <Input label="Correo" ref={correoRef} name="correo" type="text" $width="100%"></Input>
         </Container>
-        <Container $direction="row" $gap="1rem" $width="100%">
-          <Text $bold $fontSize="medium">
-            {state.salones.length} {state.salones.length !== 1 ? ' salones:' : ' salón:'}
-          </Text>
-          <Select options={SALONES_OPTIONS} label="--agregar salón--" name="addSalon" width="15rem" tiny></Select>
-        </Container>
-        <Container $gap=".4rem" $direction="column" $width="max-content">
-          {salonesSorted.map((salon) => {
-            return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
-          })}
-        </Container>
+        {nivel != 'inicial' && (
+          <>
+            <Container $direction="row" $gap="1rem" $width="100%">
+              <Text $bold $fontSize="medium">
+                {state.salones.length} {state.salones.length !== 1 ? ' salones:' : ' salón:'}
+              </Text>
+              <Select options={SALONES_OPTIONS} label="--agregar salón--" name="addSalon" width="15rem" tiny></Select>
+            </Container>
+            <Container $gap=".4rem" $direction="column" $width="max-content">
+              {salonesSorted.map((salon) => {
+                return <SalonCard salon={salon} deleteSalon={deleteSalon} deleteCurso={deleteCurso} key={salon.label} />;
+              })}
+            </Container>
+          </>
+        )}
         <Container $direction="row" $alignItems="center" $gap="2rem">
           <Button disabled={isLoading} $primary $small $width="max-content" onClick={() => submitFOrm()}>
             Crear Profesor
@@ -113,30 +117,37 @@ export default function AgregarProfesor() {
       const dni = dniRef.current!.value.trim();
       const telefono = telefonoRef.current!.value.trim();
       const correo = correoRef.current!.value.trim();
-      //validaciones
-      asserts(nombres.length >= 4, 'nombres debe contener al menos 4 caracteres');
-      asserts(apellidos.length >= 8, 'apellidos debe contener al menos 8 caracteres');
-      asserts(dni.length === 8 && typeof +dni === 'number', 'DNI inválido');
-      assertCorreo(correo);
-      if (telefono.length > 0) {
-        asserts(telefono.length === 9 && typeof +telefono === 'number', 'teléfono inválido');
-      }
-      //validar al menos 1 salon seleccionado
-      if (state.salones.length === 0) throw new Error('debes seleccionar al menos 1 salón para el profesor');
-      const validSalones = state.salones.filter((salon) => salon.cursos.length > 0);
-      //validar q cada salon tenga al menos 1 curso seleccionado
-      if (validSalones.length !== state.salones.length) {
-        throw new Error('todos los salones deben tener al menos 1 curso agregado');
-      }
-      //data:
       const profesorData: ProfesorData = {
         nombres,
         apellidos,
         dni: dni,
         correo,
-        salones: state.salones,
+        telefono: telefono.length > 0 ? +telefono : undefined,
       };
+      //validaciones
+      asserts(nombres.length >= 4, 'nombres debe contener al menos 4 caracteres');
+      asserts(apellidos.length >= 8, 'apellidos debe contener al menos 8 caracteres');
+      asserts(dni.length === 8 && typeof +dni === 'number', 'DNI inválido');
       if (telefono.length > 0) profesorData.telefono = +telefono;
+      assertCorreo(correo);
+      if (telefono.length > 0) {
+        asserts(telefono.length === 9 && typeof +telefono === 'number', 'teléfono inválido');
+      }
+      //validar al menos 1 salon seleccionado
+      if (nivel != 'inicial' && state.salones.length === 0) throw new Error('debes seleccionar al menos 1 salón para el profesor');
+      // if (state.salones.length === 0) throw new Error('debes seleccionar al menos 1 salón para el profesor');
+
+      if (nivel != 'inicial' && state.salones.length > 0) {
+        const validSalones = state.salones.filter((salon) => salon.cursos.length > 0);
+        if (validSalones.length !== state.salones.length) {
+          throw new Error('todos los salones deben tener al menos 1 curso agregado');
+        }
+        profesorData.salones = state.salones;
+      }
+      //validar q cada salon tenga al menos 1 curso seleccionado
+
+      //data:
+
       const response = await User.crearProfesor(profesorData);
       updateToken(response);
       if (!response.data.ok) {

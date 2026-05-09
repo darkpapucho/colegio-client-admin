@@ -17,5 +17,5 @@ export type ProfesorData = {
   dni: STRING;
   telefono?: number;
   correo?: string;
-  salones: SalonProfesor[];
+  salones?: SalonProfesor[];
 };

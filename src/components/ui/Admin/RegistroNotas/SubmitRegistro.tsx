@@ -47,7 +47,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
         toaster.success('Se guardó el registro exitosamente.');
         const data = await fetchRegistroNotas({ grado, seccion });
         setData(data);
-      } else if (nivel === 'primaria') {
+      } else if (nivel === 'primaria' || nivel === 'secundaria') {
         response = await Notas.updateRecordNotasPrimaria({ registro: registro as RecordNotasPrimaria[] });
         updateToken(response!);
         if (!response.data.ok) throw new Error(response.data.message);
@@ -58,6 +58,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
 
         setData(res.data.payload.registroNotas);
       }
+      console.log({ response });
       asserts(response != undefined, 'response is undefined');
     } catch (err) {
       errorHandler(err);
