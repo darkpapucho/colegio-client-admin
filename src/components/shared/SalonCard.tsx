@@ -12,6 +12,14 @@ import { theme } from '../../config/styled/styled';
 import { SalonProfesor } from './Profesor/types';
 import useCursosSelectOptions from '../../hooks/useCursosSelectOptions';
 import Loader from '../ui/Loader/Loader';
+import styled from 'styled-components';
+
+const CursosContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+`;
 
 export default function SalonCard({
   salon,
@@ -56,11 +64,11 @@ export default function SalonCard({
         <Select width="22rem" options={CURSOS_OPTIONS_DYNAMIC} label="--agregar curso--" name="addCurso" tiny></Select>
       </Container>
 
-      <Container $direction="row" $gap="2px" $justifyContent="start" $width="max-content">
+      <CursosContainer>
         {salon.cursos.map((curso, id) => {
           return <CursoCard curso={curso} salonLabel={salon.label} deleteCurso={deleteCurso} key={id} />;
         })}
-      </Container>
+      </CursosContainer>
     </Container>
   );
   //   function deleteSalon(salonLabel: string) {

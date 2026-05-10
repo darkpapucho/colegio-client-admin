@@ -81,6 +81,7 @@ export default function AgregarProfesor() {
       </Container>
     </SimpleLayout>
   );
+  //TODO: agregar salones para los profesores de incial con los cursos que corresponden
   function selectListener(event: CustomEvent) {
     const { name, value } = event.detail;
     if (name === 'addCurso') {

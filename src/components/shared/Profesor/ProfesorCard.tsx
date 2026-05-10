@@ -41,10 +41,10 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   useCustomEvent('customSelect', listener);
   useCustomEvent('customCheckbox', checkboxListener);
   return (
-    <div className="@container flex flex-col gap-4 w-full">
+    <Container $direction="column" $gap="2rem" $width="100%">
       <Container $direction="column" $gap="1.5rem" $width="100%">
         {/* <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem"> */}
-        <div className="flex w-full items-center border-1 border-black px-[1rem]">
+        <Container $direction="row" $gap=".5rem" $alignItems="center">
           <Text $bold $fontSize="small">
             Apellidos:
           </Text>
@@ -56,11 +56,11 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
               <FiSave onClick={() => updateProfesorData('apellidos')} />
             )}
           </Icon>
-        </div>
+        </Container>
         {/* </Container> */}
 
-        <div className="flex w-full items-center border-1 border-black px-[1rem]">
-          <Text $bold $fontSize="small">
+        <Container $direction="row" $gap=".5rem" $alignItems="center">
+          <Text $bold $fontSize="small" $width="6rem">
             Nombres:
           </Text>
           <StyledInput $grow defaultValue={profesor.nombres} disabled={locks.nombres} ref={nombresRef} />
@@ -71,23 +71,19 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
               <FiSave onClick={() => updateProfesorData('nombres')} />
             )}
           </Icon>
-        </div>
+        </Container>
 
-        <div className="flex w-full items-center border-1 border-black px-[1rem]">
-          <Text $bold $fontSize="small">
+        <Container $direction="row" $gap=".5rem" $alignItems="center">
+          <Text $bold $fontSize="small" $width="6rem">
             DNI:
           </Text>
           <StyledInput $grow defaultValue={profesor.dni} disabled={locks.dni} ref={dniRef} />
           <Icon $primary $small $pointer>
-            {locks.dni ? (
-              <CiEdit onClick={() => setLocks((old) => ({ ...old, dni: false }))} />
-            ) : (
-              <FiSave onClick={() => updateProfesorData('dni')} />
-            )}
+            {locks.dni ? <CiEdit onClick={() => setLocks((old) => ({ ...old, dni: false }))} /> : <FiSave onClick={() => updateProfesorData('dni')} />}
           </Icon>
-        </div>
-        <div className="flex w-full items-center border-1 border-black px-[1rem]">
-          <Text $bold $fontSize="small">
+        </Container>
+        <Container $direction="row" $gap=".5rem" $alignItems="center">
+          <Text $bold $fontSize="small" $width="6rem">
             Teléfono:
           </Text>
           <StyledInput $grow defaultValue={profesor.telefono ? profesor.telefono : ''} disabled={locks.telefono} ref={telefonoRef} />
@@ -98,20 +94,16 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
               <FiSave onClick={() => updateProfesorData('telefono')} />
             )}
           </Icon>
-        </div>
-        <div className="flex w-full items-center border-1 border-black px-[1rem]">
-          <Text $bold $fontSize="small">
+        </Container>
+        <Container $direction="row" $gap=".5rem" $alignItems="center">
+          <Text $bold $fontSize="small" $width="6rem">
             Correo:
           </Text>
           <StyledInput $grow defaultValue={profesor.correo} disabled={locks.correo} ref={correoRef} />
           <Icon $primary $small $pointer>
-            {locks.correo ? (
-              <CiEdit onClick={() => setLocks((old) => ({ ...old, correo: false }))} />
-            ) : (
-              <FiSave onClick={() => updateProfesorData('correo')} />
-            )}
+            {locks.correo ? <CiEdit onClick={() => setLocks((old) => ({ ...old, correo: false }))} /> : <FiSave onClick={() => updateProfesorData('correo')} />}
           </Icon>
-        </div>
+        </Container>
       </Container>
 
       <Container $direction="row" $gap="1rem" $width="100%">
@@ -141,7 +133,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
           Cancelar
         </Button>
       </Container>
-    </div>
+    </Container>
   );
   function listener(event: CustomEvent) {
     const { name, value } = event.detail;
