@@ -61,4 +61,5 @@ export enum ApiEndPoints {
   FETCH_RECIBO_BY_ID = '/pensiones/fetch-recibo-by-id',
   FETCH_ATRASADOS_LIST = '/pensiones/fetch-atrasados-list',
   COBRAR_PENSION = '/pensiones/cobrar-pension',
+  GET_PENSIONES_POR_COBRAR = '/pensiones/calcular-pensiones-por-cobrar',
 }

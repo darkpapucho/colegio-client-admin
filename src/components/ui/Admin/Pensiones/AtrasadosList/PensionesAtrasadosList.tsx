@@ -13,6 +13,8 @@ import { updateToken } from '../../../../../utils/utils';
 import { Button } from '../../../../shared/Button';
 import { useEffect } from 'react';
 import PensionesAtrasadosTable from './PensionesAtrasadosTable';
+import useCalcularPensionesPorCobrar from '../../../../../hooks/useCalcularPensionesPorCobrar';
+import MontosPorCobrarTable from './MontosPorCobrarTable';
 const secciones = [
   { label: 'A', value: 'A' },
   { label: 'B', value: 'B' },
@@ -20,6 +22,7 @@ const secciones = [
 
 export default function PensionesAtrasadosList() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
+
   const { grado, seccion, setSearchParams } = useGradoSeccionSearchParams();
   const { isFetching, error, refetch, data } = useQuery({
     queryKey: ['pensiones-atrasados', nivel, grado, seccion],
@@ -39,7 +42,7 @@ export default function PensionesAtrasadosList() {
       <Text $bold $fontSize="medium">
         Lista de Pensiones Atrasadas
       </Text>
-      {/* Aquí iría la tabla o lista de pensiones atrasadas */}
+      <MontosPorCobrarTable />
       <Container $direction="row" $width="max-length" $gap="1rem" $alignItems="center" $height="35px">
         <Select options={grados[nivel]} label="grado" name="grado" tiny width="130px"></Select>
         <Select options={secciones} label="seccion" name="seccion" tiny width="90px"></Select>

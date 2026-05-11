@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Container } from '../../../shared/Container';
 import MultiTabs from '../../../shared/Widget/MultiTabs';
 import { useEffect } from 'react';
+import useCalcularPensionesPorCobrar from '../../../../hooks/useCalcularPensionesPorCobrar';
 
 const pensionesTabs = [
   { label: 'Por Salón', url: 'salon' },
@@ -13,6 +14,8 @@ const pensionesTabs = [
 
 export default function Pensiones() {
   const navigate = useNavigate();
+  useCalcularPensionesPorCobrar();
+
   useEffect(() => {
     navigate('salon');
   }, []);

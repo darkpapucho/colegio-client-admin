@@ -8,6 +8,14 @@ import { GetHeaders } from '../utils/utils';
 import { Pension, PensionesAtrasadasListDetail } from '../types/pensiones';
 
 export class Pensiones {
+  static async calcularMontoPorCobrar() {
+    const response = await axios.get<ResponseSchema<{ mesesDeuda: number; cantidadAlumnos: number; montoTotalPorCobrar: number }[]>>(
+      `${API_BASE_URL + ApiEndPoints.GET_PENSIONES_POR_COBRAR}`,
+      GetHeaders(),
+    );
+
+    return response;
+  }
   static async cobrarPension({ detalle, fecha, alumnoId }: { detalle: string; fecha: Date; alumnoId: string }) {
     const response = await axios.post<ResponseSchema<boolean>>(`${API_BASE_URL + ApiEndPoints.COBRAR_PENSION}`, { detalle, fecha, alumnoId }, GetHeaders());
     return response;
