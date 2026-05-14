@@ -4,10 +4,8 @@ import { Container } from '../../../../shared/Container';
 import { Text } from '../../../../shared/Text';
 import Table from '../../../Table/Table';
 import { recortarNombres } from '../../../../../utils/utils';
-import { Icon } from '../../../../shared/Icon';
 import { BsEye } from 'react-icons/bs';
 import AtrasoDetailModal from './AtrasoDetailModal';
-import { set } from 'zod';
 
 export default function PensionesAtrasadosTable({ list }: { list: PensionesAtrasadasListDetail[] }) {
   const parsedList = list

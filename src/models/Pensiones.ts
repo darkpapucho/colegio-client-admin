@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { EstadoMatricula, Grado, Seccion } from '../types/enums';
+import { EstadoMatricula, Grado, Nivel, Seccion, Year } from '../types/enums';
 import { API_BASE_URL } from '../var/globals';
 import { ApiEndPoints } from '../enums/apiEndPoints';
 import { ResponseSchema } from '../types/axiosResponse';
-import { AMatriculado } from '../types/alumno';
+import { AlumnoRiesgoSuspension, AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 import { Pension, PensionesAtrasadasListDetail } from '../types/pensiones';
 
 export class Pensiones {
+  static async getAlumnosRiesgoSuspension() {
+    const response = await axios.get<ResponseSchema<AlumnoRiesgoSuspension[]>>(API_BASE_URL + ApiEndPoints.GET_ALUMNOS_RIESGO_SUSPENSION, GetHeaders());
+    return response;
+  }
   static async calcularMontoPorCobrar() {
     const response = await axios.get<ResponseSchema<{ mesesDeuda: number; cantidadAlumnos: number; montoTotalPorCobrar: number }[]>>(
       `${API_BASE_URL + ApiEndPoints.GET_PENSIONES_POR_COBRAR}`,

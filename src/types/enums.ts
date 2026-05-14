@@ -24,7 +24,7 @@ export type MONTH_NAME = (typeof VALID_MONTHS)[number];
 export const VALID_NOTAS = ['A', 'B', 'C', 'AD'] as const;
 export type Nota = (typeof VALID_NOTAS)[number];
 // estados matricula
-export const ESTADOS_MATRICULA = ['DEFINITIVA', 'EN PROCESO', 'TRASLADADO', 'RETIRADO'] as const;
+export const ESTADOS_MATRICULA = ['DEFINITIVA', 'TRASLADADO', 'RETIRADO', 'SUSPENDIDO'] as const;
 export type EstadoMatricula = (typeof ESTADOS_MATRICULA)[number];
 //years
 export const VALID_YEARS = ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'] as const;

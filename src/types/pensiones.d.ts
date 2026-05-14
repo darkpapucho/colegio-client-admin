@@ -40,3 +40,14 @@ export type PensionesAtrasadasListDetail = {
     fecha: string;
   };
 };
+export type AtrasoPensionDetailModal = {
+  nombreCompleto: string;
+  mesesAtrasoDetalle: PensionNoPagada[];
+  totalMesesAtraso: number;
+  apoderados: Apoderado[];
+  _id: string;
+  ultimoCobro?: {
+    detalle: string;
+    fecha: string;
+  };
+};

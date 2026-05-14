@@ -1,20 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
-import { Grado, Nivel, Seccion } from '../../../../../types/enums';
 import { grados } from '../../../../../utils/var';
 import { Container } from '../../../../shared/Container';
 import Select from '../../../../shared/Select';
 import { Text } from '../../../../shared/Text';
 import useCustomEvent from '../../../../../hooks/useCustomEvent';
 import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
-import { errorHandler } from '../../../../../utils/errorHandler';
-import { Pensiones } from '../../../../../models/Pensiones';
-import { updateToken } from '../../../../../utils/utils';
+
 import { Button } from '../../../../shared/Button';
-import { useEffect } from 'react';
+
 import PensionesAtrasadosTable from './PensionesAtrasadosTable';
-import useCalcularPensionesPorCobrar from '../../../../../hooks/useCalcularPensionesPorCobrar';
+
 import MontosPorCobrarTable from './MontosPorCobrarTable';
+import usePensionesAtrasadasList from '../../../../../hooks/usePensionesAtrasadasList';
+import { Nivel } from '../../../../../types/enums';
 const secciones = [
   { label: 'A', value: 'A' },
   { label: 'B', value: 'B' },
@@ -22,21 +20,9 @@ const secciones = [
 
 export default function PensionesAtrasadosList() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
-
-  const { grado, seccion, setSearchParams } = useGradoSeccionSearchParams();
-  const { isFetching, error, refetch, data } = useQuery({
-    queryKey: ['pensiones-atrasados', nivel, grado, seccion],
-    queryFn: fetchAtrasados,
-    enabled: false,
-    refetchOnWindowFocus: false,
-  });
+  const { setSearchParams, grado, seccion } = useGradoSeccionSearchParams();
   useCustomEvent('customSelect', customSelectListener);
-  useEffect(() => {
-    if (!error) return;
-    if (error) {
-      errorHandler(error);
-    }
-  }, [error]);
+  const { data, isFetching, refetch } = usePensionesAtrasadasList();
   return (
     <Container $width="100%" $direction="column" $gap="1rem">
       <Text $bold $fontSize="medium">
@@ -55,14 +41,6 @@ export default function PensionesAtrasadosList() {
       </Container>
     </Container>
   );
-  async function fetchAtrasados() {
-    if (!grado || !seccion) throw new Error('Grado y sección son requeridos');
-    const response = await Pensiones.fetchAtrasadosList({ grado: grado as Grado, seccion: seccion as Seccion });
-    updateToken(response);
-    if (!response.data.ok) throw new Error(response.data.message);
-    console.log({ payload: response.data.payload });
-    return response.data.payload;
-  }
 
   function customSelectListener(e: CustomEvent) {
     const { name, value } = e.detail;

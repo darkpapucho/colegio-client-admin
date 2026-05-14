@@ -1,4 +1,5 @@
-import { EstadoMatricula } from './enums';
+import { EstadoMatricula, Grado, Seccion } from './enums';
+import { Pension } from './pensiones';
 
 type TipoApoderado = 'MADRE' | 'PADRE' | 'APODERADO';
 type Sexo = 'Hombre' | 'Mujer';
@@ -44,4 +45,18 @@ export interface NuevoAlumno {
 
 export type PartialAlumno = {
   [item in keyof AMatriculado]?: AMatriculado[item];
+};
+
+export type AlumnoRiesgoSuspension = {
+  numPensionesAtrasadas: number;
+  nombreCompleto: string;
+  grado: Grado;
+  seccion: Seccion;
+  apoderados: Apoderado[];
+  _id: string;
+  pensiones: PensionNoPagada[];
+  ultimoCobro: {
+    detalle: string;
+    fecha: string;
+  };
 };

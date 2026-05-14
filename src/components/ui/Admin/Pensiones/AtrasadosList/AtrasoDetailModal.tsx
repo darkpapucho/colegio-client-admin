@@ -1,5 +1,5 @@
 import { Fragment, useRef, useState } from 'react';
-import { PensionesAtrasadasListDetail } from '../../../../../types/pensiones';
+import { AtrasoPensionDetailModal } from '../../../../../types/pensiones';
 import { Container } from '../../../../shared/Container';
 import Modal from '../../../../shared/Modal';
 import { Text } from '../../../../shared/Text';
@@ -15,13 +15,12 @@ import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Grado, Nivel, Seccion } from '../../../../../types/enums';
 import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
 import { queryClient } from '../../../../../config/query/query';
-import { set } from 'zod';
 
-export default function AtrasoDetailModal({ detail, onCloseModal }: { detail: PensionesAtrasadasListDetail; onCloseModal: () => void }) {
+export default function AtrasoDetailModal({ detail, onCloseModal }: { detail: AtrasoPensionDetailModal; onCloseModal: () => void }) {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const { grado, seccion } = useGradoSeccionSearchParams();
-  const [loading, setLoading] = useState(false);
+  const [_, setLoading] = useState(false);
   return (
     <Modal width="100rem" onCloseModal={onCloseModal} title={detail.nombreCompleto}>
       <Container $width="100%" $direction="column" $gap="1rem">

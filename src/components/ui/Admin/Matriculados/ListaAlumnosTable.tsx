@@ -12,18 +12,11 @@ import { Container } from '../../../shared/Container';
 const estados: { label: EstadoMatricula | 'TODOS'; value: EstadoMatricula | 'TODOS' }[] = [
   { label: 'TODOS', value: 'TODOS' },
   { label: 'DEFINITIVA', value: 'DEFINITIVA' },
-  { label: 'EN PROCESO', value: 'EN PROCESO' },
+  { label: 'SUSPENDIDO', value: 'SUSPENDIDO' },
   { label: 'TRASLADADO', value: 'TRASLADADO' },
   { label: 'RETIRADO', value: 'RETIRADO' },
 ];
-const headers = [
-  'ALUMNO',
-  <Filter name="estadoMatricula" label="ESTADO" options={estados} width="10rem"></Filter>,
-  'DNI',
-  'GRADO',
-  'SECCIÓN',
-  'EDIT',
-];
+const headers = ['ALUMNO', <Filter name="estadoMatricula" label="ESTADO" options={estados} width="10rem"></Filter>, 'DNI', 'GRADO', 'SECCIÓN', 'EDIT'];
 
 export default function ListaAlumnosTable({
   alumnos,

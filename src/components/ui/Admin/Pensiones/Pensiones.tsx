@@ -3,6 +3,7 @@ import { Container } from '../../../shared/Container';
 import MultiTabs from '../../../shared/Widget/MultiTabs';
 import { useEffect } from 'react';
 import useCalcularPensionesPorCobrar from '../../../../hooks/useCalcularPensionesPorCobrar';
+import useGetAlumnoRiesgoSuspension from '../../../../hooks/useGetAlumnosRiesgoSuspension';
 
 const pensionesTabs = [
   { label: 'Por Salón', url: 'salon' },
@@ -10,12 +11,15 @@ const pensionesTabs = [
 
   { label: 'Consultas', url: 'consultas' },
   { label: 'Atrasados', url: 'atrasados' },
+  { label: 'Riesgo Suspension', url: 'alumnos-riesgo-suspension' },
+  { label: 'Suspendidos', url: 'suspendidos' },
 ];
 
 export default function Pensiones() {
   const navigate = useNavigate();
   useCalcularPensionesPorCobrar();
-
+  const { data } = useGetAlumnoRiesgoSuspension();
+  console.log({ data });
   useEffect(() => {
     navigate('salon');
   }, []);

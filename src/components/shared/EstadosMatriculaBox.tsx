@@ -18,7 +18,7 @@ const ContainerBox = styled(Container)`
 `;
 
 export default function EstadosMatriculaBox({ setSearchParams }: { setSearchParams: SetURLSearchParams }) {
-  const [estadosMatricula, setEstadosMatricula] = useState<Set<EstadoMatricula>>(new Set(['EN PROCESO', 'DEFINITIVA']));
+  const [estadosMatricula, setEstadosMatricula] = useState<Set<EstadoMatricula>>(new Set(['DEFINITIVA']));
   useCustomEvent('customCheckbox', checkboxListener);
   //do this just once
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function EstadosMatriculaBox({ setSearchParams }: { setSearchPara
   return (
     <ContainerBox $direction="row" $gap="0.5rem" $border="1px solid black" $width="max-content">
       <CheckBox initialState={estadosMatricula.has('DEFINITIVA')} width="max-content" label="DEFINITIVA" name="estadoMatricula-DEFINITIVA"></CheckBox>
-      <CheckBox initialState={estadosMatricula.has('EN PROCESO')} width="max-content" label="EN PROCESO" name="estadoMatricula-EN PROCESO"></CheckBox>
+      <CheckBox initialState={estadosMatricula.has('SUSPENDIDO')} width="max-content" label="SUSPENDIDO" name="estadoMatricula-SUSPENDIDO"></CheckBox>
       <CheckBox initialState={estadosMatricula.has('TRASLADADO')} width="max-content" label="TRASLADADO" name="estadoMatricula-TRASLADADO"></CheckBox>
       <CheckBox initialState={estadosMatricula.has('RETIRADO')} width="max-content" label="RETIRADO" name="estadoMatricula-RETIRADO"></CheckBox>
     </ContainerBox>
