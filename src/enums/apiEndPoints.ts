@@ -63,4 +63,6 @@ export enum ApiEndPoints {
   COBRAR_PENSION = '/pensiones/cobrar-pension',
   GET_PENSIONES_POR_COBRAR = '/pensiones/calcular-pensiones-por-cobrar',
   GET_ALUMNOS_RIESGO_SUSPENSION = '/pensiones/get-alumnos-riesgo-suspension',
+  GET_RECAUDACION_MES_ACTUAL = '/pensiones/get-recaudacion-mes-actual',
+  GET_HISTORIAL_RECAUDACIONES = '/pensiones/get-historial-recaudaciones',
 }

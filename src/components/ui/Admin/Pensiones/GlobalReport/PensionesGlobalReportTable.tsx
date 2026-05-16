@@ -1,109 +1,138 @@
-import { createContext, Fragment, memo, useEffect, useState } from 'react';
+import { createContext, Fragment, useState } from 'react';
 import { Container } from '../../../../shared/Container';
 import { Text } from '../../../../shared/Text';
 import Table from '../../../Table/Table';
-import DisplayHoverMessage from '../../../../shared/DisplayHoverMessage';
-import { useQuery } from '@tanstack/react-query';
+
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
-import { Nivel } from '../../../../../types/enums';
+import { Nivel, VALID_MONTHS } from '../../../../../types/enums';
 import Loader from '../../../Loader/Loader';
-import AlumnosResultList from './AlumnosResultList';
-import { errorHandler } from '../../../../../utils/errorHandler';
-import { colorPickerForChart, fetchAlumnosList } from './utils';
-import { Doughnut } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  ArcElement, // ← Required for Doughnut
-  Tooltip,
-  Legend,
-  Title,
-} from 'chart.js';
+
+import { colorPickerForChart } from './utils';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import useGetHistorialRecaudaciones from '../../../../../hooks/useGetHistorialRecaudaciones';
 
 // Register ChartJS components
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export const PensionesGlobalReportTableContext = createContext<{ selectedNumber: number | null } | null>(null);
 
-export default function PensionesGlobalReportTable({ data }: { data: { numeroPensionesAtrasadas: number; totalAlumnos: number }[] }) {
+export default function PensionesGlobalReportTable() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
-  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
+  const [selectedNumber, _setSelectedNumber] = useState<number | null>(null);
 
-  const {
-    isFetching,
-    data: list,
-    error,
-  } = useQuery({
-    queryKey: ['alumnos-list-by-pensiones-atrasadas', nivel, selectedNumber],
-    queryFn: () => fetchAlumnosList({ selectedNumber }),
-    enabled: selectedNumber !== null,
-    refetchOnMount: true,
-    staleTime: 1000 * 60 * 3,
-  });
+  // const {
+  //   isFetching,
+  //   data: list,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ['alumnos-list-by-pensiones-atrasadas', nivel, selectedNumber],
+  //   queryFn: () => fetchAlumnosList({ selectedNumber }),
+  //   enabled: selectedNumber !== null,
+  //   refetchOnMount: true,
+  //   staleTime: 1000 * 60 * 3,
+  // });
+  const { data, isFetching } = useGetHistorialRecaudaciones();
+
   const chartData = {
-    labels: data.map((row) => `${row.numeroPensionesAtrasadas} ${row.numeroPensionesAtrasadas == 1 ? `mes` : 'meses'}`),
+    labels: data ? data?.map((row) => VALID_MONTHS[row._id]) : [],
     datasets: [
       {
-        label: 'Pensiones Atrasadas',
-        data: data.map((row) => row.totalAlumnos),
-        backgroundColor: data.map((row) => colorPickerForChart(row.numeroPensionesAtrasadas).bgColor),
-        borderColor: data.map((row) => colorPickerForChart(row.numeroPensionesAtrasadas).borderColor),
+        label: 'RECAUDACION MENSUAL',
+        data: data ? data.map((row) => row.recaudado) : [],
+        backgroundColor: data ? data.map((row) => colorPickerForChart(row._id).bgColor) : 'gray',
+        borderColor: data?.map((row) => colorPickerForChart(row._id).borderColor),
+        barThickness: 40,
+        maxBarThickness: 50,
+        categoryPercentage: 0.4,
       },
     ],
   };
-  useEffect(() => {
-    if (!error) return;
-    errorHandler(error);
-  }, [error]);
+  if (!data) return <>OPPS ERROR!</>;
   return (
     <PensionesGlobalReportTableContext.Provider value={{ selectedNumber }}>
-      <Container $direction="row" $gap="2rem">
+      <Container $direction="row" $gap="2rem" $width="100%">
         {isFetching && <Loader />}
 
-        <Container $direction="column" $gap="2rem" $border="2px solid black" $padding="0 2rem">
+        <Container $direction="column" $gap="2rem" $border="2px solid black" $padding="0 2rem" $width="100%">
           <Text $width="100%" $textAlign="center" $bold $fontSize="medium">
-            Reporte Global
+            {`Reporte Global de Recaudaciones ${nivel}`}
           </Text>
-          <Table width="fit-content" gridTemplateColumns="15rem 18rem" withBorder>
+          <Table width="fit-content" gridTemplateColumns="8rem 12rem 12rem 12rem 6rem" withBorder>
             <Table.Header>
               <Table.Header.Item>
-                <Container $padding="1rem" $width="100%">
-                  <DisplayHoverMessage width="100%" label="N.P.A." message="Numero de Pensiones Atrasadas" />
+                <Container $padding="1rem" $width="100%" $alignItems="center" $justifyContent="center">
+                  <Text $bold>MES</Text>
                 </Container>
               </Table.Header.Item>
               <Table.Header.Item>
-                <Container $padding="1rem" $width="100%">
-                  <DisplayHoverMessage width="100%" label="T.A." message="Total de alumnos" />
+                <Container $padding="1rem" $width="100%" $alignItems="center" $justifyContent="center">
+                  <Text $bold>RECAUDADO</Text>
+                </Container>
+              </Table.Header.Item>
+              <Table.Header.Item>
+                <Container $padding="1rem" $width="100%" $alignItems="center" $justifyContent="center">
+                  <Text $bold>PENDIENTE</Text>
+                </Container>
+              </Table.Header.Item>
+              <Table.Header.Item>
+                <Container $padding="1rem" $width="100%" $alignItems="center" $justifyContent="center">
+                  <Text $bold>TOTAL</Text>
+                </Container>
+              </Table.Header.Item>
+              <Table.Header.Item>
+                <Container $padding="1rem" $width="100%" $alignItems="center" $justifyContent="center">
+                  <Text $bold>%</Text>
                 </Container>
               </Table.Header.Item>
               <Table.Body>
-                {[...data]
-                  .sort((prev, curr) => (prev.numeroPensionesAtrasadas < curr.numeroPensionesAtrasadas ? 1 : -1))
-                  .map((record, ind) => {
-                    return (
-                      <Fragment key={ind}>
-                        <Table.Body.Item $key={ind}>
-                          <Container $pointer $padding="1rem" $width="100%" onClick={() => setSelectedNumber(record.numeroPensionesAtrasadas)}>
-                            <Text $width="100%" $bold $textAlign="center">
-                              {record.numeroPensionesAtrasadas}
-                            </Text>
-                          </Container>
-                        </Table.Body.Item>
-                        <Table.Body.Item $key={ind}>
-                          <Container $padding="1rem" $width="100%">
-                            <Text $width="100%" $bold $textAlign="center">
-                              {record.totalAlumnos}
-                            </Text>
-                          </Container>
-                        </Table.Body.Item>
-                      </Fragment>
-                    );
-                  })}
+                {[...data].map((record, ind) => {
+                  return (
+                    <Fragment key={ind}>
+                      <Table.Body.Item $key={ind}>
+                        <Container $pointer $padding="1rem" $width="100%">
+                          <Text $width="100%" $bold $textAlign="center">
+                            {VALID_MONTHS[record._id].toUpperCase()}
+                          </Text>
+                        </Container>
+                      </Table.Body.Item>
+                      <Table.Body.Item $key={ind}>
+                        <Container $padding="1rem" $width="100%">
+                          <Text $width="100%" $bold $textAlign="center">
+                            {'S/.' + record.recaudado.toLocaleString('en-US')}
+                          </Text>
+                        </Container>
+                      </Table.Body.Item>
+                      <Table.Body.Item $key={ind}>
+                        <Container $padding="1rem" $width="100%">
+                          <Text $width="100%" $bold $textAlign="center">
+                            {'S/.' + record.pendiente.toLocaleString('en-US')}
+                          </Text>
+                        </Container>
+                      </Table.Body.Item>
+                      <Table.Body.Item $key={ind}>
+                        <Container $padding="1rem" $width="100%">
+                          <Text $width="100%" $bold $textAlign="center">
+                            {'S/.' + record.total.toLocaleString('en-US')}
+                          </Text>
+                        </Container>
+                      </Table.Body.Item>
+                      <Table.Body.Item $key={ind}>
+                        <Container $padding="1rem" $width="100%">
+                          <Text $width="100%" $bold $textAlign="center">
+                            {record.porcentaje.toFixed(2)}
+                          </Text>
+                        </Container>
+                      </Table.Body.Item>
+                    </Fragment>
+                  );
+                })}
               </Table.Body>
             </Table.Header>
           </Table>
           {data && (
-            <Container>
-              <Doughnut
+            <Container $width="100%">
+              <Bar
                 data={chartData}
                 options={{
                   plugins: {
@@ -125,7 +154,6 @@ export default function PensionesGlobalReportTable({ data }: { data: { numeroPen
             </Container>
           )}
         </Container>
-        {list && list.length > 0 && <AlumnosResultList data={list} />}
       </Container>
     </PensionesGlobalReportTableContext.Provider>
   );

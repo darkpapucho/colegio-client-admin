@@ -4,6 +4,7 @@ import MultiTabs from '../../../shared/Widget/MultiTabs';
 import { useEffect } from 'react';
 import useCalcularPensionesPorCobrar from '../../../../hooks/useCalcularPensionesPorCobrar';
 import useGetAlumnoRiesgoSuspension from '../../../../hooks/useGetAlumnosRiesgoSuspension';
+import useGetHistorialRecaudaciones from '../../../../hooks/useGetHistorialRecaudaciones';
 
 const pensionesTabs = [
   { label: 'Por Salón', url: 'salon' },
@@ -18,8 +19,9 @@ const pensionesTabs = [
 export default function Pensiones() {
   const navigate = useNavigate();
   useCalcularPensionesPorCobrar();
-  const { data } = useGetAlumnoRiesgoSuspension();
-  console.log({ data });
+  useGetAlumnoRiesgoSuspension();
+  useGetHistorialRecaudaciones();
+
   useEffect(() => {
     navigate('salon');
   }, []);

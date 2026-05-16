@@ -6,8 +6,23 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { AlumnoRiesgoSuspension, AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 import { Pension, PensionesAtrasadasListDetail } from '../types/pensiones';
+import { number } from 'zod';
 
 export class Pensiones {
+  static async getHistorialRecaudaciones() {
+    const response = await axios.get<ResponseSchema<{ _id: number; total: number; recaudado: number; pendiente: number; porcentaje: number }[]>>(
+      API_BASE_URL + ApiEndPoints.GET_HISTORIAL_RECAUDACIONES,
+      GetHeaders(),
+    );
+    return response;
+  }
+  static async getRecaudacionMesActual() {
+    const response = await axios.get<ResponseSchema<{ total: number; recaudado: number }>>(
+      API_BASE_URL + ApiEndPoints.GET_RECAUDACION_MES_ACTUAL,
+      GetHeaders(),
+    );
+    return response;
+  }
   static async getAlumnosRiesgoSuspension() {
     const response = await axios.get<ResponseSchema<AlumnoRiesgoSuspension[]>>(API_BASE_URL + ApiEndPoints.GET_ALUMNOS_RIESGO_SUSPENSION, GetHeaders());
     return response;
