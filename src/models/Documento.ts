@@ -9,15 +9,7 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { PeriodosKey, RegistroNota } from '../types/documento';
 
 export default class Documento {
-  static async generateCSVAlumnosByGradoSeccion({
-    grado,
-    seccion,
-    estadosMatricula,
-  }: {
-    grado: Grado;
-    seccion: Seccion;
-    estadosMatricula: EstadoMatricula[];
-  }) {
+  static async generateCSVAlumnosByGradoSeccion({ grado, seccion, estadosMatricula }: { grado: Grado; seccion: Seccion; estadosMatricula: EstadoMatricula[] }) {
     const response = await axios.post<ResponseSchema<string>>(
       API_BASE_URL + ApiEndPoints.GENERATE_CSV_ALUMNOS_BY_GRADO_SECCION,
       { grado, seccion, estadosMatricula },
@@ -66,6 +58,7 @@ export default class Documento {
     excluirAtrasados: boolean;
   }) {
     const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
+    console.log({ zipped, estadosMatricula, grado, seccion, excluirAtrasados });
     const response = await axios.post(
       API_BASE_URL + END_POINT,
       { grado, seccion, estadosMatricula, zipped, excluirAtrasados },

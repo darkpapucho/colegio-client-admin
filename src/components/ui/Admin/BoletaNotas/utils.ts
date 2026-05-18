@@ -7,13 +7,7 @@ import { errorHandler } from '../../../../utils/errorHandler';
 import { EstadoMatricula, Grado, Nivel, Seccion } from '../../../../types/enums';
 import Notas from '../../../../models/Notas';
 
-export async function requestSingleBoleta({
-  dispatch,
-  selectedAlumno,
-}: {
-  dispatch: Dispatch<BoletaNotasActionReducer>;
-  selectedAlumno: AMatriculado;
-}) {
+export async function requestSingleBoleta({ dispatch, selectedAlumno }: { dispatch: Dispatch<BoletaNotasActionReducer>; selectedAlumno: AMatriculado }) {
   try {
     dispatch({ type: 'setIsLoading' });
     const response = await Documento.emitirBoletaNotasIndividual({ alumnoId: selectedAlumno._id });
@@ -64,7 +58,7 @@ export async function requestBoletasSalon({
       alink.click();
       alink.remove();
       dispatch({ type: 'clearIsLoading' });
-    } else if (nivel === 'primaria') {
+    } else {
       const response = await Notas.generateLibretasPrimariaByGradoSeccion({ grado, seccion, zipped, estadosMatricula, excluirAtrasados });
       updateToken(response);
       const myBlob = new Blob([response.data]);
