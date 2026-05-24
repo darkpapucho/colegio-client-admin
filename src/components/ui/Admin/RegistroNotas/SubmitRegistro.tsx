@@ -58,7 +58,7 @@ export default function SubmitRegistro({ copyRegistro }: { copyRegistro: Registr
 
         setData(res.data.payload.registroNotas);
       }
-      console.log({ response });
+
       asserts(response != undefined, 'response is undefined');
     } catch (err) {
       errorHandler(err);

@@ -15,7 +15,6 @@ export default function ListarPsicologos() {
       const response = await PsicologoModel.fetchPsicologos();
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
-      console.log(response.data.payload);
     } catch (err) {
       errorHandler(err);
     }

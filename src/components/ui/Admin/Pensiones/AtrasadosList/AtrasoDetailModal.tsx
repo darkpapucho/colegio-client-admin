@@ -131,8 +131,6 @@ export default function AtrasoDetailModal({ detail, onCloseModal }: { detail: At
       setLoading(true);
       const detalle = textAreaRef.current?.value || '';
       const fecha = new Date();
-
-      console.log({ detalle, fecha });
       const response = await Pensiones.cobrarPension({
         detalle,
         fecha,

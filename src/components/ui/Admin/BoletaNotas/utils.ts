@@ -42,11 +42,9 @@ export async function requestBoletasSalon({
   nivel: Nivel;
   excluirAtrasados: boolean;
 }) {
-  // console.log({ grado, seccion });
   try {
     dispatch({ type: 'setIsLoading' });
 
-    // if (!grado || !seccion) throw new Error('Debes indicar un grado y una sección.');
     if (nivel === 'inicial') {
       const response = await Documento.emitirBoletasNotasGradoSeccion({ grado, seccion, estadosMatricula, zipped, excluirAtrasados });
       updateToken(response);

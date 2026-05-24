@@ -56,7 +56,9 @@ export default function EnableDays() {
           </Text>
         )}
         {dateRange && (
-          <Text $fontSize="small">{'AL: ' + new Date(dateRange[1]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' })}</Text>
+          <Text $fontSize="small">
+            {'AL: ' + new Date(dateRange[1]).toLocaleDateString('es-PE', { timeZone: 'America/Lima', day: '2-digit', month: 'long', year: 'numeric' })}
+          </Text>
         )}
         <Button $width="max-content" onClick={() => handleSubmit(dateRange as [Date, Date])} $primary>
           Submit
@@ -79,7 +81,7 @@ export default function EnableDays() {
       const mappedDayList = daysList.map((record) => {
         return { ...record, month: mapNumberToMonthName(record.month) };
       });
-      // console.log({ mappedDayList });
+
       setIsLoading(true);
       if (!daysList || daysList.length === 0) {
         throw new Error('debes seleccionar un rango de fechas');

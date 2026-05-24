@@ -58,7 +58,7 @@ export default class Documento {
     excluirAtrasados: boolean;
   }) {
     const END_POINT = ApiEndPoints.EMITIR_BOLETAS_NOTAS_GRADO_SECCION;
-    console.log({ zipped, estadosMatricula, grado, seccion, excluirAtrasados });
+
     const response = await axios.post(
       API_BASE_URL + END_POINT,
       { grado, seccion, estadosMatricula, zipped, excluirAtrasados },

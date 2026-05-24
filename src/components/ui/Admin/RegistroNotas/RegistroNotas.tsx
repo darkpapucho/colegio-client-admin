@@ -180,7 +180,7 @@ export default function RegistroNotas() {
     if (!grado || !seccion) throw new Error('debes seleccionar grado y seccion');
     try {
       setIsLoading(true);
-      console.log({ nivel });
+
       if (nivel === 'primaria' || nivel === 'secundaria') {
         const response = await Notas.getNotasByGradoSeccion({ grado: grado as Grado, seccion: seccion as Seccion });
         updateToken(response);
@@ -211,7 +211,6 @@ export default function RegistroNotas() {
     }
   }
   function downloadcsvPrimaria(data: RecordNotasPrimaria[], periodo: PeriodosKey) {
-    console.log({ data });
     const mappedData = data.map((record) => {
       const result: { [key: string]: string | number } = {};
       result.alumno = record.alumno;

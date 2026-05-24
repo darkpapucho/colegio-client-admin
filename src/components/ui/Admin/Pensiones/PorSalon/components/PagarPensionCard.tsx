@@ -103,7 +103,7 @@ export default function PagarPensionCard({
       setLoading(true);
       const monto_abonado = Number(montoAbonadoRef.current?.value);
       const mora = Number(moraRef.current?.value) || 0;
-      console.log({ mora });
+
       const saldoPagar = Number(selectedData.pension.monto_pagar) - Number(selectedData.pension.monto_pagado);
       if (!fechaPagoActual) throw new Error('fecha inválida');
       if ((monto_abonado === 0 && monto_pagar > 0) || Number(monto_abonado) > saldoPagar) {

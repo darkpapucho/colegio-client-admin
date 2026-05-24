@@ -47,7 +47,6 @@ export default function AllDetailsModal({
   children: ReactNode;
   title: string;
 }) {
-  // console.log({ registro });
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const { grado } = useGradoSeccionSearchParams();
   function mapGridTemplateCols(cursosList: CursoMap[]): string {
@@ -88,8 +87,7 @@ export default function AllDetailsModal({
                           label={index + 1}
                           message={competencia}
                           width={`${
-                            100 /
-                            getCursosInfo({ nivel, grado: grado as Grado }).find((cursoInfo) => cursoInfo.key === curso.key)!.competencias.length
+                            100 / getCursosInfo({ nivel, grado: grado as Grado }).find((cursoInfo) => cursoInfo.key === curso.key)!.competencias.length
                           }%`}
                         />
                       ))}

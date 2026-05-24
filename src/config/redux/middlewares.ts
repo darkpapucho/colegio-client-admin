@@ -16,7 +16,7 @@ export const restrictYearRatificar: Middleware = (_api: MiddlewareAPI<DispatchAp
   // const pathname = window.location.pathname;
   // const type = action.type;
   // const navigate = history.navigate;
-  // console.log({ type, pathname });
+
   // if (pathname === '/menu/admin/ratificarmatricula' && type === 'año/setAño') {
   //   toaster.error('no se puede cambiar de año en esta operación');
   //   navigate('/menu');

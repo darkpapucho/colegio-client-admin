@@ -9,15 +9,6 @@ export const tercerPeriodoEnd = '10-12-2024';
 export const cuartoPeriodoStart = '10-14-2024';
 export const cuartoPeriodoEnd = '12-21-2024';
 export default function convertDateToPeriodo(date: Date): PeriodosKey {
-  // console.log({ date })
-  // const currentDate = new Date(date).getTime()
-  // console.log({ currentDate })
-  // const primerPeriodoEndLine = new Date(primerPeriodoEnd).getTime()
-  // const segundoPeriodoEndLine = new Date(segundoPeriodoEnd).getTime()
-  // const tercerPeriodoEndLine = new Date(tercerPeriodoEnd).getTime()
-  // const cuartoPeriodoEndLine = new Date(cuartoPeriodoEnd).getTime()
-  // console.log({ primerPeriodoEndLine, segundoPeriodoEndLine, tercerPeriodoEndLine, cuartoPeriodoEndLine })
-
   if (date.getTime() <= new Date(primerPeriodoEnd).getTime() && date.getTime() >= new Date(primerPeriodoStart).getTime()) {
     return 'primerPeriodo';
   } else if (date.getTime() <= new Date(segundoPeriodoEnd).getTime() && date.getTime() >= new Date(segundoPeriodoStart).getTime()) {
