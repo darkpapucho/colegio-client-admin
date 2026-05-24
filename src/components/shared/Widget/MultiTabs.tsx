@@ -25,7 +25,13 @@ const Line = styled.div`
   bottom: 0;
   z-index: 0;
 `;
-export default function MultiTabs({ tabs }: { tabs: { label: string; url: string }[] }) {
+
+export interface MultiTabsProps {
+  label: string;
+  url: string;
+}
+
+export default function MultiTabs({ tabs }: { tabs: MultiTabsProps[] }) {
   const [selectedItem, setSelectedItem] = useState(0);
   return (
     <Container $alignItems="flex-end" $width="100%" $height="35px" $bgColor={theme.colors.secondary[500]} $position="relative">

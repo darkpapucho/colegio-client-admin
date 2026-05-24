@@ -38,6 +38,9 @@ import CursosManagment from './components/ui/Admin/CursosManagment/CursosManagme
 import PensionesAtrasadosList from './components/ui/Admin/Pensiones/AtrasadosList/PensionesAtrasadosList';
 import AlumnosRiesgoSuspension from './components/ui/Admin/Pensiones/AlumnosRiesgoSuspension/AlumnosRiesgoSuspension';
 import AlumnosSuspendidos from './components/ui/Admin/Pensiones/AlumnosSuspendidos/AlumnosSuspendidos';
+import Psicologia from './components/ui/Admin/Psicologia/Psicologia';
+import AgregarPsicologo from './components/ui/Admin/Psicologia/Agregar/AgregarPsicologo';
+import ListarPsicologos from './components/ui/Admin/Psicologia/Listar/ListarPsicologos';
 
 function App() {
   const navigate = useNavigate();
@@ -88,6 +91,10 @@ function App() {
             <Route path="admin/anuncios" element={<Anuncios />} />
             <Route path="admin/test-notas" element={<RecordNotas />} />
             <Route path="admin/cursos" element={<CursosManagment />} />
+            <Route path="admin/psicologia" element={<Psicologia />}>
+              <Route path="listar" element={<ListarPsicologos />} />
+              <Route path="agregar" element={<AgregarPsicologo />} />
+            </Route>
           </Route>
           <Route element={<RequireProfesor />}></Route>
         </Route>

@@ -1,6 +1,5 @@
 import { useImmerReducer } from 'use-immer';
 import SimpleLayout from '../../../shared/SimpleLayout';
-// import AgregarProfesorForm from './AgregarProfesorForm';
 import toaster from 'react-hot-toast';
 import { Container } from '../../../shared/Container';
 import { Text } from '../../../shared/Text';
@@ -15,12 +14,12 @@ import { errorHandler } from '../../../../utils/errorHandler';
 import { generateSalones, updateToken } from '../../../../utils/utils';
 import SalonCard from '../../../shared/SalonCard';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
-import Input from '../../../shared/Input';
 import SalonesReducer from './SalonesReducer';
 import { User } from '../../../../models/user';
 import { SalonProfesor, ProfesorData } from '../../../shared/Profesor/types';
 import { queryClient } from '../../../../config/query/query';
 import { fetchProfesores } from '../Profesores/utils';
+import FormularioDatos from '../../../shared/Formulario/FormularioDatos';
 
 export default function AgregarProfesor() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
@@ -32,7 +31,6 @@ export default function AgregarProfesor() {
   });
 
   const SALONES_OPTIONS = SALONES_SELECT_OPTONS[nivel].filter((option) => {
-    console.log({ option });
     return !salonesSorted.some((salon) => salon.label === option.value); //18-04-2025 changed option.label for option.value
   });
 
@@ -48,13 +46,7 @@ export default function AgregarProfesor() {
     <SimpleLayout title="Agregar nuevo profesor">
       {/* <AgregarProfesorForm></AgregarProfesorForm> */}
       <Container $width="max-content" $gap="3rem" $direction="column">
-        <Container $width="30rem" $gap="1.8rem" $direction="column">
-          <Input label="Apellidos" ref={apellidosRef} name="apellidos" type="text" $width="100%"></Input>
-          <Input label="Nombres" ref={nombresRef} name="nombres" type="text" $width="100%"></Input>
-          <Input label="DNI" ref={dniRef} name="dni" type="text" $width="100%"></Input>
-          <Input label="Teléfono" ref={telefonoRef} name="telefono" type="text" $width="100%"></Input>
-          <Input label="Correo" ref={correoRef} name="correo" type="text" $width="100%"></Input>
-        </Container>
+        <FormularioDatos nombresRef={nombresRef} apellidosRef={apellidosRef} dniRef={dniRef} correoRef={correoRef} telefonoRef={telefonoRef} />
         {nivel != 'inicial' && (
           <>
             <Container $direction="row" $gap="1rem" $width="100%">

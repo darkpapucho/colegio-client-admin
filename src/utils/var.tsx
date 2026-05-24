@@ -11,6 +11,7 @@ import { CursoMap } from '../types/documento';
 import { PiListChecksBold } from 'react-icons/pi';
 import { BiMoneyWithdraw } from 'react-icons/bi';
 import { GrAnnounce } from 'react-icons/gr';
+import { FaEye } from 'react-icons/fa';
 
 export const baseUrl = API_BASE_URL;
 
@@ -147,6 +148,11 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
       icon: <BiMoneyWithdraw />,
       label: 'CURSOS',
       url: '/menu/admin/cursos',
+    },
+    {
+      icon: <FaEye />,
+      label: 'Psicologia',
+      url: '/menu/admin/psicologia',
     },
   ],
   promotor: [

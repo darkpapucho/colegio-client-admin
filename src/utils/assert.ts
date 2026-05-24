@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { number, z } from 'zod';
 import { Grado, GradoDestino, Seccion, Sexo, VALID_GRADOS, VALID_GRADOS_DESTINO, VALID_SECCIONES, VALID_SEXOS } from '../types/enums';
 import { FechaMatricula } from '../types/globals';
 import { FechaInputError } from './error';
@@ -44,4 +44,10 @@ export function assertCorreo(correo: any) {
   const result = z.string().email().optional().safeParse(correo);
   if (result.success) return;
   throw new Error('Correo inválido');
+}
+
+export function assertDni(dni: any) {
+  if (typeof Number(dni) != 'number') throw new Error('DNI invalido');
+  if ((dni + '').length != 8) throw new Error('DNI inválido');
+  return;
 }

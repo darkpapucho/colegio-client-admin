@@ -65,4 +65,6 @@ export enum ApiEndPoints {
   GET_ALUMNOS_RIESGO_SUSPENSION = '/pensiones/get-alumnos-riesgo-suspension',
   GET_RECAUDACION_MES_ACTUAL = '/pensiones/get-recaudacion-mes-actual',
   GET_HISTORIAL_RECAUDACIONES = '/pensiones/get-historial-recaudaciones',
+  AGREGAR_PSICOLOGO = '/empleado/agregar-psicologo',
+  FETCH_PSICOLOGOS = '/empleado/fetch-psicologos',
 }
