@@ -1,12 +1,32 @@
 import axios from 'axios';
-import { EstadoMatricula, Grado, Nivel, Seccion, Year } from '../types/enums';
+import { EstadoMatricula, Grado, Seccion } from '../types/enums';
 import { API_BASE_URL } from '../var/globals';
 import { ApiEndPoints } from '../enums/apiEndPoints';
 import { ResponseSchema } from '../types/axiosResponse';
 import { AlumnoRiesgoSuspension, AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
 import { Pension, PensionesAtrasadasListDetail } from '../types/pensiones';
-import { number } from 'zod';
+
+export type ConsultaPensionResult = {
+  alumno: {
+    dni: string;
+    grado: Grado;
+    seccion: Seccion;
+    nombreCompleto: string;
+  };
+  pensiones: {
+    fecha: string;
+    issuerNombres: string;
+    issuerApellidos: string;
+    issuerId: string;
+    mes: number;
+    monto_pagado: number;
+    monto_pagar: number;
+    numRecibo: number;
+    pagado: boolean;
+    reciboId: string;
+  }[];
+};
 
 export class Pensiones {
   static async getHistorialRecaudaciones() {
@@ -73,9 +93,12 @@ export class Pensiones {
   }
   static async getRecordPensionesPagadasByDateRange({ initDate, endDate }: { initDate: string; endDate: string }) {
     //fetch las pensiones pagadas dentro de un rango de fechas (fecha de pago)
-    const response = await axios.post<
-      ResponseSchema<{ alumno: { dni: string; nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>
-    >(API_BASE_URL + ApiEndPoints.GET_RECORD_PENSIONES_BY_DATE_RANGE, { initDate, endDate }, GetHeaders());
+    const response = await axios.post<ResponseSchema<ConsultaPensionResult[]>>(
+      API_BASE_URL + ApiEndPoints.GET_RECORD_PENSIONES_BY_DATE_RANGE,
+      { initDate, endDate },
+      GetHeaders(),
+    );
+
     return response;
   }
 

@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { WidthCss } from '../../types/globals';
+import { Text } from './Text';
 
 const StyledHoverable = styled.div<{ $bgColor?: string; $padding?: string; $width?: string }>`
   width: ${({ $width }) => $width || '100%'};
@@ -55,9 +56,15 @@ export default function DisplayHoverMessage({
     setOffset(width / 2);
   }, []);
   return (
-    <StyledHoverable $width={width} $bgColor={bgColor} $padding={padding} onMouseEnter={() => setShowMessage(true)} onMouseLeave={() => setShowMessage(false)} ref={containerRef}>
+    <StyledHoverable
+      $width={width}
+      $bgColor={bgColor}
+      $padding={padding}
+      onMouseEnter={() => setShowMessage(true)}
+      onMouseLeave={() => setShowMessage(false)}
+      ref={containerRef}>
       {showMessage && <StyledMessage $offset={offset}>{message}</StyledMessage>}
-      {label}
+      <Text $fontSize="small">{label}</Text>
     </StyledHoverable>
   );
 }

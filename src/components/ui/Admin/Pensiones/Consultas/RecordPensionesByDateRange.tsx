@@ -2,16 +2,14 @@ import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
 import { Container } from '../../../../shared/Container';
 import { Text } from '../../../../shared/Text';
 import { Button } from '../../../../shared/Button';
-import { useState } from 'react';
-// import { validateDay } from '../../../Calendario/EnableDays/utils';
-import { Pensiones } from '../../../../../models/Pensiones';
+import { useMemo, useState } from 'react';
+import { ConsultaPensionResult, Pensiones } from '../../../../../models/Pensiones';
 import { updateToken } from '../../../../../utils/utils';
 import { errorHandler } from '../../../../../utils/errorHandler';
 import Loader from '../../../Loader/Loader';
-import { Grado, Salon, Seccion } from '../../../../../types/enums';
+import { Salon } from '../../../../../types/enums';
 import RecordPensionesPagadasTable from './RecordPensionesPagadasTable';
 import { convertSalonToIndex } from '../../../../../utils/convertGradoToIndex';
-import { Pension } from '../../../../../types/pensiones';
 
 type ValuePiece = Date | null;
 type DateRangeValue = ValuePiece | [ValuePiece, ValuePiece];
@@ -21,7 +19,14 @@ export default function RecordPensionesByDateRange() {
   const maxDate = `${currentYear}-12-31`;
   const [dateRange, setDateRange] = useState<DateRangeValue>([new Date(), new Date()]);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<{ alumno: { dni: string; nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[]>([]);
+  const [data, setData] = useState<ConsultaPensionResult[]>([]);
+  const sortedData = useMemo(() => {
+    return data.sort((prev, curr) => {
+      const prevSalon = convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon);
+      const currSalon = convertSalonToIndex((curr.alumno.grado + ' ' + curr.alumno.seccion) as Salon);
+      return prevSalon > currSalon ? 1 : -1;
+    });
+  }, [data]);
   return (
     <Container $width="100%" $direction="column" $gap="2rem">
       {isLoading && <Loader />}
@@ -30,7 +35,7 @@ export default function RecordPensionesByDateRange() {
           CONSULTAR ÚLTIMAS PENSIONES PAGADAS
         </Text>
         <Container $direction="row" $width="60rem" $gap="1rem" $height="max-content" $padding="1rem">
-          <Container $width="25rem" $height="max-content" $direction="row" $border="1px solid black">
+          <Container $width="28rem" $height="max-content" $direction="row" $border="1px solid black">
             <DateTimeRangePicker
               // onClickDay={(value) => validateDay(value)}
               value={dateRange}
@@ -42,7 +47,7 @@ export default function RecordPensionesByDateRange() {
               maxDate={new Date(maxDate)}
             />
           </Container>
-          <Container $direction="column" $width="35rem">
+          <Container $direction="column" $width="32rem">
             {dateRange && (
               <Container $direction="row" $gap="1rem" $width="100%" $height="max-content">
                 <Text $fontSize="small" $bold $width="15%" $textAlign="right">
@@ -75,15 +80,7 @@ export default function RecordPensionesByDateRange() {
           </Button>
         </Container>
       </Container>
-      {data && (
-        <RecordPensionesPagadasTable
-          data={data.sort((prev, curr) => {
-            const prevSalon = convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon);
-            const currSalon = convertSalonToIndex((curr.alumno.grado + ' ' + prev.alumno.seccion) as Salon);
-            return prevSalon > currSalon ? 1 : -1;
-          })}
-        />
-      )}
+      {data && <RecordPensionesPagadasTable data={sortedData} />}
     </Container>
   );
   async function handleRequestData(dateRange: [Date, Date]) {
@@ -101,6 +98,7 @@ export default function RecordPensionesByDateRange() {
       const response = await Pensiones.getRecordPensionesPagadasByDateRange({ initDate, endDate });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
+      console.log(response.data.payload);
       setData(
         response.data.payload.sort((prev, curr) => {
           return convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon) >

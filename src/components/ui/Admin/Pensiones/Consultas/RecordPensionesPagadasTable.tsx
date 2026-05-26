@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { Grado, Nivel, Seccion } from '../../../../../types/enums';
+import { Nivel } from '../../../../../types/enums';
 import { Container } from '../../../../shared/Container';
 import Table from '../../../Table/Table';
 import { Text } from '../../../../shared/Text';
@@ -8,13 +8,10 @@ import { MONTHS } from '../../Calendario/EnableDays/utils';
 import DisplayHoverMessage from '../../../../shared/DisplayHoverMessage';
 import { getRecordBgColor } from './utils';
 import { theme } from '../../../../../config/styled/styled';
-import { Pension } from '../../../../../types/pensiones';
+import { recortarNombres } from '../../../../../utils/utils';
+import { ConsultaPensionResult } from '../../../../../models/Pensiones';
 
-export default function RecordPensionesPagadasTable({
-  data,
-}: {
-  data: { alumno: { dni: string; nombreCompleto: string; grado: Grado; seccion: Seccion }; pensiones: Pension[] }[];
-}) {
+export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPensionResult[] }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [selectedRecord, setSelectedRecord] = useState<number | null>(null);
 
@@ -39,7 +36,7 @@ export default function RecordPensionesPagadasTable({
         </Text>
       </Container>
 
-      <Table withBorder gridTemplateColumns={`35rem 10rem ${nivel === 'inicial' ? '11rem' : '8rem'} 1fr`} width="content-fit">
+      <Table withBorder gridTemplateColumns={`38rem 10rem ${nivel === 'inicial' ? '13rem' : '10rem'} 1fr`} width="content-fit">
         <Table.Header>
           <Table.Header.Item>
             <Container $width="100%" $padding=".5rem" $justifyContent="center">
@@ -77,7 +74,7 @@ export default function RecordPensionesPagadasTable({
                     }>
                     <Text $width="3rem">{`[${index + 1}]`}</Text>
                     <Text $width="calc(100% - 3rem)" $textAlign="left">
-                      {record.alumno.nombreCompleto}
+                      {record.alumno.nombreCompleto.split(',')[0] + ', ' + recortarNombres(record.alumno.nombreCompleto.split(',')[1])}
                     </Text>
                   </Container>
                 </Table.Body.Item>
@@ -119,7 +116,7 @@ export default function RecordPensionesPagadasTable({
                     }>
                     {record.pensiones.map((pension, index) => {
                       return (
-                        <Container $padding=".3rem" $border="1px solid black" key={index}>
+                        <Container $padding=".3rem" $border="1px solid black" key={index} $width="13rem">
                           <DisplayHoverMessage
                             label={`${MONTHS[pension.mes].toUpperCase()}-S/.${pension.monto_pagado}`}
                             message={`${new Date(pension.fecha).toLocaleDateString('es-PE', {
@@ -129,7 +126,7 @@ export default function RecordPensionesPagadasTable({
                               year: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit',
-                            })}`}
+                            })} [${pension.issuerApellidos.toLocaleUpperCase()}]`}
                           />
                         </Container>
                       );
