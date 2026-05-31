@@ -1,6 +1,3 @@
-// import { AiOutlineSave } from 'react-icons/ai';
-// import { CiEdit } from 'react-icons/ci';
-// import { Icon } from '../../../shared/Icon';
 import { Container } from '../../../shared/Container';
 import { StyledInput } from '../../../shared/StyledInput';
 import { Text } from '../../../shared/Text';
