@@ -98,7 +98,7 @@ export default function RecordPensionesByDateRange() {
       const response = await Pensiones.getRecordPensionesPagadasByDateRange({ initDate, endDate });
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
-      console.log(response.data.payload);
+
       setData(
         response.data.payload.sort((prev, curr) => {
           return convertSalonToIndex((prev.alumno.grado + ' ' + prev.alumno.seccion) as Salon) >

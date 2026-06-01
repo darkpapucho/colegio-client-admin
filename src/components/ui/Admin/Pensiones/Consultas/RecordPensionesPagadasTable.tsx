@@ -126,7 +126,7 @@ export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPe
                               year: 'numeric',
                               hour: '2-digit',
                               minute: '2-digit',
-                            })} [${pension.issuerApellidos.toLocaleUpperCase()}]`}
+                            })} [${pension.issuerApellidos?.toLocaleUpperCase() || 'NO REGISTRADO'}]`}
                           />
                         </Container>
                       );
