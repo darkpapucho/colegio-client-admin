@@ -46,14 +46,30 @@ export function getDisplayPensionCardBgColor(pension: Pension | undefined, mesAc
 }
 
 export default function calcularMoraPension(monthToPay: number): number {
+  const precioMoraDia = 1; //precio de mora por dia
   //use month index from 0 to 11
   const currentMonth = new Date().getMonth(); //getMonth returns month index starting from 0
   const currentDay = new Date().getDate();
+  let moraDays = 0;
+  // contabilizar la mora a partir del dia 10 del mes siguiente mes a pagar
+  let monthDelta = currentMonth - monthToPay;
+  const referencia = monthDelta;
+  if (monthDelta == 1 && currentDay > 10) {
+    moraDays += (currentDay - 10) * 1; //calcular mora por dias de atraso del mes siguiente
+  }
 
-  if (currentMonth <= monthToPay) return 0; //no mora si el mes actual es menor o igual al mes a pagar
-  const moraDays = currentDay - 10 > 0 ? currentDay - 10 : 0;
-  const monthDelta = currentMonth - monthToPay;
-  const moraMeses = monthDelta < 2 ? 0 : 20 + (monthDelta - 1) * 30; //calcular mora por meses completos de atraso
-  const mora = moraMeses + moraDays;
-  return mora;
+  while (monthDelta > 1) {
+    if (monthDelta == referencia) {
+      moraDays += currentDay;
+    }
+    if (monthDelta < referencia && monthDelta > 1) {
+      moraDays += 30; //calcular mora por dias de atraso del mes siguiente
+    }
+    if (monthDelta == 1) {
+      moraDays += 20; //calcular mora por dias de atraso del mes siguiente
+    }
+    monthDelta--;
+  }
+
+  return moraDays * precioMoraDia;
 }
