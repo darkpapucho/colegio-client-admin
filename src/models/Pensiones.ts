@@ -59,11 +59,11 @@ export class Pensiones {
     const response = await axios.post<ResponseSchema<boolean>>(`${API_BASE_URL + ApiEndPoints.COBRAR_PENSION}`, { detalle, fecha, alumnoId }, GetHeaders());
     return response;
   }
-  static async fetchAtrasadosList({ grado, seccion }: { grado: Grado; seccion: Seccion }) {
+  static async fetchAtrasadosList({ grado, seccion, mes }: { grado: Grado; seccion: Seccion; mes: number }) {
     //<ResponseSchema<{ alumnoId: string; numPensionesAtrasadas: number; estudiante: AMatriculado }[]>>
     const response = await axios.post<ResponseSchema<PensionesAtrasadasListDetail[]>>(
       API_BASE_URL + ApiEndPoints.FETCH_ATRASADOS_LIST,
-      { grado, seccion },
+      { grado, seccion, mes },
       GetHeaders(),
     );
     return response;

@@ -19,7 +19,8 @@ import { queryClient } from '../../../../../config/query/query';
 export default function AtrasoDetailModal({ detail, onCloseModal }: { detail: AtrasoPensionDetailModal; onCloseModal: () => void }) {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
-  const { grado, seccion } = useGradoSeccionSearchParams();
+  const { grado, seccion, searchParams } = useGradoSeccionSearchParams();
+
   const [_, setLoading] = useState(false);
   return (
     <Modal width="100rem" onCloseModal={onCloseModal} title={detail.nombreCompleto}>
@@ -139,11 +140,16 @@ export default function AtrasoDetailModal({ detail, onCloseModal }: { detail: At
       updateToken(response);
       if (!response.data.ok) throw new Error(response.data.message);
       queryClient.invalidateQueries({ queryKey: ['pensiones-atrasados', nivel, grado, seccion] });
+      const mes = Number(searchParams.get('mes')) || new Date().getMonth();
       alert('Observación guardada correctamente');
       queryClient.prefetchQuery({
-        queryKey: ['pensiones-atrasados', nivel, grado, seccion],
+        queryKey: ['pensiones-atrasados', nivel, grado, seccion, mes],
         queryFn: async () => {
-          const response = await Pensiones.fetchAtrasadosList({ grado: grado as Grado, seccion: seccion as Seccion });
+          const response = await Pensiones.fetchAtrasadosList({
+            grado: grado as Grado,
+            seccion: seccion as Seccion,
+            mes,
+          });
           updateToken(response);
           if (!response.data.ok) throw new Error(response.data.message);
           return response.data.payload;
