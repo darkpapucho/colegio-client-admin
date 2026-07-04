@@ -34,3 +34,8 @@ export function getClosestDay(months: { [key: string]: Omit<CalendarioList, 'mon
     return undefined;
   }
 }
+
+export function getLastDayFromMonth({ year, month }: { year: number; month: number }) {
+  const date = new Date(year, month, 0);
+  return date.getDate();
+}
