@@ -7,42 +7,40 @@ import Select from '../../../shared/Select';
 import { grados, SECCIONES_SELECT_OPTIONS, SEXOS_SELECT_OPTION } from '../../../../utils/var';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { useMutation } from '@tanstack/react-query';
-import { MutationKeys, queryClient } from '../../../../config/query/query';
+import { MutationKeys } from '../../../../config/query/query';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
-import { Grado, Seccion } from '../../../../types/enums';
-import toaster from 'react-hot-toast';
+import { Grado, Nivel, Seccion } from '../../../../types/enums';
 import Loader from '../../Loader/Loader';
-import { handleFetchMatriculados } from '../../../../hooks/useAlumnosMatriculados';
 import { parseEditarAlumnoFormData } from './utils';
 import { errorHandler } from '../../../../utils/errorHandler';
-import { NuevoAlumno } from '../../../../types/alumno';
+import { AMatriculado, NuevoAlumno } from '../../../../types/alumno';
 import OutsideCOntrolledInput from '../../../shared/OutsideControlledInput';
 
 export default function MatriculaNuevaForm() {
-  const nivel = useTypedSelector((state) => state.nivel);
-  const año = useTypedSelector((state) => state.año);
+  const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [grado, setGrado] = useState<Grado | ''>('');
   const [seccion, setSeccion] = useState<Seccion | ''>('');
   const [sexo, setSexo] = useState('');
   const apellidosRef = useRef<HTMLInputElement | null>(null);
   const nombresRef = useRef<HTMLInputElement | null>(null);
   const dniRef = useRef<HTMLInputElement | null>(null);
+  const montoMatriculaRef = useRef<HTMLInputElement | null>(null);
+  const montoPensionRef = useRef<HTMLInputElement | null>(null);
   const [codigoEstudiante, setCodigoEstudiante] = useState<string>('');
   const fechaMatriculaRef = useRef<HTMLInputElement | null>(null);
-  const { isLoading, mutate, isSuccess, error, isError } = useMutation<unknown, unknown, NuevoAlumno, unknown>({
+  const [invoiceAvailable, setInvoiceAvailable] = useState<boolean>(false);
+  const { isLoading, mutate, error, isError, isSuccess } = useMutation<
+    AMatriculado,
+    unknown,
+    { nuevoAlumno: NuevoAlumno; montoPension: number; montoMatricula: number },
+    unknown
+  >({
     mutationKey: [MutationKeys.MatricularNuevoAlumno],
   });
   useCustomEvent('customSelect', listener);
 
   useEffect(() => {
-    if (isSuccess) {
-      toaster.success('La matrícula se realizó exitosamente');
-      queryClient.invalidateQueries(['matriculados', grado, seccion, año]);
-      queryClient.prefetchQuery({
-        queryKey: ['matriculados', grado, seccion, año],
-        queryFn: () => handleFetchMatriculados({ grado, seccion, estados: 'EN PROCESO-DEFINITIVA' }),
-      });
-    }
+    setInvoiceAvailable(isSuccess);
   }, [isSuccess]);
 
   useEffect(() => {
@@ -56,17 +54,12 @@ export default function MatriculaNuevaForm() {
       {isLoading && <Loader />}
       <Container $direction="row" $gap="3rem">
         <Container $gap="2.5rem" $width="30rem" $direction="column">
+          <Input name="montoMatricula" type="number" label="monto matrícula" ref={montoMatriculaRef} $width="100%" defaultValue="150" />
           <Input name="apellidos" type="text" label="apellidos" ref={apellidosRef} $width="100%" />
           <Input name="nombres" type="text" label="nombres" ref={nombresRef} $width="100%" />
           <Input name="dni" type="text" label="dni" ref={dniRef} $width="100%" />
           <Container $gap="1rem" $direction="row">
-            <OutsideCOntrolledInput
-              name="codigoEstudiante"
-              label="código estudiante"
-              type="text"
-              value={codigoEstudiante}
-              setValue={setCodigoEstudiante}
-            />
+            <OutsideCOntrolledInput name="codigoEstudiante" label="código estudiante" type="text" value={codigoEstudiante} setValue={setCodigoEstudiante} />
 
             <Button $primary $small onClick={generarCodigoEstudiante}>
               <RiAiGenerate />
@@ -74,6 +67,14 @@ export default function MatriculaNuevaForm() {
           </Container>
         </Container>
         <Container $gap="2rem" $width="25rem" $direction="column">
+          <Input
+            name="montoPension"
+            type="number"
+            label="monto pension"
+            ref={montoPensionRef}
+            $width="100%"
+            defaultValue={nivel == 'inicial' ? '170' : nivel == 'primaria' ? '180' : '220'}
+          />
           <Select name="grado" label="grado" options={grados[nivel!]} width="15rem" tiny />
           <Select name="seccion" label="sección" options={SECCIONES_SELECT_OPTIONS} width="15rem" tiny />
           <Select name="sexo" label="sexo" options={SEXOS_SELECT_OPTION} width="15rem" tiny />
@@ -98,7 +99,7 @@ export default function MatriculaNuevaForm() {
                 fechaMatriculaRef,
               });
 
-              mutate(nuevoAlumno);
+              mutate({ nuevoAlumno, montoPension: Number(montoPensionRef.current!.value), montoMatricula: Number(montoMatriculaRef.current!.value) });
             } catch (err) {
               errorHandler(err);
             }
@@ -107,6 +108,9 @@ export default function MatriculaNuevaForm() {
         </Button>
         <Button $danger $small $width="10rem" onClick={() => borrar()}>
           Borrar
+        </Button>
+        <Button $green $small $width="max-content" onClick={() => generarReciboMatricula()}>
+          Generar Recibo
         </Button>
       </Container>
     </>
@@ -130,10 +134,17 @@ export default function MatriculaNuevaForm() {
   }
 
   function borrar() {
+    setCodigoEstudiante('');
     apellidosRef.current!.value = '';
     nombresRef.current!.value = '';
     dniRef.current!.value = '';
     // codigoEstudianteRef.current!.value = '';
-    setCodigoEstudiante('');
+  }
+  async function generarReciboMatricula() {
+    try {
+      borrar();
+    } catch (err) {
+      errorHandler(err);
+    }
   }
 }

@@ -45,13 +45,21 @@ export function parseEditarAlumnoFormData({
   return nuevoAlumno;
 }
 
-export async function handleMatricularNuevoAlumno(nuevoAlumno: NuevoAlumno) {
+export async function handleMatricularNuevoAlumno({
+  nuevoAlumno,
+  montoPension,
+  montoMatricula,
+}: {
+  montoPension: number;
+  montoMatricula: number;
+  nuevoAlumno: NuevoAlumno;
+}) {
   nuevoAlumnoSchema.parse(nuevoAlumno);
 
   const proceder = window.confirm(`Estás seguro que deseas matricular al alumno ${nuevoAlumno.apellidos} en el ${nuevoAlumno.grado} ${nuevoAlumno.seccion}?`);
   if (!proceder) return;
-  const response = await Alumno.matriculaNueva(nuevoAlumno);
+  const response = await Alumno.matriculaNueva({ alumno: nuevoAlumno, montoPension, montoMatricula });
   updateToken(response);
   if (!response.data.ok) throw new Error(response.data.message);
-  return response.data.ok;
+  return response.data.payload;
 }

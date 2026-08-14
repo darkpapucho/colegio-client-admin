@@ -53,7 +53,6 @@ export async function handleFetchMatriculados({
   assertGrado(grado);
   assertSeccion(seccion);
   const response = await Alumno.fetchMatriculados({ grado, seccion, estados });
-
   updateToken(response);
   if (!response.data.ok) throw new Error(response.data.message);
   return response.data.payload.sort((old, current) => {

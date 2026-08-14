@@ -55,11 +55,11 @@ export default function calcularMoraPension(monthToPay: number): number {
   let moraDays = 0;
   // contabilizar la mora a partir del dia 10 del mes siguiente mes a pagar
   let monthDelta = currentMonth - monthToPay;
-  const referencia = Number(monthDelta);
+
   // if (monthDelta == 1 && currentDay > 10) {
   //   return (moraDays += (currentDay - 10) * precioMoraDia); //calcular mora por dias de atraso del mes siguiente
   // }
-  console.log({ currentDay, currentMonth, monthToPay, monthDelta, referencia });
+
   for (let p = monthDelta; p > 0; p--) {
     if (p == monthDelta) {
       if (monthDelta > 1) {

@@ -12,7 +12,7 @@ export default function usePensionesAtrasadasList() {
 
   const { grado, seccion, searchParams } = useGradoSeccionSearchParams();
   const mes = Number(searchParams.get('mes')) || new Date().getMonth();
-  console.log({ mes, grado, seccion });
+
   const { isFetching, error, refetch, data } = useQuery({
     queryKey: ['pensiones-atrasados', nivel, grado, seccion, mes],
     queryFn: fetchAtrasados.bind(null, grado, seccion, mes),

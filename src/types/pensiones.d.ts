@@ -19,6 +19,15 @@ export type PensionPagada = {
 
 export type Pension = PensionPagada | PensionNoPagada;
 
+export type PensionTable = {
+  alumnoId: ObjectId;
+  pensiones: PensionRecord[];
+  estudiante: AMatriculado;
+  numPensionesPagadas: number;
+  montoMatricula?: number;
+  reciboMatricula?: string;
+};
+
 export type ComentarioPension = {
   fecha: string;
   detalle: string;

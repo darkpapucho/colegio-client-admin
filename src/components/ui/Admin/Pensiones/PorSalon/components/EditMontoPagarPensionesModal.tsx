@@ -14,6 +14,7 @@ import { updateToken } from '../../../../../../utils/utils';
 import toaster from 'react-hot-toast';
 import { Text } from '../../../../../shared/Text';
 import { Pension } from '../../../../../../types/pensiones';
+import Pagos from '../../../../../../models/Pagos';
 
 const DivContainer = styled.div`
   width: 100%;
@@ -32,9 +33,9 @@ export default function EditMontoPagarPensionesModal({
   onCloseModal,
 }: {
   onCloseModal: () => void;
-  selectedData: { estudiante: AMatriculado; pensiones: Pension[] };
+  selectedData: { estudiante: AMatriculado; pensiones: Pension[]; montoMatricula: number; reciboMatricula: string };
 }) {
-  const { setData } = useContext(PensionesByGradoSeccionContext)!;
+  const { setData, data } = useContext(PensionesByGradoSeccionContext)!;
   const [pensiones, setPensiones] = useState<Pension[]>(selectedData.pensiones);
   const [loading, setLoading] = useState(false);
   return (
@@ -42,6 +43,16 @@ export default function EditMontoPagarPensionesModal({
       {loading && <Loader $zIndex={200} />}
       <Modal title={selectedData.estudiante.nombreCompleto} width="40rem" onCloseModal={onCloseModal}>
         <Container $direction="column" $width="100%" $gap="2rem">
+          <Container $direction="row" $width="100%" $justifyContent="space-between">
+            <Text $bold $fontSize="medium">
+              Matrícula S/. {selectedData.montoMatricula}
+            </Text>
+            {selectedData.montoMatricula > 0 && (
+              <Button $green $width="max-content" onClick={() => generateReciboMatricula()} disabled={loading}>
+                Get Recibo Matricula
+              </Button>
+            )}
+          </Container>
           <Text $width="100%" $textAlign="center" $bold $fontSize="small">
             EDITAR MONTOS DE PENSIONES
           </Text>
@@ -113,6 +124,24 @@ export default function EditMontoPagarPensionesModal({
     } finally {
       setLoading(false);
       onCloseModal();
+    }
+  }
+  async function generateReciboMatricula() {
+    try {
+      setLoading(true);
+      const response = await Pagos.getReciboMatricula({ reciboMatricula: selectedData.reciboMatricula });
+      updateToken(response);
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `recibo-${selectedData.reciboMatricula}.pdf`;
+      a.click();
+      a.remove();
+    } catch (err) {
+      errorHandler(err);
+    } finally {
+      setLoading(false);
     }
   }
 }

@@ -67,4 +67,5 @@ export enum ApiEndPoints {
   GET_HISTORIAL_RECAUDACIONES = '/pensiones/get-historial-recaudaciones',
   AGREGAR_PSICOLOGO = '/empleado/agregar-psicologo',
   FETCH_PSICOLOGOS = '/empleado/fetch-psicologos',
+  GET_RECIBO_MATRICULA = '/pagos/get-recibo-matricula',
 }

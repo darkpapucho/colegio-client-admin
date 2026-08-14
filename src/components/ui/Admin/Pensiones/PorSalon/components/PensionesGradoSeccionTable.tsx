@@ -8,13 +8,9 @@ import EditMontosPagarPensionesModal from './EditMontoPagarPensionesModal';
 
 import { GrEdit, GrCopy } from 'react-icons/gr';
 import { Icon } from '../../../../../shared/Icon';
-import { Pension } from '../../../../../../types/pensiones';
+import { Pension, PensionTable } from '../../../../../../types/pensiones';
 
-export default function PensionesGradoSeccionTable({
-  data,
-}: {
-  data: { alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[];
-}) {
+export default function PensionesGradoSeccionTable({ data }: { data: PensionTable[] }) {
   data = data.map((row) => {
     const nombres = row.estudiante.nombreCompleto.split(', ')[1].split(' ');
     const newRow = { ...row };
@@ -25,8 +21,15 @@ export default function PensionesGradoSeccionTable({
   });
   const [showPensionData, setShowPensionData] = useState(false);
   const [showEditMontoPagarPensionesModal, setShowEditMontoPagarPensionesModal] = useState(false);
-  const [selectedData, setSelectedData] = useState<{ pension: Pension; estudiante: AMatriculado } | null>(null);
-  const [selectedAlumno, setSelectedAlumno] = useState<{ estudiante: AMatriculado; pensiones: Pension[] } | null>(null);
+  const [selectedData, setSelectedData] = useState<{ pension: Pension; estudiante: AMatriculado; montoMatricula: number; reciboMatricula: string } | null>(
+    null,
+  );
+  const [selectedAlumno, setSelectedAlumno] = useState<{
+    estudiante: AMatriculado;
+    pensiones: Pension[];
+    montoMatricula: number;
+    reciboMatricula: string;
+  } | null>(null);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
   return (
@@ -124,7 +127,12 @@ export default function PensionesGradoSeccionTable({
                         $primary
                         onClick={() => {
                           setShowEditMontoPagarPensionesModal(true);
-                          setSelectedAlumno({ estudiante: record.estudiante, pensiones: record.pensiones });
+                          setSelectedAlumno({
+                            estudiante: record.estudiante,
+                            pensiones: record.pensiones,
+                            montoMatricula: record.montoMatricula || 0,
+                            reciboMatricula: record.reciboMatricula || '',
+                          });
                         }}>
                         <GrEdit />
                       </Icon>
@@ -152,6 +160,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 2),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 2)}
@@ -164,6 +174,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 3),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 3)}
@@ -176,6 +188,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 4),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 4)}
@@ -188,6 +202,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 5),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 5)}
@@ -200,6 +216,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 6),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 6)}
@@ -212,6 +230,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 7),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 7)}
@@ -224,6 +244,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 8),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 8)}
@@ -236,6 +258,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 9),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 9)}
@@ -248,6 +272,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 10),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 10)}
@@ -260,6 +286,8 @@ export default function PensionesGradoSeccionTable({
                       handleClick(
                         record.pensiones.find((ele) => ele.mes == 11),
                         record.estudiante,
+                        record.montoMatricula || 0,
+                        record.reciboMatricula || '',
                       )
                     }
                     pension={record.pensiones.find((ele) => ele.mes == 11)}
@@ -273,9 +301,9 @@ export default function PensionesGradoSeccionTable({
     </Container>
   );
 
-  function handleClick(pension: Pension | undefined, estudiante: AMatriculado) {
+  function handleClick(pension: Pension | undefined, estudiante: AMatriculado, montoMatricula: number, reciboMatricula: string) {
     if (!pension) return;
-    setSelectedData({ pension, estudiante });
+    setSelectedData({ pension, estudiante, montoMatricula, reciboMatricula });
     setShowPensionData(true);
   }
   function handleClickAlumnoName(rowIndex: number) {

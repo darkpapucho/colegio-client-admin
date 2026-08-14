@@ -82,10 +82,11 @@ type InputProps = {
   type: string;
   label: string;
   isError?: boolean;
-};
+} & React.HTMLProps<HTMLInputElement>;
 //main input  componentt
-const Input = forwardRef(function InputComponent({ name, type, $width, label, isError }: InputProps, ref) {
-  const [value, setValue] = useState('');
+const Input = forwardRef(function InputComponent(props: InputProps, ref) {
+  const { $width, name, type, label, isError, defaultValue, ...rest } = props;
+  const [value, setValue] = useState(defaultValue || '');
   const [showPassword, setShowPassword] = useState(false);
   const [hasContent, setHasContent] = useState(false);
 
@@ -102,6 +103,7 @@ const Input = forwardRef(function InputComponent({ name, type, $width, label, is
         {label}
       </SLabel>
       <input
+        {...rest}
         id={name}
         type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         value={value}

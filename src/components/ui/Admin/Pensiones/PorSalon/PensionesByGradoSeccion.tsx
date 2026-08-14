@@ -19,32 +19,25 @@ import toast from 'react-hot-toast';
 import usePensionesLastUpdateDate, { fetchLastUpdateDate } from '../../../../../hooks/useLastUpdateDate';
 import { Text } from '../../../../shared/Text';
 import { queryClient } from '../../../../../config/query/query';
-import { Pension } from '../../../../../types/pensiones';
+import { Pension, PensionTable } from '../../../../../types/pensiones';
 
 export const PensionesByGradoSeccionContext = createContext<{
-  setData: React.Dispatch<
-    React.SetStateAction<
-      {
-        alumnoId: string;
-        numPensionesPagadas: number;
-        pensiones: Pension[];
-        estudiante: AMatriculado;
-      }[]
-    >
-  >;
+  setData: React.Dispatch<React.SetStateAction<PensionTable[]>>;
+  data: PensionTable[];
 } | null>(null);
 
 export default function PensionesByGradoSeccion() {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const año = useTypedSelector((state) => state.año);
   const { grado, seccion, setSearchParams, searchParams } = useGradoSeccionSearchParams();
-  const [data, setData] = useState<{ alumnoId: string; numPensionesPagadas: number; pensiones: Pension[]; estudiante: AMatriculado }[]>([]);
+  const [data, setData] = useState<PensionTable[]>([]);
+
   const [allGrades, setAllGrades] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const { date, isFetching } = usePensionesLastUpdateDate();
   useCustomEvent('customCheckbox', checkBoxListener);
   return (
-    <PensionesByGradoSeccionContext.Provider value={{ setData }}>
+    <PensionesByGradoSeccionContext.Provider value={{ setData, data }}>
       {loading || (isFetching && <Loader />)}
       <Container $direction="column" $padding="0 0 3rem 0" $width="100%" $gap="1.5rem">
         {date && (

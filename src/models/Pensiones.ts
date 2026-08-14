@@ -5,7 +5,7 @@ import { ApiEndPoints } from '../enums/apiEndPoints';
 import { ResponseSchema } from '../types/axiosResponse';
 import { AlumnoRiesgoSuspension, AMatriculado } from '../types/alumno';
 import { GetHeaders } from '../utils/utils';
-import { Pension, PensionesAtrasadasListDetail } from '../types/pensiones';
+import { Pension, PensionesAtrasadasListDetail, PensionTable } from '../types/pensiones';
 
 export type ConsultaPensionResult = {
   alumno: {
@@ -183,7 +183,7 @@ export class Pensiones {
   }
 
   static async fetchListByGradoSeccion({ grado, seccion, estadosMatricula }: { estadosMatricula: EstadoMatricula[]; grado: Grado; seccion: Seccion }) {
-    const response = await axios.post<ResponseSchema<{ alumnoId: string; numPensionesPagadas: number; estudiante: AMatriculado; pensiones: Pension[] }[]>>(
+    const response = await axios.post<ResponseSchema<PensionTable[]>>(
       `${API_BASE_URL + ApiEndPoints.FETCH_PENSIONES_LIST_BY_GRADO_SECCION}`,
       { grado, seccion, estadosMatricula },
       GetHeaders(),

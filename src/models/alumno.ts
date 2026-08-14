@@ -20,14 +20,10 @@ export class Alumno {
   }
 
   static async updateApoderadoById({ alumnoId, apoderado }: { alumnoId: string; apoderado: Apoderado }) {
-    const response = await axios.post<ResponseSchema<null>>(
-      API_BASE_URL + ApiEndPoints.UPDATE_APODERADO_BY_ID,
-      { alumnoId, apoderado },
-      GetHeaders(),
-    );
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.UPDATE_APODERADO_BY_ID, { alumnoId, apoderado }, GetHeaders());
     return response;
   }
-  static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: NuevoApoderado| Apoderado }) {
+  static async agregarApoderado({ alumnoId, apoderado }: { alumnoId: string; apoderado: NuevoApoderado | Apoderado }) {
     const response = await axios.post<ResponseSchema<{ apoderado: Apoderado }>>(
       API_BASE_URL + ApiEndPoints.AGREGAR_APODERADO,
       { alumnoId, apoderado },
@@ -54,9 +50,9 @@ export class Alumno {
     const response = await axios.get<ResponseSchema<AMatriculado[]>>(API_BASE_URL + END_POINT, GetHeaders());
     return response;
   }
-  static async matriculaNueva(alumno: NuevoAlumno) {
+  static async matriculaNueva({ alumno, montoPension, montoMatricula }: { alumno: NuevoAlumno; montoPension: number; montoMatricula: number }) {
     const END_POINT = ApiEndPoints.NUEVA_MATRICULA;
-    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { alumno: { ...alumno } }, GetHeaders());
+    const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + END_POINT, { alumno: { ...alumno }, montoPension, montoMatricula }, GetHeaders());
     return response;
   }
   static async ratificarMatricula({ alumnos, grado, fechaMatricula }: { fechaMatricula: string; alumnos: AMatriculado[]; grado: Grado }) {

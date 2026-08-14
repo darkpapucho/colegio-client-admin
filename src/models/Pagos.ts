@@ -9,4 +9,8 @@ export default class Pagos {
     const response = await axios.post<ResponseSchema<null>>(API_BASE_URL + ApiEndPoints.NUEVO_PAGO_YAPE, { amount, email, phone, token }, GetHeaders());
     return response;
   }
+  static async getReciboMatricula({ reciboMatricula }: { reciboMatricula: string }) {
+    const response = await axios.post(API_BASE_URL + ApiEndPoints.GET_RECIBO_MATRICULA, { reciboMatricula }, { ...GetHeaders(), responseType: 'arraybuffer' });
+    return response;
+  }
 }
