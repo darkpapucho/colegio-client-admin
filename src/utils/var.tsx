@@ -136,7 +136,7 @@ export const menuItems: { admin: MenuItem[]; promotor: MenuItem[]; profesor: Men
     },
     {
       icon: <BiMoneyWithdraw />,
-      label: 'Pagos Yape',
+      label: 'Otras Deudas',
       url: '/menu/admin/pagos',
     },
     {

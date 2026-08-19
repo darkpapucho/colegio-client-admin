@@ -14,6 +14,7 @@ import { ConsultaPensionResult } from '../../../../../models/Pensiones';
 export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPensionResult[] }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const [selectedRecord, setSelectedRecord] = useState<number | null>(null);
+  const estimadoPagosNoRecibidos = estimarPagosNoRecibidos();
 
   if (data.length === 0) {
     return (
@@ -35,7 +36,14 @@ export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPe
           }, 0)}
         </Text>
       </Container>
-
+      <Container>
+        <Text $bold $fontSize="medium">
+          Estimado pagos no recibidos: S/.
+        </Text>
+        <Text $bold $fontSize="medium" $color="red">
+          {estimadoPagosNoRecibidos}
+        </Text>
+      </Container>
       <Table withBorder gridTemplateColumns={`38rem 10rem ${nivel === 'inicial' ? '13rem' : '10rem'} 1fr`} width="content-fit">
         <Table.Header>
           <Table.Header.Item>
@@ -114,10 +122,13 @@ export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPe
                     $bgColor={
                       index === selectedRecord ? theme.colors.red[100] : getRecordBgColor({ grado: record.alumno.grado, seccion: record.alumno.seccion })
                     }>
+                    s
                     {record.pensiones.map((pension, index) => {
                       return (
-                        <Container $padding=".3rem" $border="1px solid black" key={index} $width="13rem">
+                        <Container $padding=".3rem" $border="1px solid black" key={index} $width="13rem" $bgColor={pension.monto_pagado == 0 ? '#ee1515' : ''}>
                           <DisplayHoverMessage
+                            color={pension.monto_pagado == 0 ? 'white' : 'black'}
+                            width="100%"
                             label={`${MONTHS[pension.mes].toUpperCase()}-S/.${pension.monto_pagado}`}
                             message={`${new Date(pension.fecha).toLocaleDateString('es-PE', {
                               timeZone: 'America/Lima',
@@ -145,5 +156,17 @@ export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPe
       return setSelectedRecord(null);
     }
     setSelectedRecord(index);
+  }
+  function estimarPagosNoRecibidos() {
+    const numberoPensiones = data.reduce((acc, curr) => {
+      const num = curr.pensiones.reduce((ack, current) => {
+        if (current.monto_pagado == 0) {
+          return ack + 1;
+        }
+        return ack;
+      }, 0);
+      return acc + num;
+    }, 0);
+    return numberoPensiones * 180;
   }
 }

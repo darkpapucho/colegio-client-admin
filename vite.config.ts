@@ -6,7 +6,7 @@ const VERSION = '1.0.1';
 export default defineConfig({
   plugins: [
     react(),
-    
+
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'src',
@@ -81,6 +81,7 @@ export default defineConfig({
     }),
   ],
   server: {
+    host: '0.0.0.0',
     port: 3000,
   },
 });

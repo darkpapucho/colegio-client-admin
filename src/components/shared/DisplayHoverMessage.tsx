@@ -39,12 +39,14 @@ export default function DisplayHoverMessage({
   bgColor,
   padding,
   width,
+  color,
 }: {
   width?: WidthCss;
   padding?: string;
   bgColor?: string;
   label: ReactNode;
   message: string;
+  color?: string;
 }) {
   const [showMessage, setShowMessage] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -64,7 +66,9 @@ export default function DisplayHoverMessage({
       onMouseLeave={() => setShowMessage(false)}
       ref={containerRef}>
       {showMessage && <StyledMessage $offset={offset}>{message}</StyledMessage>}
-      <Text $fontSize="small">{label}</Text>
+      <Text $fontSize="small" $color={color}>
+        {label}
+      </Text>
     </StyledHoverable>
   );
 }

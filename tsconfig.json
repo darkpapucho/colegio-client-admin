@@ -22,6 +22,6 @@
     "noImplicitAny": false,
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/components/ui/Admin/Yape/Yape.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/components/ui/Admin/OtrosPagos/OtrosPagos.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

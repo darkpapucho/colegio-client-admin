@@ -68,4 +68,5 @@ export enum ApiEndPoints {
   AGREGAR_PSICOLOGO = '/empleado/agregar-psicologo',
   FETCH_PSICOLOGOS = '/empleado/fetch-psicologos',
   GET_RECIBO_MATRICULA = '/pagos/get-recibo-matricula',
+  FETCH_OTRAS_DEUDAS = '/pagos/fetch-otras-deudas',
 }

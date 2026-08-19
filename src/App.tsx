@@ -30,7 +30,6 @@ import PensionesByGradoSeccion from './components/ui/Admin/Pensiones/PorSalon/Pe
 import PensionesGlobalReport from './components/ui/Admin/Pensiones/GlobalReport/PensionesGlobalReport';
 import RecordPensionesByDateRange from './components/ui/Admin/Pensiones/Consultas/RecordPensionesByDateRange';
 import ResumenTardanzas from './components/ui/Admin/AsistenciasAlumnos/ResumenTardanzas/ResumenTardanzas';
-import Yape from './components/ui/Admin/Yape/Yape';
 import Anuncios from './components/ui/Admin/Anuncios/Anuncios';
 import TeacherPage from './components/ui/Admin/TeacherPage/TeacherPage';
 import RecordNotas from './components/ui/Admin/RecordNotas/RecordNotas';
@@ -41,6 +40,8 @@ import AlumnosSuspendidos from './components/ui/Admin/Pensiones/AlumnosSuspendid
 import Psicologia from './components/ui/Admin/Psicologia/Psicologia';
 import AgregarPsicologo from './components/ui/Admin/Psicologia/Agregar/AgregarPsicologo';
 import ListarPsicologos from './components/ui/Admin/Psicologia/Listar/ListarPsicologos';
+import OtrosPagos from './components/ui/Admin/OtrosPagos/OtrosPagos';
+import RegistrarNuevaDeuda from './components/ui/Admin/OtrosPagos/RegistrarNuevaDeuda';
 
 function App() {
   const navigate = useNavigate();
@@ -86,7 +87,8 @@ function App() {
               <Route path="alumnos-riesgo-suspension" element={<AlumnosRiesgoSuspension />} />
               <Route path="suspendidos" element={<AlumnosSuspendidos />} />
             </Route>
-            <Route path="admin/pagos" element={<Yape />} />
+            <Route path="admin/pagos" element={<OtrosPagos />} />
+            <Route path="admin/registrar-nueva-deuda" element={<RegistrarNuevaDeuda />} />
             <Route path="admin/alumnos" element={<Alumnos />} />
             <Route path="admin/anuncios" element={<Anuncios />} />
             <Route path="admin/test-notas" element={<RecordNotas />} />
