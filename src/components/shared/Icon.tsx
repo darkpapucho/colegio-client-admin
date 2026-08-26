@@ -1,9 +1,18 @@
 import styled, { css } from 'styled-components';
 
-export const Icon = styled.div<{ $interactive?: boolean; $primary?: boolean; $small?: boolean; $tiny?: boolean; $inset?: string; $pointer?: boolean; $color?: string }>`
+export const Icon = styled.div<{
+  $interactive?: boolean;
+  $primary?: boolean;
+  $small?: boolean;
+  $tiny?: boolean;
+  $inset?: string;
+  $pointer?: boolean;
+  $color?: string;
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   ${({ $pointer }) =>
     $pointer &&
     css`

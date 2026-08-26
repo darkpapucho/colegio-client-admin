@@ -158,6 +158,7 @@ export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPe
     setSelectedRecord(index);
   }
   function estimarPagosNoRecibidos() {
+    const precioPensio = nivel == 'inicial' ? 170 : nivel == 'primaria' ? 180 : 220;
     const numberoPensiones = data.reduce((acc, curr) => {
       const num = curr.pensiones.reduce((ack, current) => {
         if (current.monto_pagado == 0) {

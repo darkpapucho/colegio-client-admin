@@ -1,29 +1,35 @@
 import { useEffect, useState } from 'react';
 import Loader from '../../Loader/Loader';
-import Pagos from '../../../../models/Pagos';
 import SimpleLayout from '../../../shared/SimpleLayout';
 import { Title } from '../../../shared/Title';
 import { Container } from '../../../shared/Container';
-import Table from '../../Table/Table';
+
 import { useQuery } from '@tanstack/react-query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../types/enums';
 import { Button } from '../../../shared/Button';
 import CheckBox from '../../../shared/CheckBox';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
-import { updateToken } from '../../../../utils/utils';
+
 import { errorHandler } from '../../../../utils/errorHandler';
-import DeudaCard from './DeudaCard';
+import DeudaCard from './DisplayDeudas/DeudaCard';
 import { useNavigate } from 'react-router-dom';
+import { fetchDeudas } from './util';
+import { ItemDeuda } from '../../../../types/pagos';
+import { AMatriculado } from '../../../../types/alumno';
+
+import PagarDeudaModal from './PagarDeudaCard/PagarDeudaModal';
 
 export default function OtrosPagos() {
   const navigate = useNavigate();
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const year = useTypedSelector((state) => state.año) as Year;
   const [soloDeudasPendientes, setSoloDeudasPendientes] = useState<boolean>(true);
+  const [showPagarDeudaModal, setShowPagarDeudaModal] = useState<boolean>(false);
+  const [selectedRow, setSelectedRow] = useState<{ alumno: AMatriculado; itemDeuda: ItemDeuda } | null>(null);
   const { data, error, isFetching, refetch } = useQuery({
     queryKey: ['otros-pagos', nivel, year],
-    queryFn: fetchData,
+    queryFn: fetchDeudas.bind(null, soloDeudasPendientes),
     enabled: false,
   });
   useCustomEvent('customCheckbox', checkboxListener);
@@ -34,6 +40,7 @@ export default function OtrosPagos() {
   return (
     <>
       {isFetching && <Loader />}
+      {showPagarDeudaModal && selectedRow && <PagarDeudaModal onCloseModal={onCloseModal} alumno={selectedRow.alumno} itemDeuda={selectedRow.itemDeuda} />}
       <SimpleLayout>
         <Container $direction="column" $gap="1.5rem">
           <Title>Otras Deudas</Title>
@@ -46,10 +53,10 @@ export default function OtrosPagos() {
               Registrar Nueva Deuda
             </Button>
           </Container>
-          {data && (
-            <Container $direction="column">
-              {data.map((row) => {
-                return <DeudaCard deudaInfo={row} />;
+          {data && data.length > 0 && (
+            <Container $direction="column" $gap=".4rem">
+              {data.map((row, id) => {
+                return <DeudaCard deudaInfo={row} key={id} onRowSelected={onRowSelected} />;
               })}
             </Container>
           )}
@@ -59,15 +66,17 @@ export default function OtrosPagos() {
   );
   function checkboxListener(e: CustomEvent) {
     const { name, value } = e.detail;
+    console.log({ name, value });
     if (name == 'status') {
       setSoloDeudasPendientes(value);
     }
   }
-  async function fetchData() {
-    const response = await Pagos.fetchOtrasDeudasPendientes({ soloDeudasPendientes });
-    updateToken(response);
-    if (!response.data.ok) throw new Error('no se pudo descargar otras deudas');
-
-    return response.data.payload;
+  function onRowSelected(alumno: AMatriculado, itemDeuda: ItemDeuda) {
+    setSelectedRow({ alumno, itemDeuda });
+    setShowPagarDeudaModal(true);
+  }
+  function onCloseModal() {
+    setShowPagarDeudaModal(false);
+    setSelectedRow(null);
   }
 }

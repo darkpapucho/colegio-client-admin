@@ -8,12 +8,12 @@ export type ItemDeuda = {
   abonado: number;
   lastUpdateDate: string;
   fecha: string;
+  _id?: string;
 };
 export type OtrasDeudas = {
   alumno: AMatriculado;
   deuda: {
     deudaTotal: number;
-    abonado: number;
     status: DeudaStatus;
     lastUpdateDate?: string;
     fechaPagoTotal?: string;
