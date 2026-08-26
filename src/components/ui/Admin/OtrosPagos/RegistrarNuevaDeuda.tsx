@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Container } from '../../../shared/Container';
 import SearchAlumnoBox from '../../../shared/SearchAlumnoBox';
 import { AMatriculado } from '../../../../types/alumno';
-
 import AlumnosListResultAgregarDeuda from './AlumnosListResultAgregarDeuda';
 import SimpleLayout from '../../../shared/SimpleLayout';
 import AgregarDeudaCard from './AgregarDeudaCard';

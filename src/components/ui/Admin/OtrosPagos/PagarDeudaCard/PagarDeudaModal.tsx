@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AMatriculado } from '../../../../../types/alumno';
 import { ItemDeuda } from '../../../../../types/pagos';
 import { Container } from '../../../../shared/Container';
@@ -14,6 +14,10 @@ import { queryClient } from '../../../../../config/query/query';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../../types/enums';
 import { fetchDeudas } from '../util';
+import { Alumno } from '../../../../../models/alumno';
+import { useQuery } from '@tanstack/react-query';
+import ApoderadosCard from '../ApoderadosCard';
+import Loader from '../../../Loader/Loader';
 
 export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { onCloseModal: () => void; alumno: AMatriculado; itemDeuda: ItemDeuda }) {
   const nivel = useTypedSelector((state) => state.nivel)! as Nivel;
@@ -21,9 +25,27 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
   const [loading, setLoading] = useState(false);
   const abonadoRef = useRef<HTMLInputElement | null>(null);
   const total = itemDeuda.precio_unitario * itemDeuda.cantidad;
+  const {
+    data: apoderadosData,
+    error,
+    isFetching,
+  } = useQuery({
+    queryKey: ['apoderados', alumno._id],
+    queryFn: fetchApoderadosDataHandle,
+    enabled: true,
+    refetchOnMount: false,
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    errorHandler(error);
+  }, []);
   return (
     <Modal onCloseModal={onCloseModal} width="60rem" title={`${alumno.nombreCompleto}`}>
+      {isFetching && <Loader />}
       <Container $direction="column" $width="100%" $gap="2rem">
+        {apoderadosData && apoderadosData.length != 0 && <ApoderadosCard apoderados={apoderadosData} />}
         <Container $direction="row" $gap=".5rem" $alignItems="center">
           <Text $width="100%" $fontSize="medium" $bold>
             {itemDeuda.descripcion.toUpperCase()}
@@ -98,5 +120,11 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
     } finally {
       setLoading(false);
     }
+  }
+  async function fetchApoderadosDataHandle() {
+    const response = await Alumno.getApoderadosData({ alumnoId: alumno._id });
+    updateToken(response);
+    if (!response.data.ok) throw new Error(response.data.message);
+    return response.data.payload;
   }
 }

@@ -3,21 +3,18 @@ import Loader from '../../Loader/Loader';
 import SimpleLayout from '../../../shared/SimpleLayout';
 import { Title } from '../../../shared/Title';
 import { Container } from '../../../shared/Container';
-
 import { useQuery } from '@tanstack/react-query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../types/enums';
 import { Button } from '../../../shared/Button';
 import CheckBox from '../../../shared/CheckBox';
 import useCustomEvent from '../../../../hooks/useCustomEvent';
-
 import { errorHandler } from '../../../../utils/errorHandler';
 import DeudaCard from './DisplayDeudas/DeudaCard';
 import { useNavigate } from 'react-router-dom';
 import { fetchDeudas } from './util';
 import { ItemDeuda } from '../../../../types/pagos';
 import { AMatriculado } from '../../../../types/alumno';
-
 import PagarDeudaModal from './PagarDeudaCard/PagarDeudaModal';
 
 export default function OtrosPagos() {
@@ -66,7 +63,6 @@ export default function OtrosPagos() {
   );
   function checkboxListener(e: CustomEvent) {
     const { name, value } = e.detail;
-    console.log({ name, value });
     if (name == 'status') {
       setSoloDeudasPendientes(value);
     }

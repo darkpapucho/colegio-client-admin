@@ -10,6 +10,14 @@ import { PeriodosKey } from '../types/documento';
 type TardanzaList = { alumnoId: string; tardanzas: number; estudiante: { nombreCompleto: string; grado: Grado; seccion: Seccion } }[];
 
 export class Alumno {
+  static async getApoderadosData({ alumnoId }: { alumnoId: string }) {
+    const response = await axios.post<ResponseSchema<Apoderado[] | undefined>>(
+      API_BASE_URL + ApiEndPoints.GET_APODERADO_DATA,
+      { alumnoId },
+      { ...GetHeaders() },
+    );
+    return response;
+  }
   static async getListaMasTardonesByPeriodo({ periodo }: { periodo: PeriodosKey }) {
     const response = await axios.post<ResponseSchema<{ periodoList: TardanzaList; anualList: TardanzaList }>>(
       API_BASE_URL + ApiEndPoints.GET_RECORD_TARDANZAS_LIST_BY_PERIODO,

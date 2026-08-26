@@ -4,15 +4,12 @@ import { Button } from '../../../shared/Button';
 import { Container } from '../../../shared/Container';
 import Modal from '../../../shared/Modal';
 import { Text } from '../../../shared/Text';
-
 import Input from '../../../shared/Input';
-
 import Pagos from '../../../../models/Pagos';
 import { updateToken } from '../../../../utils/utils';
 import { queryClient } from '../../../../config/query/query';
 import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../types/enums';
-
 import { fetchDeudas } from './util';
 import { errorHandler } from '../../../../utils/errorHandler';
 import { useNavigate } from 'react-router-dom';

@@ -9,6 +9,8 @@ import { Button } from '../../../../shared/Button';
 import { AMatriculado } from '../../../../../types/alumno';
 import { RiMoneyDollarBoxLine } from 'react-icons/ri';
 import { FaCheckDouble } from 'react-icons/fa';
+import { Alumno } from '../../../../../models/alumno';
+import { useQuery } from '@tanstack/react-query';
 export default function DeudaCard({
   deudaInfo,
   onRowSelected,
@@ -17,21 +19,25 @@ export default function DeudaCard({
   onRowSelected: (alumno: AMatriculado, itemDeuda: ItemDeuda) => void;
 }) {
   const [showInfo, setShowInfo] = useState<boolean>(false);
+
   return (
     <Container $direction="column" $border="1px solid gray" $width="max-content">
-      <Container $padding=".4rem" $alignItems="center" $justifyContent="space-between" $direction="row" $gap="1rem" $bgColor="#a0a2b3" $width="78rem">
-        <Container>
+      <Container $padding=".4rem" $alignItems="center" $direction="row" $gap="1rem" $bgColor="#a0a2b3" $width="78rem">
+        <Container $width="50%">
           <Text $bold>{deudaInfo.alumno.nombreCompleto}</Text>
         </Container>
-        <Container $direction="row" $alignItems="center" $gap="1rem">
-          <Container $direction="row" $alignItems="center">
+        <Container $width="25%">
+          <Text $bold>{deudaInfo.alumno.grado + ' ' + deudaInfo.alumno.seccion}</Text>
+        </Container>
+        <Container $direction="row" $justifyContent="flex-end" $gap="1rem" $width="25%" $alignItems="center">
+          <Container $direction="row" $justifyContent="flex-end" $width="80%" $alignItems="center" $gap=".2rem">
             <Text $bold>TOTAL S/.</Text>
-            <Text $bold $color="#f33040" $fontSize="small">
+            <Text $bold $color="#f33040" $fontSize="medium">
               {deudaInfo.deuda.deudaTotal}
             </Text>
           </Container>
 
-          <Container>
+          <Container $width="20%" $pointer>
             <Icon onClick={() => setShowInfo(!showInfo)} $small>
               {showInfo ? <BiChevronUp fontSize={'2rem'} color="#2e21e6" /> : <BiChevronDown fontSize={'2rem'} color="#2e21e6" />}
             </Icon>
