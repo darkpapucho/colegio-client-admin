@@ -46,10 +46,10 @@ export default function OtrosPagos() {
           <Title>Otras Deudas</Title>
           <Container $direction="row" $gap="1rem">
             <CheckBox name="status" label="solo deudas pendientes" width="max-content" initialState={soloDeudasPendientes}></CheckBox>
-            <Button $width="max-content" $green onClick={() => refetch()}>
+            <Button $width="max-content" $green onClick={() => refetch()} disabled={isFetching}>
               Get Data
             </Button>
-            <Button $width="max-content" $primary onClick={() => navigate('/menu/admin/registrar-nueva-deuda')}>
+            <Button $width="max-content" $primary onClick={() => navigate('/menu/admin/registrar-nueva-deuda')} disabled={isFetching}>
               Registrar Nueva Deuda
             </Button>
           </Container>

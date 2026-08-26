@@ -19,7 +19,7 @@ export default function DeudaCard({
   const [showInfo, setShowInfo] = useState<boolean>(false);
   return (
     <Container $direction="column" $border="1px solid gray" $width="max-content">
-      <Container $padding=".4rem" $alignItems="center" $justifyContent="space-between" $direction="row" $gap="1rem" $bgColor="#a0a2b3" $width="73rem">
+      <Container $padding=".4rem" $alignItems="center" $justifyContent="space-between" $direction="row" $gap="1rem" $bgColor="#a0a2b3" $width="78rem">
         <Container>
           <Text $bold>{deudaInfo.alumno.nombreCompleto}</Text>
         </Container>
@@ -39,7 +39,7 @@ export default function DeudaCard({
         </Container>
       </Container>
       {showInfo && (
-        <Table width="content-fit" gridTemplateColumns="3rem 15rem 20rem 10rem 5rem 6rem 10rem 4rem">
+        <Table width="content-fit" gridTemplateColumns="3rem 10rem 30rem 10rem 5rem 6rem 10rem 4rem">
           <Table.Header>
             <Table.Header.Item>
               <Container $padding=".4rem" $justifyContent="center" $alignItems="center">
@@ -96,7 +96,9 @@ export default function DeudaCard({
                       <Text $fontSize="small">{row.fecha}</Text>
                     </Table.Body.Item>
                     <Table.Body.Item $padding=".4rem">
-                      <Text $fontSize="small">{row.descripcion}</Text>
+                      <Container $direction="row" $width="100%" $justifyContent="flex-start" $alignItems="center">
+                        <Text $fontSize="small">{row.descripcion.substring(0, 70) + `${row.descripcion.length > 70 ? '...' : ''}`}</Text>
+                      </Container>
                     </Table.Body.Item>
                     <Table.Body.Item $padding=".4rem">
                       <Text $fontSize="small">{row.precio_unitario}</Text>
