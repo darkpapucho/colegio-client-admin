@@ -13,12 +13,14 @@ import { Nivel, Year } from '../../../../types/enums';
 import { fetchDeudas } from './util';
 import { errorHandler } from '../../../../utils/errorHandler';
 import { useNavigate } from 'react-router-dom';
+import TextArea from '../../../shared/TextArea';
 
 export default function AgregarDeudaCard({ alumno, onCloseModal }: { alumno: AMatriculado; onCloseModal: () => void }) {
   const nivel = useTypedSelector((state) => state.nivel) as Nivel;
   const year = useTypedSelector((state) => state.año) as Year;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const descripcionRef = useRef<HTMLInputElement | null>(null);
+  const comentariosRef = useRef<HTMLTextAreaElement | null>(null);
   const cantidadRef = useRef<HTMLInputElement | null>(null);
   const precioRef = useRef<HTMLInputElement | null>(null);
   const abonadoRef = useRef<HTMLInputElement | null>(null);
@@ -34,11 +36,16 @@ export default function AgregarDeudaCard({ alumno, onCloseModal }: { alumno: AMa
             Add Item
           </Button>
         </Container>
-        <Container $direction="column" $padding="1rem" $gap="2rem">
-          <Input type="text" label="Descripción" name="descripcion" ref={descripcionRef} defaultValue={'New Item'} />
-          <Input type="number" label="Precio" name="precio" ref={precioRef} defaultValue={10} />
-          <Input type="number" label="Cantidad" name="cantidad" ref={cantidadRef} defaultValue={1} />
-          <Input type="number" label="Abonado" name="abonado" ref={abonadoRef} defaultValue={'0'} />
+        <Container $direction="row" $gap="1rem" $width="100%">
+          <Container $direction="column" $padding="1rem" $gap="2rem" $width="50%">
+            <Input type="text" label="Descripción" name="descripcion" ref={descripcionRef} defaultValue={'New Item'} />
+            <Input type="number" label="Precio" name="precio" ref={precioRef} defaultValue={10} />
+            <Input type="number" label="Cantidad" name="cantidad" ref={cantidadRef} defaultValue={1} />
+            <Input type="number" label="Abonado" name="abonado" ref={abonadoRef} defaultValue={'0'} />
+          </Container>
+          <Container $width="50%">
+            <TextArea name="comentarios" rows={4} ref={comentariosRef} aria-label="hello"></TextArea>
+          </Container>
         </Container>
       </Container>
     </Modal>
@@ -60,6 +67,10 @@ export default function AgregarDeudaCard({ alumno, onCloseModal }: { alumno: AMa
           abonado: Number(abonado),
           fecha: fecha,
           lastUpdateDate: fecha,
+          detalles: {
+            comentarios: comentariosRef.current?.value || '',
+            fecha,
+          },
         },
         alumnoId: alumno._id,
       });

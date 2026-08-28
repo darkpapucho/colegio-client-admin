@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { CSSProperties } from 'react';
+import { CSSProperties, TextareaHTMLAttributes } from 'react';
 
 type TextAreaProps = {
   $width?: string;
   $minHeight?: string;
-};
+} & TextareaHTMLAttributes<HTMLTextAreaElement>;
 type ExtendedCSSProperties = CSSProperties & { fieldSizing?: 'content' | 'fixed' };
 
 const TextArea = styled.textarea.attrs(() => ({ style: { fieldSizing: 'content' } as ExtendedCSSProperties }))<TextAreaProps>`

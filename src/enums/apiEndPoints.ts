@@ -72,4 +72,5 @@ export enum ApiEndPoints {
   REGISTRAR_ITEM_DEUDA = '/pagos/registrar-item-deuda',
   PAGAR_ITEM_DEUDA = '/pagos/pagar-item-deuda',
   GET_APODERADO_DATA = '/alumno/get-apoderados-data',
+  COMENTAR_ITEM_DEUDA = '/pagos/comentar-item-deuda',
 }

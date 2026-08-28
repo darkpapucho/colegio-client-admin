@@ -15,6 +15,7 @@ export default function RegistrarNuevaDeuda() {
       {selectedAlumnom && showModal && <AgregarDeudaCard alumno={selectedAlumnom} onCloseModal={onCloseModal} />}
       <Container $direction="column" $gap="1.5rem">
         <SearchAlumnoBox width="max-content" handler={setAlumnos} />
+
         {alumnos && alumnos.length > 0 && <AlumnosListResultAgregarDeuda data={alumnos} handler={handler} />}
       </Container>
     </SimpleLayout>

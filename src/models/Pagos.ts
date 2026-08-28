@@ -6,6 +6,15 @@ import { ResponseSchema } from '../types/axiosResponse';
 import { ItemDeuda, OtrasDeudas } from '../types/pagos';
 
 export default class Pagos {
+  static async comentarItemDeuda({ alumnoId, itemDeudaId, comentarios, fecha }: { alumnoId: string; itemDeudaId: string; comentarios: string; fecha: string }) {
+    const response = await axios.post<ResponseSchema<null>>(
+      API_BASE_URL + ApiEndPoints.COMENTAR_ITEM_DEUDA,
+      { alumnoId, itemDeudaId, comentarios, fecha },
+      GetHeaders(),
+    );
+    console.log({ comentariosResponse: response });
+    return response;
+  }
   static async pagarItemDeuda({ alumnoId, itemDeudaId, abonado }: { alumnoId: string; itemDeudaId: string; abonado: number }) {
     const response = await axios.post<ResponseSchema<null>>(
       API_BASE_URL + ApiEndPoints.PAGAR_ITEM_DEUDA,

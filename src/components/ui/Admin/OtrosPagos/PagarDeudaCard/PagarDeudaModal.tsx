@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AMatriculado } from '../../../../../types/alumno';
-import { ItemDeuda } from '../../../../../types/pagos';
+import { ItemDeuda, OtrasDeudas } from '../../../../../types/pagos';
 import { Container } from '../../../../shared/Container';
 import Modal from '../../../../shared/Modal';
 import { Text } from '../../../../shared/Text';
@@ -15,9 +15,10 @@ import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../../types/enums';
 import { fetchDeudas } from '../util';
 import { Alumno } from '../../../../../models/alumno';
-import { useQuery } from '@tanstack/react-query';
+import { Updater, useQuery } from '@tanstack/react-query';
 import ApoderadosCard from '../ApoderadosCard';
 import Loader from '../../../Loader/Loader';
+import TextArea from '../../../../shared/TextArea';
 
 export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { onCloseModal: () => void; alumno: AMatriculado; itemDeuda: ItemDeuda }) {
   const nivel = useTypedSelector((state) => state.nivel)! as Nivel;
@@ -25,6 +26,7 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
   const [loading, setLoading] = useState(false);
   const abonadoRef = useRef<HTMLInputElement | null>(null);
   const total = itemDeuda.precio_unitario * itemDeuda.cantidad;
+  const comentariosRef = useRef<HTMLTextAreaElement | null>(null);
   const {
     data: apoderadosData,
     error,
@@ -43,7 +45,7 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
   }, []);
   return (
     <Modal onCloseModal={onCloseModal} width="60rem" title={`${alumno.nombreCompleto}`}>
-      {isFetching && <Loader />}
+      {(isFetching || loading) && <Loader />}
       <Container $direction="column" $width="100%" $gap="2rem">
         {apoderadosData && apoderadosData.length != 0 && <ApoderadosCard apoderados={apoderadosData} />}
         <Container $direction="row" $gap=".5rem" $alignItems="center">
@@ -82,7 +84,13 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
               </Container>
             </Container>
           </Container>
-          <Container $width="100%" $direction="row" $justifyContent="flex-end" $alignItems="center" $gap=".5rem">
+          <Container $width="100%" $direction="row" $alignItems="center" $gap=".5rem">
+            <Container $direction="column" $gap=".6rem" $width="50%" $justifyContent="flex-end">
+              <TextArea name="comentario" defaultValue={itemDeuda.detalles?.comentarios || ''} $width="100%" rows={4} ref={comentariosRef}></TextArea>
+              <Button $green $width="max-content" onClick={() => comentarItemDeuda()} disabled={loading}>
+                Comentar
+              </Button>
+            </Container>
             <Container $width="30%">
               <Input
                 label="Abonar S/."
@@ -126,5 +134,38 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
     updateToken(response);
     if (!response.data.ok) throw new Error(response.data.message);
     return response.data.payload;
+  }
+  async function comentarItemDeuda() {
+    try {
+      setLoading(true);
+      const fecha = new Date().toLocaleDateString('ES-pe', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const comentarios = comentariosRef.current?.value!;
+      const response = await Pagos.comentarItemDeuda({ alumnoId: alumno._id, itemDeudaId: itemDeuda._id!, comentarios, fecha });
+      updateToken(response);
+      if (!response.data.ok) throw new Error(response.data.message);
+      queryClient.setQueryData<OtrasDeudas[]>(['otros-pagos', nivel, year], (oldData: OtrasDeudas[] | undefined): OtrasDeudas[] | undefined => {
+        if (!oldData) return undefined;
+        const newData: OtrasDeudas[] = oldData.map((row) => {
+          if (row.alumno._id == alumno._id) {
+            row.deuda.items.map((item) => {
+              if (item._id == itemDeuda._id) {
+                const newDetalles = {
+                  comentarios,
+                  fecha,
+                };
+                item.detalles = newDetalles;
+              }
+            });
+          }
+          return row;
+        });
+        return newData;
+      });
+      toaster.success('comentario actualizado');
+    } catch (err) {
+      errorHandler(err);
+    } finally {
+      setLoading(false);
+    }
   }
 }
