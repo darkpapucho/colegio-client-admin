@@ -9,8 +9,7 @@ import { Button } from '../../../../shared/Button';
 import { AMatriculado } from '../../../../../types/alumno';
 import { RiMoneyDollarBoxLine } from 'react-icons/ri';
 import { FaCheckDouble } from 'react-icons/fa';
-import { Alumno } from '../../../../../models/alumno';
-import { useQuery } from '@tanstack/react-query';
+
 export default function DeudaCard({
   deudaInfo,
   onRowSelected,

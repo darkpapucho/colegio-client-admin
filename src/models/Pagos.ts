@@ -12,7 +12,7 @@ export default class Pagos {
       { alumnoId, itemDeudaId, comentarios, fecha },
       GetHeaders(),
     );
-    console.log({ comentariosResponse: response });
+
     return response;
   }
   static async pagarItemDeuda({ alumnoId, itemDeudaId, abonado }: { alumnoId: string; itemDeudaId: string; abonado: number }) {

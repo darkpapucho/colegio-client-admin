@@ -15,7 +15,7 @@ import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import { Nivel, Year } from '../../../../../types/enums';
 import { fetchDeudas } from '../util';
 import { Alumno } from '../../../../../models/alumno';
-import { Updater, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import ApoderadosCard from '../ApoderadosCard';
 import Loader from '../../../Loader/Loader';
 import TextArea from '../../../../shared/TextArea';
@@ -26,6 +26,7 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
   const [loading, setLoading] = useState(false);
   const abonadoRef = useRef<HTMLInputElement | null>(null);
   const total = itemDeuda.precio_unitario * itemDeuda.cantidad;
+  const deuda = total - itemDeuda.abonado;
   const comentariosRef = useRef<HTMLTextAreaElement | null>(null);
   const {
     data: apoderadosData,
@@ -39,7 +40,6 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });
-
   useEffect(() => {
     errorHandler(error);
   }, []);
@@ -56,31 +56,39 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
         <Container $direction="column" $gap="3rem" $width="100%">
           <Container $direction="column" $width="100%">
             <Container $direction="row" $width="100%">
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Cantidad</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Precio S/.</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Total S/.</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Abonado S/.</Text>
+              </Container>
+              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
+                <Text $fontSize="small">Deuda S/.</Text>
               </Container>
             </Container>
             <Container $direction="row" $width="100%">
-              <Container $padding=".5rem" $border="1px solid black" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{itemDeuda.cantidad}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{itemDeuda.precio_unitario}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{total}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="25%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{itemDeuda.abonado}</Text>
+              </Container>
+              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
+                <Text $bold $color="red" $fontSize="small">
+                  {deuda}
+                </Text>
               </Container>
             </Container>
           </Container>
@@ -91,19 +99,10 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
                 Comentar
               </Button>
             </Container>
-            <Container $width="30%">
-              <Input
-                label="Abonar S/."
-                name="abonado"
-                defaultValue={total - itemDeuda.abonado}
-                type="number"
-                $width="100%"
-                max={total - itemDeuda.abonado}
-                ref={abonadoRef}
-                min={1}
-              />
+            <Container $width="35%">
+              <Input label="Abonar S/." name="abonado" defaultValue={'0'} type="number" $width="100%" max={deuda} ref={abonadoRef} min={1} />
             </Container>
-            <Button $width="20%" $primary $center disabled={loading} onClick={() => pagarItemDeuda()}>
+            <Button $width="15%" $primary $center disabled={loading} onClick={() => pagarItemDeuda()}>
               PAGAR
             </Button>
           </Container>
@@ -115,6 +114,7 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
     try {
       setLoading(true);
       const abonado = Number(abonadoRef.current!.value);
+      if (abonado > deuda) throw new Error('El monto abonado no puede ser mayor que la deuda');
       if (!window.confirm(`Pagar ${abonado} de ${itemDeuda.descripcion}?`)) return;
       const response = await Pagos.pagarItemDeuda({ alumnoId: alumno._id, itemDeudaId: itemDeuda._id!, abonado });
       updateToken(response);
