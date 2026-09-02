@@ -19,9 +19,14 @@ const colors: { [key: string]: tinycolor.Instance } = {
   color5: tinycolor('rgb(227, 72, 233)'),
   color6: tinycolor('rgb(231, 108, 139)'),
   color7: tinycolor('rgb(255, 10, 10)'),
+  color8: tinycolor('rgb(255, 10, 10)'),
+  color9: tinycolor('rgb(255, 10, 10)'),
+  color10: tinycolor('rgb(255, 10, 10)'),
+  color11: tinycolor('rgb(255, 10, 10)'),
 };
 
 export function colorPickerForChart(numPensionesAtrasadas: number): { bgColor: string; borderColor: string } {
+  console.log({ numPensionesAtrasadas });
   const baseColor = colors[`color${numPensionesAtrasadas}`].clone();
   return { bgColor: baseColor.toString(), borderColor: baseColor.darken(10).toString() };
 }

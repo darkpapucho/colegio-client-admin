@@ -94,6 +94,7 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
           </Container>
           <Container $width="100%" $direction="row" $alignItems="center" $gap=".5rem">
             <Container $direction="column" $gap=".6rem" $width="50%" $justifyContent="flex-end">
+              <Text>{itemDeuda.detalles?.fecha || ''}</Text>
               <TextArea name="comentario" defaultValue={itemDeuda.detalles?.comentarios || ''} $width="100%" rows={4} ref={comentariosRef}></TextArea>
               <Button $green $width="max-content" onClick={() => comentarItemDeuda()} disabled={loading}>
                 Comentar

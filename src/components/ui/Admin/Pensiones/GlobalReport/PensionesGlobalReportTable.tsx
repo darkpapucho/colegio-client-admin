@@ -33,7 +33,7 @@ export default function PensionesGlobalReportTable() {
   //   staleTime: 1000 * 60 * 3,
   // });
   const { data, isFetching } = useGetHistorialRecaudaciones();
-
+  console.log({ data });
   const chartData = {
     labels: data ? data?.map((row) => VALID_MONTHS[row._id]) : [],
     datasets: [

@@ -18,10 +18,22 @@ export default function DeudaCard({
   onRowSelected: (alumno: AMatriculado, itemDeuda: ItemDeuda) => void;
 }) {
   const [showInfo, setShowInfo] = useState<boolean>(false);
+  const sevenDaysTime = 7 * 24 * 60 * 60 * 1000;
+  const sevenDaysAgo = new Date().getTime() - sevenDaysTime;
+  const is7DaysOlder = deudaInfo.deuda.items.reduce((acc, item) => {
+    const [day, month, year] = item.lastUpdateDate.split('/');
+    const fechaUltimoPago = new Date(`${year}-${month}-${day}`).getTime();
+    const fechaUltimoComentario = item.detalles?.fecha ? new Date(item.detalles.fecha.split('/').reverse().join('-')).getTime() : 0;
 
+    if ((fechaUltimoPago < sevenDaysAgo && !fechaUltimoComentario) || (fechaUltimoPago < sevenDaysAgo && fechaUltimoComentario < sevenDaysAgo)) {
+      return acc + 1;
+    }
+    return acc;
+  }, 0);
+  console.log({ is7DaysOlder });
   return (
     <Container $direction="column" $border="1px solid gray" $width="max-content">
-      <Container $padding=".4rem" $alignItems="center" $direction="row" $gap="1rem" $bgColor="#a0a2b3" $width="78rem">
+      <Container $padding=".4rem" $alignItems="center" $direction="row" $gap="1rem" $bgColor={is7DaysOlder > 0 ? '#c9c9c9' : '#36ce30'} $width="78rem">
         <Container $width="50%">
           <Text $bold>{deudaInfo.alumno.nombreCompleto}</Text>
         </Container>
