@@ -2,7 +2,6 @@ import { ChangeEvent, useContext, useState } from 'react';
 import { AMatriculado } from '../../../../../../types/alumno';
 import Modal from '../../../../../shared/Modal';
 import { Container } from '../../../../../shared/Container';
-import styled from 'styled-components';
 import { MONTHS } from '../../../Calendario/EnableDays/utils';
 import { getDisplayPensionCardBgColor } from './utils';
 import { Button } from '../../../../../shared/Button';
@@ -16,17 +15,9 @@ import { Text } from '../../../../../shared/Text';
 import { Pension } from '../../../../../../types/pensiones';
 import Pagos from '../../../../../../models/Pagos';
 
-const DivContainer = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, max-content));
-  justify-content: center;
-  align-items: center;
-
-  padding: 1.6rem 0;
-  margin: 0;
-  gap: 0.5rem;
-`;
+const DivContainer = ({ children }: { children?: React.ReactNode }) => (
+  <div className="m-0 grid w-full grid-cols-[repeat(auto-fit,minmax(8rem,max-content))] items-center justify-center gap-2 py-[1.6rem]">{children}</div>
+);
 
 export default function EditMontoPagarPensionesModal({
   selectedData,

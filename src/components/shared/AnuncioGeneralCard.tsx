@@ -9,7 +9,7 @@ export default function AnuncioGeneralCard({ anuncio }: { anuncio: AnuncioGenera
   return (
     <>
       {isLoading && <Loader />}
-      <div className="flex flex-col w-[100%] gap-2 p-2 border-1 border-black min-h-[80px] rounded-sm">
+      <div className="flex flex-col w-[100%] gap-2 p-2 border border-slate-300 min-h-[80px] rounded-md">
         <div className="flex flex-col justify-start @[600px]:flex-row @[600px]:justify-between @[600px]:items-center ">
           <div className="flex items-center gap-2">
             <Button $danger disabled={isLoading} onClick={() => handleDeleteAnuncio(anuncio._id)}>

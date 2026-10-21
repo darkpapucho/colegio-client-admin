@@ -1,8 +1,6 @@
 import './main.css';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
-import { GlobalStyle, theme } from './config/styled/styled.ts';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './config/redux/store.ts';
@@ -17,11 +15,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <Toaster {...toastArgs} />
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <App />
-          <ReactQueryDevtools />
-        </ThemeProvider>
+        <App />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </Provider>
   </BrowserRouter>,

@@ -55,62 +55,62 @@ export default function PensionesGradoSeccionTable({ data }: { data: PensionTabl
       <Table gridTemplateColumns="37rem 8rem repeat(10, 4rem)" width="fit-content">
         <Table.Header>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               ALUMNO
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               DNI
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               MAR
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               ABR
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               MAY
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               JUN
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               JUL
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               AGO
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               SEP
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               OCT
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               NOV
             </Container>
           </Table.Header.Item>
           <Table.Header.Item>
-            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid black">
+            <Container $width="100%" $padding=".5rem" $justifyContent="center" $border="1px solid #CBD5E1">
               DIC
             </Container>
           </Table.Header.Item>
@@ -120,7 +120,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: PensionTabl
             return (
               <Fragment key={record.alumnoId}>
                 <Table.Body.Item $key={index === selectedRow ? 2 : 1}>
-                  <Container $direction="row" $gap=".5rem" $width="100%" $justifyContent="left" $border="1px solid black">
+                  <Container $direction="row" $gap=".5rem" $width="100%" $justifyContent="left" $border="1px solid #CBD5E1">
                     <Container $pointer $padding=".5rem" $width="4rem" $alignItems="center" $gap=".8rem" $justifyContent="center">
                       <Icon
                         $tiny
@@ -149,7 +149,7 @@ export default function PensionesGradoSeccionTable({ data }: { data: PensionTabl
                   </Container>
                 </Table.Body.Item>
                 <Table.Body.Item $key={index === selectedRow ? 2 : 1}>
-                  <Container $width="100%" $border="1px solid black" $justifyContent="center" $alignItems="center">
+                  <Container $width="100%" $border="1px solid #CBD5E1" $justifyContent="center" $alignItems="center">
                     {record.estudiante.dni ?? ''}
                   </Container>
                 </Table.Body.Item>

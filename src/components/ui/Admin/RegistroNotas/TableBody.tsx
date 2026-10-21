@@ -6,35 +6,14 @@ import { DeterminateState, convertPeriodoKeyToIndex } from './utils';
 import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import { IconBG } from './IconBG';
 import { Fragment } from 'react';
-import styled from 'styled-components';
 import { InicialRegistroReducer } from './Table/Inicial/registroReducerInicial';
-const DisplayAlumno = styled.div<{ $index: number }>`
-  color: white;
-  cursor: pointer;
-  background-color: ${({ $index }) => {
-    if ($index % 2 === 0) {
-      return 'hsl(228, 100%, 57%)';
-    } else {
-      return 'hsl(228, 100%, 69%)';
-    }
-  }};
-
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: 5px;
-  gap: 0.4rem;
-
-  .nombres-apellidos {
-    flex-grow: 1;
-    text-align: left;
-  }
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary[400]};
-  }
-`;
+const DisplayAlumno = ({ $index, children }: { $index: number; children?: React.ReactNode }) => (
+  <div
+    className="flex h-full w-full cursor-pointer items-center justify-between gap-[0.4rem] px-[5px] text-white hover:text-brand-400 [&_.nombres-apellidos]:grow [&_.nombres-apellidos]:text-left"
+    style={{ backgroundColor: $index % 2 === 0 ? 'hsl(228, 100%, 57%)' : 'hsl(228, 100%, 69%)' }}>
+    {children}
+  </div>
+);
 
 export default function TableBody({
   openAllDetailsModal,

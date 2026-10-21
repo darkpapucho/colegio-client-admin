@@ -1,10 +1,9 @@
-import styled from 'styled-components';
 import { useTypedSelector } from '../../../../../hooks/useTypedSelector';
 import Calendario from '../../../../../models/Calendario';
 import { Grado, MONTH_NAME, Seccion } from '../../../../../types/enums';
 import { errorHandler } from '../../../../../utils/errorHandler';
 import { updateToken } from '../../../../../utils/utils';
-import { Container } from '../../../../shared/Container';
+import { Container, ContainerProps } from '../../../../shared/Container';
 // import { MONTHS } from '../../Calendario/EnableDays/utils';
 import { AsistenciaRecord, AsistenciaValue } from '../types';
 import { dayCellWidth, getAsistenciaValueFromRecords, getBgColorOfCell, requestRecords } from '../utils';
@@ -13,15 +12,9 @@ import { queryClient } from '../../../../../config/query/query';
 import useGradoSeccionSearchParams from '../../../../../hooks/useGradoSeccionSearchParams';
 import { MONTHS } from '../../Calendario/EnableDays/utils';
 
-const DayCell = styled(Container)<{ $isSelected: boolean }>`
-  color: white;
-  /* &:hover {
-    filter: brightness(140%);
-    color: black;
-  } */
-  filter: ${({ $isSelected }) => ($isSelected ? 'brightness(140%)' : 'brightness(100%)')};
-  justify-content: center;
-`;
+const DayCell = ({ $isSelected, ...rest }: { $isSelected: boolean } & ContainerProps) => (
+  <Container {...rest} $color="white" $justifyContent="center" style={{ filter: $isSelected ? 'brightness(140%)' : 'brightness(100%)' }} />
+);
 
 export default function MonthBody({
   monthName,
@@ -45,7 +38,7 @@ export default function MonthBody({
         const result = getAsistenciaValueFromRecords({ monthName, day, records });
         if (!result) {
           return (
-            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid black" $bgColor="#9a9c9c" key={day} $isSelected={isSelected}>
+            <DayCell $width={`${dayCellWidth}rem`} $border="1px solid #CBD5E1" $bgColor="#9a9c9c" key={day} $isSelected={isSelected}>
               X
             </DayCell>
           );
@@ -57,7 +50,7 @@ export default function MonthBody({
               $pointer
               onClick={() => justificarFalta({ alumnoId, dayId: result.dayId, monthName, day, asistencia: result.asistencia.value })}
               $width={`${dayCellWidth}rem`}
-              $border="1px solid black"
+              $border="1px solid #CBD5E1"
               $bgColor={getBgColorOfCell({ asistenciaValue: result.asistencia.value, justificado: result.asistencia.justificado })}
               key={day}>
               {result.asistencia.value}
@@ -69,7 +62,7 @@ export default function MonthBody({
             $isSelected={isSelected}
             // onClick={() => justificarFalta({ alumnoId, dayId:result.dayId, monthName, day, asistencia: result.asistencia.value })}
             $width={`${dayCellWidth}rem`}
-            $border="1px solid black"
+            $border="1px solid #CBD5E1"
             $bgColor={getBgColorOfCell({ asistenciaValue: result.asistencia.value, justificado: result.asistencia.justificado })}
             key={day}>
             {result.asistencia.value !== '' ? result.asistencia.value : '-'}

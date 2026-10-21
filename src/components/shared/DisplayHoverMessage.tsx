@@ -1,37 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
 import { WidthCss } from '../../types/globals';
 import { Text } from './Text';
-
-const StyledHoverable = styled.div<{ $bgColor?: string; $padding?: string; $width?: string }>`
-  width: ${({ $width }) => $width || '100%'};
-
-  text-align: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${({ $padding }) =>
-    $padding &&
-    css`
-      padding: ${$padding};
-    `}
-  ${({ $bgColor }) =>
-    $bgColor &&
-    css`
-      background-color: ${$bgColor};
-    `}
-`;
-const StyledMessage = styled.div<{ $offset: number }>`
-  position: absolute;
-  padding: 4px;
-  background-color: ${({ theme }) => theme.colors.secondary[100]};
-  color: black;
-  top: -23px;
-  left: ${({ $offset }) => $offset + 'px'};
-  width: max-content;
-  z-index: 100;
-`;
 
 export default function DisplayHoverMessage({
   message,
@@ -58,17 +27,21 @@ export default function DisplayHoverMessage({
     setOffset(width / 2);
   }, []);
   return (
-    <StyledHoverable
-      $width={width}
-      $bgColor={bgColor}
-      $padding={padding}
+    <div
+      style={{ width: (width as string) || '100%', backgroundColor: bgColor, padding }}
       onMouseEnter={() => setShowMessage(true)}
       onMouseLeave={() => setShowMessage(false)}
-      ref={containerRef}>
-      {showMessage && <StyledMessage $offset={offset}>{message}</StyledMessage>}
+      ref={containerRef}
+      className="relative flex items-center justify-center text-center"
+    >
+      {showMessage && (
+        <div className="absolute -top-[23px] z-[100] w-max p-1 bg-brand-100 text-black" style={{ left: offset + 'px' }}>
+          {message}
+        </div>
+      )}
       <Text $fontSize="small" $color={color}>
         {label}
       </Text>
-    </StyledHoverable>
+    </div>
   );
 }

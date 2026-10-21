@@ -96,7 +96,7 @@ export default function PasarAsistencia() {
                     <Container
                       key={element._id}
                       $padding=".5rem"
-                      $border="1px solid black"
+                      $border="1px solid #CBD5E1"
                       $bgColor={selectedDay?._id === element._id ? theme.colors.primary[100] : theme.colors.secondary[100]}
                       $pointer
                       onClick={() => setSelectedDay(element)}>

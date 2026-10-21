@@ -54,7 +54,7 @@ export default function PensionesGlobalReportTable() {
       <Container $direction="row" $gap="2rem" $width="100%">
         {isFetching && <Loader />}
 
-        <Container $direction="column" $gap="2rem" $border="2px solid black" $padding="0 2rem" $width="100%">
+        <Container $direction="column" $gap="2rem" $border="2px solid #64748B" $padding="0 2rem" $width="100%">
           <Text $width="100%" $textAlign="center" $bold $fontSize="medium">
             {`Reporte Global de Recaudaciones ${nivel}`}
           </Text>

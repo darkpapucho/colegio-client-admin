@@ -26,7 +26,7 @@ export default function AgregarApoderadoCard({ alumnoId, onCancel, closeModal }:
   return (
     <>
       {isLoading && <Loader />}
-      <Container $direction="column" $width="100%" $gap="1.4rem" $border="1px solid black" $padding="1rem">
+      <Container $direction="column" $width="100%" $gap="1.4rem" $border="1px solid #CBD5E1" $padding="1rem">
         <Container $width="100%" $direction="column" $gap=".1rem">
           <Container $direction="row" $width="100%" $gap=".5rem">
             <Container $direction="row" $width="50%" $alignItems="center">

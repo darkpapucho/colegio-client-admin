@@ -28,7 +28,7 @@ export default function DisplayDay({ day, month }: { month: number; day: Omit<Ca
     },
   });
   return (
-    <Container $bgColor={theme.colors.secondary[200]} $padding="6px 2px" $border="1px solid black" $direction="row">
+    <Container $bgColor={theme.colors.secondary[200]} $padding="6px 2px" $border="1px solid #CBD5E1" $direction="row">
       <DisplayHoverMessage width="15px" label={day.day} message={message} />
       <DisplayHoverMessage
         width="15px"

@@ -1,8 +1,3 @@
-import styled from "styled-components";
-
-export const Image = styled.img<{ $width: string; $ratio: string }>`
-  width: ${({ $width }) => $width || "fit-content"};
-  object-fit: contain;
-  aspect-ratio: ${({ $ratio }) => $ratio};
-  object-position: center;
-`;
+export const Image = ({ $width, $ratio, style, className = '', ...rest }: { $width?: string; $ratio?: string } & React.ImgHTMLAttributes<HTMLImageElement>) => (
+  <img className={`object-contain object-center ${className}`} style={{ width: $width || 'fit-content', aspectRatio: $ratio, ...style }} {...rest} />
+);

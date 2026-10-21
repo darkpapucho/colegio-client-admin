@@ -1,6 +1,12 @@
-import { DefaultTheme, createGlobalStyle } from 'styled-components';
-
-export const theme: DefaultTheme = {
+/**
+ * Design tokens (plain data) — I.E.P. JESÚS EL NAZARENO
+ * Brand palette: college blue 60% · white 25% · orange 15%.
+ * `primary`/`secondary` map to the college blue scale;
+ * `tertiary` maps to slate neutrals.
+ * These tokens mirror the Tailwind 4 `@theme` values in src/main.css
+ * and are consumed by components that pass CSS values as strings.
+ */
+export const theme = {
   iconSize: {
     tiny: '1rem',
     md: '1.5rem',
@@ -26,109 +32,94 @@ export const theme: DefaultTheme = {
     xl: 'clamp(32px, 2vw, 48px)', //h1
   },
   fontFamily: {
-    display: "'Anton', sans-serif;", //display text (h1)
-    header: "'Poppins', sans-serif", //titles , subttitles
+    display: "'Poppins', sans-serif", //display text (h1)
+    header: "'Poppins', sans-serif", //titles, subttitles
     text: "'Inter', sans-serif", //text
   },
   colors: {
-    //primary color
+    //primary color — college blue accent
     primary: {
-      100: '#FDBF60',
-      400: '#FFA447',
-      800: '#FC6736',
+      100: '#d6e7ff',
+      400: '#4e92ff',
+      800: '#004199',
     },
-    //secondary
+    //secondary — college blue scale
     secondary: {
-      50: '#eef2ff',
-      100: '#eef2ff',
-      200: '#c7d2fe',
-      300: '#c7d2fe',
-      500: '#6366f1',
-      600: '#6366f1',
-      700: '#3730a3',
-      800: '#3730a3',
-      900: '#3730a3',
+      50: '#ebf3ff',
+      100: '#d6e7ff',
+      200: '#afceff',
+      300: '#7fb0ff',
+      500: '#1a75ff',
+      600: '#0060f0',
+      700: '#0052cc',
+      800: '#004199',
+      900: '#00306b',
     },
+    //accent — college orange scale
+    accent: {
+      50: '#fff4ec',
+      100: '#ffe6d4',
+      200: '#ffc9a3',
+      300: '#ffad73',
+      500: '#f06000',
+      600: '#d95800',
+      700: '#b34a00',
+      800: '#8c3b00',
+      900: '#662c00',
+    },
+    //tertiary — neutral slate scale
     tertiary: {
-      0: '#fff',
-      50: '#fff',
-      100: '#f9fafb',
-      200: '#f3f4f6',
-      300: '#e5e7eb',
-      400: '#d1d5db',
-      500: '#9ca3af',
-      600: '#4b5563',
-      700: '#374151',
-      800: '#1f2937',
-      900: '#111827',
+      0: '#FFFFFF',
+      50: '#FFFFFF',
+      100: '#F8FAFC',
+      200: '#F1F5F9',
+      300: '#E2E8F0',
+      400: '#CBD5E1',
+      500: '#94A3B8',
+      600: '#64748B',
+      700: '#475569',
+      800: '#1E293B',
+      900: '#0F172A',
     },
     blue: {
-      100: '#e0f2fe',
-      700: '#0369a1',
+      100: '#DBEAFE',
+      700: '#1D4ED8',
     },
     green: {
-      100: '#50ea86',
-      500: '#2D9596',
-      700: '#0D9276',
-      800: '#0D9276',
+      100: '#DCFCE7',
+      500: '#22C55E',
+      700: '#15803D',
+      800: '#166534',
     },
-
     yellow: {
-      100: '#fef9c3',
-      700: '#a16207',
+      100: '#FEF9C3',
+      700: '#A16207',
     },
     silver: {
-      100: '#e5e7eb',
-      700: '#374151',
+      100: '#E2E8F0',
+      700: '#334155',
     },
     red: {
-      100: '#fee2e2',
-      500: '#fc1703',
-      700: '#b91c1c',
-      800: '#991b1b',
+      100: '#FEE2E2',
+      500: '#EF4444',
+      700: '#B91C1C',
+      800: '#991B1B',
     },
-    backdrop: 'rgba(255, 255, 255, 0.1)',
+    backdrop: 'rgba(15, 23, 42, 0.5)',
   },
   shadows: {
-    sm: '0 1px 2px rgba(0, 0, 0, 0.04)',
-    md: '0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06)',
-    lg: '0 2.4rem 3.2rem rgba(0, 0, 0, 0.12)',
+    sm: '0 1px 2px rgba(15, 23, 42, 0.06)',
+    md: '0 6px 16px rgba(15, 23, 42, 0.08)',
+    lg: '0 16px 40px rgba(15, 23, 42, 0.16)',
   },
   borderRadius: {
-    tiny: '3px',
-    sm: '5px',
-    md: '7px',
-    lg: '9px',
+    tiny: '4px',
+    sm: '8px',
+    md: '10px',
+    lg: '14px',
   },
   image: {
     tertiaryScale: 0,
     opacity: '100%',
   },
-};
-
-export const GlobalStyle = createGlobalStyle`
-  *,*::after,*::before{
-    box-sizing: border-box;
-    /* margin: 0;
-    padding: 0; */
-  }
-
-  html{
-    font-size: 62.5%;
-    font-family: 'Libre Franklin', sans-serif;
-    font-weight: 400;
-    color: ${theme.colors.tertiary[800]};
-  }
-  body{
-    box-sizing: inherit;
-    font-size: calc(.8rem + .2vw);
-    font-family: inherit;
-    color: inherit;
-    overflow:auto;
-
-  }
-  a,a:visited,a:active{
-    text-decoration: none;
-    color:${theme.colors.tertiary[800]}
-  }
-`;
+} as const;

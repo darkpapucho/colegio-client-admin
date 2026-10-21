@@ -15,7 +15,7 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
     <Table gridTemplateColumns={gridTemplateCols} width="max-content">
       <Table.Header>
         <Table.Header.Item>
-          <Container $border="1px solid black" $width="100%" $height="100%" $justifyContent="center" $alignItems="center">
+          <Container $border="1px solid #CBD5E1" $width="100%" $height="100%" $justifyContent="center" $alignItems="center">
             Alumno
           </Container>
         </Table.Header.Item>
@@ -36,7 +36,7 @@ export default function AsistenciaTable({ asistencias, availableDays }: { asiste
                   $bgColor={index === selectedRow ? 'yellow' : 'white'}
                   $direction="row"
                   $width="100%"
-                  $border="1px solid black"
+                  $border="1px solid #CBD5E1"
                   onClick={() => handleTableClick({ index, currentSelectedRow: selectedRow })}>
                   <Container $width="2.5rem">{`[${index + 1}]`}</Container>
                   <Container>{element.nombreCompleto}</Container>

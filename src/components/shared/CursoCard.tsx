@@ -14,7 +14,7 @@ export default function CursoCard({
   salonLabel: string;
 }) {
   return (
-    <Container $direction="row" $border="1px solid black" $bgColor={theme.colors.secondary[200]} $padding="0 4px" key={curso.label} $width="5rem">
+    <Container $direction="row" $border="1px solid #CBD5E1" $bgColor={theme.colors.secondary[200]} $padding="0 4px" key={curso.label} $width="5rem">
       <DisplayHoverMessage padding={'2px 3px'} label={curso.code} message={curso.label} />
       <DisplayHoverMessage
         message={`Eliminar ${curso.label}`}

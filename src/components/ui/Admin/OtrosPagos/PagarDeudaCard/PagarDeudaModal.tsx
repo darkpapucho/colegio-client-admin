@@ -56,36 +56,36 @@ export default function PagarDeudaModal({ onCloseModal, alumno, itemDeuda }: { o
         <Container $direction="column" $gap="3rem" $width="100%">
           <Container $direction="column" $width="100%">
             <Container $direction="row" $width="100%">
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Cantidad</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Precio S/.</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Total S/.</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Abonado S/.</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $bgColor="#d3d3d3" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">Deuda S/.</Text>
               </Container>
             </Container>
             <Container $direction="row" $width="100%">
-              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{itemDeuda.cantidad}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{itemDeuda.precio_unitario}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{total}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $width="20%" $justifyContent="center">
                 <Text $fontSize="small">{itemDeuda.abonado}</Text>
               </Container>
-              <Container $padding=".5rem" $border="1px solid black" $width="20%" $justifyContent="center">
+              <Container $padding=".5rem" $border="1px solid #CBD5E1" $width="20%" $justifyContent="center">
                 <Text $bold $color="red" $fontSize="small">
                   {deuda}
                 </Text>

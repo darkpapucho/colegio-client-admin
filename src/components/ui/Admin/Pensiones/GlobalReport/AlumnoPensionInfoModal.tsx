@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { AMatriculado } from '../../../../../types/alumno';
 import { Container } from '../../../../shared/Container';
 import Modal from '../../../../shared/Modal';
@@ -7,17 +6,9 @@ import { getDisplayPensionCardBgColor } from '../PorSalon/components/utils';
 import ApoderadoInfoCard from './ApoderadoInfoCard';
 import ComentarioCard from './ComentarioCard';
 import { ComentarioPension, Pension } from '../../../../../types/pensiones';
-const DivContainer = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, max-content));
-  justify-content: center;
-  align-items: center;
-
-  padding: 1.6rem 0;
-  margin: 0;
-  gap: 0.5rem;
-`;
+const DivContainer = ({ children }: { children?: React.ReactNode }) => (
+  <div className="m-0 grid w-full grid-cols-[repeat(auto-fit,minmax(8rem,max-content))] items-center justify-center gap-2 py-[1.6rem]">{children}</div>
+);
 export default function AlumnoPensionInfoModal({
   onCloseModal,
   selectedAlumno,

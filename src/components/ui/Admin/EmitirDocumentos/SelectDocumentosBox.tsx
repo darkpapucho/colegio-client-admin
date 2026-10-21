@@ -14,7 +14,7 @@ export default function SelectDocumentosBox({
   width: WidthCss;
 }) {
   return (
-    <Container $height="100%" $border="1px solid black" $direction="column" $width={width} $padding="1rem" $gap="1rem">
+    <Container $height="100%" $border="1px solid #CBD5E1" $direction="column" $width={width} $padding="1rem" $gap="1rem">
       <Subtitle>Documentos:</Subtitle>
       <CheckBox label="Cert. Conducta" name="certificadoConducta" width="100%" initialState={certificadoConducta}></CheckBox>
       <CheckBox label="No Adeudo" name="certificadoNoAdeudo" width="100%" initialState={certificadoNoAdeudo}></CheckBox>

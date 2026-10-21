@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import { CSSProperties, ElementType } from 'react';
 
 export type ContainerProps = {
   $padding?: string;
@@ -13,76 +13,52 @@ export type ContainerProps = {
   $border?: string;
   $pointer?: boolean;
   $color?: string;
-};
+  as?: ElementType;
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const Container = styled.div<ContainerProps>`
-  box-sizing: border-box;
-  display: flex;
-  height: 100%;
-  //pointer
-  ${({ $pointer }) =>
-    $pointer &&
-    css`
-      cursor: pointer;
-    `}
-  //border
-  ${({ $border }) =>
-    $border &&
-    css`
-      border: ${$border};
-    `}
-  //width
-  ${({ $width }) =>
-    $width &&
-    css`
-      width: ${$width};
-    `}
-  flex-direction: ${({ $direction }) => $direction || 'row'};
+export function Container({
+  $padding,
+  $direction,
+  $gap,
+  $bgColor,
+  $width,
+  $alignItems,
+  $justifyContent,
+  $height,
+  $position,
+  $border,
+  $pointer,
+  $color,
+  as,
+  className = '',
+  style,
+  children,
+  ...rest
+}: ContainerProps) {
+  const Tag = (as || 'div') as ElementType;
+  const styleObj: CSSProperties = {
+    ...style,
+    alignItems: ($alignItems || undefined) as CSSProperties['alignItems'],
+    justifyContent: ($justifyContent || undefined) as CSSProperties['justifyContent'],
+  };
+  if ($padding) styleObj.padding = $padding;
+  if ($gap) styleObj.gap = $gap;
+  if ($bgColor) styleObj.backgroundColor = $bgColor;
+  if ($width) styleObj.width = $width;
+  if ($height) styleObj.height = $height;
+  if ($position) styleObj.position = $position as CSSProperties['position'];
+  if ($border) styleObj.border = $border;
+  if ($color) styleObj.color = $color;
 
-  //height
-  ${({ $height }) =>
-    $height &&
-    css`
-      height: ${$height};
-    `}
-  //padding
-  ${({ $padding }) =>
-    $padding &&
-    css`
-      padding: ${$padding};
-    `}
-  //gap
-  ${({ $gap }) =>
-    $gap &&
-    css`
-      gap: ${$gap};
-    `}
-  //background-color
-    ${({ $bgColor }) =>
-    $bgColor &&
-    css`
-      background-color: ${$bgColor};
-    `}
-  //position
-    ${({ $position }) =>
-    $position &&
-    css`
-      position: ${$position};
-    `}
-  //center
-   ${({ $alignItems }) => {
-    return css`
-      align-items: ${$alignItems};
-    `;
-  }}
-   ${({ $justifyContent }) => {
-    return css`
-      justify-content: ${$justifyContent};
-    `;
-  }}
-  ${({ $color }) =>
-    $color &&
-    css`
-      color: ${$color};
-    `}
-`;
+  return (
+    <Tag
+      className={`flex h-full ${$direction === 'column' ? 'flex-col' : 'flex-row'} ${$pointer ? 'cursor-pointer' : ''} ${className}`}
+      style={styleObj}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+export default Container;

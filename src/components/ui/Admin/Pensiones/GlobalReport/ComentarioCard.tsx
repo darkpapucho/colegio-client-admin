@@ -93,7 +93,7 @@ export default function ComentarioCard({
   return (
     <>
       {(loading || isLoading) && <Loader $zIndex={300} />}
-      <Container $width="100%" $direction="column" $gap="1rem" $padding=".6rem" $border="1px solid black">
+      <Container $width="100%" $direction="column" $gap="1rem" $padding=".6rem" $border="1px solid #CBD5E1">
         <Text $width="100%" $textAlign="center" $bold>
           ANOTACIONES
         </Text>

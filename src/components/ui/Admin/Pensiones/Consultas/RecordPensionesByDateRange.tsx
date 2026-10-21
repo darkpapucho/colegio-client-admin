@@ -35,7 +35,7 @@ export default function RecordPensionesByDateRange() {
           CONSULTAR ÚLTIMAS PENSIONES PAGADAS
         </Text>
         <Container $direction="row" $width="60rem" $gap="1rem" $height="max-content" $padding="1rem">
-          <Container $width="28rem" $height="max-content" $direction="row" $border="1px solid black">
+          <Container $width="28rem" $height="max-content" $direction="row" $border="1px solid #CBD5E1">
             <DateTimeRangePicker
               // onClickDay={(value) => validateDay(value)}
               value={dateRange}

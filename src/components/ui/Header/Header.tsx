@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { BiCog } from 'react-icons/bi';
 import Select from '../../shared/Select';
@@ -13,60 +12,10 @@ import { setNivel } from '../../../config/redux/nivel/slice';
 import { HandleLogOut } from '../../../utils/utils';
 import { Text } from '../../shared/Text';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { theme } from '../../../config/styled/styled';
 import { Container } from '../../shared/Container';
 import { useContext } from 'react';
 import { LayoutContext } from '../../../pages/Layout';
 
-const StyledHeader = styled.div`
-  grid-row: 1 / 2;
-  grid-column: 2 / span 8;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  box-shadow: 0 0 3px black;
-  min-width: 100%;
-  height: 100px;
-  background-color: ${theme.colors.primary[100]};
-  @media (min-width: ${theme.mediaScreen.small}) {
-    height: 80px;
-    grid-column: 3 / span 7;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-  }
-`;
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: left;
-  gap: 0.5rem;
-  text-transform: capitalize;
-  @media (min-width: ${({ theme }) => theme.mediaScreen.small}) {
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-  }
-  button {
-    align-self: flex-end;
-  }
-`;
-
-const Hamburger = styled.div`
-  padding: 1rem;
-  border-radius: 50%;
-  display: flex;
-  height: 100%;
-  align-items: flex-start;
-  @media (min-width: ${theme.mediaScreen.small}) {
-    display: none;
-  }
-`;
 export default function Header() {
   const { data } = useTypedSelector((state) => state.user);
   const año = useTypedSelector((state) => state.año);
@@ -77,21 +26,21 @@ export default function Header() {
   useCustomEvent('customSelect', listener);
 
   return (
-    <StyledHeader id="header">
+    <header id="header" className="col-[2/10] row-1 flex h-[100px] min-w-full items-center justify-between border-b border-slate-200 bg-white p-4 shadow-card sm:h-[80px] sm:col-[3/10] sm:p-6">
       {rol !== 'profesor' && (
         <Container $direction="row" $gap="2rem" $alignItems="center" $height="100%">
-          <Hamburger onClick={() => setIsVisible((old) => !old)}>
+          <div onClick={() => setIsVisible((old) => !old)} className="flex h-full cursor-pointer items-start rounded-full p-4 sm:hidden">
             <Icon $primary $small $pointer>
               <GiHamburgerMenu />
             </Icon>
-          </Hamburger>
-          <Box>
+          </div>
+          <div className="flex flex-col items-start gap-2 capitalize sm:flex-row sm:items-center sm:gap-4 [&>button]:self-end sm:[&>button]:self-auto">
             <Select small name="año" label="año" options={AÑOS_SELECT_OPTIONS} defaultValue={{ label: año + '', value: año }} width="7rem" />
             <Select small name="nivel" label="nivel" options={NIVELES_SELECT_OPTIONS} defaultValue={{ label: nivel!, value: nivel }} width="12.5rem" />
-          </Box>
+          </div>
         </Container>
       )}
-      <Box>
+      <div className="flex flex-col items-start gap-2 capitalize sm:flex-row sm:items-center sm:gap-4 [&>button]:self-end sm:[&>button]:self-auto">
         <Text $bold $fontSize="small">
           {data?.nombres + ' ' + data?.apellidos}
         </Text>
@@ -103,8 +52,8 @@ export default function Header() {
             <BiCog />
           </Icon>
         </Container>
-      </Box>
-    </StyledHeader>
+      </div>
+    </header>
   );
 
   function listener(event: CustomEvent) {

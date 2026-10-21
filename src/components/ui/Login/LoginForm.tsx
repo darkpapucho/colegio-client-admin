@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { FormEvent, useRef, useState } from 'react';
 import Input from '../../shared/Input';
 import { Button } from '../../shared/Button';
@@ -16,24 +15,6 @@ import { errorHandler } from '../../../utils/errorHandler';
 import { Nivel, Year } from '../../../types/enums';
 import { loginSchema } from '../../../utils/zodSchemas';
 import { InstallPrompt } from '../../InstallPrompt/InstallPrompt';
-
-const StyledLoginForm = styled.div`
-  grid-column: center-start / center-end;
-  grid-row: 2 / 3;
-  height: 100%;
-  padding: ${({ theme }) => theme.padding.sm};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (min-width: ${({ theme }) => theme.mediaScreen.small}) {
-    padding: ${({ theme }) => theme.padding.md};
-    grid-column: 7 / 10;
-    grid-row: 2 / 3;
-  }
-  @media (min-width: ${({ theme }) => theme.mediaScreen.medium}) {
-    padding: ${({ theme }) => theme.padding.xl};
-  }
-`;
 
 type LoginForm = {
   username: string;
@@ -54,7 +35,7 @@ export default function LoginForm() {
   useCustomEvent('customSelect', listener);
 
   return (
-    <StyledLoginForm>
+    <div className="col-[3/9] row-2 flex h-full items-center justify-center p-3 sm:col-[7/10] sm:p-4 md:p-6">
       <Form onSubmit={onSubmit}>
         <InstallPrompt />
         <div>
@@ -80,7 +61,7 @@ export default function LoginForm() {
           {user.error && <ErrorMessage message={user.error}></ErrorMessage>}
         </div>
       </Form>
-    </StyledLoginForm>
+    </div>
   );
 
   function listener(event: CustomEvent) {

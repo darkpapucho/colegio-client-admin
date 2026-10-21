@@ -1,109 +1,10 @@
 import { useState } from 'react';
-import styled, { css } from 'styled-components';
 import { publishEvent } from '../../utils/customEvent';
 import useClickOutside from '../../hooks/useClickOutside';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 import { Icon } from './Icon';
 
-const StyledSelect = styled.div<{ $height?: string; $width?: string; $tiny?: boolean; $small?: boolean; $rect?: boolean }>`
-  padding-left: 2px;
-  background-color: ${({ theme }) => theme.colors.secondary[500]};
-  border-radius: 6px;
-  color: white;
-  height: max-content;
-  ${({ $width }) =>
-    $width &&
-    css`
-      width: ${$width};
-    `}
-  position: relative;
-  ${({ $tiny, theme }) =>
-    $tiny &&
-    css`
-      font-size: ${theme.fontSizes.tiny};
-    `}
-  ${({ $small, theme }) =>
-    $small &&
-    css`
-      font-size: ${theme.fontSizes.sm};
-    `}
-  font-family: ${({ theme }) => theme.fontFamily.header};
-
-  ${({ $height }) =>
-    $height &&
-    css`
-      height: ${$height};
-    `}
-  ${({ $rect }) =>
-    $rect &&
-    css`
-      border-radius: 0;
-    `}
-`;
-
-const StyledSelectOpts = styled.div<{ $isOpen: boolean }>`
-  /* border-top: 1px solid black;
-  border-left: 1px solid black;
-  border-right: 1px solid black; */
-
-  z-index: 10;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  ${({ $isOpen }) =>
-    !$isOpen &&
-    css`
-      display: none;
-    `}
-`;
-const StyledOpt = styled.div<{ $tiny?: boolean; $small?: boolean; $primary?: boolean }>`
-  cursor: pointer;
-  background-color: ${({ theme }) => theme.colors.secondary[700]};
-  width: 100%;
-  ${({ $tiny, theme }) =>
-    $tiny &&
-    css`
-      padding: ${theme.padding.tiny};
-    `}
-  ${({ $small, theme }) =>
-    $small &&
-    css`
-      padding: ${theme.padding.sm};
-    `}
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary[500]};
-  }
-  &:last-child {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
-`;
-const StyledSelectedOpt = styled.div<{ $tiny?: boolean; $small?: boolean; $bgColor?: string }>`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  justify-content: space-between;
-
-  ${({ $tiny, theme }) =>
-    $tiny &&
-    css`
-      padding: ${theme.padding.tiny};
-    `}
-  ${({ $small, theme }) =>
-    $small &&
-    css`
-      padding: ${theme.padding.sm};
-    `}
-    ${({ $bgColor }) =>
-    $bgColor &&
-    css`
-      background-color: ${$bgColor};
-    `}
-`;
+const sizeClass = (small?: boolean, tiny?: boolean) => (tiny ? 'p-1' : small ? 'p-2' : 'p-3');
 
 //#MAIN FUNCTIONAL COMPONENT
 
@@ -129,8 +30,18 @@ export default function Select<T>({ name, label, options, width, defaultValue, s
   }
 
   return (
-    <StyledSelect $width={width} ref={ref} $small={small} $tiny={tiny} $height={height} $rect={rect}>
-      <StyledSelectedOpt onClick={() => toggle()} $small={small} $tiny={tiny} $bgColor={bgColor}>
+    <div
+      ref={ref}
+      style={{ width, height }}
+      className={`relative max-h-fit cursor-pointer bg-white font-display text-slate-800 shadow-card transition-all duration-150 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-100 ${
+        rect ? 'border-[1.5px] border-slate-300 rounded-none' : 'border-[1.5px] border-slate-300 rounded-lg'
+      } ${tiny ? 'text-[11px]' : small ? 'text-sm' : 'text-base'} px-1.5`}
+    >
+      <div
+        onClick={() => toggle()}
+        style={{ backgroundColor: bgColor }}
+        className={`flex items-center justify-between gap-2 rounded-md ${sizeClass(small, tiny)}`}
+      >
         {selectedOption.label}
         {isOpen ? (
           <Icon $tiny>
@@ -141,17 +52,22 @@ export default function Select<T>({ name, label, options, width, defaultValue, s
             <BsChevronDown />
           </Icon>
         )}
-      </StyledSelectedOpt>
-      <StyledSelectOpts $isOpen={isOpen}>
+      </div>
+      <div
+        className={`absolute left-0 top-[calc(100%+0.4rem)] z-10 w-full flex-col items-start overflow-auto rounded-lg border border-slate-200 bg-white shadow-lift ${
+          isOpen ? 'flex' : 'hidden'
+        }`}
+        style={{ maxHeight: '22rem' }}
+      >
         {options.map((option) => {
           return (
-            <StyledOpt key={option.label} onClick={() => handleClick(option)} $small={small} $tiny={tiny}>
+            <div key={option.label} onClick={() => handleClick(option)} className={`w-full cursor-pointer bg-transparent font-sans text-slate-700 transition-colors duration-100 hover:bg-brand-50 hover:text-brand-800 ${sizeClass(small, tiny)}`}>
               {option.label}
-            </StyledOpt>
+            </div>
           );
         })}
-      </StyledSelectOpts>
-    </StyledSelect>
+      </div>
+    </div>
   );
   function handleClick(option: { label: string; value: T }) {
     setSelectedOption(option);

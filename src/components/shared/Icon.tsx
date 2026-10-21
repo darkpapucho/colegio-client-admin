@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
+import { CSSProperties } from 'react';
 
-export const Icon = styled.div<{
+export type IconProps = {
   $interactive?: boolean;
   $primary?: boolean;
   $small?: boolean;
@@ -8,54 +8,33 @@ export const Icon = styled.div<{
   $inset?: string;
   $pointer?: boolean;
   $color?: string;
-}>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  ${({ $pointer }) =>
-    $pointer &&
-    css`
-      cursor: pointer;
-    `}
-  ${({ $inset }) =>
-    $inset &&
-    css`
-      position: absolute;
-      inset: ${$inset};
-    `}
-  & > svg {
-    ${({ $tiny, theme }) =>
-      $tiny &&
-      css`
-        font-size: ${theme.iconSize.tiny};
-      `}
-    ${({ $small, theme }) =>
-      $small &&
-      css`
-        font-size: ${theme.iconSize.sm};
-      `}
-    color: ${({ $primary, theme }) => ($primary ? theme.colors.primary[800] : theme.colors.tertiary[600])};
+} & React.HTMLAttributes<HTMLDivElement>;
+
+export function Icon({ $interactive, $primary, $small, $tiny, $inset, $pointer, $color, className = '', style, children, ...rest }: IconProps) {
+  const svgStyle: CSSProperties = {};
+  if ($tiny) svgStyle.fontSize = '1rem';
+  if ($small) svgStyle.fontSize = '1.25rem';
+  svgStyle.color = $color || ($primary ? '#0052cc' : '#475569');
+
+  const styleObj: CSSProperties = { ...style };
+  if ($inset) {
+    styleObj.position = 'absolute';
+    styleObj.inset = $inset;
   }
-  ${({ $interactive }) =>
-    $interactive &&
-    css`
-      &:hover {
-        > svg {
-          scale: 1.1;
-        }
-      }
-    `}
-  &:hover {
-    > svg {
-      color: ${({ theme, $primary }) => ($primary ? theme.colors.primary[400] : theme.colors.secondary[800])};
-    }
-  }
-  ${({ $color }) =>
-    $color &&
-    css`
-      > svg {
-        color: ${$color};
-      }
-    `}
-`;
+
+  return (
+    <div
+      className={`flex w-full items-center justify-center ${$pointer ? 'cursor-pointer' : ''} ${
+        $interactive ? 'transition-transform hover:scale-110' : ''
+      } ${className}`}
+      style={styleObj}
+      {...rest}
+    >
+      <span style={svgStyle} className="inline-flex">
+        {children}
+      </span>
+    </div>
+  );
+}
+
+export default Icon;

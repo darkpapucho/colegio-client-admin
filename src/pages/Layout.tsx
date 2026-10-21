@@ -1,33 +1,8 @@
-import styled from 'styled-components';
 import SideBar from '../components/ui/SideBar/SideBar';
 import Header from '../components/ui/Header/Header';
 import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import useFetchCurrentPeriodo from '../hooks/useFetchCurrentPeriodo';
-import { theme } from '../config/styled/styled';
-
-const LayoutContainer = styled.div<{ $headerHeight: string }>`
-  display: grid;
-  position: relative;
-  grid-template-rows: 100px calc(100vh - 100px);
-  grid-template-columns: 1fr repeat(8, minmax(max-content, 200px)) 1fr;
-  @media (min-width: ${theme.mediaScreen.small}) {
-    grid-template-rows: 80px calc(100vh - 80px);
-  }
-`;
-const LayoutContent = styled.div`
-  grid-row: 2 / span 1;
-  grid-column: 2 / span 8;
-  /* overflow: scroll; */
-  min-height: calc(100vh - 100px);
-  @media (min-width: ${theme.mediaScreen.small}) {
-    min-height: calc(100vh - 80px);
-    grid-row: 2 / span 1;
-    grid-column: 3 / span 7;
-  }
-`;
-
-export const LayoutContext = createContext<{ isVisible: boolean; setIsVisible: React.Dispatch<React.SetStateAction<boolean>> } | null>(null);
 
 export default function Layout() {
   useFetchCurrentPeriodo();
@@ -40,13 +15,15 @@ export default function Layout() {
   }, []);
   return (
     <LayoutContext.Provider value={{ isVisible, setIsVisible }}>
-      <LayoutContainer $headerHeight={headerHeight}>
+      <div className="relative grid grid-cols-[1fr_repeat(8,minmax(max-content,200px))_1fr] grid-rows-[100px_calc(100vh-100px)] sm:grid-rows-[80px_calc(100vh-80px)]">
         <Header />
         <SideBar />
-        <LayoutContent>
+        <div className="col-[2/10] row-2 min-h-[calc(100vh-100px)] sm:col-[3/10] sm:min-h-[calc(100vh-80px)]">
           <Outlet />
-        </LayoutContent>
-      </LayoutContainer>
+        </div>
+      </div>
     </LayoutContext.Provider>
   );
 }
+
+export const LayoutContext = createContext<{ isVisible: boolean; setIsVisible: React.Dispatch<React.SetStateAction<boolean>> } | null>(null);

@@ -68,11 +68,11 @@ export default function RegistroAsistenciaAlumnos() {
         {currentPeriodo && (
           <Container $padding="2rem 0" $height="max-content" $direction="column" $gap="1rem">
             <Container $direction="row" $gap="0.5rem">
-              <Container $direction="column" $gap="0.5rem" $border="1px solid black" $bgColor={theme.colors.secondary[200]} $padding="0.5rem">
+              <Container $direction="column" $gap="0.5rem" $border="1px solid #CBD5E1" $bgColor={theme.colors.secondary[200]} $padding="0.5rem">
                 <Container
                   $direction="row"
                   $gap="0.5rem"
-                  $border="1px solid black"
+                  $border="1px solid #CBD5E1"
                   $bgColor={theme.colors.secondary[100]}
                   $padding="0.5rem"
                   $alignItems="center">

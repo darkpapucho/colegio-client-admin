@@ -1,10 +1,5 @@
-import styled from 'styled-components';
-export const ErrorPage = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url('/error-robot.png');
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: contain;
-  position: relative;
-`;
+export const ErrorPage = ({ children, className = '', style }: { children?: React.ReactNode; className?: string; style?: React.CSSProperties }) => (
+  <div className={`relative h-full w-full bg-[url('/error-robot.png')] bg-right bg-no-repeat bg-contain ${className}`} style={style}>
+    {children}
+  </div>
+);

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { WidthCss } from '../../types/globals';
 import { ReactNode, useEffect, useRef } from 'react';
 import { Button } from './Button';
@@ -6,54 +5,6 @@ import { Container } from './Container';
 import { motion, useDragControls } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { Overlay } from './Overlay';
-
-const ModalContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: inherit;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  transform-origin: top;
-  touch-action: none;
-  user-select: none;
-`;
-const StyledModal = styled.div<{ $width: string; $marginTop?: string }>`
-  transform-origin: top;
-  position: absolute;
-  top: ${({ $marginTop }) => $marginTop || '45%'};
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 101;
-  width: ${({ $width }) => $width};
-  padding: 0;
-  .modal-container {
-    z-index: 102;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 4px black;
-  }
-`;
-const ModalHeader = styled.div`
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.secondary[600]};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.7rem 1rem;
-  border-bottom: 2px solid black;
-  font-size: ${({ theme }) => theme.fontSizes.tiny};
-  font-weight: 500;
-  color: white;
-  user-select: none;
-`;
 
 export default function Modal({
   children,
@@ -80,27 +31,24 @@ export default function Modal({
     };
   }, []);
   return createPortal(
-    <ModalContainer ref={ref}>
-      <StyledModal $width={width} $marginTop={marginTop}>
-        <motion.div className="modal-container" drag dragListener={false} dragControls={controls} dragElastic={0} dragMomentum={false} dragConstraints={ref}>
-          <ModalHeader onPointerDown={(e) => controls.start(e)}>
+    <div ref={ref} className="absolute inset-0 flex h-full w-full touch-none select-none items-center justify-center origin-top">
+      <div className="absolute left-1/2 z-[101] -translate-x-1/2 -translate-y-1/2" style={{ top: marginTop || '45%', width }}>
+        <motion.div className="modal-container z-[102] flex w-full flex-col items-center justify-center overflow-hidden rounded-xl shadow-lift" drag dragListener={false} dragControls={controls} dragElastic={0} dragMomentum={false} dragConstraints={ref}>
+          <div onPointerDown={(e) => controls.start(e)} className="flex w-full select-none items-center justify-between border-b border-white/15 bg-gradient-to-r from-brand-700 to-brand-600 px-4 py-2.5 font-display text-sm font-semibold text-white">
             {title}
             <Button $danger onClick={() => onCloseModal()} $width="max-content">
               X
             </Button>
-          </ModalHeader>
+          </div>
           <Container $direction="row" $width="100%" $bgColor="white" $padding="2rem">
             {children}
           </Container>
         </motion.div>
-      </StyledModal>
+      </div>
       <Overlay />
-    </ModalContainer>,
+    </div>,
     document.querySelector('#portal')!,
   );
-  // function onDrag(event:React.PointerEvent<HTMLDivElement>){
-  //   const target = event.target;
-  // }
   function keyDownListener(event: KeyboardEvent) {
     if (event.key == 'Escape') {
       onCloseModal();

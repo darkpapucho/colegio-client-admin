@@ -43,7 +43,7 @@ export default function ProfesorCard({ profesor }: { profesor: Profesor }) {
   return (
     <Container $direction="column" $gap="2rem" $width="100%">
       <Container $direction="column" $gap="1.5rem" $width="100%">
-        {/* <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid black" $padding="0 .5rem"> */}
+        {/* <Container $direction="row" $alignItems="center" $gap=".5rem" $width="50%" $border="1px solid #CBD5E1" $padding="0 .5rem"> */}
         <Container $direction="row" $gap=".5rem" $alignItems="center">
           <Text $bold $fontSize="small">
             Apellidos:

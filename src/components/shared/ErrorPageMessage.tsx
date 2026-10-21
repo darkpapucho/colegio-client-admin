@@ -1,20 +1,13 @@
-import styled from 'styled-components';
-
-export const StyledErrorPageMessage = styled.div`
-  position: absolute;
-  top: 30%;
-  left: 20%;
-  > h1 {
-    font-size: 3.5rem;
-    width: 30rem;
-    font-family: 'Courier New', Courier, monospace;
-  }
-`;
+export const StyledErrorPageMessage = ({ children, className = '', style }: { children?: React.ReactNode; className?: string; style?: React.CSSProperties }) => (
+  <div className={`absolute left-[20%] top-[30%] ${className}`} style={style}>
+    {children}
+  </div>
+);
 
 export default function ErrorPageMessage({ message }: { message: string }) {
   return (
-    <StyledErrorPageMessage>
-      <h1>{message}</h1>
-    </StyledErrorPageMessage>
+    <div className="absolute left-[20%] top-[30%]">
+      <h1 className="w-[30rem] font-mono text-4xl text-slate-800">{message}</h1>
+    </div>
   );
 }

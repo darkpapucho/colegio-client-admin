@@ -1,81 +1,7 @@
-import { RefObject, forwardRef, useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import { forwardRef, useEffect, useState } from 'react';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import { Icon } from './Icon';
-import { theme } from '../../config/styled/styled';
-export const SContainer = styled.div<{ $width?: string; $type: string; $isError?: boolean }>`
-  position: relative;
-  ${({ $width }) =>
-    $width &&
-    css`
-      width: 100%;
-    `}
-  &>input {
-    ${({ $width }) =>
-      $width &&
-      css`
-        width: 100%;
-      `}
-    outline: none;
-    border: none;
-    border-bottom: ${({ $type }) => ($type === 'date' ? 'none' : '1px solid black')};
-    border-color: ${({ theme, $isError }) => ($isError ? theme.colors.red[500] : theme.colors.tertiary[700])};
-    height: 3rem;
-    padding-left: 5px;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-    font-family: ${({ theme }) => theme.fontFamily.text};
-    &:focus {
-      outline: none;
-      border-bottom: 3px solid ${theme.colors.secondary[900]};
-    }
-    &[type='date'] {
-      background-color: rgba(0, 0, 0, 0);
-      &::-webkit-calendar-picker-indicator {
-        //display: none;
-        //-webkit-appearance: none;
-        height: 20px;
-        position: relative;
-        width: 20px;
-        cursor: pointer;
-      }
-      &::-webkit-calendar-picker-indicator:hover {
-        transform: scale(1.1);
-      }
-    }
-    &[type='datetime-local'] {
-      background-color: rgba(0, 0, 0, 0);
-      &::-webkit-calendar-picker-indicator {
-        //display: none;
-        //-webkit-appearance: none;
-        height: 20px;
-        position: relative;
-        width: 20px;
-        cursor: pointer;
-      }
-      &::-webkit-calendar-picker-indicator:hover {
-        transform: scale(1.1);
-      }
-    }
-  }
-`;
-const SLabel = styled.label<{ $hasContent: boolean; $type: string }>`
-  display: block;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-family: ${({ theme }) => theme.fontFamily.header};
-  position: ${({ $type }) => ($type === 'date' ? 'relative' : 'absolute')};
-  border: 2px;
-  left: 5px;
-  top: 0px;
-  font-style: italic;
-  ${({ $hasContent, $type }) =>
-    $hasContent &&
-    $type !== 'date' &&
-    css`
-      font-size: ${({ theme }) => theme.fontSizes.sm};
-      top: -20px;
-    `}
-  transition:all .5s;
-`;
+
 type InputProps = {
   $width?: string;
   name: string;
@@ -83,44 +9,51 @@ type InputProps = {
   label: string;
   isError?: boolean;
 } & React.HTMLProps<HTMLInputElement>;
-//main input  componentt
-const Input = forwardRef(function InputComponent(props: InputProps, ref) {
-  const { $width, name, type, label, isError, defaultValue, ...rest } = props;
+
+export default forwardRef(function InputComponent(props: InputProps, ref) {
+  const { $width, name, type, label, isError, defaultValue, className = '', ...rest } = props;
   const [value, setValue] = useState(defaultValue || '');
   const [showPassword, setShowPassword] = useState(false);
   const [hasContent, setHasContent] = useState(false);
 
   useEffect(() => {
-    if (value !== '') {
-      setHasContent(true);
-    } else {
-      setHasContent(false);
-    }
+    setHasContent(value !== '');
   }, [value]);
+
+  const isDate = type === 'date' || type === 'datetime-local';
+
   return (
-    <SContainer $width={$width} $type={type} $isError={isError}>
-      <SLabel htmlFor={name} $hasContent={hasContent} $type={type}>
+    <div
+      className={`relative w-full rounded-lg border-[1.5px] bg-white transition-all duration-150 ${
+        isError ? 'border-red-500 focus-within:ring-2 focus-within:ring-red-200' : 'border-slate-300 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-200'
+      } ${className}`}
+    >
+      <label
+        htmlFor={name}
+        className={`pointer-events-none absolute font-display text-sm text-slate-400 transition-all duration-200 ${
+          isDate
+            ? 'top-1 left-2.5'
+            : hasContent
+              ? 'top-1 left-2.5 text-[11px] text-slate-500'
+              : 'top-3.5 left-2.5'
+        } ${isError && hasContent ? 'text-red-500' : ''}`}
+      >
         {label}
-      </SLabel>
+      </label>
       <input
         {...rest}
+        ref={ref as React.Ref<HTMLInputElement>}
         id={name}
         type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        ref={ref as RefObject<HTMLInputElement>}
+        className="h-12 w-full bg-transparent px-3 pt-5 pb-1 text-sm font-sans text-slate-800 outline-none placeholder:text-slate-400 [color-scheme:light]"
       />
-      {type === 'password' &&
-        (showPassword ? (
-          <Icon $small $inset="2px 2px 30% 90%">
-            <HiOutlineEyeOff onClick={() => setShowPassword((old) => !old)} />
-          </Icon>
-        ) : (
-          <Icon $small $inset="2px 2px 30% 90%">
-            <HiOutlineEye onClick={() => setShowPassword((old) => !old)} />
-          </Icon>
-        ))}
-    </SContainer>
+      {type === 'password' && (
+        <span className="absolute top-1/2 right-2.5 flex -translate-y-1/2 cursor-pointer text-lg text-slate-500 hover:text-brand-700">
+          {showPassword ? <HiOutlineEyeOff onClick={() => setShowPassword((old) => !old)} /> : <HiOutlineEye onClick={() => setShowPassword((old) => !old)} />}
+        </span>
+      )}
+    </div>
   );
 });
-export default Input;

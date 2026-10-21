@@ -12,14 +12,9 @@ import { theme } from '../../config/styled/styled';
 import { SalonProfesor } from './Profesor/types';
 import useCursosSelectOptions from '../../hooks/useCursosSelectOptions';
 import Loader from '../ui/Loader/Loader';
-import styled from 'styled-components';
-
-const CursosContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 4px;
-`;
+const CursosContainer = ({ children }: { children?: React.ReactNode }) => (
+  <div className="flex flex-row flex-wrap gap-1">{children}</div>
+);
 
 export default function SalonCard({
   salon,
@@ -43,7 +38,7 @@ export default function SalonCard({
     : [];
 
   return (
-    <Container $direction="column" $gap="4px" $width="100%" key={salon.label} $border="1px solid black">
+    <Container $direction="column" $gap="4px" $width="100%" key={salon.label} $border="1px solid #CBD5E1">
       {isFetching && <Loader />}
       <Container $direction="row" $width="100%" $justifyContent="space-between" $bgColor={theme.colors.tertiary[400]}>
         <div className="flex gap-4 items-center">

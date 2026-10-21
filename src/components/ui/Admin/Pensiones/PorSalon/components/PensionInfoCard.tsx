@@ -1,15 +1,10 @@
-import styled, { css } from 'styled-components';
-import { Container } from '../../../../../shared/Container';
+import { Container, ContainerProps } from '../../../../../shared/Container';
 import { getDisplayPensionCardContent, getDisplayPensionCardBgColor } from './utils';
 import { Pension } from '../../../../../../types/pensiones';
 
-const DisplayPensionContainer = styled(Container)<{ $index: boolean }>`
-  ${({ $index }) =>
-    $index &&
-    css`
-      filter: brightness(70%);
-    `}
-`;
+const DisplayPensionContainer = ({ $index, ...rest }: { $index: boolean } & ContainerProps) => (
+  <Container {...rest} style={{ filter: $index ? 'brightness(70%)' : undefined }} />
+);
 
 export default function PensionInfoCard({ pension, onClick, $index }: { $index: boolean; onClick: () => void; pension: Pension | undefined }) {
   const mesActual = new Date().getMonth();

@@ -125,7 +125,7 @@ export default function RecordPensionesPagadasTable({ data }: { data: ConsultaPe
                     s
                     {record.pensiones.map((pension, index) => {
                       return (
-                        <Container $padding=".3rem" $border="1px solid black" key={index} $width="13rem" $bgColor={pension.monto_pagado == 0 ? '#ee1515' : ''}>
+                        <Container $padding=".3rem" $border="1px solid #CBD5E1" key={index} $width="13rem" $bgColor={pension.monto_pagado == 0 ? '#ee1515' : ''}>
                           <DisplayHoverMessage
                             color={pension.monto_pagado == 0 ? 'white' : 'black'}
                             width="100%"

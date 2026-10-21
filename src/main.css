@@ -1,29 +1,197 @@
+@import "tailwindcss";
 
+/* ============================================================
+   I.E.P. JESÚS EL NAZARENO — Design tokens (Tailwind CSS 4)
+   Brand ratio: blue 60% · white 25% · orange 15%
+   ============================================================ */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", "Inter", ui-sans-serif, sans-serif;
+
+  /* — College blue (primary, 60%) — */
+  --color-brand-50: #ebf3ff;
+  --color-brand-100: #d6e7ff;
+  --color-brand-200: #afceff;
+  --color-brand-300: #7fb0ff;
+  --color-brand-400: #4e92ff;
+  --color-brand-500: #1a75ff;
+  --color-brand-600: #0060f0;
+  --color-brand-700: #0052cc;
+  --color-brand-800: #004199;
+  --color-brand-900: #00306b;
+  --color-brand-950: #001d40;
+
+  /* — College orange (accent, 15%) — */
+  --color-accent-50: #fff4ec;
+  --color-accent-100: #ffe6d4;
+  --color-accent-200: #ffc9a3;
+  --color-accent-300: #ffad73;
+  --color-accent-400: #f98d43;
+  --color-accent-500: #f06000;
+  --color-accent-600: #d95800;
+  --color-accent-700: #b34a00;
+  --color-accent-800: #8c3b00;
+  --color-accent-900: #662c00;
+  --color-accent-950: #401d00;
+
+  /* — Elevation — */
+  --shadow-card: 0 1px 2px rgb(2 8 23 / 0.05), 0 2px 8px rgb(2 8 23 / 0.06);
+  --shadow-lift: 0 8px 24px rgb(2 8 23 / 0.12);
+
+  /* — Radii — */
+  --radius-card: 0.75rem;
+}
+
+@layer base {
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
 
-  * {
-    margin: 0;
-
-    padding: 0;
-
-    box-sizing: border-box;
-  }
-
   html {
-    font-family: sans-serif;
-    /* color: #333; */
-  }
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    width: 100%;
-    @container (width>640px) {
-      width: 40%;
-    }
-    max-height: 200px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: #f4f8fd;
+    color: #1e293b;
+    overflow: auto;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  a,
+  a:visited,
+  a:active {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-900);
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* Utility kept for components that opt into the grid layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  width: 100%;
+  max-height: 200px;
+}
+
+/* — Widget: pure-CSS tab switching (radio + :has) — */
+.widget-container {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 20px 0 rgb(0 0 0 / 0.025);
+}
+.widget-container .tab-content {
+  width: 100%;
+  padding: 1rem;
+}
+.widget-container [class^='tab-content-'] {
+  display: none;
+}
+.widget-container:has(:checked:nth-of-type(1)) .tab-content-1,
+.widget-container:has(:checked:nth-of-type(2)) .tab-content-2,
+.widget-container:has(:checked:nth-of-type(3)) .tab-content-3 {
+  display: block;
+}
+
+.widget-tabs {
+  display: flex;
+  height: 3.5rem;
+  position: relative;
+  isolation: isolate;
+  border-bottom: 1px solid #e9ebec;
+}
+.widget-tabs input {
+  display: none;
+}
+.widget-tabs label {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #656d7b;
+  cursor: pointer;
+  transition: color 0.5s ease-in-out;
+  font-family: var(--font-display);
+}
+.widget-tabs input:checked + label {
+  color: #101010;
+}
+.widget-tabs:has(:checked:nth-of-type(1)) {
+  --active: 0;
+}
+.widget-tabs:has(:checked:nth-of-type(2)) {
+  --active: 1;
+}
+.widget-tabs:has(:checked:nth-of-type(3)) {
+  --active: 2;
+}
+.widget-tabs::after {
+  pointer-events: none;
+  position: absolute;
+  content: '';
+  z-index: -1;
+  inset: 0 0 -1px;
+  width: calc((100% / var(--tab-count, 3)) - 2px);
+  border-radius: 0.5rem 0.5rem 0 0;
+  border: 1px solid #e9ebec;
+  border-bottom: none;
+  background-color: var(--color-brand-100);
+  translate: calc(var(--active, 0) * 100%);
+  transition: translate 0.5s ease-in-out;
+}
+
+/* Inputs numéricos de RegistroNotas: oculta spinners y centra el valor */
+.nota-input {
+  width: 100%;
+  margin: 0;
+  outline: none;
+  text-align: center;
+  appearance: textfield;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+.nota-input::-webkit-outer-spin-button,
+.nota-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

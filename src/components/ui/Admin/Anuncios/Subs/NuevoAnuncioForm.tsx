@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Button } from '../../../../shared/Button';
 import Anuncios from '../../../../../models/Anuncios';
 import { useEffect, useRef } from 'react';
@@ -10,33 +9,6 @@ import { errorHandler } from '../../../../../utils/errorHandler';
 import Loader from '../../../Loader/Loader';
 import { AnuncioProfesor } from '../../../../../types/anuncios';
 
-const FormContainer = styled.div`
-  container-type: inline-size;
-  container-name: form;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  font-size: 20px;
-  padding: 2rem;
-`;
-const DynamicInput = styled.input`
-  padding-left: 1rem;
-  border: 1px solid black;
-  width: 100%;
-  font-size: 1.4rem;
-  @container form (width>600px) {
-    width: 50%;
-  }
-`;
-const MyTextArea = styled.textarea`
-  field-sizing: content;
-  border: 1px solid black;
-  padding: 0.5rem 1rem;
-  outline: none;
-  font-size: 1.4rem;
-  min-height: 60px;
-`;
 export default function NuevoAnuncioForm() {
   const user = useTypedSelector((state) => state.user)!;
   const nivel = useTypedSelector((state) => state.nivel)!;
@@ -63,10 +35,10 @@ export default function NuevoAnuncioForm() {
   return (
     <>
       {isLoading && <Loader />}
-      <FormContainer>
+      <div className="@container flex w-full flex-col gap-8 p-8 text-xl">
         <p className="">Publica un nuevo anuncio</p>
-        <DynamicInput ref={titleRef} name="title" placeholder="título" type="text" />
-        <MyTextArea rows={4} ref={contentRef}></MyTextArea>
+        <input ref={titleRef} name="title" placeholder="título" type="text" className="w-full border border-slate-300 pl-4 text-[1.4rem] @min-[600px]:w-1/2" />
+        <textarea rows={4} ref={contentRef} className="min-h-[60px] border border-slate-300 px-4 py-2 text-[1.4rem] outline-none [field-sizing:content]"></textarea>
         <Button
           $width="max-content"
           $primary
@@ -74,7 +46,7 @@ export default function NuevoAnuncioForm() {
           disabled={isLoading}>
           Agregar
         </Button>
-      </FormContainer>
+      </div>
     </>
   );
   async function addAnuncio({ title, content, userId }: { title: string; content: string; userId: string }) {

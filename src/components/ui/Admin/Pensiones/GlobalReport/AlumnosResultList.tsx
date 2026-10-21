@@ -17,15 +17,9 @@ import {
   Legend,
 } from 'chart.js';
 import tinycolor from 'tinycolor2';
-import styled from 'styled-components';
 import { ComentarioPension, Pension } from '../../../../../types/pensiones';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-const ChartContainer = styled(Container)`
-  canvas {
-    border: 1px solid black;
-  }
-`;
 
 export default function AlumnosResultList({
   data,
@@ -42,7 +36,7 @@ export default function AlumnosResultList({
   const sortedSalones = Array.from(uniqueSalones).sort((prev, curr) => (convertSalonToIndex(prev) > convertSalonToIndex(curr) ? 1 : -1));
 
   return (
-    <Container $direction="column" $gap="2rem" $width="100%" $border="2px solid black" $padding="0 2rem">
+    <Container $direction="column" $gap="2rem" $width="100%" $border="2px solid #64748B" $padding="0 2rem">
       <Text $width="100%" $bold $fontSize="medium" $textAlign="center">{`CON ${data[0].numeroPensionesAtrasadas} ${
         data[0].numeroPensionesAtrasadas == 1 ? 'PENSION ATRASADA' : 'PENSIONES ATRASADAS'
       }`}</Text>

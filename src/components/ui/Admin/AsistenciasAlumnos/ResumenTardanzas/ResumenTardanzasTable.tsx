@@ -13,7 +13,7 @@ export default function ResumenTardanzasTable({
   list: { alumnoId: string; tardanzas: number; estudiante: { nombreCompleto: string; grado: Grado; seccion: Seccion } }[];
 }) {
   return (
-    <Container $width="max-content" $border="2px solid black" $direction="column" $height="max-content">
+    <Container $width="max-content" $border="2px solid #64748B" $direction="column" $height="max-content">
       <Container $width="100%" $bgColor={theme.colors.tertiary[400]} $padding="1rem 0">
         <Text $width="100%" $textAlign="center" $bold $fontSize="medium" $color="black">
           {title}

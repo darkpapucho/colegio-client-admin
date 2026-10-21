@@ -1,56 +1,36 @@
-import styled, { css } from 'styled-components';
+import { CSSProperties } from 'react';
 import { Size } from '../../types/globals';
 
-export const Text = styled.div<{ $primary?: boolean; $fontSize?: Size; $bold?: boolean; $width?: string; $textAlign?: string; $color?: string }>`
-  padding: 0;
-  margin: 0;
-  ${({ $primary, theme }) =>
-    $primary &&
-    css`
-      color: ${theme.colors.primary[400]};
-    `}
-  ${({ $textAlign }) =>
-    $textAlign &&
-    css`
-      text-align: ${$textAlign};
-    `};
-  ${({ $fontSize, theme }) => {
-    if ($fontSize) {
-      switch ($fontSize) {
-        case 'large':
-          return css`
-            font-size: ${theme.fontSizes.lg};
-          `;
-        case 'medium':
-          return css`
-            font-size: ${theme.fontSizes.md};
-          `;
-        case 'small':
-          return css`
-            font-size: 1.2rem;
-          `;
-        default:
-          return css`
-            font-size: 1.3rem;
-          `;
-      }
-    }
-  }}
-  font-family: ${({ theme }) => theme.fontFamily.text};
-  ${({ $bold }) =>
-    $bold &&
-    css`
-      font-weight: bold;
-    `};
-  ${({ $width }) =>
-    $width &&
-    css`
-      width: ${$width};
-    `};
-  ${({ $color }) =>
-    $color &&
-    css`
-      color: ${$color};
-    `};
-  /* text-align: right; */
-`;
+export type TextProps = {
+  $primary?: boolean;
+  $fontSize?: Size;
+  $bold?: boolean;
+  $width?: string;
+  $textAlign?: string;
+  $color?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+const sizeClasses: Record<Size, string> = {
+  small: 'text-[13px]',
+  medium: 'text-base',
+  large: 'text-xl',
+};
+
+export function Text({ $primary, $fontSize, $bold, $width, $textAlign, $color, className = '', style, ...rest }: TextProps) {
+  const styleObj: CSSProperties = { ...style };
+  if ($width) styleObj.width = $width;
+  if ($textAlign) styleObj.textAlign = $textAlign as CSSProperties['textAlign'];
+  if ($color) styleObj.color = $color;
+
+  return (
+    <div
+      className={`font-sans leading-snug ${$bold ? 'font-bold' : ''} ${$fontSize ? sizeClasses[$fontSize] : 'text-sm'} ${
+        $primary ? 'text-brand-700' : 'text-slate-700'
+      } ${className}`}
+      style={styleObj}
+      {...rest}
+    />
+  );
+}
+
+export default Text;

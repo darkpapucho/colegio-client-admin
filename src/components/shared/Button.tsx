@@ -1,63 +1,6 @@
-import styled, { css, DefaultTheme } from 'styled-components';
+import { forwardRef, CSSProperties } from 'react';
 
-const sizes = (theme: DefaultTheme) => {
-  return {
-    small: css`
-      font-size: ${theme.fontSizes.sm};
-      padding: ${({ theme }) => theme.padding.sm};
-      text-transform: capitalize;
-      font-weight: 400;
-    `,
-    medium: css`
-      font-size: ${theme.fontSizes.md};
-      padding: ${({ theme }) => theme.padding.md};
-      font-weight: 500;
-    `,
-    large: css`
-      font-size: ${theme.fontSizes.lg};
-      padding: ${({ theme }) => theme.padding.lg};
-      font-weight: 500;
-    `,
-  };
-};
-
-const variations = (theme: DefaultTheme) => {
-  return {
-    primary: css`
-      color: ${theme.colors.tertiary[100]};
-      background-color: ${theme.colors.primary[800]};
-
-      &:hover {
-        background-color: ${theme.colors.primary[400]};
-      }
-    `,
-    green: css`
-      color: ${theme.colors.tertiary[100]};
-      background-color: ${theme.colors.green[500]};
-
-      &:hover {
-        background-color: ${theme.colors.green[800]};
-      }
-    `,
-    secondary: css`
-      color: ${theme.colors.tertiary[100]};
-      background: ${theme.colors.secondary[600]};
-
-      &:hover {
-        background-color: ${theme.colors.secondary[300]};
-      }
-    `,
-    danger: css`
-      color: ${theme.colors.tertiary[100]};
-      background-color: ${theme.colors.red[700]};
-
-      &:hover {
-        background-color: ${theme.colors.red[800]};
-      }
-    `,
-  };
-};
-interface Props {
+export type ButtonProps = {
   $primary?: boolean;
   $secondary?: boolean;
   $medium?: boolean;
@@ -69,82 +12,49 @@ interface Props {
   $padding?: string;
   $center?: boolean;
   $height?: string;
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button = styled.button<Props>`
-  padding: 0.4rem 0.8rem;
-  ${({ $height }) =>
-    $height &&
-    css`
-      height: ${$height};
-    `}
-  ${({ $width }) =>
-    $width &&
-    css`
-      width: ${$width};
-    `}
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  font-family: 'Lato', sans-serif;
-  border: none;
-  font-size: 1.2rem;
+const baseClasses =
+  'inline-flex items-center gap-2 rounded-lg border px-[1.1rem] py-[0.6rem] font-display font-medium text-sm transition-all duration-150 ' +
+  'focus:outline-none focus:ring-2 focus:ring-brand-300 active:scale-[0.98] ' +
+  'disabled:cursor-not-allowed disabled:opacity-55';
 
-  font-weight: 500;
-  background-color: ${(props) => props.theme.colors.tertiary[500]};
-  border: 1px solid ${(props) => props.theme.colors.tertiary[500]};
-  border-radius: ${({ theme }) => theme.borderRadius.sm};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-  &:active {
-    transform: scale(0.93);
-  }
-  &:hover {
-    background-color: ${(props) => props.theme.colors.tertiary[600]};
-  }
-  &:disabled {
-    &:hover {
-      background-color: ${(props) => props.theme.colors.tertiary[500]};
-    }
-    background-color: ${(props) => props.theme.colors.tertiary[500]};
-  }
-  ${(props) => {
-    if (props.$large) {
-      return sizes(props.theme)['large'];
-    }
-    if (props.$small) {
-      return sizes(props.theme)['small'];
-    }
-    if (props.$medium) {
-      return sizes(props.theme)['medium'];
-    }
-  }}
-  ${(props) => {
-    if (props.$primary) {
-      return variations(props.theme)['primary'];
-    }
-    if (props.$secondary) {
-      return variations(props.theme)['secondary'];
-    }
-    if (props.$danger) {
-      return variations(props.theme)['danger'];
-    }
-    if (props.$green) {
-      return variations(props.theme)['green'];
-    }
-  }}
-  ${({ $padding }) =>
-    $padding &&
-    css`
-      padding: ${$padding};
-    `}
-    ${({ $center }) =>
-    $center &&
-    css`
-      justify-content: center;
-    `}
-`;
+const variations: Record<string, string> = {
+  default: 'border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-100',
+  primary: 'border-transparent bg-brand-600 text-white shadow-sm hover:bg-brand-700',
+  secondary: 'border-brand-200 bg-white text-brand-700 hover:bg-brand-50',
+  danger: 'border-transparent bg-red-600 text-white shadow-sm hover:bg-red-700',
+  green: 'border-transparent bg-green-600 text-white shadow-sm hover:bg-green-700',
+};
+
+const sizes: Record<string, string> = {
+  small: 'text-[13px] px-2.5 py-1 capitalize',
+  medium: 'text-base px-4 py-2',
+  large: 'text-xl px-6 py-3',
+};
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { $primary, $secondary, $medium, $large, $small, $danger, $width, $green, $padding, $center, $height, className = '', style, children, ...rest },
+  ref,
+) {
+  const variation = $primary ? 'primary' : $secondary ? 'secondary' : $danger ? 'danger' : $green ? 'green' : 'default';
+  const size = $large ? sizes.large : $small ? sizes.small : $medium ? sizes.medium : '';
+
+  const styleObj: CSSProperties = { ...style };
+  if ($width) styleObj.width = $width;
+  if ($height) styleObj.height = $height;
+  if ($padding) styleObj.padding = $padding;
+
+  return (
+    <button
+      ref={ref}
+      className={`${baseClasses} ${variations[variation]} ${size} ${$center ? 'justify-center' : 'justify-between'} ${className}`}
+      style={styleObj}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+});
+
+export default Button;

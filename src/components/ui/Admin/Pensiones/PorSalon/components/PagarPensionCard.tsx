@@ -37,7 +37,7 @@ export default function PagarPensionCard({
           <Text $width="100%" $textAlign="center" $bold $fontSize="small">
             PAGAR PENSIÓN
           </Text>
-          <Container $direction="row" $width="max-content" $gap="1rem" $border="1px solid black">
+          <Container $direction="row" $width="max-content" $gap="1rem" $border="1px solid #CBD5E1">
             <Container
               $direction="column"
               $width="max-content"

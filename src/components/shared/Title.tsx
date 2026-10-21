@@ -1,22 +1,19 @@
-import styled, { css } from 'styled-components';
+export type TitleProps = {
+  $cursive?: boolean;
+  $center?: boolean;
+  $color?: string;
+} & React.HTMLAttributes<HTMLHeadingElement>;
 
-export const Title = styled.h1<{ $cursive?: boolean; $center?: boolean; $color?: string }>`
-  word-wrap: break-word;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  letter-spacing: 1px;
-  font-family: ${({ theme }) => theme.fontFamily.header};
-  color: ${({ $color }) => $color || 'black'};
+export function Title({ $cursive, $center, $color, className = '', style, ...rest }: TitleProps) {
+  return (
+    <h1
+      className={`font-display text-2xl font-semibold tracking-tight break-words ${$center ? 'text-center' : ''} ${
+        $cursive ? 'italic font-extralight' : 'text-slate-900'
+      } ${className}`}
+      style={{ color: $color, ...style }}
+      {...rest}
+    />
+  );
+}
 
-  ${({ $center }) =>
-    $center &&
-    css`
-      text-align: center;
-    `}
-  ${({ $cursive }) =>
-    $cursive &&
-    css`
-      font-family: 'Young serif', serif;
-      font-style: italic;
-      font-weight: 200;
-    `}
-`;
+export default Title;

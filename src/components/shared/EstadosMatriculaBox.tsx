@@ -1,21 +1,9 @@
 import { useEffect, useState } from 'react';
 import { EstadoMatricula } from '../../types/enums';
-import styled from 'styled-components';
 import { Container } from './Container';
 import CheckBox from './CheckBox';
-import { theme } from '../../config/styled/styled';
 import { SetURLSearchParams } from 'react-router-dom';
 import useCustomEvent from '../../hooks/useCustomEvent';
-
-const ContainerBox = styled(Container)`
-  background-color: ${theme.colors.secondary[100]};
-  > * {
-    padding: 5px;
-  }
-  > :not(:last-child) {
-    border-right: 1px solid black;
-  }
-`;
 
 export default function EstadosMatriculaBox({ setSearchParams }: { setSearchParams: SetURLSearchParams }) {
   const [estadosMatricula, setEstadosMatricula] = useState<Set<EstadoMatricula>>(new Set(['DEFINITIVA']));
@@ -28,12 +16,12 @@ export default function EstadosMatriculaBox({ setSearchParams }: { setSearchPara
     });
   }, []);
   return (
-    <ContainerBox $direction="row" $gap="0.5rem" $border="1px solid black" $width="max-content">
+    <Container $direction="row" $gap="0.5rem" $border="1px solid #CBD5E1" $width="max-content" className="rounded-lg bg-brand-100 divide-x divide-slate-300 [&>*]:p-[5px]">
       <CheckBox initialState={estadosMatricula.has('DEFINITIVA')} width="max-content" label="DEFINITIVA" name="estadoMatricula-DEFINITIVA"></CheckBox>
       <CheckBox initialState={estadosMatricula.has('SUSPENDIDO')} width="max-content" label="SUSPENDIDO" name="estadoMatricula-SUSPENDIDO"></CheckBox>
       <CheckBox initialState={estadosMatricula.has('TRASLADADO')} width="max-content" label="TRASLADADO" name="estadoMatricula-TRASLADADO"></CheckBox>
       <CheckBox initialState={estadosMatricula.has('RETIRADO')} width="max-content" label="RETIRADO" name="estadoMatricula-RETIRADO"></CheckBox>
-    </ContainerBox>
+    </Container>
   );
   function checkboxListener(event: CustomEvent) {
     const { name, value } = event.detail;

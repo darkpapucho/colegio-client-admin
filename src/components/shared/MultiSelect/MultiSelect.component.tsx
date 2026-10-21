@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { WidthCss } from '../../../types/globals';
 import { useEffect } from 'react';
 import { publishEvent } from '../../../utils/customEvent';
@@ -11,27 +10,12 @@ import { AiFillCloseSquare } from 'react-icons/ai';
 import { Text } from '../Text';
 import { SalonProfesor } from '../Profesor/types';
 
-export const OptionsContainer = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  inset-inline: 0 50%;
-  inset-block: 0 100%;
-  width: 50%;
-  height: max-content;
-`;
-export const SelectedOptionsContainer = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-
-  inset-inline: 50% 100%;
-  inset-block: 0% 100%;
-  width: 50%;
-  height: max-content;
-`;
+export const OptionsContainer = ({ children, className = '' }: { children?: React.ReactNode; className?: string }) => (
+  <div className={`absolute left-0 top-0 flex w-1/2 flex-col gap-0.5 ${className}`}>{children}</div>
+);
+export const SelectedOptionsContainer = ({ children, className = '' }: { children?: React.ReactNode; className?: string }) => (
+  <div className={`absolute left-1/2 top-0 flex w-1/2 flex-col gap-0.5 ${className}`}>{children}</div>
+);
 
 export default function MultiSelect({ items, width, name }: { items: SalonProfesor[]; width: WidthCss; name: string }) {
   const [state, dispatch] = useImmerReducer(MultiSelectReducer, { options: items, selectedOptions: [] as SalonProfesor[] });
@@ -40,7 +24,7 @@ export default function MultiSelect({ items, width, name }: { items: SalonProfes
   }, [state.selectedOptions.length]);
 
   return (
-    <Container $direction="row" $width={width} $position="relative" $bgColor="red">
+    <Container $direction="row" $width={width} $position="relative" $bgColor="white" className="rounded-lg border border-slate-300 shadow-card">
       <OptionsContainer>
         <Text $bold $fontSize="medium" $textAlign="center">
           Salones

@@ -1,70 +1,9 @@
 import { RefObject, forwardRef, useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import { Icon } from './Icon';
-import { theme } from '../../config/styled/styled';
-export const SContainer = styled.div<{ $width?: string; $type: string; $isError?: boolean }>`
-  position: relative;
-  ${({ $width }) =>
-    $width &&
-    css`
-      width: 100%;
-    `}
-  &>input {
-    ${({ $width }) =>
-      $width &&
-      css`
-        width: 100%;
-      `}
-    outline: none;
-    border: none;
-    border-bottom: ${({ $type }) => ($type === 'date' ? 'none' : '1px solid black')};
-    border-color: ${({ theme, $isError }) => ($isError ? theme.colors.red[500] : theme.colors.tertiary[700])};
-    height: 3rem;
-    padding-left: 5px;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-    font-family: ${({ theme }) => theme.fontFamily.text};
-    &:focus {
-      outline: none;
-      border-bottom: 3px solid ${theme.colors.secondary[900]};
-    }
-    &[type='date'] {
-      background-color: rgba(0, 0, 0, 0);
-      &::-webkit-calendar-picker-indicator {
-        //display: none;
-        //-webkit-appearance: none;
-        height: 20px;
-        position: relative;
-        width: 20px;
-        cursor: pointer;
-      }
-      &::-webkit-calendar-picker-indicator:hover {
-        transform: scale(1.1);
-      }
-    }
-  }
-`;
-const SLabel = styled.label<{ $hasContent: boolean; $type: string }>`
-  display: block;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-family: ${({ theme }) => theme.fontFamily.header};
-  position: ${({ $type }) => ($type === 'date' ? 'relative' : 'absolute')};
-  border: 2px;
-  left: 5px;
-  top: 0px;
-  font-style: italic;
-  ${({ $hasContent, $type }) =>
-    $hasContent &&
-    $type !== 'date' &&
-    css`
-      font-size: ${({ theme }) => theme.fontSizes.sm};
-      top: -20px;
-    `}
-  transition:all .5s;
-`;
 
-//main input  componentt
-const OutsideCOntrolledInput = forwardRef(function InputComponent(
+//main input component
+const OutsideControlledInput = forwardRef(function InputComponent(
   {
     name,
     type,
@@ -86,17 +25,32 @@ const OutsideCOntrolledInput = forwardRef(function InputComponent(
       setHasContent(false);
     }
   }, [value]);
+
+  const isDate = type === 'date';
+
   return (
-    <SContainer $width={$width} $type={type} $isError={isError}>
-      <SLabel htmlFor={name} $hasContent={hasContent} $type={type}>
+    <div className="relative w-full">
+      <label
+        htmlFor={name}
+        className={`font-display text-sm italic text-slate-500 transition-all duration-500 ${
+          isDate ? 'relative block' : `absolute left-[5px] ${hasContent ? '-top-5' : 'top-0'}`
+        } ${isError && hasContent ? 'text-red-600' : ''}`}
+      >
         {label}
-      </SLabel>
+      </label>
       <input
         id={name}
         type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         ref={ref as RefObject<HTMLInputElement>}
+        className={`h-[3rem] w-full border-0 pl-[5px] font-sans text-sm text-slate-800 outline-none transition-all [color-scheme:light] ${
+          isDate
+            ? 'bg-transparent'
+            : isError
+              ? 'border-b-2 border-red-500 focus:border-b-[3px] focus:border-red-600'
+              : 'border-b-2 border-slate-400 focus:border-b-[3px] focus:border-brand-700'
+        }`}
       />
       {type === 'password' &&
         (showPassword ? (
@@ -108,7 +62,7 @@ const OutsideCOntrolledInput = forwardRef(function InputComponent(
             <HiOutlineEye onClick={() => setShowPassword((old) => !old)} />
           </Icon>
         ))}
-    </SContainer>
+    </div>
   );
 });
-export default OutsideCOntrolledInput;
+export default OutsideControlledInput;

@@ -9,7 +9,7 @@ export default function CursoCard({ curso, onDelete }: { curso: CURSO; onDelete:
       $direction="row"
       $gap="1rem"
       $alignItems="center"
-      $border="1px solid black"
+      $border="1px solid #CBD5E1"
       $width="16rem"
       $padding="2px 6px"
       $justifyContent="space-between">

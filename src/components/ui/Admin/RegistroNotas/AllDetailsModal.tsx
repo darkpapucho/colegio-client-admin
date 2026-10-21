@@ -8,32 +8,14 @@ import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 import useGradoSeccionSearchParams from '../../../../hooks/useGradoSeccionSearchParams';
 import { Grado, Nivel } from '../../../../types/enums';
 import DisplayHoverMessage from '../../../shared/DisplayHoverMessage';
-import styled from 'styled-components';
 
-const CompTransCont = styled.div`
-  width: 100%;
-  border: 1px solid black;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  *:not(:last-child) {
-    border-right: 1px solid black;
-  }
-`;
-const CursoLabel = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid black;
-  border-bottom: none;
-`;
-const NotasContainer = styled.div`
-  text-align: center;
-  flex-grow: 1;
-`;
+const CompTransCont = ({ children }: { children?: ReactNode }) => (
+  <div className="flex w-full items-center justify-center divide-x divide-slate-300 border border-slate-300">{children}</div>
+);
+const CursoLabel = ({ children }: { children?: ReactNode }) => (
+  <div className="flex h-full w-full items-center justify-center border border-b-0 border-slate-300">{children}</div>
+);
+const NotasContainer = ({ children }: { children?: ReactNode }) => <div className="grow text-center">{children}</div>;
 export default function AllDetailsModal({
   children,
   title,
@@ -67,7 +49,7 @@ export default function AllDetailsModal({
         <Table width="100%" gridTemplateColumns={templateCols} withBorder>
           <Table.Header>
             <Table.Header.Item>
-              <Container $border="1px solid black" $width="100%" $height="100%" $alignItems="center">
+              <Container $border="1px solid #CBD5E1" $width="100%" $height="100%" $alignItems="center">
                 <CursoLabel>Periodo</CursoLabel>
               </Container>
             </Table.Header.Item>

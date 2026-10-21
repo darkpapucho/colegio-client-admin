@@ -1,9 +1,5 @@
-import styled from 'styled-components';
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
-  gap: 2.5rem;
-`;
+export const Form = ({ children, className = '', ...rest }: React.FormHTMLAttributes<HTMLFormElement>) => (
+  <form className={`flex w-full flex-col justify-start gap-10 ${className}`} {...rest}>
+    {children}
+  </form>
+);

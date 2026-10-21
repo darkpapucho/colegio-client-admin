@@ -1,13 +1,14 @@
-import styled, { css } from 'styled-components';
+export type SubtitleProps = {
+  $cursive?: boolean;
+} & React.HTMLAttributes<HTMLHeadingElement>;
 
-export const Subtitle = styled.h1<{ $cursive?: boolean }>`
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  font-family: ${({ theme }) => theme.fontFamily.header};
+export function Subtitle({ $cursive, className = '', ...rest }: SubtitleProps) {
+  return (
+    <h2
+      className={`font-display text-sm font-medium tracking-wide text-slate-600 ${$cursive ? 'italic' : ''} ${className}`}
+      {...rest}
+    />
+  );
+}
 
-  letter-spacing: 1px;
-  ${({ $cursive }) =>
-    $cursive &&
-    css`
-      font-family: 'Young serif', serif;
-    `}
-`;
+export default Subtitle;

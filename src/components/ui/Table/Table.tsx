@@ -1,81 +1,58 @@
 import { createContext, ReactNode, useContext } from 'react';
-import styled, { css } from 'styled-components';
 import { WidthCss } from '../../../types/globals';
 
-const TableContainer = styled.div<{ $withBorder?: boolean }>`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: ${({ $withBorder }) => ($withBorder ? '2px' : 0)};
-`;
-
-const StyledTableRow = styled.div<{ $gridTemplateColumns: string; $width: string; $withBorder?: boolean }>`
-  display: grid;
-  width: ${({ $width }) => $width};
-  grid-template-columns: ${({ $gridTemplateColumns }) => $gridTemplateColumns};
-  gap: ${({ $withBorder }) => ($withBorder ? '2px' : 0)};
-`;
-
-const StyledHeader = styled(StyledTableRow)`
-  border-top-left-radius: ${({ theme }) => theme.borderRadius.lg};
-  border-top-right-radius: ${({ theme }) => theme.borderRadius.lg};
-`;
-const StyledBody = styled(StyledTableRow)`
-  border-bottom-left-radius: ${({ theme }) => theme.borderRadius.lg};
-  border-bottom-right-radius: ${({ theme }) => theme.borderRadius.lg};
-  gap: ${({ $withBorder }) => ($withBorder ? '2px' : 0)};
-`;
-const StyledTableItem = styled.div<{ $padding?: string }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: ${({ $padding }) => $padding || 0};
-  text-align: center;
-`;
-const HeaderItem = styled(StyledTableItem)`
-  background-color: ${({ theme }) => theme.colors.secondary[600]};
-  color: ${({ theme }) => theme.colors.tertiary[100]};
-  width: 100%;
-`;
-const BodyItem = styled(StyledTableItem)<{ $key: number; $align?: string }>`
-  background-color: ${({ $key, theme }) => {
-    return $key % 2 === 0 ? theme.colors.tertiary[400] : theme.colors.tertiary[200];
-  }};
-  ${({ $align }) =>
-    $align &&
-    css`
-      justify-content: ${$align};
-    `}
-  color: ${({ theme }) => theme.colors.tertiary[800]};
-`;
 const TableContext = createContext<{ gridTemplateColumns: string; width: string; withBorder?: boolean } | null>(null);
 
-export default function Table({ children, gridTemplateColumns, width, withBorder }: { withBorder?: boolean; children: ReactNode; gridTemplateColumns: string; width: WidthCss }) {
+const rowClasses = (withBorder?: boolean) => `grid ${withBorder ? 'gap-0.5' : ''}`;
+
+function TableBase({ children, gridTemplateColumns, width, withBorder }: { withBorder?: boolean; children: ReactNode; gridTemplateColumns: string; width: WidthCss }) {
   return (
     <TableContext.Provider value={{ gridTemplateColumns, width, withBorder }}>
-      <TableContainer $withBorder={withBorder}> {children}</TableContainer>
+      <div className={`flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card ${withBorder ? 'gap-0.5' : ''}`}>{children}</div>
     </TableContext.Provider>
   );
 }
 function TableHeader({ children }: { children: ReactNode }) {
   const { width, gridTemplateColumns, withBorder } = useContext(TableContext)!;
   return (
-    <StyledHeader $withBorder={withBorder} $width={width} $gridTemplateColumns={gridTemplateColumns}>
+    <div className={`${rowClasses(withBorder)} rounded-t-xl`} style={{ width, gridTemplateColumns }}>
       {children}
-    </StyledHeader>
+    </div>
   );
 }
 function TableBody({ children }: { children: ReactNode }) {
   const { width, gridTemplateColumns, withBorder } = useContext(TableContext)!;
   return (
-    <StyledBody $withBorder={withBorder} $width={width} $gridTemplateColumns={gridTemplateColumns}>
+    <div className={`${rowClasses(withBorder)} rounded-b-xl border-b border-slate-200 transition-colors duration-100 last:border-b-0 hover:bg-brand-50`} style={{ width, gridTemplateColumns }}>
       {children}
-    </StyledBody>
+    </div>
   );
 }
-Table.Header = TableHeader;
-TableHeader.Item = HeaderItem;
-Table.Body = TableBody;
-TableBody.Item = BodyItem;
+function HeaderItem({ children, $padding, className = '', ...rest }: { $padding?: string; children?: ReactNode; className?: string } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={`flex w-full items-center justify-center bg-gradient-to-r from-brand-700 to-brand-600 p-0 text-center font-display font-semibold text-white capitalize ${className}`}
+      style={{ padding: $padding }}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+}
+function BodyItem({ children, $key = 0, $align, $padding, className = '', ...rest }: { $key?: number; $align?: string; $padding?: string; children?: ReactNode; className?: string } & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={`flex w-full items-center justify-center p-0 text-center text-slate-800 transition-colors duration-100 ${$key % 2 === 0 ? 'bg-white' : 'bg-slate-100'} ${className}`}
+      style={{ padding: $padding, justifyContent: $align }}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+}
+
+const TableHeaderWithItem = Object.assign(TableHeader, { Item: HeaderItem });
+const TableBodyWithItem = Object.assign(TableBody, { Item: BodyItem });
+const Table = Object.assign(TableBase, { Header: TableHeaderWithItem, Body: TableBodyWithItem });
+
+export default Table;
